@@ -8,17 +8,16 @@ const login = (loginData) => axios
   .post(`${API_URL}/auth/signin`, loginData)
   .then((response) => {
     if (response.data.accessToken) {
-      localStorage.setItem('user', JSON.stringify(response.data));
+      sessionStorage.setItem('user', JSON.stringify(response.data));
     }
-
     return response.data;
   });
 
 const logout = () => {
-  localStorage.removeItem('user');
+  sessionStorage.removeItem('user');
 };
 
-const getCurrentUser = () => JSON.parse(localStorage.getItem('user'));
+const getCurrentUser = () => JSON.parse(sessionStorage.getItem('user'));
 
 const AuthService = {
   register,

@@ -1,0 +1,206 @@
+{
+    "basic": {
+        "header": {
+            "routes": {
+                "market": "Market",
+                "stake": "Staking",
+                "my": "My NFT",
+                "create": "Create",
+                "collections": "Collections"
+            },
+            "buttons": {
+                "theme-switcher": "Тема ",
+                "connect-wallet": "Connect Wallet",
+                "wallet": "Гаманець"
+            }
+        },
+        "footer": {
+            "bla": "bla"
+        },
+        "connect-wallet-modal": {
+            "title": "Буфер Обміну",
+            "header": {
+                "explore-wallet": "Переглянути Гаманець",
+                "connect-wallet": "Під'єднати Гаманець"
+            },
+            "footer": {
+                "btn-close": "Закрити"
+            },
+            "body": {
+                "network": "Мережа",
+                "wallet": "Гаманець",
+                "too-many-extensions": "Ми знайшли більше одного розширення у вашому браузері"
+            },
+            "toast-messages": {
+                "success": "Скопійовано до Буферу Обміну!",
+                "error": "Неможливо скопіювати:",
+                "no-clipboard": "Неможливо скопіювати,попробуйте скопіювати вручну!"
+            },
+            "copy-btn": "Копіювати",
+            "view-on": "Переглянути на "
+        },
+        "toasts": {
+            "successful": "Успішно",
+            "waiting-staking": "NFT очікує на стейкінг",
+            "stake-as-soon": "Ваш NFT буде поставлений на стейкінг якнайшвидше",
+            "1": "Увійдіть до TronLink",
+            "2": "Шукаємо підключення до блокчейну...",
+            "3": "Токен уже продано!",
+            "4": "У Вас є права для створення NFT ",
+            "5": "У Вас немає прав для створення NFT ",
+            "6": "Ви пропустили деяку інформацію",
+            "7": "Ви отримаєте нагороду якнайшвидше",
+            "8": "Нічого знімати",
+            "9": "Неправильна адреса гаманця",
+            "10": "Будь ласка, вкажіть NFT ID, на який ми нараховуватимемо бонус"
+        }
+    },
+    "common": {
+        "nft-card": {
+            "btns": {
+                "bid": "Ставка",
+                "buy": "Купити",
+                "show": "Перегляд",
+                "details": "Детальніше"
+            }
+        },
+        "nft-item-card": {
+            "owner": "Власник: ",
+            "btns": {
+                "offer": "Зробити Пропозицію",
+                "buy": "Купити Зараз"
+            },
+            "about": "Інфо",
+            "details": {
+                "title": "Детальна Інформація",
+                "contract": "Контракт: ",
+                "token-id": "Token ID: ",
+                "collection": "Колекція: ",
+                "creator": "Автор: "
+            }
+        }
+    },
+    "pages": {
+        "no-data": "Дані відсутні",
+        "404": {
+            "main": "Сторінку не знайдено!",
+            "go-back": "Ви можете спробувати повернутися назад:",
+            "go-home-page": "Або почати знову з головної сторінки:",
+            "back": "Назад",
+            "home": "На головну"
+        },
+        "create-nft": {
+            "btns": {
+                "create-collection": "Collection",
+                "create-nft-existing": "From existing NFT",
+                "create-nft": "NFT"
+            },
+            "modal": {
+                "img-or-vid-upload": "Завантажити Картинку",
+                "logo-upload": "Завантажити Логотип",
+                "input-title": "Назва",
+                "input-title-placeholder": "Введіть Назву",
+                "input-description": "Опис",
+                "collection-select": {
+                    "label": "Колекція",
+                    "def-opt": "Колекція"
+                },
+                "submit-btn": "Створити",
+                "close-btn": "Закрити",
+                "from-existing-select-collection": "Оберіть колекцію",
+                "from-existing-select-token-name": "і потрібний токен"
+            }
+        },
+        "my-nft": {
+            "header": "Мій NFT",
+            "btns": {
+                "accept": "Прийняти пропозицію",
+                "sell": "Продати",
+                "stop-sell": "Відмінити торги",
+                "send": "Відправити",
+                "delete": "Видалити",
+                "staking": "Staking"
+            },
+            "collectible-bonus-modal": {
+                "header": "Вітаємо",
+                "msg-1": "Ви отримали ",
+                "msg-2": "винагороду",
+                "btn": "Отримати"
+            },
+            "my-nft-filter": {
+                "title": "Фільтр",
+                "by-name": "Токен",
+                "by-collection": "Колекція",
+                "by-market-status": {
+                    "title": "Маркет",
+                    "on-sale": "Продається",
+                    "not-on-sale": "Не продається"
+                }
+            },
+            "hints": {
+                "sell": "Ви можете виставити свій токен на Маркет",
+                "send": "Ви можете відправити свій токен на інші гаманці",
+                "staking-bonus": "Ви можете поставити свій токен в Staking, щоб отримати з нього прибуток"
+            },
+            "warnings": {
+                "comission-on-bonus-staking": "Для проведення операціі необхідно мати 100 TRX на балансі TronLink!"
+            }
+        },
+        "nft-market": {
+            "header": "NFT Токени",
+            "search-input-placeholder": "Пошук",
+            "total-on-market": "Всьго на торгах",
+            "card-carousel": {
+                "title": "Актуальні курси валют"
+            },
+            "filter": {
+                "head": "Колекції",
+                "type-of-auction": "Тип аукціону:",
+                "auc-types": {
+                    "all": "Всі",
+                    "auction": "Аукціон",
+                    "fix-price": "Фіксована ціна",
+                    "new": "Нові",
+                    "has-off": "Вже з пропозиціями"
+                },
+                "price": "Ціна",
+                "top-sellers": "Найкращі продавці",
+                "collection": "Колекція",
+                "ok-btn": "Ok"
+            },
+            "refModal": {
+                "title": "Реферер",
+                "attention": "Увага!",
+                "1": "Якщо Ви маєте адресу реферера то введіть її в поле нижче",
+                "2": "Адреса реферера повинна відрізнятися від Вашої!",
+                "3": "Або якщо не маєте, то просто купуйте!",
+                "inputPlaceholder": "Введіть адресу"
+            }
+        },
+        "staking": {
+            "header": "Дохід",
+            "card-carousel": {
+                "title": "Останні виплати Користувачам"
+            },
+            "staking-table": {
+                "name": "Staking",
+                "date": "Дата",
+                "nextWithdrawDate": "Дата Виплати",
+                "tariff": "Тариф",
+                "income": "Дохід",
+                "paid-out": "Виплачено",
+                "has-ended":"Цей стейкiнг закінчився. Перегляньте сторінку MyNft."
+            },
+            "additionalInfoOverlay": {
+                "at": "О "
+            },
+            "withdraw-btn": "Виведення"
+        },
+        "collections": {
+            "tabs": {
+                "1": "Опис",
+                "2": "Токени"
+            }
+        }
+    }
+}

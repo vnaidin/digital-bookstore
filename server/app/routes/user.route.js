@@ -9,6 +9,32 @@ module.exports = function(app) {
     );
     next();
   });
+   /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserUpdate:
+ *       type: object
+ *       required:
+ *         - name
+ *         - surname
+ *         - phoneNumber
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: User's name
+ *         surname:
+ *           type: string
+ *           description: User's surname
+ *         phoneNumber:
+ *           type: string
+ *           description: UA-type phone number
+ *   
+ *       example:
+ *         name: John
+ *         surname: Smith
+ *         phoneNumber: "0951234567"
+ */
 
   /**
    * @swagger
@@ -87,7 +113,7 @@ module.exports = function(app) {
   *      content:
   *        application/json:
   *          schema:
-  *            $ref: '#/components/schemas/User'
+  *            $ref: '#/components/schemas/UserUpdate'
   *    responses:
   *      200:
   *        description: The user was updated

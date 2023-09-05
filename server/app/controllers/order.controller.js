@@ -7,17 +7,20 @@ exports.getOrders = async (req, res) => {
   // Find all books
   const orders = await Order.findAll();
   res.status(200).json(orders);
-  
+
 };
 
 exports.getOrderById = async (req, res) => {
-  const bookId = req.params.id;
-  const book = await Order.findOne({ where: { id: bookId } });
+  const orderId = req.params.id;
+  const book = await Order.findOne({ where: { id: orderId } });
   res.status(200).json(book);
 }
 
-exports.createOrder = (req, res) => {
-  console.log(res)//TODO:
+exports.createOrder = async (req, res) => {
+  console.log(req.body)//TODO:
+  const { name, surname, phoneNumber, email, city, address, branch, comments, year, category } = req.body;
+  await Order.create(req.body)
+    .then(order => res.status(200).json({ message: `Order ${order} created` }))
 }
 
 exports.updateOrder = (req, res) => {

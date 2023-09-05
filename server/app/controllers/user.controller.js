@@ -13,16 +13,27 @@ exports.moderatorBoard = async (req, res) => {
   res.status(200).json(allModerators);
 };
 
-exports.updateInfo = (req, res) => {
-  console.log(res)//TODO:
+exports.updateInfo = async (req, res) => {
+  const userId = req.params.id;
+  const { name, surname, phoneNumber } = req.body;
+
+  await User.update({
+    name, surname, phoneNumber
+  }, {
+    where: {
+      id: userId
+    }
+  }).then(user => res.status(200).json({ message: `User ${userId} updated` }))
 }
 
 
 exports.deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
   await User.destroy({
     where: {
-      id: req.params.id
+      id: userId
     }
   });
-  res.status(200).send("Deleted user "+req.params.id)
+  res.status(200).send("Deleted user " + userId)
 }

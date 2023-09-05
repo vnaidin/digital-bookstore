@@ -1,8 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("users", {
-    /* username: {
-      type: Sequelize.STRING
-    }, */
     email: {
       type: Sequelize.STRING
     },
@@ -16,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     phoneNumber: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     }
   });
 

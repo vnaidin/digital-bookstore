@@ -4,7 +4,7 @@ const db = require("../models/index.js");
 const User = db.user;
 
 verifyToken = (req, res, next) => {
-  let token = req.headers["authorization"].substring(7);
+  let token = req.headers["authorization"]?.substring(7);
 
   if (!token) {
     return res.status(403).send({

@@ -1,0 +1,87 @@
+import React, { useContext } from 'react';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
+import AppContext from '../../appContext';
+
+export default function CartItems({ totalPrice }) {
+  const { state, dispatch } = useContext(AppContext);
+  const handleAddToCart = (id, price, title, image) => {
+    const payload = {
+      id, price, title, image,
+    };
+    localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
+    dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
+  };
+
+  const handleRemoveFromCart = (id) => {
+    const temp = [...state.shoppingCart];
+    const indNeeded = temp.findIndex((x) => x.id === id);
+    if (indNeeded >= 0) {
+      temp.splice(indNeeded, 1);
+    }
+    localStorage.setItem('cart', JSON.stringify(temp));
+    dispatch({ type: 'rmItemFromCart', payload: temp });
+  };
+
+  const reducedBooks = state.shoppingCart.reduce((acc, {
+    id, price, title, image,
+  }) => (
+    {
+      ...acc,
+      [id]: acc[id] ? [...acc[id], { price, title }] : [{ price, title, image }],
+    }
+  ), {});
+
+  return (
+    <Container fluid>
+      {Object.entries(reducedBooks).map(([key, value]) => (
+        <Row key={key} className="d-flex p-0 align-items-center">
+          <Col
+            xs={7}
+            sm={6}
+            md={6}
+            lg={5}
+            xl={4}
+            xxl={3}
+          >
+            <img src={value[0].image} alt={value[0].title} width={80} />
+            <p>
+              {value[0].title}
+              {' '}
+              {value[0].price}
+            </p>
+          </Col>
+          <Col
+            xs={5}
+            sm={6}
+            md={6}
+            lg={5}
+            xl={4}
+            xxl={3}
+          >
+            <div>
+              <Button onClick={() => handleRemoveFromCart(+key)} variant="danger" className="mx-1">-</Button>
+              {value.length}
+              <Button
+                variant="success"
+                className="mx-1"
+                onClick={
+                () => handleAddToCart(+key, value[0].price, value[0].title, value[0].image)
+}
+              >
+                +
+              </Button>
+            </div>
+
+          </Col>
+        </Row>
+      ))}
+      <h4>
+        Total:
+        {' '}
+        {totalPrice}
+      </h4>
+    </Container>
+  );
+}

@@ -1,0 +1,8 @@
+.langSelect {
+    width: 4.5em;
+    border-radius: 20px;
+    outline-width: 0;
+    outline: none;
+    border: none;
+    /* background-color: rgb(224, 224, 224); */
+}

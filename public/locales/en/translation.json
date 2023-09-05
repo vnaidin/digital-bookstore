@@ -1,0 +1,87 @@
+{
+    "basic": {
+        "header": {
+            "routes": {
+                "authors": "Authors",
+                "merch": "Merch",
+                "delivery": "Delivery",
+                "moderator": "Moderator",
+                "aboutUs": "About Us",
+                "contactUs": "Contacts",
+                "retrieval": "Retrieval",
+                "terms": "Terms of use"
+            },
+            "buttons": {
+                "theme-switcher": "Switch Theme",
+                "connect-wallet": "Connect Wallet",
+                "wallet": "Wallet"
+            }
+        },
+        "footer": {
+            "bla": "bla"
+        },
+        "connect-wallet-modal": {
+            "title": "Clipboard",
+            "header": {
+                "explore-wallet": "Explore Wallet",
+                "connect-wallet": "Connect Wallet"
+            },
+            "footer": {
+                "btn-close": "Close"
+            },
+            "body": {
+                "network": "Network",
+                "wallet": "Wallet",
+                "too-many-extensions": "We found more than one extension in your browser"
+            },
+            "toast-messages": {
+                "success": "Copied to Clipboard!",
+                "error": "Couldn't copy text:",
+                "no-clipboard": "Could not copy text, try to copy by hand!",
+                "no-wallet": "Please login to TronLink extention wallet first"
+            },
+            "copy-btn": "Copy",
+            "view-on": "View on "
+        },
+        "toasts": {
+            "successful": "Successful",
+            "waiting-staking": "NFT is waiting to be staked",
+            "stake-as-soon": "Your NFT will be staked as soon as possible",
+            "1": "Log into TronLink",
+            "2": "Looking for blockchain connectivity...",
+            "3": "Item is already sold!",
+            "4": "You have the rights for NFT Creation",
+            "5": "You don't have the rights for NFT Creation",
+            "6": "You have missed some information",
+            "7": "You will get the reward as soon as possible",
+            "8": "Nothing to withdraw",
+            "9": "Invalid Wallet Address",
+            "10": "Please, put the NFT ID to which we will assign the bonus"
+        }
+    },
+    "common": {
+        "nft-card": {
+            "btns": {
+                "bid": "Bid",
+                "buy": "Buy",
+                "show": "Show",
+                "details": "Details"
+            }
+        },
+        "nft-item-card": {
+            "owner": "Owner: ",
+            "btns": {
+                "offer": "Make Offer",
+                "buy": "Buy"
+            },
+            "about": "About",
+            "details": {
+                "title": "Details",
+                "contract": "Contract: ",
+                "token-id": "Token ID: ",
+                "collection": "Collection: ",
+                "creator": "Creator: "
+            }
+        }
+    }
+}

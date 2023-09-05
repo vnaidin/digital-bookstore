@@ -1,4 +1,20 @@
 .App {
   text-align: center;
+  background-color: #DDC3A5;
 }
+
+main {
+  min-height: 70vh;
+}
+
+header {
+  background-color: #E0A96D;
+}
+
+footer, .header-bottom {
+  background-color: #201E20;
+  color: rgb(255 255 255 / 55%);
+}
+
+/*https://webflow.com/blog/best-color-combinations look here*/
 

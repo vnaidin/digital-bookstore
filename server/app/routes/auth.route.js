@@ -39,9 +39,8 @@ module.exports = function (app) {
    *             type: string
    *   
    *       example:
-   *         email: test@email.com
-   *         username: test
-   *         password: "1234"
+   *         email: John@gmail.com
+   *         password: "@'Sq12RR"
    *         roles: ["user","moderator","admin"]
    */
 
@@ -95,8 +94,8 @@ module.exports = function (app) {
  *           description: The title of your user
  *   
  *       example:
- *         email: test@email.com
- *         password: "1234"
+ *         email: John@gmail.com
+ *         password: "@'Sq12RR"
  */
 
   /**

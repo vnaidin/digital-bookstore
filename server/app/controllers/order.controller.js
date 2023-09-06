@@ -39,13 +39,12 @@ exports.updateOrder = async (req, res) => {
   }).then(order => res.status(200).json({ message: `Order ${id} updated` }))
 }
 
-exports.deleteOrder = async (req, res) => {
+exports.deleteOrder = async (req, res) => {//TODO: do we need it?
   const orderId = req.params.id;
-
   await Order.destroy({
     where: {
       id: orderId
     }
   });
-  res.status(200).send("Deleted order " + orderId)
+  res.status(200).json({ message: "Deleted order " + orderId })
 }

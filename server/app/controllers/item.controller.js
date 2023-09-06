@@ -49,7 +49,7 @@ exports.deleteBook = async (req, res) => {
       id: itemId
     }
   });
-  res.status(200).send("Deleted book " + itemId)
+  res.status(200).json({ message: "Deleted book " + itemId });
 }
 
 exports.getMerch = async (req, res) => {
@@ -68,7 +68,7 @@ exports.getMerchById = async (req, res) => {
 exports.createMerch = async (req, res) => {//TODO:
   const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
   await Item.create({
-     isReducedNow, price, reducedPrice, author, lang,
+    isReducedNow, price, reducedPrice, author, lang,
     annotation, title, tags, year, category, image: req.file.filename
   })
     .then(merch => res.status(200).json({ message: `Merch ${title} created` }))
@@ -77,10 +77,10 @@ exports.createMerch = async (req, res) => {//TODO:
 
 exports.updateMerch = async (req, res) => {//TODO:
   const itemId = req.params.id;
-  const {  isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
+  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
 
   await Item.update({
-     isReducedNow, price, reducedPrice, author, lang,
+    isReducedNow, price, reducedPrice, author, lang,
     annotation, title, tags, year, category, image: req.file?.filename
   }, {
     where: {
@@ -98,7 +98,7 @@ exports.deleteMerch = async (req, res) => {
       id: itemId
     }
   });
-  res.status(200).send("Deleted merch " + itemId)
+  res.status(200).json({ message: "Deleted merch " + itemId });
 }
 
 /**
@@ -118,23 +118,26 @@ exports.getItemsOfOrder = async (req, res) => {
 
 exports.searchItems = async (req, res) => {
   // console.log(req?.query)
-  const result=Item.findAll({where: {
-    [Op.or]: [
-      {
-        title: {
-          [Op.like]: `%${ req.query.search }%`
+  const result = await Item.findAll({
+    where: {
+      [Op.or]: [
+        {
+          title: {
+            [Op.like]: `%${req.query.search}%`
+          }
+        },
+        {
+          author: {
+            [Op.like]: `%${req.query.search}%`
+          }
+        },
+        {
+          publisher: {
+            [Op.like]: `%${req.query.search}%`
+          }
         }
-      },
-      {
-        author: {
-          [Op.like]: `%${ req.query.search }%`
-        }
-      },
-      {
-        publisher: {
-          [Op.like]: `%${ req.query.search }%`
-        }
-      }
-    ]
-  }}).then(result=>res.status(200).json(result))
+      ]
+    }
+  })
+  res.status(200).json(result)
 }

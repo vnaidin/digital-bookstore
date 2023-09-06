@@ -35,5 +35,5 @@ exports.deleteUser = async (req, res) => {
       id: userId
     }
   });
-  res.status(200).send("Deleted user " + userId)
+  res.status(200).json({ message: "Deleted user " + userId })
 }

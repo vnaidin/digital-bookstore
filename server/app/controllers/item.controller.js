@@ -65,7 +65,7 @@ exports.getMerchById = async (req, res) => {
 
 }
 
-exports.createMerch = async (req, res) => {
+exports.createMerch = async (req, res) => {//TODO:
   const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
   await Item.create({
      isReducedNow, price, reducedPrice, author, lang,
@@ -75,7 +75,7 @@ exports.createMerch = async (req, res) => {
 
 }
 
-exports.updateMerch = async (req, res) => {
+exports.updateMerch = async (req, res) => {//TODO:
   const itemId = req.params.id;
   const {  isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
 
@@ -99,4 +99,42 @@ exports.deleteMerch = async (req, res) => {
     }
   });
   res.status(200).send("Deleted merch " + itemId)
+}
+
+/**
+ *  Common for both book and merch, search and getting by list of ID's
+ */
+
+exports.getItemsOfOrder = async (req, res) => {
+  const orderItems = req.query.items;
+  const items = await Item.findAll({
+    attributes: ['id', 'author', 'title', 'image'],
+    where: {
+      id: orderItems.split(',')
+    }
+  });
+  res.status(200).json(items);
+}
+
+exports.searchItems = async (req, res) => {
+  // console.log(req?.query)
+  const result=Item.findAll({where: {
+    [Op.or]: [
+      {
+        title: {
+          [Op.like]: `%${ req.query.search }%`
+        }
+      },
+      {
+        author: {
+          [Op.like]: `%${ req.query.search }%`
+        }
+      },
+      {
+        publisher: {
+          [Op.like]: `%${ req.query.search }%`
+        }
+      }
+    ]
+  }}).then(result=>res.status(200).json(result))
 }

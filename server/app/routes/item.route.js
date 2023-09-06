@@ -527,4 +527,70 @@ module.exports = function(app) {
   *         description: The merch was not found
   */
   app.delete('/api/merch/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteMerch)
+
+  /************************************************************************************************************************************************** */
+
+  /**
+   * @swagger
+   * /items/order:
+   *   get:
+   *     summary: Get items of the order
+   *     tags: [Items]
+   *     parameters:
+   *      - in: query
+   *        name: items
+   *        schema:
+   *          type: string
+   *        required: true
+   *        description: Items to show 
+   *     responses:
+   *       200:
+   *         description: The items of order.
+   *         content:
+   *           application/json:
+   *            schema:
+   *              type: array
+   *              items:
+   *               $ref: '#/components/schemas/Items'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.get(
+    "/api/items/order",
+    // [authJwt.verifyToken],
+    controller.getItemsOfOrder
+  );
+
+  /**
+   * @swagger
+   * /items/search:
+   *   get:
+   *     summary: Get search items
+   *     tags: [Items]
+   *     parameters:
+   *      - in: query
+   *        name: search
+   *        schema:
+   *          type: string
+   *        required: true
+   *        description: Query 
+   *     responses:
+   *       200:
+   *         description: The items of search.
+   *         content:
+   *           application/json:
+   *            schema:
+   *              type: array
+   *              items:
+   *               $ref: '#/components/schemas/Items'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.get(
+    "/api/items/search",
+    // [authJwt.verifyToken],
+    controller.searchItems
+  );
 };

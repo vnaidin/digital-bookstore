@@ -37,7 +37,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     status: {
-      type: Sequelize.BOOLEAN// 1 true or 0 false
+      type: Sequelize.INTEGER// new, inProgress, finished
     },
     rejected: {
       type: Sequelize.BOOLEAN

@@ -103,6 +103,40 @@ module.exports = function(app) {
 
   /**
    * @swagger
+   * /all/orders/{userId}:
+   *   get:
+   *     security: 
+   *       - bearer: []
+   *     summary: Get orders by userId
+   *     tags: [Orders]
+   *     parameters:
+   *      - in: path
+   *        name: userId
+   *        schema:
+   *          type: string
+   *        required: true
+   *        description: Users Id to show orders
+   *     responses:
+   *       200:
+   *         description: The orders by userId.
+   *         content:
+   *           application/json:
+   *            schema:
+   *              type: array
+   *              items:
+   *               $ref: '#/components/schemas/Order'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.get(
+    "/api/all/orders/:userId",
+    [authJwt.verifyToken],
+    controller.getOrdersOfUser
+  );
+
+  /**
+   * @swagger
    * /order/{id}:
    *   get:
    *     security: 
@@ -197,7 +231,7 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/order/:id', [authJwt.verifyToken, authJwt.isModerator],controller.updateOrder)//TODO: verify that it is exact user
+  app.put('/api/order/:id', [authJwt.verifyToken, authJwt.isModerator],controller.updateOrder)
 
     /**
   * @swagger

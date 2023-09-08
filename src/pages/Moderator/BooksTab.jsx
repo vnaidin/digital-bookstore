@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Button, Container, Table, Row,
 } from 'react-bootstrap';
 import { useFetch } from '../../utils/hooks';
 import BookService from '../../services/book';
 import CreateUpdateBookModal from './CreateUpdateBookModal';
+import AppContext from '../../appContext';
 
 export default function BooksTab() {
+  const { dispatch } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [currentBook, updateBookObject] = useState();
 
@@ -17,10 +19,13 @@ export default function BooksTab() {
   const { loading, error, value } = useFetch(
     `${process.env.REACT_APP_BE_URL}/all/books`,
     {},
-    [],
+    [showModal],
   );
   const handleBookDelete = (id) => {
-    BookService.deleteBook(id);// FIXME: do notifications of errors or success
+    BookService.deleteBook(id).then((response) => {
+      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      handleCloseModal();
+    });// FIXME: refetch
   };
   const handleBookUpdate = (id) => {
     handleOpenModal(); updateBookObject(value.find((book) => book.id === id));

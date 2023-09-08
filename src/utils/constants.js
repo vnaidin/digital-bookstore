@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const DELIVERY_METHODS = [
   {
     id: 1, title: 'УкрПошта Експрес (доставка до відділення)', cost: 32, freeFrom: 300, stateFullAddress: false,
@@ -18,3 +17,9 @@ export const DELIVERY_METHODS = [
   {
     id: 6, title: 'Meest Пошта. Кур\'єр', cost: 60, freeFrom: null, stateFullAddress: true,
   }];
+
+export const ORDER_STATUSES = ['new', 'inProgress', 'finished'];
+
+export const PAYMENT_METHODS = ['cash', 'liqpay'];
+
+// TODO: book categories?

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+import {
+  Button, Form, InputGroup, Row, Col,
+} from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import AuthService from '../../../services/auth';
@@ -12,8 +11,8 @@ export default function Login() {
   const { Formik } = formik;
   const { dispatch } = useContext(AppContext);
   const schema = yup.object().shape({
-    email: yup.string().required(),
-    // password: yup.string().required(),
+    email: yup.string().required().email(),
+    password: yup.string().required(),
   });
 
   const logIn = (values) => {
@@ -29,7 +28,7 @@ export default function Login() {
       onSubmit={(values) => logIn(values)}
       initialValues={{
         email: 'John@gmail.com',
-        password: `@'Sq12RR`,
+        password: '@\'Sq12RR',
       }}
     >
       {({
@@ -39,13 +38,20 @@ export default function Login() {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="validationFormik01">
               <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                isValid={touched.email && !errors.email}
-              />
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  isValid={touched.email && !errors.email}
+                  isInvalid={errors.email}
+                />
+                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.email}
+                </Form.Control.Feedback>
+              </InputGroup>
             </Form.Group>
             <Form.Group as={Col} controlId="validationFormik02">
               <Form.Label>Password</Form.Label>

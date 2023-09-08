@@ -1,26 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Button, Card, Col, NavLink,
+  Card, Col, NavLink,
 } from 'react-bootstrap';
-import AppContext from '../../appContext';
+import BuyButton from '../BuyButton';
 
 export default function BookCard({
   id, author, title, image, publisher, year, isbn,
   pageCount, lang, price, reducedPrice, isReducedNow, annotation, category, tags,
 }) {
-  const { dispatch, state } = useContext(AppContext);
-
-  const handleAddToCart = () => {
-    const payload = {
-      id, price, title, image,
-    };
-    localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
-    dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
-  };
-
   return (
     <Col
       xs={12}
@@ -52,8 +42,7 @@ export default function BookCard({
                 <Card.Text>{reducedPrice}</Card.Text>
               </>
             ) : <Card.Text>{price}</Card.Text>}
-            <Button variant="primary">Buy</Button>
-            <Button variant="secondary" onClick={handleAddToCart}>Add to cart</Button>
+            <BuyButton id={id} price={price} title={title} image={image} />
           </div>
 
         </Card.Body>
@@ -96,5 +85,4 @@ BookCard.propTypes = {
   annotation: PropTypes.string,
   category: PropTypes.string,
   tags: PropTypes.string,
-
 };

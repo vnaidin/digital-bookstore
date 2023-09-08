@@ -2,26 +2,31 @@ import React, { useContext, useState } from 'react';
 import {
   Row, Col, Button, Form, InputGroup,
 } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import * as formik from 'formik';
 import * as yup from 'yup';
-import { DELIVERY_METHODS } from '../../utils/constants';
+import { useNavigate } from 'react-router-dom';
+import { DELIVERY_METHODS, PAYMENT_METHODS } from '../../utils/constants';
 import AppContext from '../../appContext';
 import OrderService from '../../services/order';
 
 export default function OrderForm({ totalPrice }) {
   const [deliveryMethod, setDeliveryMethod] = useState();
   const { dispatch, state } = useContext(AppContext);
+  const navigate = useNavigate();
   const { Formik } = formik;
 
-  const schema = yup.object().shape({
-    name: yup.string().required(),
-    surname: yup.string().required(),
+  const schema = yup.object().shape({ // TODO: validation to improve
+    name: yup.string().required().min(3),
+    surname: yup.string().required().min(3),
     phoneNumber: yup.string().required(),
-    email: yup.string().required(),
-    city: yup.string().required(),
+    email: yup.string().required().email(),
+    city: yup.string().required().min(2),
     address: yup.string()/* .required() */,
     // zip: yup.string().required(),
     branch: yup.string()/* .required() */,
+    paymentMethodId: yup.number().required(),
+    delMethod: yup.number().required(),
     comments: yup.string()/* .required() */,
   });
 
@@ -31,10 +36,19 @@ export default function OrderForm({ totalPrice }) {
       userId: state?.currentUser?.id,
       items: state.shoppingCart.map((item) => item.id).toString(),
       price: totalPrice,
+      status: 0,
     };
-    // console.log(objectToPost);
+    //  console.log(objectToPost);
     OrderService.createOrder(objectToPost).then(
-      (response) => console.log(response),
+      (response) => {
+        // console.log(response);
+        localStorage.setItem('cart', JSON.stringify([]));
+        dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+        setTimeout(() => {
+          dispatch({ type: 'addItemToCart', payload: [] });
+          navigate('/');
+        }, 3000);
+      },
     ).catch((e) => console.error(new Error(e)));
   };
   return (
@@ -58,6 +72,7 @@ export default function OrderForm({ totalPrice }) {
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
+            <h2 className="text-start my-1">1. Personal Information</h2>
             <Form.Group
               as={Col}
               md="6"
@@ -65,16 +80,23 @@ export default function OrderForm({ totalPrice }) {
               className="position-relative"
             >
               <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                placeholder="John"
-                value={values.name}
-                onChange={handleChange}
-                isValid={touched.name && !errors.name}
-                readOnly={state.currentUser?.id > 0}
-              />
-              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="John"
+                  value={values.name}
+                  onChange={handleChange}
+                  isValid={touched.name && !!errors.name}
+                  isInvalid={/* touched.surname &&  */errors.name}
+                  readOnly={state.currentUser?.id > 0}
+                />
+                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.name}
+                </Form.Control.Feedback>
+              </InputGroup>
+
             </Form.Group>
             <Form.Group
               as={Col}
@@ -83,18 +105,24 @@ export default function OrderForm({ totalPrice }) {
               className="position-relative"
             >
               <Form.Label>Last name</Form.Label>
-              <Form.Control
-                type="text"
-                name="surname"
-                placeholder="Appleseed"
-                value={values.surname}
-                onChange={handleChange}
-                isValid={touched.surname && !errors.surname}
-                readOnly={state.currentUser?.id > 0}
-              />
-
-              <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="text"
+                  name="surname"
+                  placeholder="Appleseed"
+                  value={values.surname}
+                  onChange={handleChange}
+                  isValid={touched.surname && !!errors.surname}
+                  isInvalid={/* touched.surname &&  */errors.surname}
+                  readOnly={state.currentUser?.id > 0}
+                />
+                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.surname}
+                </Form.Control.Feedback>
+              </InputGroup>
             </Form.Group>
+
             <Form.Group as={Col} sm="12" controlId="validationFormikUsername2">
               <Form.Label>Phone number</Form.Label>
               <InputGroup hasValidation>
@@ -106,7 +134,7 @@ export default function OrderForm({ totalPrice }) {
                   name="phoneNumber"
                   value={values.phoneNumber}
                   onChange={handleChange}
-                  isInvalid={!!errors.phoneNumber}
+                  isInvalid={/* touched.phoneNumber && */ !!errors.phoneNumber}
                   readOnly={state.currentUser?.id > 0}
                 />
                 <Form.Control.Feedback type="invalid" tooltip>
@@ -114,6 +142,7 @@ export default function OrderForm({ totalPrice }) {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
+
             <Form.Group as={Col} sm="12" controlId="validationFormikEmail2">
               <Form.Label>Email</Form.Label>
               <InputGroup hasValidation>
@@ -134,6 +163,8 @@ export default function OrderForm({ totalPrice }) {
               </InputGroup>
             </Form.Group>
 
+            <h2 className="text-start my-1">2. Delivery</h2>
+
             <Form.Group as={Col} sm="12" controlId="delMethod">
               <Form.Label>DeliveryMethod</Form.Label>
               <InputGroup hasValidation>
@@ -148,16 +179,18 @@ export default function OrderForm({ totalPrice }) {
                   }}
                   title="delMethod"
                   placeholder="Category"
+                  isInvalid={errors.delMethod}
+                  isValid={!!errors.delMethod}
                  //  defaultValue={existingBook?.category || null}
                 >
                   <option hidden value={null}>Choose delivery method</option>
                   {DELIVERY_METHODS.map(
                     ({
-                      id, title, cost, freeFrom,
+                      id, title, cost, /* freeFrom, */
                     }) => (
                       <option
                         key={title}
-                        value={id}
+                        value={+id}
                       >
                         {title}
                         {' '}
@@ -284,6 +317,43 @@ export default function OrderForm({ totalPrice }) {
                 </Form.Group>
               </>
             )}
+
+            <h2 className="text-start my-1">3. Payment Method</h2>
+            {/** TODO: */}
+            <Form.Group
+              as={Col}
+              sm="12"
+              controlId="validationFormik10611"
+              className="position-relative"
+            >
+              <InputGroup hasValidation>
+                <Form.Group
+                  as={Col}
+                  md="5"
+                  controlId="validationFormik15134"
+                  className="position-relative"
+                >
+                  {PAYMENT_METHODS.map((payMethod, ind) => (
+                    <Form.Check
+                      required
+                      key={payMethod}
+                      type="radio"
+                      name="paymentMethodId"
+                      id={payMethod}
+                      label={payMethod}
+                      value={+ind}
+                      onChange={handleChange}
+                      isInvalid={errors.paymentMethodId}
+                      className="text-capitalize"
+                    />
+                  ))}
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {errors.paymentMethodId}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </InputGroup>
+            </Form.Group>
+
             <Form.Group
               as={Col}
               sm="12"
@@ -312,3 +382,10 @@ export default function OrderForm({ totalPrice }) {
     </Formik>
   );
 }
+
+OrderForm.defaultProps = {
+};
+
+OrderForm.propTypes = {
+  totalPrice: PropTypes.number.isRequired,
+};

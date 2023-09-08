@@ -12,16 +12,16 @@ export default function Order() {
   const totalPrice = state.deliveryMethod && totalBooksPrice < state.deliveryMethod?.freeFrom
     ? totalBooksPrice + state.deliveryMethod.cost : totalBooksPrice;
   return (
-    <Container>
+    <Container className="my-3">
       {state.shoppingCart && state.shoppingCart.length > 0 ? (
         <Row className="gap-0 my-2">
           <Col
             xs={12}
             sm={6}
             md={6}
-            lg={5}
-            xl={4}
-            xxl={3}
+            lg={6}
+            xl={6}
+            xxl={4}
             title="cart-items"
           >
             <CartItems totalPrice={totalPrice} />
@@ -30,9 +30,9 @@ export default function Order() {
             xs={12}
             sm={6}
             md={6}
-            lg={5}
-            xl={4}
-            xxl={3}
+            lg={6}
+            xl={6}
+            xxl={6}
             title="order-form"
           >
             <OrderForm totalPrice={totalPrice} />

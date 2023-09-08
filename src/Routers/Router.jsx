@@ -35,6 +35,7 @@ export default function AppRouter() {
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/delivery" element={<Delivery />} />
           {/* <Route path="/merch" element={<Merch />} /> */}
+          {/* <Route path="/merch/:id" element={<BookPage />} /> */}
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contacts />} />
           <Route path="/retrieval" element={<Retrieval />} />

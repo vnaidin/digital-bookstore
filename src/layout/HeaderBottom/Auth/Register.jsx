@@ -1,8 +1,7 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+import {
+  Button, Form, InputGroup, Row, Col,
+} from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
 
@@ -11,9 +10,14 @@ import AuthService from '../../../services/auth';
 export default function Register() {
   const { Formik } = formik;
 
+  const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+  // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
   const schema = yup.object().shape({
-    email: yup.string().required(),
-    password: yup.string().required(),
+    email: yup.string().required().email(),
+    password: yup
+      .string()
+      .matches(passwordRules, { message: 'Please create a stronger password' })
+      .required('Required'),
   });
 
   return (
@@ -32,26 +36,37 @@ export default function Register() {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="validationFormik011">
               <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={values.email}
-                onChange={handleChange}
-                isValid={touched.email && !errors.email}
-              />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  isValid={touched.email && !errors.email}
+                  isInvalid={errors.email}
+                />
+                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.email}
+                </Form.Control.Feedback>
+              </InputGroup>
             </Form.Group>
             <Form.Group as={Col} controlId="validationFormik021">
               <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                isValid={touched.password && !errors.password}
-              />
-
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  isValid={touched.password && !errors.password}
+                  isInvalid={errors.password}
+                />
+                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.password}
+                </Form.Control.Feedback>
+              </InputGroup>
             </Form.Group>
           </Row>
           <Button type="submit">Register</Button>

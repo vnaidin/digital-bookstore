@@ -1,15 +1,23 @@
 import React, { useContext } from 'react';
 import {
-  Button, ListGroup, Table, Row, Form, Col, InputGroup,
+  Button, ListGroup, Table, Row, Form, Col, InputGroup, Spinner, Image,
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import AuthService from '../../../services/auth';
 import AppContext from '../../../appContext';
 import UserService from '../../../services/user';
+import { useFetch } from '../../../utils/hooks';
+import authHeader from '../../../services/auth-header';
+import { ORDER_STATUSES } from '../../../utils/constants';
 
 export default function UserPanel() {
   const { state, dispatch } = useContext(AppContext);
+  const { loading, error, value } = useFetch(
+    `${process.env.REACT_APP_BE_URL}/all/orders/${state?.currentUser?.id}`,
+    { headers: authHeader() },
+    [],
+  );
   const logout = () => {
     AuthService.logout();
     dispatch({ type: 'logOut' });
@@ -23,26 +31,17 @@ export default function UserPanel() {
   });
 
   const handleUpdateUserInfoSubmit = (values) => {
-    UserService.editUser(state.currentUser.id, values);// TODO: add then catch
+    UserService.editUser(state.currentUser.id, values).then((response) => {
+      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      // replace info locally
+      dispatch({ type: 'logIn', payload: { ...state.currentUser, ...values } });
+      sessionStorage.setItem('user', JSON.stringify({ ...state.currentUser, ...values }));
+    }).catch((err) => console.error(new Error(err)));
   };
   return (
     <>
       <Row className="my-3">
-
-        Roles:
-        <ListGroup>
-          {state?.currentUser?.roles.map((role) => (
-            <ListGroup.Item
-              key={role}
-            >
-              {role}
-            </ListGroup.Item>
-          ))}
-          <ListGroup.Item key="jwt">{state?.currentUser?.accessToken}</ListGroup.Item>
-        </ListGroup>
-      </Row>
-      <Row className="my-3">
-        <h4>User Info</h4>
+        <h3 className="text-center">User Info</h3>
         <Formik
           validationSchema={schema}
           onSubmit={handleUpdateUserInfoSubmit}
@@ -116,44 +115,86 @@ export default function UserPanel() {
       </Row>
 
       <Row className="my-3">
-        <h4>Orders</h4>
-        <Table
-          striped
-          bordered
-          hover
-          responsive
-        >
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan={2}>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </Table>
+
+        <h3 className="text-center">Roles</h3>
+        <ListGroup>
+          {state?.currentUser?.roles.map((role) => (
+            <ListGroup.Item
+              key={role}
+            >
+              {role}
+            </ListGroup.Item>
+          ))}
+          {/* <ListGroup.Item key="jwt">{state?.currentUser?.accessToken}</ListGroup.Item> */}
+        </ListGroup>
+      </Row>
+
+      <Row className="my-3">
+        <h3 className="text-center">Orders</h3>
+        {error && (
+        <p>
+          {new Error(error).message}
+        </p>
+        )}
+        {loading && (
+        <Spinner animation="border" />
+        )}
+        {value && value.length > 0 ? (
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Items</th>
+                <th>Price</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {value.map((order, ind) => (
+                <tr key={order.id}>
+                  <td>{ind + 1}</td>
+                  <OrderItemsCell items={order.items} />
+                  <td>{order.price}</td>
+                  <td>{ORDER_STATUSES[order.status]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : <h4>No Data...</h4>}
       </Row>
 
       <Button variant="danger" onClick={logout}>Log out</Button>
     </>
+  );
+}
+
+function OrderItemsCell({ items }) {
+  const { loading, error, value } = useFetch(
+    `${process.env.REACT_APP_BE_URL}/items/order?items=${encodeURI(items)}`,
+    {},
+    [items],
+  );
+  const itemsAmountById = items.split(',').reduce((prev, cur) => {
+    // eslint-disable-next-line no-param-reassign
+    prev[cur] = (prev[cur] || 0) + 1;
+    return prev;
+  }, {});
+  return (
+    <td>
+      <ListGroup>
+        {value && value.length > 0 && value.map((item) => (
+          <ListGroup.Item className="text-start" key={item.id}>
+            {itemsAmountById[item.id] > 1 ? (`${itemsAmountById[item.id]}`) : ''}
+            <Image src={item.image} width={30} rounded className="m-1" />
+            {`${item.title} `}
+          </ListGroup.Item>
+        )) }
+      </ListGroup>
+    </td>
   );
 }

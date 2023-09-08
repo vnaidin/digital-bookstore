@@ -59,8 +59,8 @@ export default function ShoppingCart() {
           <Modal.Title>Shopping Cart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Container>
-            {Object.entries(reducedBooks).map(([key, value]) => (
+          <Container style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
+            {nOfItemsInCart > 0 ? Object.entries(reducedBooks).map(([key, value]) => (
               <Row key={key} className="align-items-center">
                 <Col>
                   <img src={value[0].image} alt={value[0].title} width={80} />
@@ -91,32 +91,37 @@ export default function ShoppingCart() {
 
                 </Col>
               </Row>
-            ))}
-            <h4>
-              Total:
-              {' '}
-              {totalPrice}
-            </h4>
+            )) : <h4>Your shopping cart is empty. Start buying now!</h4>}
+
           </Container>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="danger"
-            onClick={handleEmptyCart}
-            disabled={nOfItemsInCart === 0}
-          >
-            Empty Cart
-          </Button>
-          <Button variant="warning" onClick={handleClose}>
-            Continue buying
-          </Button>
-          <Button
-            variant="success"
-            onClick={() => { navigate('/order'); handleClose(); }}
-            disabled={nOfItemsInCart === 0}
-          >
-            Make an Order
-          </Button>
+        <Modal.Footer className="justify-content-around">
+          <h4 className="text-start">
+            Total:
+            {' '}
+            {totalPrice}
+            {' ₴'}
+          </h4>
+          <div className="d-flex gap-1">
+            <Button
+              variant="danger"
+              onClick={handleEmptyCart}
+              disabled={nOfItemsInCart === 0}
+            >
+              Empty Cart
+            </Button>
+            <Button variant="warning" onClick={handleClose}>
+              Continue buying
+            </Button>
+            <Button
+              variant="success"
+              onClick={() => { navigate('/order'); handleClose(); }}
+              disabled={nOfItemsInCart === 0}
+            >
+              Make an Order
+            </Button>
+
+          </div>
         </Modal.Footer>
       </Modal>
       <Button

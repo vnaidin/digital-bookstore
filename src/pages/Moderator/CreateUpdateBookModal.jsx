@@ -63,12 +63,18 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
       if (existingBook.id) {
         // perform edit
         BookService.editBook(existingBook.id, fd).then(
-          (res) => console.log(res),
+          (response) => {
+            /* console.log(response); */ handleCloseModal();
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+          },
         ).catch((err) => console.error(new Error(err).message));
       } else {
         // creating
         BookService.createBook(fd).then(
-          (res) => console.log(res),
+          (response) => {
+            /* console.log(response); */ handleCloseModal();
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+          },
         ).catch((err) => console.error(new Error(err).message));
       }
     } else {
@@ -76,7 +82,6 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
       dispatch({
         type: 'setToast',
         payload: {
-          visible: 5,
           body: t('basic.toasts.6'),
           callee: t('pages.create-nft.btns.create-nft'),
         },
@@ -115,14 +120,15 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                 onSubmit={handleSubmit}
                 // encType="multipart/form-data"
               >
-                <Form.Label>Email address</Form.Label>
+                {/* <Form.Label>Email address</Form.Label> */}
                 <Form.Control
                   size="sm"
                   placeholder="Author"
                   onChange={handleChange}
-                  title="author"
+                  // title="author"
                   autoComplete="off"
                   defaultValue={existingBook?.author || ''}
+                  required
                 />
 
                 <Form.Control
@@ -132,6 +138,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   title="title"
                   autoComplete="off"
                   defaultValue={existingBook?.title || ''}
+                  required
                 />
 
                 <Form.Control
@@ -139,8 +146,9 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   placeholder="Publisher"
                   onChange={handleChange}
                   title="publisher"
-                  autoComplete="off"
+                  // autoComplete="off"
                   defaultValue={existingBook?.publisher || ''}
+                  required
                 />
 
                 <Form.Control
@@ -149,8 +157,9 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   type="number"
                   onChange={handleChange}
                   title="year"
-                  autoComplete="off"
+                  // autoComplete="off"
                   defaultValue={existingBook?.year || null}
+                  required
                 />
 
                 <Form.Control
@@ -161,6 +170,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   title="isbn"
                   autoComplete="off"
                   defaultValue={existingBook?.isbn || ''}
+                  required
                 />
 
                 <Form.Control
@@ -171,6 +181,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   title="pageCount"
                   autoComplete="off"
                   defaultValue={existingBook?.pageCount || null}
+                  required
                 />
 
                 <Form.Control
@@ -178,8 +189,9 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   placeholder="Language"
                   onChange={handleChange}
                   title="lang"
-                  autoComplete="off"
+                  // autoComplete="off"
                   defaultValue={existingBook?.lang || ''}
+                  required
                 />
 
                 <Form.Control
@@ -190,6 +202,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   title="price"
                   autoComplete="off"
                   defaultValue={existingBook?.price || null}
+                  required
                 />
 
                 <Form.Control
@@ -222,6 +235,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   title="annotation"
                   defaultValue={existingBook?.annotation || ''}
                   rows={10}
+                  required
                 />
 
                 <Form.Select
@@ -230,6 +244,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   title="category"
                   placeholder="Category"
                   defaultValue={existingBook?.category || null}
+                  required
                 >
                   <option hidden value={null}>none</option>
                   {['military'].map(

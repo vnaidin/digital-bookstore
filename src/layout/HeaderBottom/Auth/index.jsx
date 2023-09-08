@@ -7,9 +7,9 @@ import AppContext from '../../../appContext';
 import UserPanel from './UserPanel';
 
 export default function Auth() {
+  const { state } = useContext(AppContext);
   const [show, setShow] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const { state } = useContext(AppContext);
 
   const handleCloseCanvas = () => setShow(false);
   const handleShowCanvas = () => setShow(true);

@@ -16,7 +16,11 @@ export default function Catalog() {
         Catalogue
       </Button>
 
-      <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas
+        show={show}
+        onHide={handleClose}
+        scroll
+      >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Catalogue</Offcanvas.Title>
         </Offcanvas.Header>

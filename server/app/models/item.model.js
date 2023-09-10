@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     author: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     title: {
       type: Sequelize.STRING
@@ -19,6 +19,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     publisher: {
       type: Sequelize.STRING
+    },
+    coverType:{
+      type: Sequelize.INTEGER
     },
     year: {
       type: Sequelize.INTEGER
@@ -37,10 +40,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     reducedPrice: {
       type: Sequelize.INTEGER,
-      defaultValue: null
+      defaultValue: 0
     },
     isReducedNow: {
-      type: Sequelize.BOOLEAN// 0 false and 1 true
+      type: Sequelize.BOOLEAN
     },
     annotation: {
       type: Sequelize.STRING(2000)

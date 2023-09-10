@@ -242,6 +242,49 @@ module.exports = function(app) {
    *   get:
    *     summary: Get all Books
    *     tags: [Books]
+   *     parameters:
+   *      - in: query
+   *        name: page
+   *        schema:
+   *          type: integer
+   *        required: true
+   *        example: 0
+   *        description: Page to show
+   *      - in: query
+   *        name: cat
+   *        schema:
+   *          type: integer
+   *        required: false
+   *        example: 0
+   *        description: Category to show  
+   *      - in: query
+   *        name: order
+   *        schema:
+   *          type: string
+   *        required: false
+   *        example: "price,DESC"
+   *        description: Order by ASC/DESC price
+   *      - in: query
+   *        name: priceRange
+   *        schema:
+   *          type: string
+   *        required: false
+   *        example: "300,500"
+   *        description: Range of price [MIN,MAX]
+   *      - in: query
+   *        name: author
+   *        schema:
+   *          type: string
+   *        required: false
+   *        example: "Сергій Жадан"
+   *        description: Books of that author
+   *      - in: query
+   *        name: publisher
+   *        schema:
+   *          type: string
+   *        required: false
+   *        example: Артбукс
+   *        description: Books of that publisher
    *     responses:
    *       200:
    *         description: The created books.

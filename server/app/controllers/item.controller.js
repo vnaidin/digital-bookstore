@@ -1,43 +1,101 @@
 const db = require("../models");
 const Item = db.item;
+const ItemsManagement = db.itemsManagement;
 
 const Op = db.Sequelize.Op;
 
 exports.getBooks = async (req, res) => {
   // Find all books
-  const books = await Item.findAll({ where: { itemType: 'book' } });
-  res.status(200).json(books);
+  const { cat, page, order, priceRange, author, publisher } = req.query
+  const paginationQuery = {
+    order: order ? [order ? [...order.split(",")] : db.sequelize.random()] : null,
+    where: {
+      [Op.and]: [
+        { itemType: 'book' },
+        { category: cat ? cat : { [Op.not]: null } },
+        { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
+        { author: author ? author : { [Op.not]: null } },
+        { publisher: publisher ? publisher : { [Op.not]: null } }
+      ]
+    },
+    offset: page > 0 ? 12 * page : 0,// page n increments
+    limit: page ? 12 : null,// show per page
+    include: { model: ItemsManagement, attributes: ['amount', 'comments'] }
+  };
+  const attributesQuery = {
+    /* attributes: ['author', 'publisher', "price"], */ where: {
+      [Op.and]: [
+        { itemType: 'book' },
+        { category: cat ? cat : { [Op.not]: null } },
+        { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
+        { author: author ? author : { [Op.not]: null } },
+        { publisher: publisher ? publisher : { [Op.not]: null } }
+      ]
+    }
+  };
+  const { count, rows } = await Item.findAndCountAll(paginationQuery);
+  const authors = await Item.findAll(attributesQuery);
+  const priceValues = authors.map(({ price }) => +price)
+
+  res.status(200).json({
+    books: rows,
+    total: count,
+    authors: Array.from(new Set(authors.map(({ author }) => author))),
+    publishers: Array.from(new Set(authors.map(({ publisher }) => publisher))),
+    minMaxPrice: [Math.min(...priceValues), Math.max(...priceValues)]
+  });
+
 };
 
 exports.getBookById = async (req, res) => {
   const itemId = req.params.id;
-  const book = await Item.findOne({ where: { id: itemId } });
+  const book = await Item.findOne({ where: { id: itemId }, include: { model: ItemsManagement, attributes: ['amount', 'comments'] } });
   res.status(200).json(book);
 
 }
 
 exports.createBook = async (req, res) => {
-  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category } = req.body;
+  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, purchasePrice, comments } = req.body;
   await Item.create({
     pageCount, isReducedNow, price, reducedPrice, author, lang,
-    annotation, isbn, title, tags, publisher, year, category, image: req.file.filename
-  })
+    annotation, isbn, title, tags, publisher, year, category, image: req.file.filename, item_management:{ amount, purchasePrice, comments}
+  }, { include: [ItemsManagement] })
     .then(book => res.status(200).json({ message: `Book ${title} created` }))
 
 }
 
 exports.updateBook = async (req, res) => {
-  const itemId = req.params.id;
-  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category } = req.body;
+  const id = req.params.id;
+  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, purchasePrice, comments } = req.body;
 
-  await Item.update({
-    pageCount, isReducedNow, price, reducedPrice, author, lang,
-    annotation, isbn, title, tags, publisher, year, category, image: req.file?.filename
-  }, {
-    where: {
-      id: itemId
-    }
-  }).then(book => res.status(200).json({ message: `Book ${title} updated` }))
+  try {
+
+    const result = await db.sequelize.transaction(async (t) => {
+
+      const user = await Item.update({
+        pageCount, isReducedNow, price, reducedPrice, author, lang,
+        annotation, isbn, title, tags, publisher, year, category, image: req.file?.filename
+      }, {
+        where: {
+          id: id
+        }
+      }, { transaction: t })
+
+      await ItemsManagement.update({ amount, purchasePrice, comments }, { where: { itemId: id } }, { transaction: t })
+
+      return user;
+
+    });
+    // If the execution reaches this line, the transaction has been committed successfully
+    // `result` is whatever was returned from the transaction callback (the `user`, in this case)
+    res.status(200).json({ message: `Book ${author}-${title} updated` })
+
+  } catch (error) {
+    res.status(500).send({ message: "Server Error" })
+    // If the execution reaches this line, an error occurred.
+    // The transaction has already been rolled back automatically by Sequelize!
+
+  }
 }
 
 

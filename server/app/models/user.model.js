@@ -6,6 +6,12 @@ module.exports = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING
     },
+    resetToken: {
+      type: Sequelize.STRING
+    },
+    expireToken: {
+      type: Sequelize.STRING
+    },
     name: {
       type: Sequelize.STRING
     },

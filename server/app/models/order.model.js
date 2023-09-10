@@ -3,9 +3,6 @@ module.exports = (sequelize, Sequelize) => {
     userId: {
       type: Sequelize.INTEGER
     },
-    items: {
-      type: Sequelize.STRING
-    },
     price: {
       type: Sequelize.INTEGER
     },
@@ -21,23 +18,14 @@ module.exports = (sequelize, Sequelize) => {
     phoneNumber: {
       type: Sequelize.STRING
     },
-    delMethod: {
-      type: Sequelize.INTEGER
-    },
-    city: {
-      type: Sequelize.STRING
-    },
-    branch: {
-      type: Sequelize.STRING
-    },
-    address: {
-      type: Sequelize.STRING
-    },
     comments: {
       type: Sequelize.STRING
     },
     status: {
       type: Sequelize.INTEGER// new, inProgress, finished
+    },
+    paymentMethodId:{
+      type: Sequelize.INTEGER
     },
     rejected: {
       type: Sequelize.BOOLEAN

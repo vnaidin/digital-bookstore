@@ -122,4 +122,106 @@ module.exports = function (app) {
    *
    */
   app.post("/api/auth/signin", controller.signin);
+
+    /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserRequestResetPass:
+ *       type: object
+ *       required:
+ *         - email
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: Address where to send recovery email
+ *   
+ *       example:
+ *         email: shniperson62@gmail.com
+ */
+
+  /**
+   * @swagger
+   * /auth/requestResetPass:
+   *   post:
+   *     summary: Reset password request
+   *     tags: [Users]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/UserRequestResetPass'
+   *     responses:
+   *       200:
+   *         description: The created user.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                  link:
+   *                    type: string
+   *                    description: Address where to send recovery link
+   *   
+   *               example:
+   *                link: "http://localhost:3016/passwordReset?token=7bf8c59ac10cfa89cb0ccf05f3d680b653a7645a00ab1f6523febaa63ad5a4fb&id=1"
+   * 
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.post("/api/auth/requestResetPass", controller.requestResetPassword);
+
+  /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ResetPass:
+ *       type: object
+ *       required:
+ *         - id
+ *         - token
+ *         - password
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         token:
+ *           type: string
+ *           description: The title of your user
+ *         password:
+ *           type: string
+ *           description: The title of your user
+ *   
+ *       example:
+ *         id: 1
+ *         token: b49fcad0883e3b2da229251100ed7d4d5cf9a9725187ef8d0e4920208e3d6eed
+ *         password: "@'Sq12RR"
+ */
+
+  /**
+   * @swagger
+   * /auth/resetPass:
+   *   post:
+   *     summary: Reset user's password
+   *     tags: [Users]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/ResetPass'
+   *     responses:
+   *       200:
+   *         description: The created user.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/User'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.post("/api/auth/resetPass", controller.resetPassword);
 };

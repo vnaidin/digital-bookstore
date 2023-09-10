@@ -61,16 +61,29 @@ module.exports = function(app) {
    * 
    *       example:
    *         userId: 1
-   *         orderedItemIDs: "[1,2]"
-   *         email: test@email.com
-   *         name: test
+   *         name: John
+   *         surname: Smith
    *         phoneNumber: 380954279091
-   *         delMethodId: 3
-   *         region: test@email.com
-   *         branch: test@email.com
-   *         address: test@email.com
+   *         email: john@gmail.com
+   *         orderAddress: {
+   *            delMethodId: 4,
+   *            city: "Lviv", 
+   *            street: "Shevchenko", 
+   *            houseNr: 1, 
+   *            flatNr: 38, 
+   *            branch: null
+   *           }
    *         comments: test comment
-   *         status: true
+   *         price: 1000
+   *         orderItems: [{ 
+   *              price: 300, 
+   *              itemId: 6
+   *            }, 
+   *            { 
+   *              price: 638,
+   *              itemId: 2 
+   *            }]
+   *         status: 0
    *         rejected: false
    */
 

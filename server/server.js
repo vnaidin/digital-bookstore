@@ -22,6 +22,10 @@ httpServer.listen(80, () => {
     } \nListening on HTTP `,
   );
 });
+app.get('*', function(req, res){
+  // redirect to HTTPS
+  res.redirect('https://' + req.hostname + req.path);
+});
 
 const key = fs.readFileSync(process.env.SSL_KEY_PATH);//pem
 const cert = fs.readFileSync(process.env.SSL_CERT_CHAIN_PATH);//crt
@@ -69,23 +73,23 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-app.use(
+secureApp.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs)
 );
-app.use(cors(corsOptions));
+secureApp.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
-app.use(express.json());
+secureApp.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+secureApp.use(express.urlencoded({ extended: true }));
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '..//build')));
+secureApp.use(express.static(path.resolve(__dirname, '..//build')));
 // folder for media
-app.use(express.static(`${process.env.TOKEN_FILES_PATH}`, { maxAge: 43200 }));// caching for 12h
+secureApp.use(express.static(`${process.env.TOKEN_FILES_PATH}`, { maxAge: 43200 }));// caching for 12h
 
 // database
 const db = require("./app/models");
@@ -99,13 +103,13 @@ db.sequelize.sync({ force: true }).then(() => {
 });
 
 // routes
-require('./app/routes/auth.route')(app);
-require('./app/routes/user.route')(app);
-require('./app/routes/item.route')(app);
-require('./app/routes/order.route')(app);
+require('./app/routes/auth.route')(secureApp);
+require('./app/routes/user.route')(secureApp);
+require('./app/routes/item.route')(secureApp);
+require('./app/routes/order.route')(secureApp);
 
 // Handles any requests that don't match the ones above
-app.get('*', (req, res) => {
+secureApp.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, `..//build/index.html`));
 });
 

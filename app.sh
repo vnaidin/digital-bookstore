@@ -1,2 +1,2 @@
 #!/bin/bash
-cd /home/vnaidin/digital-bookstore && npm start prod
+cd /home/vnaidin/digital-bookstore && npm run prod

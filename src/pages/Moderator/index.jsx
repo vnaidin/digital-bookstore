@@ -7,10 +7,11 @@ export default function Moderator() {
   return (
     <Container fluid className="my-3">
       <Tabs
-        // defaultActiveKey="books"
+        defaultActiveKey="books"
         id="uncontrolled-tab-example"
         className="mb-3"
         justify
+        mountOnEnter
       >
         <Tab eventKey="books" title="Books">
           <BooksTab />

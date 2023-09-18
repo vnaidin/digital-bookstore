@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, ListGroup, Table, Row, Form, Col, InputGroup, Spinner, Image,
 } from 'react-bootstrap';
@@ -158,7 +159,7 @@ export default function UserPanel() {
               {value.map((order, ind) => (
                 <tr key={order.id}>
                   <td>{ind + 1}</td>
-                  <OrderItemsCell items={order.items} />
+                  <OrderItemsCell items={order.order_items} />
                   <td>{order.price}</td>
                   <td>{ORDER_STATUSES[order.status]}</td>
                 </tr>
@@ -174,24 +175,27 @@ export default function UserPanel() {
 }
 
 function OrderItemsCell({ items }) {
-  const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/items/order?items=${encodeURI(items)}`,
-    {},
-    [items],
-  );
-  const itemsAmountById = items.split(',').reduce((prev, cur) => {
+  const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
     prev[cur] = (prev[cur] || 0) + 1;
     return prev;
   }, {});
+
+  const [orderItemsToShow, setOrderItemsToShow] = useState([]);
+  useEffect(() => {
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/book/${id}`).then(
+      (response) => response.json(),
+    ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
+  }, [items]);
+
   return (
     <td>
       <ListGroup>
-        {value && value.length > 0 && value.map((item) => (
+        {orderItemsToShow && orderItemsToShow.length > 0 && orderItemsToShow.map((item) => (
           <ListGroup.Item className="text-start" key={item.id}>
-            {itemsAmountById[item.id] > 1 ? (`${itemsAmountById[item.id]}`) : ''}
             <Image src={item.image} width={30} rounded className="m-1" />
             {`${item.title} `}
+            {itemsAmountById[item.id] > 1 ? (`(${itemsAmountById[item.id]})`) : ''}
           </ListGroup.Item>
         )) }
       </ListGroup>

@@ -62,9 +62,10 @@ export default function ShoppingCart() {
           <Container style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
             {nOfItemsInCart > 0 ? Object.entries(reducedBooks).map(([key, value]) => (
               <Row key={key} className="align-items-center">
-                <Col>
+                <Col className="text-start">
                   <img src={value[0].image} alt={value[0].title} width={80} />
                   {value[0].title}
+                  {' '}
                   {value[0].price}
                 </Col>
                 <Col>
@@ -75,7 +76,6 @@ export default function ShoppingCart() {
                       onClick={() => handleRemoveFromCart(+key)}
                     >
                       -
-
                     </Button>
                     {value.length}
                     <Button

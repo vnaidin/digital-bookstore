@@ -22,9 +22,10 @@ export default function OrderForm({ totalPrice }) {
     phoneNumber: yup.string().required(),
     email: yup.string().required().email(),
     city: yup.string().required().min(2),
-    address: yup.string()/* .required() */,
-    // zip: yup.string().required(),
-    branch: yup.string()/* .required() */,
+    street: yup.string()/* .required() */,
+    houseNr: yup.number()/* .required() */,
+    flatNr: yup.number()/* .required() */,
+    branch: yup.number()/* .required() */,
     paymentMethodId: yup.number().required(),
     delMethod: yup.number().required(),
     comments: yup.string()/* .required() */,
@@ -32,16 +33,28 @@ export default function OrderForm({ totalPrice }) {
 
   const handleOrderSubmit = (values) => {
     const objectToPost = {
-      ...values,
+      // ...values,
+      name: values.name,
+      surname: values.surname,
+      phoneNumber: values.phoneNumber,
+      email: values.email,
       userId: state?.currentUser?.id,
-      items: state.shoppingCart.map((item) => item.id).toString(),
+      order_items: state.shoppingCart.map(({ id, price }) => ({ itemId: id, price })),
+      order_address: {
+        delMethodId: +values.delMethod,
+        city: values.city,
+        street: values.street,
+        houseNr: +values.houseNr,
+        flatNr: +values.flatNr,
+        branch: +values.branch,
+      },
       price: totalPrice,
-      status: 0,
+      status: false,
+      paymentMethodId: +values.paymentMethodId,
     };
     //  console.log(objectToPost);
     OrderService.createOrder(objectToPost).then(
       (response) => {
-        // console.log(response);
         localStorage.setItem('cart', JSON.stringify([]));
         dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
         setTimeout(() => {
@@ -181,7 +194,7 @@ export default function OrderForm({ totalPrice }) {
                   placeholder="Category"
                   isInvalid={errors.delMethod}
                   isValid={!!errors.delMethod}
-                 //  defaultValue={existingBook?.category || null}
+                //  defaultValue={existingBook?.category || null}
                 >
                   <option hidden value={null}>Choose delivery method</option>
                   {DELIVERY_METHODS.map(
@@ -212,10 +225,10 @@ export default function OrderForm({ totalPrice }) {
           <Row className="mb-3">
 
             {deliveryMethod?.stateFullAddress ? (
-              <>
+              <Row>
                 <Form.Group
                   as={Col}
-                  md="3"
+                  md="12"
                   controlId="validationFormik103"
                   className="position-relative"
                 >
@@ -235,44 +248,64 @@ export default function OrderForm({ totalPrice }) {
                 </Form.Group>
                 <Form.Group
                   as={Col}
-                  md="9"
+                  md="6"
                   controlId="validationFormik104"
                   className="position-relative"
                 >
-                  <Form.Label>Address</Form.Label>
+                  <Form.Label>Street</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Address"
-                    name="address"
-                    value={values.address}
+                    placeholder="Street"
+                    name="street"
+                    value={values.street}
                     onChange={handleChange}
-                    isInvalid={!!errors.address}
+                    isInvalid={!!errors.street}
                   />
                   <Form.Control.Feedback type="invalid" tooltip>
-                    {errors.address}
+                    {errors.street}
                   </Form.Control.Feedback>
                 </Form.Group>
-                {/* <Form.Group
+                <Form.Group
                   as={Col}
                   md="3"
                   controlId="validationFormik105"
                   className="position-relative"
                 >
-                  <Form.Label>Zip</Form.Label>
+                  <Form.Label>House №</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="Zip"
-                    name="zip"
-                    value={values.zip}
+                    type="number"
+                    placeholder="House №"
+                    name="houseNr"
+                    value={values.houseNr}
                     onChange={handleChange}
-                    isInvalid={!!errors.zip}
+                    isInvalid={!!errors.houseNr}
                   />
 
                   <Form.Control.Feedback type="invalid" tooltip>
-                    {errors.zip}
+                    {errors.houseNr}
                   </Form.Control.Feedback>
-                </Form.Group> */}
-              </>
+                </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md="3"
+                  controlId="validationFormik1051"
+                  className="position-relative"
+                >
+                  <Form.Label>Flat №</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Flat №"
+                    name="flatNr"
+                    value={values.flatNr}
+                    onChange={handleChange}
+                    isInvalid={!!errors.flatNr}
+                  />
+
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {errors.flatNr}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
             ) : (
               <>
                 <Form.Group

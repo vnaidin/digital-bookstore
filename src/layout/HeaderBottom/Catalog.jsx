@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Offcanvas } from 'react-bootstrap';
+import {
+  Button, Offcanvas, ListGroup, NavLink,
+} from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { BOOK_CATEGORIES } from '../../utils/constants';
 
 export default function Catalog() {
   const [show, setShow] = useState(false);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,8 +31,21 @@ export default function Catalog() {
           <Offcanvas.Title>Catalogue</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          <ListGroup>
+            {BOOK_CATEGORIES.map((category, index) => (
+              <ListGroup.Item className="text-start" key={category}>
+                <NavLink
+                  active={pathname.substring(1) === category}
+                  onClick={() => {
+                    navigate({ pathname: '/', search: `?cat=${index}` });
+                  }}
+                >
+                  {category}
+                </NavLink>
+
+              </ListGroup.Item>
+            )) }
+          </ListGroup>
         </Offcanvas.Body>
       </Offcanvas>
     </>

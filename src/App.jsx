@@ -8,11 +8,18 @@ import InfoToast from './components/InfoToast/InfoToast';
 
 import './App.css';
 
-const { REACT_APP_BE_URL } = process.env;
-axios.defaults.baseURL = REACT_APP_BE_URL;
-
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { REACT_APP_BE_URL } = process.env;
+  axios.defaults.baseURL = REACT_APP_BE_URL;
+  // validate response
+  axios.interceptors.response.use((response) => response, (error) => {
+    if (error.response.status === 401) {
+      dispatch({ type: 'logOut' });
+      sessionStorage.removeItem('user');
+    }
+    return Promise.reject(error);
+  });
 
   return (
     <div className="App">

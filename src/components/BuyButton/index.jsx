@@ -15,7 +15,7 @@ export default function BuyButton({
     localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
     dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
   };
-  return <Button variant="success" onClick={handleAddToCart}>Buy</Button>;
+  return <Button variant="success" style={{ width: '10em' }} onClick={handleAddToCart}>Buy</Button>;
 }
 
 BuyButton.defaultProps = {

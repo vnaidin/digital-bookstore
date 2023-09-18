@@ -13,28 +13,26 @@ var corsOptions = {
 };
 
 var app = express();
+var secureApp = express();
 
-if (process.env.APP_MODE !== 'development') {
-  const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH);//pem
-  const certificate = fs.readFileSync(process.env.SSL_CERT_CHAIN_PATH);//crt
-  const credentials = { key: privateKey, cert: certificate };
+const httpServer = http.createServer(app);
+httpServer.listen(80, () => {
+  console.log(
+    `Server started at ${new Date()
+    } \nListening on HTTP `,
+  );
+});
 
-  const httpsServer = https.createServer(credentials, app);
-  httpsServer.listen(443, () => {
-    console.log(
-      `Server started at ${new Date()
-      } \nListening on HTTPS `,
-    );
-  });
-} else {
-  const httpServer = http.createServer(app);
-  httpServer.listen(80, () => {
-    console.log(
-      `Server started at ${new Date()
-      } \nListening on HTTP `,
-    );
-  });
-}
+const key = fs.readFileSync(process.env.SSL_KEY_PATH);//pem
+const cert = fs.readFileSync(process.env.SSL_CERT_CHAIN_PATH);//crt
+
+const httpsServer = https.createServer({ key, cert }, secureApp);
+httpsServer.listen(443, () => {
+  console.log(
+    `Server started at ${new Date()
+    } \nListening on HTTPS `,
+  );
+});
 
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");

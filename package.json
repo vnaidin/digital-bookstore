@@ -27,7 +27,10 @@
     "yup": "^1.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-back": "cd ./server && npm run dev",
+    "start-front": "react-scripts start",
+    "dev": "concurrently --kill-others \"npm run start-back\" \"npm run start-front\"",
+    "prod": "npm run build && cd ./server && npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^8.2.1",
     "eslint": "^7.32.0"
   }
 }

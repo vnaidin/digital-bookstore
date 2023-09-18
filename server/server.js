@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const path = require('path');
-var http = require('http');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
-const app = express();
 require('dotenv').config();
 const PORT = process.env.APP_PORT || 3016;
 
@@ -11,9 +12,29 @@ var corsOptions = {
   origin: process.env.APP_MODE === 'development' ? 'http://localhost:3015' : `http://localhost:${PORT}`
 };
 
-http.createServer(app).listen(80, function(){
-  console.log('HTTP listening on port 80');
-});
+var app = express();
+
+if (process.env.APP_MODE !== 'development') {
+  const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH);//pem
+  const certificate = fs.readFileSync(process.env.SSL_CERT_CHAIN_PATH);//crt
+  const credentials = { key: privateKey, cert: certificate };
+
+  const httpsServer = https.createServer(credentials, app);
+  httpsServer.listen(443, () => {
+    console.log(
+      `Server started at ${new Date()
+      } \nListening on HTTPS `,
+    );
+  });
+} else {
+  const httpServer = http.createServer(app);
+  httpServer.listen(80, () => {
+    console.log(
+      `Server started at ${new Date()
+      } \nListening on HTTP `,
+    );
+  });
+}
 
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");

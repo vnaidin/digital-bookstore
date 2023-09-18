@@ -1,6 +1,7 @@
 import {
-  useCallback, useEffect, useState,
+  useCallback, useContext, useEffect, useState,
 } from 'react';
+import AppContext from '../appContext';
 
 const DEFAULT_OPTIONS = {
   headers: { 'Content-Type': 'application/json' },
@@ -29,8 +30,12 @@ export function useAsync(callback, dependencies = []) {
 }
 
 export function useFetch(url, options = {}, dependencies = []) {
+  const { dispatch } = useContext(AppContext);
   return useAsync(() => fetch(url, { ...DEFAULT_OPTIONS, ...options }).then((res) => {
-    if (res.ok) return res.json();
+    if (res.ok) { return res.json(); } if (res.status === 401) {
+      sessionStorage.removeItem('user');
+      dispatch({ type: 'logOut' });
+    }
     return res.json().then((json) => Promise.reject(json));
   }), dependencies);
 }
@@ -61,6 +66,7 @@ export function useSearch(value) {
     () => {
       if (value && value.trim('').length > 0) {
         fetch(`${process.env.REACT_APP_BE_URL}/items/search?search=${encodeURI(value)}`, { ...DEFAULT_OPTIONS }).then((res) => res.json())
+          // eslint-disable-next-line no-console
           .then((res) => setResult(res)).catch((err) => console.error(err));
       } else setResult();
     },

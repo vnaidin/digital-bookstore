@@ -5,6 +5,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useFetch } from '../../utils/hooks';
 import BuyButton from '../../components/BuyButton';
+import { BOOK_CATEGORIES, BOOK_COVER_TYPES } from '../../utils/constants';
 
 export default function BookPage() {
   const { id } = useParams();
@@ -69,6 +70,9 @@ export default function BookPage() {
                 {`Language: ${value?.lang}`}
               </ListGroup.Item>
               <ListGroup.Item>
+                {`Cover: ${BOOK_COVER_TYPES[value?.coverType]}`}
+              </ListGroup.Item>
+              <ListGroup.Item>
                 {`Page count: ${value?.pageCount}`}
               </ListGroup.Item>
               <ListGroup.Item>
@@ -77,11 +81,9 @@ export default function BookPage() {
               <ListGroup.Item>
                 {`Publisher: ${value?.publisher}`}
               </ListGroup.Item>
-              {value?.category && (
               <ListGroup.Item>
-                {`Category: ${value?.category}`}
+                {`Category: ${BOOK_CATEGORIES[value?.category]}`}
               </ListGroup.Item>
-              )}
             </ListGroup>
             {/** TODO: add price */}
           </Row>

@@ -57,6 +57,7 @@ export default function Register() {
                 <Form.Control
                   type="password"
                   name="password"
+                  autoComplete="new-password"
                   value={values.password}
                   onChange={handleChange}
                   isValid={touched.password && !errors.password}

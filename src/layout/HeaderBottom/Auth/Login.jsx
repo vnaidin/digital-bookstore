@@ -44,7 +44,7 @@ export default function Login() {
                   name="email"
                   value={values.email}
                   onChange={handleChange}
-                  isValid={touched.email && !errors.email}
+                  isValid={touched.email && !!errors.email}
                   isInvalid={errors.email}
                 />
                 <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
@@ -60,7 +60,7 @@ export default function Login() {
                 name="password"
                 value={values.password}
                 onChange={handleChange}
-                isValid={touched.password && !errors.password}
+                isValid={touched.password && !!errors.password}
               />
 
             </Form.Group>

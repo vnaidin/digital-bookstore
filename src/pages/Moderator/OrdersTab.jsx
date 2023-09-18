@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button, Container, Table, Spinner, OverlayTrigger, Tooltip, ListGroup, Row, Col,
 } from 'react-bootstrap';
@@ -47,9 +47,9 @@ export default function OrdersTab() {
               <th>Name</th>
               <th>Surname</th>
               <th>Email</th>
-              <th>Tel</th>
+              {/* <th>Tel</th> */}
               <th>Price</th>
-              <th>Comments</th>
+              {/* <th>Comments</th> */}
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -107,9 +107,9 @@ function OrderTableLine({ order, handleOrderUpdate }) {
         <td>{order.name}</td>
         <td>{order.surname}</td>
         <td>{order.email}</td>
-        <td>{order.phoneNumber}</td>
+        {/*  <td>{order.phoneNumber}</td> */}
         <td>{order.price}</td>
-        <td>{order.comments}</td>
+        {/* <td>{order.comments}</td> */}
         <td>{ORDER_STATUSES[order.status]}</td>
         <td className="d-flex gap-1">
           <Button variant="warning" onClick={() => { handleOrderUpdate(order.id); }}>Update</Button>
@@ -117,11 +117,10 @@ function OrderTableLine({ order, handleOrderUpdate }) {
       </tr>
       {showMoreInfo && (
       <OrderMoreInfoLine
-        items={order.items}
-        delMethod={order.delMethod}
-        city={order.city}
-        branch={order.branch}
-        address={order.address}
+        items={order.order_items}
+        address={order.order_address}
+        phoneNumber={order.phoneNumber}
+        comments={order.comments}
       />
       )}
     </>
@@ -137,60 +136,77 @@ OrderTableLine.propTypes = {
     surname: PropTypes.string,
     email: PropTypes.string,
     phoneNumber: PropTypes.string,
-    delMethod: PropTypes.number,
-    city: PropTypes.string,
-    branch: PropTypes.string,
-    address: PropTypes.string,
+    order_address: PropTypes.shape({
+      delMethodId: PropTypes.number,
+      city: PropTypes.string,
+      street: PropTypes.string,
+      houseNr: PropTypes.number,
+      flatNr: PropTypes.number,
+      branch: PropTypes.number,
+    }),
     comments: PropTypes.string,
     price: PropTypes.number,
     status: PropTypes.number,
-    items: PropTypes.string,
+    order_items: PropTypes.arrayOf(PropTypes.shape({
+      itemId: PropTypes.number,
+      price: PropTypes.number,
+    })),
   }).isRequired,
   handleOrderUpdate: PropTypes.func.isRequired,
 };
 
 function OrderMoreInfoLine({
-  items, delMethod, city, branch, address,
+  items, address, phoneNumber, comments,
 }) {
-  const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/items/order?items=${encodeURI(items)}`,
-    {},
-    [],
-  );
-  const itemsAmountById = items.split(',').reduce((prev, cur) => {
+  const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
     prev[cur] = (prev[cur] || 0) + 1;
     return prev;
   }, {});
+  const [orderItemsToShow, setOrderItemsToShow] = useState([]);
+  useEffect(() => {
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/book/${id}`).then(
+      (response) => response.json(),
+    ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
+  }, [items]);
+  const currentDeliveryMethod = DELIVERY_METHODS.find(
+    (method) => method.id === address.delMethodId,
+  );
   return (
     <tr>
       <td>{' '}</td>
       <td colSpan={5}>
-        {error && (
-        <p>
-          {new Error(error).message}
-        </p>
-        )}
-        {loading && (
-        <Spinner animation="border" />
-        )}
+
         <Row className="my-3 gap-1">
           <Col>
             <strong>Delivery:</strong>
             {' '}
-            <u>{DELIVERY_METHODS.find((method) => method.id === delMethod)?.title}</u>
+            <u>{currentDeliveryMethod?.title}</u>
           </Col>
           <Col>
             <strong>Address:</strong>
-            {' '}
-            <u>{`${city}, ${branch}, ${address}`}</u>
+            {currentDeliveryMethod.stateFullAddress
+              ? <u>{` ${address.city}, ${address.street}, ${address.houseNr}, ${address.flatNr}`}</u>
+              : <u>{` ${address.city}, ${address.branch}`}</u>}
           </Col>
+          <Col>
+            <strong>Tel:</strong>
+            {' '}
+            <u>{phoneNumber}</u>
+          </Col>
+
         </Row>
-        <ListGroup>
-          {value && value.length > 0 ? value.map((item, index) => (
+
+        <ListGroup as={Row} className="p-3">
+          {orderItemsToShow && orderItemsToShow.length > 0 ? orderItemsToShow.map((item, index) => (
             <ListGroup.Item className="text-start" key={item.id}>{`${index + 1}.${item.author}, ${item.title} ${itemsAmountById[item.id] > 1 ? (`(${itemsAmountById[item.id]} items)`) : ''} `}</ListGroup.Item>
           )) : <ListGroup.Item>No Data...</ListGroup.Item>}
         </ListGroup>
+        <Row className="p-3">
+          Comments:
+          {' '}
+          {comments}
+        </Row>
       </td>
     </tr>
   );
@@ -200,9 +216,18 @@ OrderMoreInfoLine.defaultProps = {
 };
 
 OrderMoreInfoLine.propTypes = {
-  items: PropTypes.string.isRequired,
-  delMethod: PropTypes.number.isRequired,
-  city: PropTypes.string.isRequired,
-  branch: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({
+    itemId: PropTypes.number,
+    price: PropTypes.number,
+  })).isRequired,
+  address: PropTypes.shape({
+    delMethodId: PropTypes.number,
+    city: PropTypes.string,
+    street: PropTypes.string,
+    houseNr: PropTypes.number,
+    flatNr: PropTypes.number,
+    branch: PropTypes.number,
+  }).isRequired,
+  phoneNumber: PropTypes.string.isRequired,
+  comments: PropTypes.string.isRequired,
 };

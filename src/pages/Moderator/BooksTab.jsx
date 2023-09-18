@@ -28,14 +28,22 @@ export default function BooksTab() {
     });// FIXME: refetch
   };
   const handleBookUpdate = (id) => {
-    handleOpenModal(); updateBookObject(value.find((book) => book.id === id));
+    handleOpenModal(); updateBookObject(value.books.find((book) => book.id === id));
   };
   return (
     <>
       {showModal && (
-      <CreateUpdateBookModal existingBook={currentBook} handleCloseModal={handleCloseModal} />
+      <CreateUpdateBookModal
+        existingBook={currentBook}
+        handleCloseModal={handleCloseModal}
+        authors={value?.authors}
+        publishers={value?.publishers}
+      />
       )}
       <Container>
+        <Row className="my-3">
+          <Button variant="success" onClick={handleOpenModal}>Create Book</Button>
+        </Row>
         <Table
           striped
           bordered
@@ -45,22 +53,26 @@ export default function BooksTab() {
           <thead>
             <tr>
               <th>#</th>
-              <th>Title</th>
-              <th>Author</th>
+              <th>Author_Title</th>
+              <th>ISBN</th>
               <th>Price</th>
+              <th>Reduced_Price</th>
+              <th>Is Reduced</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {value && value.map(({
+            {value && value.books.map(({
               id, author, title, image, publisher, year, isbn,
               pageCount, lang, price, reducedPrice, isReducedNow, annotation,
-            }) => (
+            }, index) => (
               <tr key={id}>
-                <td>{id}</td>
-                <td>{title}</td>
-                <td>{author}</td>
+                <td>{index + 1}</td>
+                <td>{`${author}_${title}`}</td>
+                <td>{isbn}</td>
                 <td>{price}</td>
+                <td>{reducedPrice}</td>
+                <td>{isReducedNow.toString()}</td>
                 <td className="d-flex gap-1">
                   <Button variant="danger" onClick={() => handleBookDelete(id)}>Remove</Button>
                   <Button variant="warning" onClick={() => { handleBookUpdate(id); }}>Update</Button>
@@ -69,9 +81,7 @@ export default function BooksTab() {
             ))}
           </tbody>
         </Table>
-        <Row>
-          <Button variant="success" onClick={handleOpenModal}>Create Book</Button>
-        </Row>
+
       </Container>
     </>
   );

@@ -1,46 +1,21 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useContext } from 'react';
 import {
   Container, Row, Col, Card, Form, Modal, Button,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { FiUpload } from 'react-icons/fi';
 import AppContext from '../../appContext';
 import BookService from '../../services/book';
+import { BOOK_CATEGORIES, BOOK_COVER_TYPES } from '../../utils/constants';
+import { bookType } from '../../utils/types';
 
-export default function CreateUpdateBookModal({ handleCloseModal, existingBook }) {
+export default function CreateUpdateBookModal({
+  handleCloseModal, existingBook, authors, publishers,
+}) {
   const [image, setImage] = useState();
-  const {
-    id,
-    author,
-    title,
-    publisher,
-    year,
-    isbn,
-    pageCount,
-    lang,
-    price,
-    reducedPrice,
-    isReducedNow,
-    annotation,
-    category,
-    tags,
-  } = existingBook;
-  const [formData, setFormData] = useState({
-    id,
-    author,
-    title,
-    publisher,
-    year,
-    isbn,
-    pageCount,
-    lang,
-    price,
-    reducedPrice,
-    isReducedNow,
-    annotation,
-    category,
-    tags,
-  });
+  const [formData, setFormData] = useState({ ...existingBook });
 
   const { t } = useTranslation();
   const { dispatch } = useContext(AppContext);
@@ -99,7 +74,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>{existingBook.id ? 'Update' : 'Create'}</Modal.Title>
+        <Modal.Title>{existingBook?.id ? 'Update' : 'Create'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -118,19 +93,25 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                 title="book-description-inputs"
                 className="d-flex flex-column gap-1"
                 onSubmit={handleSubmit}
-                // encType="multipart/form-data"
               >
-                {/* <Form.Label>Email address</Form.Label> */}
+                <Form.Label>Author</Form.Label>
                 <Form.Control
                   size="sm"
                   placeholder="Author"
                   onChange={handleChange}
+                  list="authors"
                   // title="author"
                   autoComplete="off"
                   defaultValue={existingBook?.author || ''}
                   required
                 />
+                <datalist id="authors">
+                  {authors && authors.map((author) => (
+                    <option value={author} key={author} />
+                  ))}
+                </datalist>
 
+                <Form.Label>Title</Form.Label>
                 <Form.Control
                   size="sm"
                   placeholder="Title"
@@ -141,91 +122,243 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   required
                 />
 
-                <Form.Control
-                  size="sm"
-                  placeholder="Publisher"
-                  onChange={handleChange}
-                  title="publisher"
+                <Row>
+                  <Form.Group
+                    as={Col}
+                    md="6"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Publisher</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="Publisher"
+                      onChange={handleChange}
+                      title="publisher"
+                      list="publishers"
                   // autoComplete="off"
-                  defaultValue={existingBook?.publisher || ''}
-                  required
-                />
+                      defaultValue={existingBook?.publisher || ''}
+                      required
+                    />
+                    <datalist id="publishers">
+                      {publishers && publishers.map((author) => (
+                        <option value={author} key={author} />
+                      ))}
+                    </datalist>
+                  </Form.Group>
 
-                <Form.Control
-                  size="sm"
-                  placeholder="Year"
-                  type="number"
-                  onChange={handleChange}
-                  title="year"
+                  <Form.Group
+                    as={Col}
+                    md="2"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Year</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="Year"
+                      type="number"
+                      onChange={handleChange}
+                      title="year"
+                      list="year"
+                      autoComplete="off"
                   // autoComplete="off"
-                  defaultValue={existingBook?.year || null}
-                  required
-                />
+                      defaultValue={existingBook?.year || null}
+                      required
+                    />
+                    <datalist id="year">
+                      {[2017, 2018, 2019, 2020, 2021, 2022, 2023].map((author) => (
+                        <option value={author} key={author} />
+                      ))}
+                    </datalist>
+                  </Form.Group>
 
-                <Form.Control
-                  size="sm"
-                  placeholder="ISBN"
-                  type="number"
-                  onChange={handleChange}
-                  title="isbn"
-                  autoComplete="off"
-                  defaultValue={existingBook?.isbn || ''}
-                  required
-                />
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>ISBN</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="ISBN"
+                      type="number"
+                      onChange={handleChange}
+                      title="isbn"
+                      autoComplete="off"
+                      defaultValue={existingBook?.isbn || ''}
+                      required
+                    />
+                  </Form.Group>
+                </Row>
+                <Row className="align-items-center">
 
-                <Form.Control
-                  size="sm"
-                  placeholder="PageCount"
-                  type="number"
-                  onChange={handleChange}
-                  title="pageCount"
-                  autoComplete="off"
-                  defaultValue={existingBook?.pageCount || null}
-                  required
-                />
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Page count</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="PageCount"
+                      type="number"
+                      onChange={handleChange}
+                      title="pageCount"
+                      autoComplete="off"
+                      defaultValue={existingBook?.pageCount || null}
+                      required
+                    />
+                  </Form.Group>
 
-                <Form.Control
-                  size="sm"
-                  placeholder="Language"
-                  onChange={handleChange}
-                  title="lang"
-                  // autoComplete="off"
-                  defaultValue={existingBook?.lang || ''}
-                  required
-                />
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Cover</Form.Label>
 
-                <Form.Control
-                  size="sm"
-                  placeholder="Price"
-                  type="number"
-                  onChange={handleChange}
-                  title="price"
-                  autoComplete="off"
-                  defaultValue={existingBook?.price || null}
-                  required
-                />
+                    <Form.Select
+                      size="sm"
+                      placeholder="cover"
+                      onChange={handleChange}
+                      title="cover"
+                      list="cover"
+                      autoComplete="off"
+                      defaultValue={existingBook?.coverType || ''}
+                      required
+                    >
+                      <option hidden value={null}>none</option>
+                      {BOOK_COVER_TYPES.map(
+                        (collection, ind) => (
+                          <option
+                            key={collection}
+                            value={ind}
+                          >
+                            {collection}
+                          </option>
+                        ),
+                      )}
+                    </Form.Select>
+                  </Form.Group>
 
-                <Form.Control
-                  size="sm"
-                  placeholder="ReducedPrice"
-                  type="number"
-                  onChange={handleChange}
-                  title="reducedPrice"
-                  autoComplete="off"
-                  defaultValue={existingBook?.reducedPrice !== null
-                    ? existingBook?.reducedPrice : 0}
-                />
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Language</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="Language"
+                      onChange={handleChange}
+                      title="lang"
+                      list="language"
+                      autoComplete="off"
+                      defaultValue={existingBook?.lang || ''}
+                      required
+                    />
+                    <datalist id="language">
+                      {['українська'].map((author) => (
+                        <option value={author} key={author} />
+                      ))}
+                    </datalist>
+                  </Form.Group>
 
-                <Form.Select
-                  onChange={handleChange}
-                  title="isReducedNow"
+                  <Form.Group
+                    as={Col}
+                    md="3"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Category</Form.Label>
+                    <Form.Select
+                      aria-label="collection-select"
+                      onChange={handleChange}
+                      title="category"
+                      placeholder="Category"
+                      defaultValue={existingBook?.category || null}
+                      required
+                    >
+                      <option hidden value={null}>none</option>
+                      {BOOK_CATEGORIES.map(
+                        (collection, ind) => (
+                          <option
+                            key={collection}
+                            value={ind}
+                          >
+                            {collection}
+                          </option>
+                        ),
+                      )}
+                    </Form.Select>
+                  </Form.Group>
+
+                </Row>
+                <Row className="align-items-center">
+
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="Price"
+                      type="number"
+                      onChange={handleChange}
+                      title="price"
+                      autoComplete="off"
+                      defaultValue={existingBook?.price || null}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Reduced Price</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="ReducedPrice"
+                      type="number"
+                      onChange={handleChange}
+                      title="reducedPrice"
+                      autoComplete="off"
+                      defaultValue={existingBook?.reducedPrice !== null
+                        ? existingBook?.reducedPrice : 0}
+                    />
+                  </Form.Group>
+
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>isReducedNow</Form.Label>
+                    <Form.Select
+                      onChange={handleChange}
+                      title="isReducedNow"
                   // eslint-disable-next-line no-unsafe-optional-chaining
-                  defaultValue={+existingBook?.isReducedNow || false}
-                >
-                  <option value={0}>No</option>
-                  <option value={1}>Yes</option>
-                </Form.Select>
+                      defaultValue={+existingBook?.isReducedNow || false}
+                      required
+                    >
+                      <option value={0}>No</option>
+                      <option value={1}>Yes</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Row>
 
+                <Form.Label>Annotation</Form.Label>
                 <Form.Control
                   size="sm"
                   as="textarea"
@@ -234,31 +367,10 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   onChange={handleChange}
                   title="annotation"
                   defaultValue={existingBook?.annotation || ''}
-                  rows={10}
+                  rows={8}
                   required
                 />
-
-                <Form.Select
-                  aria-label="collection-select"
-                  onChange={handleChange}
-                  title="category"
-                  placeholder="Category"
-                  defaultValue={existingBook?.category || null}
-                  required
-                >
-                  <option hidden value={null}>none</option>
-                  {['military'].map(
-                    (collection, ind) => (
-                      <option
-                        key={collection}
-                        value={ind}
-                      >
-                        {collection}
-                      </option>
-                    ),
-                  )}
-                </Form.Select>
-
+                <Form.Label>Tags</Form.Label>
                 <Form.Control
                   placeholder="Tags"
                   type="string"
@@ -267,12 +379,73 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                   autoComplete="off"
                   defaultValue={existingBook?.tags || ''}
                 />
+                <hr />
+                <Row>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Amount</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="Amount"
+                      type="number"
+                      onChange={handleChange}
+                      title="amount"
+                      autoComplete="off"
+                      defaultValue={existingBook?.item_management?.amount !== null
+                        ? existingBook?.item_management?.amount : 0}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>Purchase Price</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder="Purchase Price"
+                      type="number"
+                      onChange={handleChange}
+                      title="purchasePrice"
+                      autoComplete="off"
+                      defaultValue={existingBook?.item_management?.purchasePrice !== null
+                        ? existingBook?.item_management?.purchasePrice : 0}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group
+                    as={Col}
+                    md="4"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    {' '}
+                    <Form.Label>Comments</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      as="textarea"
+                      placeholder="Comments"
+                      maxLength={2000}
+                      onChange={handleChange}
+                      title="comments"
+                      defaultValue={existingBook?.item_management?.comments || ''}
+                      rows={5}
+                    />
+                  </Form.Group>
+                </Row>
 
                 <Button
                   className="m-2 place-self-center"
                   type="submit"
                 >
-                  {existingBook.id ? 'Update' : 'Create'}
+                  {existingBook?.id ? 'Update' : 'Create'}
                 </Button>
               </Form.Group>
             </Col>
@@ -308,7 +481,7 @@ export default function CreateUpdateBookModal({ handleCloseModal, existingBook }
                       borderRadius: '24px',
                     }}
                   >
-                    <img height={30} src="/assets/upload-icon.svg" alt="upload" />
+                    <FiUpload size={20} className="mx-1" />
                   </Form.Label>
                   <Form.Control
                     type="file"
@@ -349,25 +522,13 @@ CreateUpdateBookModal.defaultProps = {
     category: null,
     tags: null,
   },
+  authors: null,
+  publishers: null,
 };
 
 CreateUpdateBookModal.propTypes = {
   handleCloseModal: PropTypes.func.isRequired,
-  existingBook: PropTypes.shape({
-    id: PropTypes.number,
-    author: PropTypes.string,
-    title: PropTypes.string,
-    image: PropTypes.string,
-    publisher: PropTypes.string,
-    year: PropTypes.number,
-    isbn: PropTypes.string,
-    pageCount: PropTypes.number,
-    lang: PropTypes.string,
-    price: PropTypes.number,
-    reducedPrice: PropTypes.number,
-    isReducedNow: PropTypes.bool,
-    annotation: PropTypes.string,
-    category: PropTypes.string,
-    tags: PropTypes.string,
-  }),
+  existingBook: bookType,
+  authors: PropTypes.arrayOf(PropTypes.string),
+  publishers: PropTypes.arrayOf(PropTypes.string),
 };

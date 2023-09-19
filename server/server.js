@@ -6,14 +6,14 @@ const https = require('https');
 const fs = require('fs');
 
 require('dotenv').config();
-const PORT = process.env.APP_PORT || 3016;
+const HOST = process.env.APP_HOST;
 
-var corsOptions = {
-  origin: process.env.APP_MODE === 'development' ? 'http://localhost:3015' : `http://localhost:${PORT}`
+const corsOptions = {
+  origin: process.env.APP_MODE === 'development' ? 'https://localhost' : `http://localhost`
 };
 
-var app = express();
-var secureApp = express();
+const app = express();
+const secureApp = express();
 
 const httpServer = http.createServer(app);
 httpServer.listen(80, () => {
@@ -22,7 +22,7 @@ httpServer.listen(80, () => {
     } \nListening on HTTP `,
   );
 });
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
   // redirect to HTTPS
   res.redirect('https://' + req.hostname + req.path);
 });
@@ -54,7 +54,7 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${PORT}/api/`,
+        url: `${HOST}/api/`,
       },
     ],
     // schemes: ["http"],

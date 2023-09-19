@@ -19,6 +19,7 @@ const Retrieval = lazy(() => import('../pages/Retrieval'));
 const TermsOfUse = lazy(() => import('../pages/TermsOfUse'));
 const Moderator = lazy(() => import('../pages/Moderator'));
 const BookPage = lazy(() => import('../pages/BookPage'));
+const PassReset = lazy(() => import('../pages/PassReset'));
 const PageNotFound = lazy(() => import('../pages/404'));
 // const Merch = lazy(() => import('../pages/Merch'));
 
@@ -41,6 +42,7 @@ export default function AppRouter() {
           <Route path="/retrieval" element={<Retrieval />} />
           <Route path="/order" element={<Order />} />
           <Route path="/terms" element={<TermsOfUse />} />
+          <Route path="/passwordReset?/:token?/:id" element={<PassReset />} />
           {state?.currentUser?.roles.some((role) => role === 'ROLE_MODERATOR')
           && <Route path="/moderator" element={<Moderator />} />}
           <Route path="*" element={<PageNotFound />} />

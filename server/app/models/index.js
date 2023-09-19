@@ -40,8 +40,7 @@ db.user.belongsToMany(db.role, {
 db.order.hasMany(db.orderItems);
 db.order.hasOne(db.orderAddress);
 
- db.item.hasOne(db.itemsManagement);
-//db.itemsManagement.hasOne(db.item);
+db.item.hasOne(db.itemsManagement);
 
 db.ROLES = ["user", "admin", "moderator"];
 

@@ -20,25 +20,26 @@ module.exports = function (app) {
    *     User:
    *       type: object
    *       required:
+   *         - name
    *         - email
    *         - password
-   *         - username
    *       properties:
    *         password:
    *           type: string
-   *           description: The auto-generated id of the user
+   *           description: Password 8 symbols
    *         email:
    *           type: string
-   *           description: The title of your user
-   *         username:
+   *           description: User's email
+   *         name:
    *           type: string
-   *           description: The user author
+   *           description: The user name
    *         roles:
    *           type: array
    *           items:
    *             type: string
    *   
    *       example:
+   *         name: John
    *         email: John@gmail.com
    *         password: "@'Sq12RR"
    *         roles: ["user","moderator","admin"]

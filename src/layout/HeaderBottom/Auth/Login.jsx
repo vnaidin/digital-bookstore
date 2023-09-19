@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  Button, Form, InputGroup, Row, Col,
+  Button, Form, InputGroup, Row,
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
@@ -8,11 +8,12 @@ import AuthService from '../../../services/auth';
 import AppContext from '../../../appContext';
 
 export default function Login() {
+  const [forgoPass, setForgotPass] = useState(false);
   const { Formik } = formik;
   const { dispatch } = useContext(AppContext);
   const schema = yup.object().shape({
     email: yup.string().required().email(),
-    password: yup.string().required(),
+    password: forgoPass ? yup.string().max(0) : yup.string().required(),
   });
 
   const logIn = (values) => {
@@ -22,21 +23,31 @@ export default function Login() {
     }, 500);
   };
 
+  const requestForgotPassword = (values) => {
+    AuthService.requestForgotPassword(values)
+      .then((response) => {
+        dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      }).catch((error) => {
+        dispatch({ type: 'setToast', payload: { body: error?.message, callee: 'System' } });
+      });
+  };
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values) => logIn(values)}
+      // eslint-disable-next-line no-unused-expressions
+      onSubmit={(values) => { forgoPass ? requestForgotPassword(values) : logIn(values); }}
       initialValues={{
-        email: 'John@gmail.com',
-        password: '@\'Sq12RR',
+        email: '',
+        password: '',
       }}
     >
       {({
         handleSubmit, handleChange, values, touched, errors,
       }) => (
         <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="validationFormik01">
+          <Row className="m-1 p-0">
+            <Form.Group as={Row} className="p-0" controlId="validationFormik01">
               <Form.Label>Email</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
@@ -53,7 +64,7 @@ export default function Login() {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
-            <Form.Group as={Col} controlId="validationFormik02">
+            <Form.Group as={Row} controlId="validationFormik02">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
@@ -62,11 +73,23 @@ export default function Login() {
                 onChange={handleChange}
                 isValid={touched.password && !!errors.password}
               />
-
             </Form.Group>
           </Row>
-
-          <Button type="submit">Login</Button>
+          <Button
+            type="submit"
+            variant="link"
+            className="my-2"
+            onClick={() => setForgotPass(true)}
+          >
+            Forgot password?
+          </Button>
+          <Button
+            type="submit"
+            className="my-2 align-self-center"
+            style={{ width: '6em' }}
+          >
+            Login
+          </Button>
         </Form>
       )}
     </Formik>

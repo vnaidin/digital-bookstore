@@ -11,6 +11,12 @@ const login = (loginData) => axios
     return response.data;
   });
 
+const requestForgotPassword = ({ email }) => axios
+  .post('/auth/requestResetPass', { email });
+
+const resetPassword = ({ password, token, id }) => axios
+  .post('/auth/resetPass', { password, token, id });
+
 const logout = () => {
   sessionStorage.removeItem('user');
 };
@@ -22,6 +28,8 @@ const AuthService = {
   login,
   logout,
   getCurrentUser,
+  requestForgotPassword,
+  resetPassword,
 };
 
 export default AuthService;

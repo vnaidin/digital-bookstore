@@ -19,12 +19,13 @@ exports.signup = (req, res) => {
     subject: 'Успішна реєстрація',
     template: 'registration',
     context: {
-      address: req.headers.origin
+      address: req.headers.origin,
+      name: req.body.name
     }
   };
   // Save User to Database
   User.create({
-    // username: req.body.username,
+    name: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
   })
@@ -142,7 +143,7 @@ exports.requestResetPassword = (req, res) => {
 
       let passwordResetToken = user.resetToken;
       if (passwordResetToken) {
-        throw new Error("Password Reset is already in process!");
+        return res.send({ message: "Password Reset is already in process!" });
       }
 
       let resetToken = crypto.randomBytes(32).toString("hex");
@@ -170,6 +171,7 @@ exports.requestResetPassword = (req, res) => {
       });
 
       res.status(200).send({
+        message:"Check your email",
         link: link
       });
 

@@ -398,7 +398,7 @@ module.exports = function(app) {
   *        description: Some error happened
   */
   app.put('/api/book/:id', [authJwt.verifyToken, authJwt.isModerator],multer({ storage }).single('image'),
-  controller.updateBook)//TODO: verify that it is exact user
+  controller.updateBook)
 
     /**
   * @swagger

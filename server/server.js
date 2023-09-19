@@ -9,7 +9,7 @@ require('dotenv').config();
 const HOST = process.env.APP_HOST;
 
 const corsOptions = {
-  origin: process.env.APP_MODE === 'development' ? 'https://localhost' : `http://localhost`
+  origin: process.env.APP_MODE === 'development' ? 'http://localhost:3015' : `http://localhost`
 };
 
 const app = express();

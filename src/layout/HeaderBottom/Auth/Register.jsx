@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Button, Form, InputGroup, Row, Col,
+  Button, Form, InputGroup, Row,
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
@@ -13,6 +13,7 @@ export default function Register() {
   const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
   // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
   const schema = yup.object().shape({
+    name: yup.string().required().min(2),
     email: yup.string().required().email(),
     password: yup
       .string()
@@ -25,7 +26,7 @@ export default function Register() {
       validationSchema={schema}
       onSubmit={AuthService.register}
       initialValues={{
-        email: 'John@gmail.com',
+        email: '',
         password: '',
       }}
     >
@@ -33,8 +34,25 @@ export default function Register() {
         handleSubmit, handleChange, values, touched, errors,
       }) => (
         <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="validationFormik011">
+          <Row className="my-1">
+            <Form.Group as={Row} controlId="validationFormik2011">
+              <Form.Label>Name</Form.Label>
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="text"
+                  name="email"
+                  value={values.name}
+                  onChange={handleChange}
+                  isValid={touched.name && !errors.name}
+                  isInvalid={errors.name}
+                />
+                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.name}
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Form.Group>
+            <Form.Group as={Row} controlId="validationFormik011">
               <Form.Label>Email</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
@@ -51,7 +69,7 @@ export default function Register() {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
-            <Form.Group as={Col} controlId="validationFormik021">
+            <Form.Group as={Row} controlId="validationFormik021">
               <Form.Label>Password</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
@@ -70,7 +88,7 @@ export default function Register() {
               </InputGroup>
             </Form.Group>
           </Row>
-          <Button type="submit">Register</Button>
+          <Button type="submit" className="my-2 align-self-center" style={{ width: '6em' }}>Register</Button>
         </Form>
       )}
     </Formik>

@@ -36,7 +36,6 @@ exports.getBooks = async (req, res) => {
   const { count, rows } = await Item.findAndCountAll(paginationQuery);
   const authors = await Item.findAll(attributesQuery);
   const priceValues = authors.map(({ price }) => +price)
-
   res.status(200).json({
     books: rows,
     total: count,
@@ -55,10 +54,10 @@ exports.getBookById = async (req, res) => {
 }
 
 exports.createBook = async (req, res) => {
-  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, purchasePrice, comments } = req.body;
+  const { pageCount, isReducedNow, price, reducedPrice, author,coverType, lang, annotation, isbn, title, tags, publisher, year, category, amount, purchasePrice, comments } = req.body;
   await Item.create({
-    pageCount, isReducedNow, price, reducedPrice, author, lang,
-    annotation, isbn, title, tags, publisher, year, category, image: req.file.filename, item_management:{ amount, purchasePrice, comments}
+    pageCount, isReducedNow, price, reducedPrice, author, lang,coverType,
+    annotation, isbn, title, tags, publisher, year, category, image: req.file.filename, item_management: { amount, purchasePrice, comments }
   }, { include: [ItemsManagement] })
     .then(book => res.status(200).json({ message: `Book ${title} created` }))
 

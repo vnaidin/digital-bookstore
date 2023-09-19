@@ -225,7 +225,7 @@ export default function CreateUpdateBookModal({
                       size="sm"
                       placeholder="cover"
                       onChange={handleChange}
-                      title="cover"
+                      title="coverType"
                       list="cover"
                       autoComplete="off"
                       defaultValue={existingBook?.coverType || ''}

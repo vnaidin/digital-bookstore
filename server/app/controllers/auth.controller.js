@@ -54,6 +54,14 @@ exports.signup = (req, res) => {
         // user role = 1
         user.setRoles([1]).then(() => {
           res.send({ message: "User was registered successfully!" });
+          // send success registration email
+          nodemailer.transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
         });
       }
     })

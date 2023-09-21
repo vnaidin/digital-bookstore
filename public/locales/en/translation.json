@@ -3,6 +3,7 @@
         "header": {
             "routes": {
                 "authors": "Authors",
+                "news": "News",
                 "merch": "Merch",
                 "delivery": "Delivery",
                 "moderator": "Moderator",

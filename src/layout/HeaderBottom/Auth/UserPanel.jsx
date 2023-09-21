@@ -15,7 +15,7 @@ import { ORDER_STATUSES } from '../../../utils/constants';
 export default function UserPanel() {
   const { state, dispatch } = useContext(AppContext);
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/all/orders/${state?.currentUser?.id}`,
+    `${process.env.REACT_APP_BE_URL}/api/all/orders/${state?.currentUser?.id}`,
     { headers: authHeader() },
     [],
   );
@@ -183,7 +183,7 @@ function OrderItemsCell({ items }) {
 
   const [orderItemsToShow, setOrderItemsToShow] = useState([]);
   useEffect(() => {
-    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/book/${id}`).then(
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/book/${id}`).then(
       (response) => response.json(),
     ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
   }, [items]);

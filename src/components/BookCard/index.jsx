@@ -59,7 +59,7 @@ export default function BookCard({
               )}
             </div>
             <div className="align-self-center">
-              { item_management.amount > 0 && item_management.amount <= 5 && <Badge pill bg="danger">Ending</Badge>}
+              { item_management.amount > 0 && item_management.amount <= 2 && <Badge pill bg="danger">Ending</Badge>}
               {item_management.amount === 0 && <Badge pill bg="secondary">Ended</Badge>}
             </div>
           </div>

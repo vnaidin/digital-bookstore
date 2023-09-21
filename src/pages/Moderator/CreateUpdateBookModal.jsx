@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useContext } from 'react';
 import {
-  Container, Row, Col, Card, Form, Modal, Button,
+  Container, Row, Col, Card, Form, Modal, Button, Accordion,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -14,8 +14,11 @@ import { bookType } from '../../utils/types';
 export default function CreateUpdateBookModal({
   handleCloseModal, existingBook, authors, publishers,
 }) {
-  const [image, setImage] = useState();
-  const [formData, setFormData] = useState({ ...existingBook });
+  const [image, setImage] = useState(null);
+  const [formData, setFormData] = useState({
+    ...existingBook,
+    category: existingBook?.category.length > 0 ? Array.from(existingBook?.category.split(',')).map((cat) => Number(cat)) : [],
+  });
 
   const { t } = useTranslation();
   const { dispatch } = useContext(AppContext);
@@ -33,16 +36,20 @@ export default function CreateUpdateBookModal({
       Object.entries(formData).forEach(([key, value]) => {
         fd.append(key, value);
       });
-      if (image) { fd.append('image', image); }
+      fd.append('image', image);
+      // if (image) { fd.append('image', image); }
 
-      if (existingBook.id) {
+      if (existingBook?.id && existingBook?.id > 0) {
         // perform edit
         BookService.editBook(existingBook.id, fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
             dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
           },
-        ).catch((err) => console.error(new Error(err).message));
+        ).catch((err) => {
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          console.error(new Error(err).message);
+        });
       } else {
         // creating
         BookService.createBook(fd).then(
@@ -50,7 +57,10 @@ export default function CreateUpdateBookModal({
             /* console.log(response); */ handleCloseModal();
             dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
           },
-        ).catch((err) => console.error(new Error(err).message));
+        ).catch((err) => {
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          console.error(new Error(err).message);
+        });
       }
     } else {
       // no image no formdata
@@ -100,7 +110,7 @@ export default function CreateUpdateBookModal({
                   placeholder="Author"
                   onChange={handleChange}
                   list="authors"
-                  // title="author"
+                  title="author"
                   autoComplete="off"
                   defaultValue={existingBook?.author || ''}
                   required
@@ -136,7 +146,7 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="publisher"
                       list="publishers"
-                  // autoComplete="off"
+                      // autoComplete="off"
                       defaultValue={existingBook?.publisher || ''}
                       required
                     />
@@ -162,7 +172,7 @@ export default function CreateUpdateBookModal({
                       title="year"
                       list="year"
                       autoComplete="off"
-                  // autoComplete="off"
+                      // autoComplete="off"
                       defaultValue={existingBook?.year || null}
                       required
                     />
@@ -196,7 +206,7 @@ export default function CreateUpdateBookModal({
 
                   <Form.Group
                     as={Col}
-                    md="3"
+                    md="4"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
@@ -215,7 +225,7 @@ export default function CreateUpdateBookModal({
 
                   <Form.Group
                     as={Col}
-                    md="3"
+                    md="4"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
@@ -247,7 +257,7 @@ export default function CreateUpdateBookModal({
 
                   <Form.Group
                     as={Col}
-                    md="3"
+                    md="4"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
@@ -263,7 +273,7 @@ export default function CreateUpdateBookModal({
                       required
                     />
                     <datalist id="language">
-                      {['українська'].map((author) => (
+                      {['українська', 'english'].map((author) => (
                         <option value={author} key={author} />
                       ))}
                     </datalist>
@@ -271,31 +281,48 @@ export default function CreateUpdateBookModal({
 
                   <Form.Group
                     as={Col}
-                    md="3"
+                    md="12"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
                     <Form.Label>Category</Form.Label>
-                    <Form.Select
-                      aria-label="collection-select"
-                      onChange={handleChange}
-                      title="category"
-                      placeholder="Category"
-                      defaultValue={existingBook?.category || null}
-                      required
-                    >
-                      <option hidden value={null}>none</option>
-                      {BOOK_CATEGORIES.map(
-                        (collection, ind) => (
-                          <option
-                            key={collection}
-                            value={ind}
-                          >
-                            {collection}
-                          </option>
-                        ),
-                      )}
-                    </Form.Select>
+                    <div>
+                      <Accordion>
+                        <Accordion.Item eventKey="0">
+                          <Accordion.Header>Categories</Accordion.Header>
+                          <Accordion.Body as={Row} className="gap-1">
+                            {BOOK_CATEGORIES.map((category, ind) => (
+                              <Form.Check
+                                className="col md-3"
+                                key={category}
+                                style={{ border: '1px solid black' }}
+                                type="checkbox"
+                                label={category}
+                                value={ind}
+                                checked={new Set(formData.category).has(ind)}
+                                // required
+                                onChange={(event) => {
+                                  if (event.target.checked) {
+                                    setFormData((prev) => ({
+                                      ...prev,
+                                      category: prev.category?.concat(+event.target.value),
+                                    }));
+                                  } else {
+                                    const temp = [...formData.category];
+                                    const indToRemove = temp.findIndex(
+                                      (x) => x === +event.target.value,
+                                    );
+                                    temp.splice(indToRemove, 1);
+                                    setFormData((prev) => ({ ...prev, category: temp }));
+                                  }
+                                }}
+                              />
+                            ))}
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      </Accordion>
+
+                    </div>
                   </Form.Group>
 
                 </Row>
@@ -348,7 +375,7 @@ export default function CreateUpdateBookModal({
                     <Form.Select
                       onChange={handleChange}
                       title="isReducedNow"
-                  // eslint-disable-next-line no-unsafe-optional-chaining
+                      // eslint-disable-next-line no-unsafe-optional-chaining
                       defaultValue={+existingBook?.isReducedNow || false}
                       required
                     >
@@ -383,7 +410,7 @@ export default function CreateUpdateBookModal({
                 <Row>
                   <Form.Group
                     as={Col}
-                    md="4"
+                    md="6"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
@@ -400,29 +427,10 @@ export default function CreateUpdateBookModal({
                       required
                     />
                   </Form.Group>
-                  <Form.Group
-                    as={Col}
-                    md="4"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Purchase Price</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder="Purchase Price"
-                      type="number"
-                      onChange={handleChange}
-                      title="purchasePrice"
-                      autoComplete="off"
-                      defaultValue={existingBook?.item_management?.purchasePrice !== null
-                        ? existingBook?.item_management?.purchasePrice : 0}
-                      required
-                    />
-                  </Form.Group>
 
                   <Form.Group
                     as={Col}
-                    md="4"
+                    md="6"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
@@ -451,9 +459,9 @@ export default function CreateUpdateBookModal({
             </Col>
 
             <Card
-         // bg={variant}
+              // bg={variant}
               as={Col}
-          // xs={12}
+              // xs={12}
               xs={{ order: 'first' }}
               sm={4}
               lg={4}
@@ -466,7 +474,8 @@ export default function CreateUpdateBookModal({
               {(image || existingBook?.image) && (
                 <Card.Img
                   variant="top"
-                  src={image ? URL.createObjectURL(image) : existingBook.image}
+                  src={image ? URL.createObjectURL(image)
+                    : `${existingBook?.image ? '' : process.env.REACT_APP_BE_URL}${existingBook.image}`}
                 />
               )}
               <Card.Body>
@@ -485,7 +494,7 @@ export default function CreateUpdateBookModal({
                   </Form.Label>
                   <Form.Control
                     type="file"
-                // id="img"
+                    // id="img"
                     accept="image/*"
                     size="sm"
                     style={{ display: 'none' }}

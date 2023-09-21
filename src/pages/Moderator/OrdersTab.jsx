@@ -16,7 +16,7 @@ export default function OrdersTab() {
   const handleCloseModal = () => { setShowModal(false); updateOrderObject(null); };
   const handleOpenModal = () => setShowModal(true);
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/all/orders`,
+    `${process.env.REACT_APP_BE_URL}/api/all/orders`,
     { headers: authHeader() },
     [showModal],
   );
@@ -121,6 +121,7 @@ function OrderTableLine({ order, handleOrderUpdate }) {
         address={order.order_address}
         phoneNumber={order.phoneNumber}
         comments={order.comments}
+        receiver={order.receiverName ? `${order.receiverName} ${order.receiverSurname} (${order.receiverPhoneNumber})` : null}
       />
       )}
     </>
@@ -134,8 +135,11 @@ OrderTableLine.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     surname: PropTypes.string,
-    email: PropTypes.string,
     phoneNumber: PropTypes.string,
+    receiverName: PropTypes.string,
+    receiverSurname: PropTypes.string,
+    receiverPhoneNumber: PropTypes.string,
+    email: PropTypes.string,
     order_address: PropTypes.shape({
       delMethodId: PropTypes.number,
       city: PropTypes.string,
@@ -156,7 +160,7 @@ OrderTableLine.propTypes = {
 };
 
 function OrderMoreInfoLine({
-  items, address, phoneNumber, comments,
+  items, address, phoneNumber, comments, receiver,
 }) {
   const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
@@ -165,7 +169,7 @@ function OrderMoreInfoLine({
   }, {});
   const [orderItemsToShow, setOrderItemsToShow] = useState([]);
   useEffect(() => {
-    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/book/${id}`).then(
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/book/${id}`).then(
       (response) => response.json(),
     ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
   }, [items]);
@@ -196,23 +200,34 @@ function OrderMoreInfoLine({
           </Col>
 
         </Row>
+        {receiver && (
+        <Row className="p-3">
+          Receiver:
+          {' '}
+          {receiver}
+        </Row>
+        )}
 
         <ListGroup as={Row} className="p-3">
           {orderItemsToShow && orderItemsToShow.length > 0 ? orderItemsToShow.map((item, index) => (
             <ListGroup.Item className="text-start" key={item.id}>{`${index + 1}.${item.author}, ${item.title} ${itemsAmountById[item.id] > 1 ? (`(${itemsAmountById[item.id]} items)`) : ''} `}</ListGroup.Item>
           )) : <ListGroup.Item>No Data...</ListGroup.Item>}
         </ListGroup>
+        {comments && (
         <Row className="p-3">
           Comments:
           {' '}
           {comments}
         </Row>
+        )}
       </td>
     </tr>
   );
 }
 
 OrderMoreInfoLine.defaultProps = {
+  comments: null,
+  receiver: null,
 };
 
 OrderMoreInfoLine.propTypes = {
@@ -229,5 +244,6 @@ OrderMoreInfoLine.propTypes = {
     branch: PropTypes.number,
   }).isRequired,
   phoneNumber: PropTypes.string.isRequired,
-  comments: PropTypes.string.isRequired,
+  comments: PropTypes.string,
+  receiver: PropTypes.string,
 };

@@ -65,7 +65,7 @@ export function useSearch(value) {
   useEffect(
     () => {
       if (value && value.trim('').length > 0) {
-        fetch(`${process.env.REACT_APP_BE_URL}/items/search?search=${encodeURI(value)}`, { ...DEFAULT_OPTIONS }).then((res) => res.json())
+        fetch(`${process.env.REACT_APP_BE_URL}/api/items/search?search=${encodeURI(value)}`, { ...DEFAULT_OPTIONS }).then((res) => res.json())
           // eslint-disable-next-line no-console
           .then((res) => setResult(res)).catch((err) => console.error(err));
       } else setResult();

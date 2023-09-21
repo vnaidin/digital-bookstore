@@ -20,6 +20,8 @@ const TermsOfUse = lazy(() => import('../pages/TermsOfUse'));
 const Moderator = lazy(() => import('../pages/Moderator'));
 const BookPage = lazy(() => import('../pages/BookPage'));
 const PassReset = lazy(() => import('../pages/PassReset'));
+const News = lazy(() => import('../pages/News'));
+const NewsPage = lazy(() => import('../pages/NewsPage'));
 const PageNotFound = lazy(() => import('../pages/404'));
 // const Merch = lazy(() => import('../pages/Merch'));
 
@@ -34,6 +36,8 @@ export default function AppRouter() {
           <Route index path="/" element={<Main />} />
           <Route path="/authors" element={<Authors />} />
           <Route path="/book/:id" element={<BookPage />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/news/:id" element={<NewsPage />} />
           <Route path="/delivery" element={<Delivery />} />
           {/* <Route path="/merch" element={<Merch />} /> */}
           {/* <Route path="/merch/:id" element={<BookPage />} /> */}
@@ -42,9 +46,9 @@ export default function AppRouter() {
           <Route path="/retrieval" element={<Retrieval />} />
           <Route path="/order" element={<Order />} />
           <Route path="/terms" element={<TermsOfUse />} />
-          <Route path="/passwordReset?/:token?/:id" element={<PassReset />} />
-          {state?.currentUser?.roles.some((role) => role === 'ROLE_MODERATOR')
+          {state?.currentUser?.roles.some((role) => role === 'ROLE_SELLER')
           && <Route path="/moderator" element={<Moderator />} />}
+          <Route path="/passwordReset" element={<PassReset />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Container>

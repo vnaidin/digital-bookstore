@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const register = (registrationData) => axios.post('/auth/signup', registrationData);
+const register = (registrationData) => axios.post('/api/auth/signup', registrationData);
 
 const login = (loginData) => axios
-  .post('/auth/signin', loginData)
+  .post('/api/auth/signin', loginData)
   .then((response) => {
     if (response.data.accessToken) {
       sessionStorage.setItem('user', JSON.stringify(response.data));
@@ -12,10 +12,10 @@ const login = (loginData) => axios
   });
 
 const requestForgotPassword = ({ email }) => axios
-  .post('/auth/requestResetPass', { email });
+  .post('/api/auth/requestResetPass', { email });
 
 const resetPassword = ({ password, token, id }) => axios
-  .post('/auth/resetPass', { password, token, id });
+  .post('/api/auth/resetPass', { password, token, id });
 
 const logout = () => {
   sessionStorage.removeItem('user');

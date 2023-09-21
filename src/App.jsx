@@ -5,15 +5,14 @@ import { AppStateProvider } from './appContext';
 import { initialState, reducer } from './store/reducer';
 import AppRouter from './Routers/Router';
 import InfoToast from './components/InfoToast/InfoToast';
-
+import './utils/axios';
 import './App.css';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { REACT_APP_BE_URL } = process.env;
-  axios.defaults.baseURL = REACT_APP_BE_URL;
-  // validate response
+  // FIXME: replace it into axios.js but how to dispatch?
   axios.interceptors.response.use((response) => response, (error) => {
+    // validate response
     if (error.response.status === 401) {
       dispatch({ type: 'logOut' });
       sessionStorage.removeItem('user');

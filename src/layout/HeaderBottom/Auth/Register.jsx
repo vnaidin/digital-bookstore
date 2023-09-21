@@ -26,6 +26,7 @@ export default function Register() {
       validationSchema={schema}
       onSubmit={AuthService.register}
       initialValues={{
+        name: '',
         email: '',
         password: '',
       }}
@@ -40,7 +41,7 @@ export default function Register() {
               <InputGroup hasValidation>
                 <Form.Control
                   type="text"
-                  name="email"
+                  name="name"
                   value={values.name}
                   onChange={handleChange}
                   isValid={touched.name && !errors.name}

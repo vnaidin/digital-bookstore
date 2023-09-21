@@ -10,7 +10,7 @@ export default function Order() {
   const { state } = useContext(AppContext);
   const totalBooksPrice = state.shoppingCart.reduce((acc, curr) => acc + curr.price, 0);
   const totalPrice = state.deliveryMethod && totalBooksPrice < state.deliveryMethod?.freeFrom
-    ? totalBooksPrice + state.deliveryMethod.cost : totalBooksPrice;
+    ? totalBooksPrice : totalBooksPrice;// TODO: review, as we don't have different delivery prices
   return (
     <Container className="my-3">
       {state.shoppingCart && state.shoppingCart.length > 0 ? (

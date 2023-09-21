@@ -10,7 +10,7 @@ import { BOOK_CATEGORIES, BOOK_COVER_TYPES } from '../../utils/constants';
 export default function BookPage() {
   const { id } = useParams();
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/book/${id}`,
+    `${process.env.REACT_APP_BE_URL}/api/book/${id}`,
     {},
     [],
   );

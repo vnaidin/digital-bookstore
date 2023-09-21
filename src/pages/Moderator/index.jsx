@@ -1,9 +1,15 @@
-import React from 'react';
-import { Container, Tabs, Tab } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import {
+  Container, Tabs, Tab,
+} from 'react-bootstrap';
 import BooksTab from './BooksTab';
 import OrdersTab from './OrdersTab';
+import AppContext from '../../appContext';
+import NewsTab from './NewsTab';
 
 export default function Moderator() {
+  const { state } = useContext(AppContext);
+  const userRoles = state?.currentUser?.roles;
   return (
     <Container fluid className="my-3">
       <Tabs
@@ -13,15 +19,34 @@ export default function Moderator() {
         justify
         mountOnEnter
       >
-        <Tab eventKey="books" title="Books">
-          <BooksTab />
-        </Tab>
-        <Tab eventKey="merch" title="Merch">
-          Soon
-        </Tab>
         <Tab eventKey="orders" title="Orders">
           <OrdersTab />
         </Tab>
+        <Tab
+          eventKey="books"
+          title="Books"
+          disabled={userRoles.some((role) => role === 'ROLE_SELLER')
+            && !userRoles.some((role) => role === 'ROLE_MODERATOR') && !userRoles.some((role) => role === 'ROLE_ADMIN')}
+        >
+          <BooksTab />
+        </Tab>
+        <Tab
+          eventKey="merch"
+          title="Merch"
+          disabled={userRoles.some((role) => role === 'ROLE_SELLER')
+            && !userRoles.some((role) => role === 'ROLE_MODERATOR') && !userRoles.some((role) => role === 'ROLE_ADMIN')}
+        >
+          Soon
+        </Tab>
+        <Tab
+          eventKey="news"
+          title="News"
+          disabled={userRoles.some((role) => role === 'ROLE_SELLER')
+            && !userRoles.some((role) => role === 'ROLE_MODERATOR') && !userRoles.some((role) => role === 'ROLE_ADMIN')}
+        >
+          <NewsTab />
+        </Tab>
+
       </Tabs>
     </Container>
   );

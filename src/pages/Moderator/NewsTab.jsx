@@ -4,45 +4,43 @@ import {
   Button, Container, Table, Row,
 } from 'react-bootstrap';
 import { useFetch } from '../../utils/hooks';
-import BookService from '../../services/book';
-import CreateUpdateBookModal from './CreateUpdateBookModal';
+import NewsService from '../../services/news';
+import CreateUpdateNewsModal from './CreateUpdateNewsModal';
 import AppContext from '../../appContext';
 
-export default function BooksTab() {
+export default function NewsTab() {
   const { dispatch } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
-  const [currentBook, updateBookObject] = useState();
+  const [currentNews, updateBookObject] = useState();
 
   const handleCloseModal = () => { setShowModal(false); updateBookObject(null); };
   const handleOpenModal = () => setShowModal(true);
 
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/all/books`,
+    `${process.env.REACT_APP_BE_URL}/api/all/news`,
     {},
     [showModal],
   );
   const handleBookDelete = (id) => {
-    BookService.deleteBook(id).then((response) => {
+    NewsService.deleteNews(id).then((response) => {
       dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
       console.warn('refetch');
     });// FIXME: refetch
   };
   const handleBookUpdate = (id) => {
-    handleOpenModal(); updateBookObject(value.books.find((book) => book.id === id));
+    handleOpenModal(); updateBookObject(value.news.find((book) => book.id === id));
   };
   return (
     <>
       {showModal && (
-      <CreateUpdateBookModal
-        existingBook={currentBook}
+      <CreateUpdateNewsModal
+        existingNews={currentNews}
         handleCloseModal={handleCloseModal}
-        authors={value?.authors}
-        publishers={value?.publishers}
       />
       )}
       <Container>
         <Row className="my-3">
-          <Button variant="success" onClick={handleOpenModal}>Create Book</Button>
+          <Button variant="success" onClick={handleOpenModal}>Create News</Button>
         </Row>
         <Table
           striped
@@ -53,26 +51,21 @@ export default function BooksTab() {
           <thead>
             <tr>
               <th>#</th>
-              <th>Author_Title</th>
-              <th>ISBN</th>
-              <th>Price</th>
-              <th>Reduced_Price</th>
-              <th>Is Reduced</th>
+              <th>Author</th>
+              <th>Title</th>
+              <th>Publisher</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {value && value.books.map(({
-              id, author, title, image, publisher, year, isbn,
-              pageCount, lang, price, reducedPrice, isReducedNow, annotation,
-            }, index) => (
+            {value && value.news.map(({
+              id, author, title, image, publisher, text,
+            }) => (
               <tr key={id}>
-                <td>{index + 1}</td>
-                <td>{`${author}_${title}`}</td>
-                <td>{isbn}</td>
-                <td>{price}</td>
-                <td>{reducedPrice}</td>
-                <td>{isReducedNow?.toString() || 'false'}</td>
+                <td>{id}</td>
+                <td>{author}</td>
+                <td>{title}</td>
+                <td>{publisher}</td>
                 <td className="d-flex gap-1">
                   <Button variant="danger" onClick={() => handleBookDelete(id)}>Remove</Button>
                   <Button variant="warning" onClick={() => { handleBookUpdate(id); }}>Update</Button>

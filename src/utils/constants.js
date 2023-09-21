@@ -1,21 +1,21 @@
 export const DELIVERY_METHODS = [
   {
-    id: 1, title: 'УкрПошта Експрес (доставка до відділення)', cost: 32, freeFrom: 300, stateFullAddress: false,
+    id: 1, title: 'УкрПошта Експрес (доставка до відділення)', freeFrom: 1500, stateFullAddress: false,
   },
   {
-    id: 2, title: 'Нова Пошта. Відділення', cost: 60, freeFrom: 799, stateFullAddress: false,
+    id: 2, title: 'Нова Пошта. Відділення', freeFrom: 1500, stateFullAddress: false,
   },
   {
-    id: 3, title: 'Нова Пошта. Поштомати', cost: 32, freeFrom: null, stateFullAddress: false,
+    id: 3, title: 'Нова Пошта. Поштомати', freeFrom: 1500, stateFullAddress: false,
   },
   {
-    id: 4, title: 'Нова Пошта. Кур\'єр', cost: 80, freeFrom: null, stateFullAddress: true,
+    id: 4, title: 'Нова Пошта. Кур\'єр', freeFrom: 1500, stateFullAddress: true,
   },
   {
-    id: 5, title: 'Meest Пошта. Відділення / міні-відділення', cost: 40, freeFrom: null, stateFullAddress: false,
+    id: 5, title: 'Meest Пошта. Відділення / міні-відділення', freeFrom: 1500, stateFullAddress: false,
   },
   {
-    id: 6, title: 'Meest Пошта. Кур\'єр', cost: 60, freeFrom: null, stateFullAddress: true,
+    id: 6, title: 'Meest Пошта. Кур\'єр', freeFrom: 1500, stateFullAddress: true,
   }];
 
 export const ORDER_STATUSES = ['new', 'inProgress', 'finished'];
@@ -44,40 +44,6 @@ export const BOOK_CATEGORIES = [
   'Drama',
   'Guide',
   'Fairytale',
-  'Health/fitness',
-  'Fantasy',
-  'History',
-  'Graphic novel',
-  'Home and garden',
-  'Historical fiction',
-  'Humor',
-  'Horror',
-  'Journal',
-  'Mystery',
-  'Math',
-  'Paranormal romance',
-  'Memoir',
-  'Picture book',
-  'Philosophy',
-  'Poetry',
-  'Prayer',
-  'Political thriller',
-  'Religion, spirituality, and new age',
-  'Romance',
-  'Textbook',
-  'Satire',
-  'Science fiction',
-  'Review',
-  'Short story',
-  'Science',
-  'Suspense',
-  'Self help',
-  'Thriller',
-  'Sports and leisure',
-  'Western',
-  'Travel',
-  'Young adult',
-  'True crime',
 ];
 
 export const BOOK_ORDERING = [{ title: 'Price high>low', value: 'price,DESC' }, { title: 'Price low>high', value: 'price,ASC' }];

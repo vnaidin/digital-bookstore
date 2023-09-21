@@ -18,7 +18,7 @@ export const bookType = shape({
   reducedPrice: number,
   isReducedNow: bool,
   annotation: string,
-  category: number,
+  category: string,
   tags: string,
   item_management: shape({
     amount: number,

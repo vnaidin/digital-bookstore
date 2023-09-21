@@ -43,6 +43,14 @@ export default function Header() {
                 {t('basic.header.routes.authors')}
               </NavLink>
             </Nav.Item>
+            <Nav.Item key="news">
+              <NavLink
+                active={pathname.substring(1) === 'news'}
+                href="/news"
+              >
+                {t('basic.header.routes.news')}
+              </NavLink>
+            </Nav.Item>
             {/* <Nav.Item key="merch">
               <NavLink
                 active={pathname.substring(1) === 'merch'}

@@ -26,7 +26,7 @@ export default function Main() { // TODO: split into components
   const myRef = useRef(null);
   const [priceLocalValues, setLocalValues] = useState([0, 1000]);
 
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/all/books`);
+  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
   url.searchParams.append('page', filters.page);
   bookCategory && url.searchParams.append('cat', bookCategory);
   filters.order && url.searchParams.append('order', filters.order);

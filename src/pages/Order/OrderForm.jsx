@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import { DELIVERY_METHODS, PAYMENT_METHODS } from '../../utils/constants';
 import AppContext from '../../appContext';
 import OrderService from '../../services/order';
+import { telegramBotSendMsg } from '../../utils/axios';
 
 export default function OrderForm({ totalPrice }) {
   const [deliveryMethod, setDeliveryMethod] = useState();
+  const [addReceiver, setReceiver] = useState(false);
   const { dispatch, state } = useContext(AppContext);
   const navigate = useNavigate();
   const { Formik } = formik;
@@ -20,6 +22,9 @@ export default function OrderForm({ totalPrice }) {
     name: yup.string().required().min(3),
     surname: yup.string().required().min(3),
     phoneNumber: yup.string().required(),
+    receiverName: yup.string().min(3),
+    receiverSurname: yup.string().min(3),
+    receiverPhoneNumber: yup.string(),
     email: yup.string().required().email(),
     city: yup.string().required().min(2),
     street: yup.string()/* .required() */,
@@ -39,6 +44,9 @@ export default function OrderForm({ totalPrice }) {
       phoneNumber: values.phoneNumber,
       email: values.email,
       userId: state?.currentUser?.id,
+      receiverName: values.receiverName,
+      receiverSurname: values.receiverSurname,
+      receiverPhoneNumber: values.receiverPhoneNumber,
       order_items: state.shoppingCart.map(({ id, price }) => ({ itemId: id, price })),
       order_address: {
         delMethodId: +values.delMethod,
@@ -61,8 +69,15 @@ export default function OrderForm({ totalPrice }) {
           dispatch({ type: 'addItemToCart', payload: [] });
           navigate('/');
         }, 3000);
+        return response.data.id;
       },
-    ).catch((e) => console.error(new Error(e)));
+    ).then((id) => {
+      const hypertext = `
+      New Order!
+      From: ${values.name} ${values.surname}
+      Price: ${totalPrice} UAH`;
+      telegramBotSendMsg(hypertext, `${process.env.REACT_APP_BE_URL}/order/${id}`);
+    }).catch((e) => console.error(new Error(e)));
   };
   return (
     <Formik
@@ -72,7 +87,7 @@ export default function OrderForm({ totalPrice }) {
         name: state?.currentUser?.name || '',
         surname: state?.currentUser?.surname || '',
         phoneNumber: state?.currentUser?.phoneNumber || '',
-        email: state?.currentUser?.email || '',
+        email: state?.currentUser.email || '',
         city: '',
         address: '',
         //  zip: '',
@@ -102,7 +117,7 @@ export default function OrderForm({ totalPrice }) {
                   onChange={handleChange}
                   isValid={touched.name && !!errors.name}
                   isInvalid={/* touched.surname &&  */errors.name}
-                  readOnly={state.currentUser?.id > 0}
+                  readOnly={state.currentUser?.name}
                 />
                 <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
@@ -127,7 +142,7 @@ export default function OrderForm({ totalPrice }) {
                   onChange={handleChange}
                   isValid={touched.surname && !!errors.surname}
                   isInvalid={/* touched.surname &&  */errors.surname}
-                  readOnly={state.currentUser?.id > 0}
+                  readOnly={state.currentUser?.surname}
                 />
                 <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
@@ -148,7 +163,7 @@ export default function OrderForm({ totalPrice }) {
                   value={values.phoneNumber}
                   onChange={handleChange}
                   isInvalid={/* touched.phoneNumber && */ !!errors.phoneNumber}
-                  readOnly={state.currentUser?.id > 0}
+                  readOnly={state.currentUser?.phoneNumber}
                 />
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.phoneNumber}
@@ -176,7 +191,109 @@ export default function OrderForm({ totalPrice }) {
               </InputGroup>
             </Form.Group>
 
+            <Form.Group>
+              <Form.Label>Receiver</Form.Label>
+              <div
+                className="d-flex my-0 gap-1 justify-content-center"
+              >
+                <Form.Check
+                  type="radio"
+                  label="me"
+                  value={0}
+                  checked={!addReceiver}
+                  onChange={() => setReceiver(false)}
+                />
+                <Form.Check
+                  type="radio"
+                  label="not me"
+                  value={1}
+                  checked={addReceiver}
+                  onChange={() => setReceiver(true)}
+
+                />
+              </div>
+            </Form.Group>
+            {addReceiver && (
+              <>
+                <Form.Group
+                  as={Col}
+                  md="6"
+                  controlId="validationFormik0131"
+                  className="position-relative"
+                >
+                  <Form.Label>Name</Form.Label>
+                  <InputGroup hasValidation>
+                    <Form.Control
+                      type="text"
+                      name="receiverName"
+                      placeholder="John"
+                      value={values.receiverName}
+                      onChange={handleChange}
+                      isValid={touched.receiverName && !!errors.receiverName}
+                      isInvalid={/* touched.surname &&  */errors.receiverName}
+                    />
+                    <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.receiverName}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+
+                </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md="6"
+                  controlId="validationFormik102"
+                  className="position-relative"
+                >
+                  <Form.Label>Last name</Form.Label>
+                  <InputGroup hasValidation>
+                    <Form.Control
+                      type="text"
+                      name="receiverSurname"
+                      placeholder="Appleseed"
+                      value={values.receiverSurname}
+                      onChange={handleChange}
+                      isValid={touched.receiverSurname && !!errors.receiverSurname}
+                      isInvalid={/* touched.receiverSurname &&  */errors.receiverSurname}
+                      readOnly={state.currentUser?.receiverSurname}
+                    />
+                    <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.receiverSurname}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
+
+                <Form.Group as={Col} sm="12" controlId="validationFormikUsername2">
+                  <Form.Label>Phone number</Form.Label>
+                  <InputGroup hasValidation>
+                    <Form.Control
+                      type="tel"
+                      placeholder="+38095 123 45 67"
+                      width={100}
+                      aria-describedby="inputGroupPrepend"
+                      name="receiverPhoneNumber"
+                      value={values.receiverPhoneNumber}
+                      onChange={handleChange}
+                      isInvalid={/* touched.receiverPhoneNumber && */ !!errors.receiverPhoneNumber}
+                      readOnly={state.currentUser?.receiverPhoneNumber}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>
+                      {errors.receiverPhoneNumber}
+                    </Form.Control.Feedback>
+                  </InputGroup>
+                </Form.Group>
+              </>
+            )}
+
+            <hr className="my-3" />
             <h2 className="text-start my-1">2. Delivery</h2>
+            <u className="text-start">
+              Orders higher
+              {` ${DELIVERY_METHODS[0].freeFrom}₴`}
+              {' '}
+              have free delivery. Otherwise delivery is paid by customer!
+            </u>
 
             <Form.Group as={Col} sm="12" controlId="delMethod">
               <Form.Label>DeliveryMethod</Form.Label>
@@ -199,17 +316,13 @@ export default function OrderForm({ totalPrice }) {
                   <option hidden value={null}>Choose delivery method</option>
                   {DELIVERY_METHODS.map(
                     ({
-                      id, title, cost, /* freeFrom, */
+                      id, title,
                     }) => (
                       <option
                         key={title}
                         value={+id}
                       >
                         {title}
-                        {' '}
-                        (
-                        {`${cost} UAH`}
-                        )
                       </option>
                     ),
                   )}
@@ -350,6 +463,7 @@ export default function OrderForm({ totalPrice }) {
                 </Form.Group>
               </>
             )}
+            <hr className="my-3" />
 
             <h2 className="text-start my-1">3. Payment Method</h2>
             {/** TODO: */}

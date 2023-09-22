@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import {
   Container, Row, Col,
 } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import OrderForm from './OrderForm';
 import CartItems from './CartItems';
 import AppContext from '../../appContext';
@@ -13,6 +14,9 @@ export default function Order() {
     ? totalBooksPrice : totalBooksPrice;// TODO: review, as we don't have different delivery prices
   return (
     <Container className="my-3">
+      <Helmet>
+        <title>Order</title>
+      </Helmet>
       {state.shoppingCart && state.shoppingCart.length > 0 ? (
         <Row className="gap-0 my-2">
           <Col

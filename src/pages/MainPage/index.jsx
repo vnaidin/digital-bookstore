@@ -5,6 +5,7 @@ import React, { useState, useRef } from 'react';
 import {
   Container, Row, Spinner, Pagination, Form, Col, Button,
 } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import RangeSlider from 'react-range-slider-input';
 import 'react-range-slider-input/dist/style.css';
 
@@ -53,6 +54,12 @@ export default function Main() { // TODO: split into components
     ));
   return (
     <Container as={Row}>
+      <Helmet titleTemplate="Alineabooks - %s">
+        <title>
+          Інтернет-магазин книг - Alineabooks
+        </title>
+
+      </Helmet>
       <Col
         xs={12}
         sm={12}

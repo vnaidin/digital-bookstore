@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { FiUpload } from 'react-icons/fi';
 import AppContext from '../../appContext';
 import BookService from '../../services/book';
-import { BOOK_CATEGORIES, BOOK_COVER_TYPES } from '../../utils/constants';
+import { BOOK_CATEGORIES, BOOK_COVER_TYPES, BOOK_TAGS } from '../../utils/constants';
 import { bookType } from '../../utils/types';
 
 export default function CreateUpdateBookModal({
@@ -18,6 +18,7 @@ export default function CreateUpdateBookModal({
   const [formData, setFormData] = useState({
     ...existingBook,
     category: existingBook?.category.length > 0 ? Array.from(existingBook?.category.split(',')).map((cat) => Number(cat)) : [],
+    tags: existingBook?.tags.length > 0 ? Array.from(existingBook?.tags.split(',')).map((tag) => Number(tag)) : [],
   });
 
   const { t } = useTranslation();
@@ -397,15 +398,51 @@ export default function CreateUpdateBookModal({
                   rows={8}
                   required
                 />
-                <Form.Label>Tags</Form.Label>
-                <Form.Control
-                  placeholder="Tags"
-                  type="string"
-                  onChange={handleChange}
-                  title="tags"
-                  autoComplete="off"
-                  defaultValue={existingBook?.tags || ''}
-                />
+                <Form.Group
+                  as={Col}
+                  md="12"
+                  controlId="validationFormik151"
+                  className="position-relative"
+                >
+                  <Form.Label>Tags</Form.Label>
+                  <div>
+                    <Accordion>
+                      <Accordion.Item eventKey="0">
+                        <Accordion.Header>Tags</Accordion.Header>
+                        <Accordion.Body as={Row} className="gap-1">
+                          {BOOK_TAGS.map((tag, ind) => (
+                            <Form.Check
+                              className="col md-3"
+                              key={tag}
+                              style={{ border: '1px solid black' }}
+                              type="checkbox"
+                              label={tag}
+                              value={ind}
+                              checked={new Set(formData.tags).has(ind)}
+                                // required
+                              onChange={(event) => {
+                                if (event.target.checked) {
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    tags: prev.tags?.concat(+event.target.value),
+                                  }));
+                                } else {
+                                  const temp = [...formData.tags];
+                                  const indToRemove = temp.findIndex(
+                                    (x) => x === +event.target.value,
+                                  );
+                                  temp.splice(indToRemove, 1);
+                                  setFormData((prev) => ({ ...prev, tags: temp }));
+                                }
+                              }}
+                            />
+                          ))}
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+
+                  </div>
+                </Form.Group>
                 <hr />
                 <Row>
                   <Form.Group
@@ -528,8 +565,8 @@ CreateUpdateBookModal.defaultProps = {
     reducedPrice: 0,
     isReducedNow: false,
     annotation: null,
-    category: null,
-    tags: null,
+    category: '',
+    tags: '',
   },
   authors: null,
   publishers: null,

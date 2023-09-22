@@ -3,6 +3,7 @@ import {
   Col, Container, Row, Spinner, Image,
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { useFetch } from '../../utils/hooks';
 
 export default function NewsPage() {
@@ -14,6 +15,9 @@ export default function NewsPage() {
   );
   return (
     <Container>
+      <Helmet>
+        <title>{value?.title}</title>
+      </Helmet>
       <Row className="my-2">
         {error && (
         <p>

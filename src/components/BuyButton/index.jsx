@@ -13,6 +13,7 @@ export default function BuyButton({
       id, price, title, image,
     };
     localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
+    dispatch({ type: 'setToast', payload: { body: `${title} added to the cart!`, callee: 'System' } });
     dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
   };
   return <Button variant="success" style={{ width: '10em' }} onClick={handleAddToCart}>Buy</Button>;

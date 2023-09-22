@@ -49,3 +49,5 @@ export const BOOK_CATEGORIES = [
 export const BOOK_ORDERING = [{ title: 'Price high>low', value: 'price,DESC' }, { title: 'Price low>high', value: 'price,ASC' }];
 
 export const BOOK_COVER_TYPES = ['Мʼяка', 'Тверда'];
+
+export const BOOK_TAGS = ['New', 'Top', 'Exclusive'];

@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { useFetch } from '../../utils/hooks';
 import NewsItem from '../../components/NewsItem';
 
@@ -38,6 +39,9 @@ export default function Main() { // TODO: split into components
     ));
   return (
     <Container as={Row}>
+      <Helmet>
+        <title>News</title>
+      </Helmet>
       <Col
         xs={12}
         sm={12}

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Col, Container, Row, Spinner, Image, ListGroup,
 } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useFetch } from '../../utils/hooks';
 import BuyButton from '../../components/BuyButton';
@@ -16,6 +17,9 @@ export default function BookPage() {
   );
   return (
     <Container>
+      <Helmet>
+        <title>{value?.title}</title>
+      </Helmet>
       <Row className="my-2">
         {error && (
         <p>

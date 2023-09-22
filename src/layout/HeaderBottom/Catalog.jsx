@@ -38,6 +38,7 @@ export default function Catalog() {
                   active={pathname.substring(1) === category}
                   onClick={() => {
                     navigate({ pathname: '/', search: `?cat=${index}` });
+                    handleClose();
                   }}
                 >
                   {category}

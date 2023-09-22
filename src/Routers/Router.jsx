@@ -22,6 +22,7 @@ const BookPage = lazy(() => import('../pages/BookPage'));
 const PassReset = lazy(() => import('../pages/PassReset'));
 const News = lazy(() => import('../pages/News'));
 const NewsPage = lazy(() => import('../pages/NewsPage'));
+const OrderPage = lazy(() => import('../pages/OrderPage'));
 const PageNotFound = lazy(() => import('../pages/404'));
 // const Merch = lazy(() => import('../pages/Merch'));
 
@@ -45,6 +46,7 @@ export default function AppRouter() {
           <Route path="/contact" element={<Contacts />} />
           <Route path="/retrieval" element={<Retrieval />} />
           <Route path="/order" element={<Order />} />
+          <Route path="/order/:id" element={<OrderPage />} />
           <Route path="/terms" element={<TermsOfUse />} />
           {state?.currentUser?.roles.some((role) => role === 'ROLE_SELLER')
           && <Route path="/moderator" element={<Moderator />} />}

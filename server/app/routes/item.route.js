@@ -89,7 +89,7 @@ module.exports = function(app) {
    *           type: string
    *           description: The books annotation
    *         category:
-   *           type: integer
+   *           type: string
    *           description: The books category
    *         tags:
    *           type: string
@@ -109,8 +109,8 @@ module.exports = function(app) {
    *         reducedPrice: 450
    *         isReducedNow: 1
    *         annotation: annotation
-   *         category: military
-   *         tags: new
+   *         category: 1,4
+   *         tags: 1
    *     BookCreate:
    *       type: object
    *       properties:
@@ -155,7 +155,7 @@ module.exports = function(app) {
    *           type: string
    *           description: The books annotation
    *         category:
-   *           type: integer
+   *           type: string
    *           description: The books category
    *         tags:
    *           type: string
@@ -271,9 +271,9 @@ module.exports = function(app) {
    *      - in: query
    *        name: cat
    *        schema:
-   *          type: integer
+   *          type: string
    *        required: false
-   *        example: 0
+   *        example: 1,4
    *        description: Category to show  
    *      - in: query
    *        name: order

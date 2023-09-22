@@ -174,7 +174,7 @@ export default function UserPanel() {
   );
 }
 
-function OrderItemsCell({ items }) {
+export function OrderItemsCell({ items }) {
   const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
     prev[cur] = (prev[cur] || 0) + 1;

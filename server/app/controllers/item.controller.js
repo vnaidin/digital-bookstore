@@ -6,13 +6,13 @@ const Op = db.Sequelize.Op;
 
 exports.getBooks = async (req, res) => {
   // Find all books
-  const { cat, page, order, priceRange, author, publisher } = req.query
+  const { cat, page, order, priceRange, author, publisher } = req.query;
   const paginationQuery = {
     order: order ? [order ? [...order.split(",")] : db.sequelize.random()] : null,
     where: {
       [Op.and]: [
         { itemType: 'book' },
-        { category: cat ? cat : { [Op.not]: null } },
+        { category: cat ? { [Op.substring]: cat } : { [Op.not]: null } },
         { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
         { author: author ? author : { [Op.not]: null } },
         { publisher: publisher ? publisher : { [Op.not]: null } }

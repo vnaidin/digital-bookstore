@@ -187,7 +187,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/order/:id",
-    [authJwt.verifyToken, authJwt.isModerator],
+    /* [authJwt.verifyToken, authJwt.isModerator], */
     controller.getOrderById
   );
 

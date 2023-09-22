@@ -35,7 +35,16 @@ module.exports = function(app) {
    *           type: string
    *           description: Buyer surname
    *         phoneNumber:
-   *           type: integer
+   *           type: string
+   *           description: Buyer phone number
+   *         receiverName:
+   *           type: string
+   *           description: Buyer name
+   *         receiverSurname:
+   *           type: string
+   *           description: Buyer surname
+   *         receiverPhoneNumber:
+   *           type: string
    *           description: Buyer phone number
    *         delMethodId:
    *           type: integer

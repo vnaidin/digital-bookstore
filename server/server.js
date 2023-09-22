@@ -107,6 +107,7 @@ require('./app/routes/auth.route')(secureApp);
 require('./app/routes/user.route')(secureApp);
 require('./app/routes/item.route')(secureApp);
 require('./app/routes/order.route')(secureApp);
+require('./app/routes/news.route')(secureApp);
 
 // Handles any requests that don't match the ones above
 secureApp.get('*', (req, res) => {

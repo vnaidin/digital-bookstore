@@ -42,7 +42,7 @@ module.exports = function (app) {
    *         name: John
    *         email: John@gmail.com
    *         password: "@'Sq12RR"
-   *         roles: ["user","moderator","admin"]
+   *         roles: ["user","seller","moderator","admin"]
    */
 
   /**

@@ -26,6 +26,7 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.item = require("./item.model.js")(sequelize, Sequelize);
 db.order = require("./order.model.js")(sequelize, Sequelize);
+db.news = require('./news.model.js')(sequelize, Sequelize);
 db.orderItems = require("./orderItems.model.js")(sequelize, Sequelize);
 db.orderAddress = require("./orderAddress.model.js")(sequelize, Sequelize);
 db.itemsManagement = require('./itemManagement.model.js')(sequelize, Sequelize);
@@ -42,6 +43,6 @@ db.order.hasOne(db.orderAddress);
 
 db.item.hasOne(db.itemsManagement);
 
-db.ROLES = ["user", "admin", "moderator"];
+db.ROLES = ["user", "admin", "moderator", 'seller'];
 
 module.exports = db;

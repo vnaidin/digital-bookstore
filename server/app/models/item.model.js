@@ -49,7 +49,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(2000)
     },
     category: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     },
     tags: {
       type: Sequelize.STRING

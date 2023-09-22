@@ -8,9 +8,6 @@ module.exports = (sequelize, Sequelize) => {
     amount: { // left in the system
       type: Sequelize.INTEGER
     },
-    purchasePrice: {// price from the publisher
-      type: Sequelize.INTEGER,
-    },
     purchasesCount: {// how many times the book was bought
       type: Sequelize.INTEGER,
       defaultValue: 0

@@ -54,10 +54,11 @@ exports.getBookById = async (req, res) => {
 }
 
 exports.createBook = async (req, res) => {
-  const { pageCount, isReducedNow, price, reducedPrice, author,coverType, lang, annotation, isbn, title, tags, publisher, year, category, amount, purchasePrice, comments } = req.body;
+  const { pageCount, isReducedNow, price, reducedPrice, author, coverType, lang, annotation, isbn, title, tags, publisher, year, category, amount, comments } = req.body;
   await Item.create({
-    pageCount, isReducedNow, price, reducedPrice, author, lang,coverType,
-    annotation, isbn, title, tags, publisher, year, category, image: req.file.filename, item_management: { amount, purchasePrice, comments }
+    itemType: 'book',
+    pageCount, isReducedNow, price, reducedPrice, author, lang, coverType,
+    annotation, isbn, title, tags, publisher, year, category, image: req.file ? req.file.filename : null, item_management: { amount, comments }
   }, { include: [ItemsManagement] })
     .then(book => res.status(200).json({ message: `Book ${title} created` }))
 
@@ -65,7 +66,7 @@ exports.createBook = async (req, res) => {
 
 exports.updateBook = async (req, res) => {
   const id = req.params.id;
-  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, purchasePrice, comments } = req.body;
+  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, comments } = req.body;
 
   try {
 
@@ -80,7 +81,7 @@ exports.updateBook = async (req, res) => {
         }
       }, { transaction: t })
 
-      await ItemsManagement.update({ amount, purchasePrice, comments }, { where: { itemId: id } }, { transaction: t })
+      await ItemsManagement.update({ amount, comments }, { where: { itemId: id } }, { transaction: t })
 
       return user;
 

@@ -4,14 +4,32 @@ const controller = require("../controllers/item.controller");
 
 const multer = require('multer');
 const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename(req, file, cb) {
-    cb(null, `${file.originalname.replaceAll(' ', '')}`);
-  },
+  destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+  }
+  ,
+  filename: function (req, file, cb) {
+      cb(null, file?file.fieldname + '-' + Date.now()+'.'+file.mimetype.split('/')[1]:'none');
+  }
 });
-const upload = multer({ storage });
+
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+      cb(null, true);
+  } else {
+      cb(null, false);
+  }
+}
+
+const upload = multer({
+  storage: storage,
+  /* limits: {
+      fileSize: 1024 * 1024 * 5// mb
+  }, */
+  fileFilter: fileFilter
+}).single('image');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -360,7 +378,7 @@ module.exports = function(app) {
   
     app.post(
       "/api/book",
-      [authJwt.verifyToken, authJwt.isModerator],multer({ storage }).single('image'),
+      [authJwt.verifyToken, authJwt.isModerator],upload,
       controller.createBook
     );
 
@@ -397,7 +415,7 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/book/:id', [authJwt.verifyToken, authJwt.isModerator],multer({ storage }).single('image'),
+  app.put('/api/book/:id', [authJwt.verifyToken, authJwt.isModerator],upload,
   controller.updateBook)
 
     /**

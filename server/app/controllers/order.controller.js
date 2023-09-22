@@ -29,7 +29,8 @@ exports.getOrdersOfUser = async (req, res) => {
 }
 
 exports.createOrder = async (req, res) => {
-  const { userId, name, surname, phoneNumber, email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price } = req.body;
+  const { userId, name, surname, phoneNumber, receiverName, receiverSurname, receiverPhoneNumber,
+    email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price } = req.body;
 
   const itemsAmountById = order_items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
@@ -41,7 +42,10 @@ exports.createOrder = async (req, res) => {
 
     const result = await db.sequelize.transaction(async (t) => {
       // create order
-      const user = await Order.create({ userId, name, surname, phoneNumber, email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price },
+      const order = await Order.create({
+        userId, name, surname, phoneNumber, receiverName, receiverSurname, receiverPhoneNumber,
+        email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price
+      },
         {
           include: [OrderItems, OrderAddress]
         }, { transaction: t })
@@ -50,12 +54,12 @@ exports.createOrder = async (req, res) => {
         await ItemsManagement.increment({ amount: -n, purchasesCount: n }, { where: { itemId } }, { transaction: t })
       }))
 
-      return user;
+      return order;
 
     });
     // If the execution reaches this line, the transaction has been committed successfully
     // `result` is whatever was returned from the transaction callback (the `user`, in this case)
-    res.status(200).json({ message: `New order created` })
+    res.status(200).json({ message: `New order created`, id: result.id })
     //TODO: send email
 
   } catch (error) {

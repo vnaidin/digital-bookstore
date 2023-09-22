@@ -87,7 +87,7 @@ export default function OrderForm({ totalPrice }) {
         name: state?.currentUser?.name || '',
         surname: state?.currentUser?.surname || '',
         phoneNumber: state?.currentUser?.phoneNumber || '',
-        email: state?.currentUser.email || '',
+        email: state?.currentUser?.email || '',
         city: '',
         address: '',
         //  zip: '',

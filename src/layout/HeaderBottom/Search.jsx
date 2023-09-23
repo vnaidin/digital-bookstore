@@ -34,7 +34,7 @@ export default function SearchBar() {
       {value && (
         <ListGroup
           style={{
-            position: 'absolute', width: 'inherit',
+            position: 'absolute', width: 'inherit', zIndex: '1',
           }}
           className="container-fluid px-0"
         >

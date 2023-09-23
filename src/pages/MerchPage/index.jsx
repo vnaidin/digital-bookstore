@@ -1,19 +1,18 @@
 import React from 'react';
 import {
-  Col, Container, Row, Spinner, Image, ListGroup,
+  Col, Container, Row, Spinner, Image, /* ListGroup */
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import BuyButton from '../../components/BuyButton';
-import { BOOK_CATEGORIES, BOOK_COVER_TYPES } from '../../utils/constants';
 
-export default function BookPage() {
+export default function MerchPage() {
   const { id } = useParams();
   const { i18n } = useTranslation();
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/book/${id}`,
+    `${process.env.REACT_APP_BE_URL}/api/merch/${id}`,
     {},
     [],
   );
@@ -65,7 +64,7 @@ export default function BookPage() {
             </h2>
           </Row>
           <Row className="mx-0 my-2 text-start">
-            <ListGroup>
+            {/* <ListGroup>
               <ListGroup.Item>
                 {`Author: ${value?.author}`}
               </ListGroup.Item>
@@ -90,7 +89,7 @@ export default function BookPage() {
               <ListGroup.Item>
                 {`Category: ${BOOK_CATEGORIES[value?.category]}`}
               </ListGroup.Item>
-            </ListGroup>
+            </ListGroup> */}
             {/** TODO: add price */}
             <div className="d-flex flex-column align-items-center my-2">
               {value?.isReducedNow ? (

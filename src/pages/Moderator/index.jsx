@@ -6,6 +6,7 @@ import BooksTab from './BooksTab';
 import OrdersTab from './OrdersTab';
 import AppContext from '../../appContext';
 import NewsTab from './NewsTab';
+import MerchTab from './MerchTab';
 
 export default function Moderator() {
   const { state } = useContext(AppContext);
@@ -36,7 +37,7 @@ export default function Moderator() {
           disabled={userRoles.some((role) => role === 'ROLE_SELLER')
             && !userRoles.some((role) => role === 'ROLE_MODERATOR') && !userRoles.some((role) => role === 'ROLE_ADMIN')}
         >
-          Soon
+          <MerchTab />
         </Tab>
         <Tab
           eventKey="news"

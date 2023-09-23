@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
-  Button, Container, Table, Spinner, OverlayTrigger, Tooltip, ListGroup, Row, Col,
+  Button, Container, Table, Spinner, OverlayTrigger, Tooltip, ListGroup, Row, Col, Form,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { useFetch } from '../../utils/hooks';
+import { useDebounce, useFetch } from '../../utils/hooks';
 import authHeader from '../../services/auth-header';
 import { DELIVERY_METHODS, ORDER_STATUSES } from '../../utils/constants';
 import UpdateOrderModal from './UpdateOrderModal';
@@ -15,10 +16,22 @@ export default function OrdersTab() {
 
   const handleCloseModal = () => { setShowModal(false); updateOrderObject(null); };
   const handleOpenModal = () => setShowModal(true);
+
+  const [search, updSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 600);
+
+  const [filters, setFilters] = useState({ // TODO:
+    page: 0,
+    status: null,
+  });
+  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'orders/search' : 'all/orders'}`);
+  search.length > 1 && url.searchParams.append('search', debouncedSearch);
+  filters.status && url.searchParams.append('status', filters.status);
+
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/all/orders`,
+    url,
     { headers: authHeader() },
-    [showModal],
+    [showModal, debouncedSearch, filters],
   );
 
   const handleOrderUpdate = (id) => {
@@ -33,43 +46,81 @@ export default function OrdersTab() {
       />
       )}
       <Container>
-        <Table
-          striped
-          bordered
-          hover
-          responsive
-        >
-          <thead>
-            <tr>
-              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-              <th />
-              <th>#</th>
-              <th>Name</th>
-              <th>Surname</th>
-              <th>Email</th>
-              {/* <th>Tel</th> */}
-              <th>Price</th>
-              {/* <th>Comments</th> */}
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {value && value.map((order) => (
-              <OrderTableLine
-                key={order.id}
-                order={order}
-                handleOrderUpdate={handleOrderUpdate}
-              />
-            ))}
-          </tbody>
-        </Table>
+        <Row>
+          <Col>
+            <Form.Control
+              className="colmy-3 px-3"
+              size="lg"
+              placeholder="Name, Surname or TelNumber"
+              onChange={(e) => { updSearch(e.target.value); }}
+              title="search"
+              autoComplete="off"
+            />
+          </Col>
+          <Col className="d-flex gap-2 align-items-center">
+            <Form.Label>Filter</Form.Label>
+            <Form.Select
+              aria-label="Default select example"
+              onChange={(event) => setFilters(
+                (prev) => ({ ...prev, status: event.target.value === 'By status:' ? null : event.target.value }),
+              )}
+            >
+              <option value={null}>By status:</option>
+              {Object.entries(ORDER_STATUSES).map(
+                ([id, { title }]) => <option key={id} value={id}>{title}</option>,
+              )}
+            </Form.Select>
+
+          </Col>
+        </Row>
+        <Row className="my-2">
+          {error && (
+            <p>
+              {new Error(error).message}
+            </p>
+          )}
+          {loading && (
+            <Spinner animation="border" />
+          )}
+        </Row>
+
+        {value && value.length > 0 ? (
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+          >
+            <thead>
+              <tr>
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <th />
+                <th>#</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {value && value.map((order) => (
+                <OrderTableLine
+                  key={order.id}
+                  order={order}
+                  handleOrderUpdate={handleOrderUpdate}
+                />
+              ))}
+            </tbody>
+          </Table>
+        ) : <h4>No Data...</h4>}
       </Container>
     </>
   );
 }
 
-function OrderTableLine({ order, handleOrderUpdate }) {
+export function OrderTableLine({ order, handleOrderUpdate }) {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   return (
     <>
@@ -110,7 +161,7 @@ function OrderTableLine({ order, handleOrderUpdate }) {
         {/*  <td>{order.phoneNumber}</td> */}
         <td>{order.price}</td>
         {/* <td>{order.comments}</td> */}
-        <td>{ORDER_STATUSES[order.status]}</td>
+        <td>{ORDER_STATUSES[order.status].title}</td>
         <td className="d-flex gap-1">
           <Button variant="warning" onClick={() => { handleOrderUpdate(order.id); }}>Update</Button>
         </td>
@@ -144,7 +195,7 @@ OrderTableLine.propTypes = {
       delMethodId: PropTypes.number,
       city: PropTypes.string,
       street: PropTypes.string,
-      houseNr: PropTypes.number,
+      houseNr: PropTypes.string,
       flatNr: PropTypes.number,
       branch: PropTypes.number,
     }),
@@ -162,6 +213,7 @@ OrderTableLine.propTypes = {
 function OrderMoreInfoLine({
   items, address, phoneNumber, comments, receiver,
 }) {
+  // console.log(items)
   const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
     prev[cur] = (prev[cur] || 0) + 1;
@@ -169,7 +221,7 @@ function OrderMoreInfoLine({
   }, {});
   const [orderItemsToShow, setOrderItemsToShow] = useState([]);
   useEffect(() => {
-    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/book/${id}`).then(
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/item/${id}`).then(
       (response) => response.json(),
     ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
   }, [items]);
@@ -239,7 +291,7 @@ OrderMoreInfoLine.propTypes = {
     delMethodId: PropTypes.number,
     city: PropTypes.string,
     street: PropTypes.string,
-    houseNr: PropTypes.number,
+    houseNr: PropTypes.string,
     flatNr: PropTypes.number,
     branch: PropTypes.number,
   }).isRequired,

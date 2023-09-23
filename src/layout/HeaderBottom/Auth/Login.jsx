@@ -8,12 +8,12 @@ import AuthService from '../../../services/auth';
 import AppContext from '../../../appContext';
 
 export default function Login() {
-  const [forgoPass, setForgotPass] = useState(false);
+  const [forgotPass, setForgotPass] = useState(false);
   const { Formik } = formik;
   const { dispatch } = useContext(AppContext);
   const schema = yup.object().shape({
     email: yup.string().required().email(),
-    password: forgoPass ? yup.string().max(0) : yup.string().required(),
+    password: forgotPass ? yup.string().max(0) : yup.string().required(),
   });
 
   const logIn = (values) => {
@@ -36,7 +36,7 @@ export default function Login() {
     <Formik
       validationSchema={schema}
       // eslint-disable-next-line no-unused-expressions
-      onSubmit={(values) => { forgoPass ? requestForgotPassword(values) : logIn(values); }}
+      onSubmit={(values) => { forgotPass ? requestForgotPassword(values) : logIn(values); }}
       initialValues={{
         email: '',
         password: '',
@@ -64,6 +64,7 @@ export default function Login() {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
+            {!forgotPass && (
             <Form.Group as={Row} controlId="validationFormik02">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -74,6 +75,7 @@ export default function Login() {
                 isValid={touched.password && !!errors.password}
               />
             </Form.Group>
+            )}
           </Row>
           <Button
             type="submit"
@@ -88,7 +90,7 @@ export default function Login() {
             className="my-2 align-self-center"
             style={{ width: '6em' }}
           >
-            Login
+            {forgotPass ? 'Reset Password' : 'Login'}
           </Button>
         </Form>
       )}

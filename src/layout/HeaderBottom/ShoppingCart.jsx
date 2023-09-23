@@ -4,10 +4,12 @@ import {
 } from 'react-bootstrap';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AppContext from '../../appContext';
 
 export default function ShoppingCart() {
   const { state, dispatch } = useContext(AppContext);
+  const { i18n } = useTranslation();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
@@ -31,7 +33,7 @@ export default function ShoppingCart() {
 
   const handleRemoveFromCart = (id) => {
     const temp = [...state.shoppingCart];
-    const indNeeded = temp.findIndex((x) => x.id === id);
+    const indNeeded = temp.findIndex((x) => Number(x.id) === Number(id));
     if (indNeeded >= 0) {
       temp.splice(indNeeded, 1);
     }
@@ -62,7 +64,7 @@ export default function ShoppingCart() {
           <Container style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
             {nOfItemsInCart > 0 ? Object.entries(reducedBooks).map(([key, value]) => (
               <Row key={key} className="align-items-center">
-                <Col className="text-start">
+                <Col className="text-start my-1">
                   <img src={value[0].image} alt={value[0].title} width={80} />
                   {value[0].title}
                   {' '}
@@ -100,7 +102,7 @@ export default function ShoppingCart() {
             Total:
             {' '}
             {totalPrice}
-            {' ₴'}
+            {i18n.language === 'en' ? ' UAH' : ' грн'}
           </h4>
           <div className="d-flex gap-1">
             <Button
@@ -129,7 +131,10 @@ export default function ShoppingCart() {
         variant="link"
         onClick={handleShow}
       >
-        <FiShoppingCart size={20} className="mx-1" />
+        <FiShoppingCart
+          size={20}
+          className="mx-1"
+        />
         {nOfItemsInCart > 0 && <Badge bg="warning">{nOfItemsInCart}</Badge>}
       </Button>
     </>

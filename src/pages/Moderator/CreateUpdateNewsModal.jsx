@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { FiUpload } from 'react-icons/fi';
 import AppContext from '../../appContext';
 import NewsService from '../../services/news';
-import { bookType } from '../../utils/types';
+import { newsType } from '../../utils/types';
 
 export default function CreateUpdateNewsModal({
   handleCloseModal, existingNews,
@@ -65,7 +65,7 @@ export default function CreateUpdateNewsModal({
       dispatch({
         type: 'setToast',
         payload: {
-          body: t('basic.toasts.6'),
+          body: t('layout.toasts.6'),
           callee: t('pages.create-nft.btns.create-nft'),
         },
       });
@@ -154,9 +154,6 @@ export default function CreateUpdateNewsModal({
                       ))}
                     </datalist> */}
                   </Form.Group>
-                </Row>
-                <Row className="align-items-center">
-
                   <Form.Group
                     as={Col}
                     md="4"
@@ -268,5 +265,5 @@ CreateUpdateNewsModal.defaultProps = {
 
 CreateUpdateNewsModal.propTypes = {
   handleCloseModal: PropTypes.func.isRequired,
-  existingNews: bookType,
+  existingNews: newsType,
 };

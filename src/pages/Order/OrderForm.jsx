@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { DELIVERY_METHODS, PAYMENT_METHODS } from '../../utils/constants';
 import AppContext from '../../appContext';
 import OrderService from '../../services/order';
@@ -16,6 +17,7 @@ export default function OrderForm({ totalPrice }) {
   const [addReceiver, setReceiver] = useState(false);
   const { dispatch, state } = useContext(AppContext);
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
   const { Formik } = formik;
 
   const schema = yup.object().shape({ // TODO: validation to improve
@@ -28,7 +30,7 @@ export default function OrderForm({ totalPrice }) {
     email: yup.string().required().email(),
     city: yup.string().required().min(2),
     street: yup.string()/* .required() */,
-    houseNr: yup.number()/* .required() */,
+    houseNr: yup.string()/* .required() */,
     flatNr: yup.number()/* .required() */,
     branch: yup.number()/* .required() */,
     paymentMethodId: yup.number().required(),
@@ -52,7 +54,7 @@ export default function OrderForm({ totalPrice }) {
         delMethodId: +values.delMethod,
         city: values.city,
         street: values.street,
-        houseNr: +values.houseNr,
+        houseNr: values.houseNr,
         flatNr: +values.flatNr,
         branch: +values.branch,
       },
@@ -290,7 +292,8 @@ export default function OrderForm({ totalPrice }) {
             <h2 className="text-start my-1">2. Delivery</h2>
             <u className="text-start">
               Orders higher
-              {` ${DELIVERY_METHODS[0].freeFrom}₴`}
+
+              {` ${DELIVERY_METHODS[0].freeFrom} ${i18n.language === 'en' ? ' UAH' : ' грн'} `}
               {' '}
               have free delivery. Otherwise delivery is paid by customer!
             </u>

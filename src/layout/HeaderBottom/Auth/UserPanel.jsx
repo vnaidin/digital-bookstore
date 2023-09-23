@@ -161,7 +161,7 @@ export default function UserPanel() {
                   <td>{ind + 1}</td>
                   <OrderItemsCell items={order.order_items} />
                   <td>{order.price}</td>
-                  <td>{ORDER_STATUSES[order.status]}</td>
+                  <td>{ORDER_STATUSES[order.status].title}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,5 +1,6 @@
 {
-    "basic": {
+    "components": {},
+    "layout": {
         "header": {
             "routes": {
                 "authors": "Authors",
@@ -11,38 +12,10 @@
                 "contactUs": "Contacts",
                 "retrieval": "Retrieval",
                 "terms": "Terms of use"
-            },
-            "buttons": {
-                "theme-switcher": "Switch Theme",
-                "connect-wallet": "Connect Wallet",
-                "wallet": "Wallet"
             }
         },
         "footer": {
             "bla": "bla"
-        },
-        "connect-wallet-modal": {
-            "title": "Clipboard",
-            "header": {
-                "explore-wallet": "Explore Wallet",
-                "connect-wallet": "Connect Wallet"
-            },
-            "footer": {
-                "btn-close": "Close"
-            },
-            "body": {
-                "network": "Network",
-                "wallet": "Wallet",
-                "too-many-extensions": "We found more than one extension in your browser"
-            },
-            "toast-messages": {
-                "success": "Copied to Clipboard!",
-                "error": "Couldn't copy text:",
-                "no-clipboard": "Could not copy text, try to copy by hand!",
-                "no-wallet": "Please login to TronLink extention wallet first"
-            },
-            "copy-btn": "Copy",
-            "view-on": "View on "
         },
         "toasts": {
             "successful": "Successful",
@@ -60,29 +33,5 @@
             "10": "Please, put the NFT ID to which we will assign the bonus"
         }
     },
-    "common": {
-        "nft-card": {
-            "btns": {
-                "bid": "Bid",
-                "buy": "Buy",
-                "show": "Show",
-                "details": "Details"
-            }
-        },
-        "nft-item-card": {
-            "owner": "Owner: ",
-            "btns": {
-                "offer": "Make Offer",
-                "buy": "Buy"
-            },
-            "about": "About",
-            "details": {
-                "title": "Details",
-                "contract": "Contract: ",
-                "token-id": "Token ID: ",
-                "collection": "Collection: ",
-                "creator": "Creator: "
-            }
-        }
-    }
+    "pages": {}
 }

@@ -3,10 +3,12 @@ import {
   Container, Row, Col, Button,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import AppContext from '../../appContext';
 
 export default function CartItems({ totalPrice }) {
   const { state, dispatch } = useContext(AppContext);
+  const { i18n } = useTranslation();
   const handleAddToCart = (id, price, title, image) => {
     const payload = {
       id, price, title, image,
@@ -17,7 +19,7 @@ export default function CartItems({ totalPrice }) {
 
   const handleRemoveFromCart = (id) => {
     const temp = [...state.shoppingCart];
-    const indNeeded = temp.findIndex((x) => x.id === id);
+    const indNeeded = temp.findIndex((x) => Number(x.id) === Number(id));
     if (indNeeded >= 0) {
       temp.splice(indNeeded, 1);
     }
@@ -84,7 +86,7 @@ export default function CartItems({ totalPrice }) {
         Total:
         {' '}
         {totalPrice}
-        {' ₴'}
+        {i18n.language === 'en' ? ' UAH' : ' грн'}
       </h4>
 
     </>

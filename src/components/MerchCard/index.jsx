@@ -5,10 +5,11 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import BuyButton from '../BuyButton';
-import { bookType } from '../../utils/types';
+import { merchType } from '../../utils/types';
 
-export default function BookCard({ // TODO: add tags
-  id, author, title, image, price, reducedPrice, isReducedNow, tags, item_management,
+export default function MerchCard({
+  id, title, image,
+  price, reducedPrice, isReducedNow, tags, item_management,
 }) {
   const { i18n } = useTranslation();
   return (
@@ -27,18 +28,12 @@ export default function BookCard({ // TODO: add tags
           src={image}
           width={300}
           className="p-3"
-          alt={`${author}_${title}`}
+          alt={title}
         />
         <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2">
-          <NavLink href={`/book/${id}`}>
+          <NavLink href={`/merch/${id}`}>
             <Card.Title>{title}</Card.Title>
           </NavLink>
-          <Card.Subtitle style={{
-            width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
-          }}
-          >
-            {author}
-          </Card.Subtitle>
           <div className="d-flex m-2 p-1 gap-1 justify-content-center">
             <div className="d-flex flex-column">
               {isReducedNow ? (
@@ -46,6 +41,7 @@ export default function BookCard({ // TODO: add tags
                   <s style={{ fontSize: 'small' }}>
                     {price}
                     {i18n.language === 'en' ? ' UAH' : ' грн'}
+
                   </s>
                   <b style={{ fontSize: 'larger' }}>
                     {reducedPrice}
@@ -74,9 +70,8 @@ export default function BookCard({ // TODO: add tags
   );
 }
 
-BookCard.defaultProps = {
+MerchCard.defaultProps = {
   id: null,
-  author: null,
   title: null,
   image: null,
   price: null,
@@ -85,4 +80,4 @@ BookCard.defaultProps = {
   tags: null,
 };
 
-BookCard.propTypes = bookType.isRequired;
+MerchCard.propTypes = merchType.isRequired;

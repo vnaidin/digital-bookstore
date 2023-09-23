@@ -200,9 +200,8 @@ export default function Main() { // TODO: split into components
             </Form.Group>
             {value.total > 12 && (
               <Col sm={4}>
-                <Pagination>
-                  Page:
-                  {' '}
+                <Pagination className="d-flex align-items-center">
+                  <p style={{ fontSize: 'x-large', margin: '0 1em', padding: '0' }}>Page: </p>
                   {paginationItems}
                 </Pagination>
               </Col>
@@ -221,9 +220,8 @@ export default function Main() { // TODO: split into components
           <Row title="pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
               <Col>
-                <Pagination>
-                  Page:
-                  {' '}
+                <Pagination className="d-flex align-items-center">
+                  <p style={{ fontSize: 'x-large', margin: '0 1em', padding: '0' }}>Page: </p>
                   {paginationItems}
                 </Pagination>
               </Col>

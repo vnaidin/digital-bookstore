@@ -61,13 +61,13 @@ export default function NewsPage() {
               <h2>
                 {value?.title}
               </h2>
+              <p style={{ textAlign: 'justify' }}>{value?.text}</p>
             </Row>
-            <Row className="mx-0 my-2 text-start" />
           </Col>
         </Row>
         <Row className="my-3">
-          <h4>Annotation:</h4>
-          <p style={{ textAlign: 'justify' }}>{value?.text}</p>
+          <p style={{ textAlign: 'end', fontSize: 'larger' }}>{value?.author}</p>
+          <p style={{ textAlign: 'end' }}>{new Date(value?.createdAt).toLocaleDateString()}</p>
         </Row>
       </>
       )}

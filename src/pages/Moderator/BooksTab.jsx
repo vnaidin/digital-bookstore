@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, Table, Row,
+  Button, Container, Table, Row, Col, Form, Spinner,
 } from 'react-bootstrap';
-import { useFetch } from '../../utils/hooks';
+import { useDebounce, useFetch } from '../../utils/hooks';
 import BookService from '../../services/book';
 import CreateUpdateBookModal from './CreateUpdateBookModal';
 import AppContext from '../../appContext';
@@ -16,15 +16,23 @@ export default function BooksTab() {
   const handleCloseModal = () => { setShowModal(false); updateBookObject(null); };
   const handleOpenModal = () => setShowModal(true);
 
+  const [search, updSearch] = useState('');
+  const debouncedSearch = useDebounce(search, 600);
+
+  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'books/search' : 'all/books'}`);
+  // eslint-disable-next-line no-unused-expressions
+  search.length > 1 && url.searchParams.append('search', debouncedSearch);
+
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/all/books`,
+    url,
     {},
-    [showModal],
+    [showModal, debouncedSearch],
   );
   const handleBookDelete = (id) => {
     BookService.deleteBook(id).then((response) => {
       dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
       console.warn('refetch');
+      updSearch('');
     });// FIXME: refetch
   };
   const handleBookUpdate = (id) => {
@@ -42,8 +50,32 @@ export default function BooksTab() {
       )}
       <Container>
         <Row className="my-3">
-          <Button variant="success" onClick={handleOpenModal}>Create Book</Button>
+          <Col>
+            <Form.Control
+              className="colmy-3 px-3"
+              size="lg"
+              placeholder="Author, Title or Publisher"
+              onChange={(e) => { updSearch(e.target.value); }}
+              title="search"
+              autoComplete="off"
+            />
+          </Col>
+          <Col className="d-flex gap-2 align-items-center">
+            <Button variant="success" onClick={handleOpenModal}>Create Book</Button>
+          </Col>
         </Row>
+
+        <Row className="my-2">
+          {error && (
+            <p>
+              {new Error(error).message}
+            </p>
+          )}
+          {loading && (
+            <Spinner animation="border" />
+          )}
+        </Row>
+        {value && value.books.length > 0 && (
         <Table
           striped
           bordered
@@ -81,6 +113,7 @@ export default function BooksTab() {
             ))}
           </tbody>
         </Table>
+        )}
 
       </Container>
     </>

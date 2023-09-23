@@ -2,11 +2,10 @@ import React from 'react';
 import {
   Card, Col, NavLink,
 } from 'react-bootstrap';
-import { bookType } from '../../utils/types';
+import { newsType } from '../../utils/types';
 
 export default function NewsItem({
-  // eslint-disable-next-line no-unused-vars
-  id, author, title, image, publisher, text,
+  id, author, title, image,
 }) {
   return (
     <Col
@@ -51,17 +50,6 @@ NewsItem.defaultProps = {
   author: null,
   title: null,
   image: null,
-  publisher: null,
-  year: null,
-  isbn: null,
-  pageCount: null,
-  lang: null,
-  price: null,
-  reducedPrice: 0,
-  isReducedNow: false,
-  annotation: null,
-  category: null,
-  tags: null,
 };
 
-NewsItem.propTypes = bookType.isRequired;
+NewsItem.propTypes = newsType.isRequired;

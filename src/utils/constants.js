@@ -18,7 +18,9 @@ export const DELIVERY_METHODS = [
     id: 6, title: 'Meest Пошта. Кур\'єр', freeFrom: 1500, stateFullAddress: true,
   }];
 
-export const ORDER_STATUSES = ['new', 'inProgress', 'finished'];
+export const ORDER_STATUSES = {
+  0: { title: 'Новий' }, 1: { title: 'В обробці' }, 2: { title: 'Доставка' }, 3: { title: 'Завершений' }, 4: { title: 'Скасований' },
+};
 
 export const PAYMENT_METHODS = ['cash', 'liqpay'];
 
@@ -51,3 +53,5 @@ export const BOOK_ORDERING = [{ title: 'Price high>low', value: 'price,DESC' }, 
 export const BOOK_COVER_TYPES = ['Мʼяка', 'Тверда'];
 
 export const BOOK_TAGS = ['New', 'Top', 'Exclusive'];
+
+export const NEWS_CATEGORIES = [''];

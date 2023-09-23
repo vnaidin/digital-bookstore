@@ -3,6 +3,8 @@ import {
   Col, Container, Row, Nav, NavLink, Navbar,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { LiaTelegram } from 'react-icons/lia';
+import { PiTiktokLogo } from 'react-icons/pi';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -16,28 +18,28 @@ export default function Footer() {
                 <NavLink
                   href="/about"
                 >
-                  {t('basic.header.routes.aboutUs')}
+                  {t('layout.header.routes.aboutUs')}
                 </NavLink>
               </Nav.Item>
               <Nav.Item className="col" key="contactUs">
                 <NavLink
                   href="/contact"
                 >
-                  {t('basic.header.routes.contactUs')}
+                  {t('layout.header.routes.contactUs')}
                 </NavLink>
               </Nav.Item>
               <Nav.Item className="col" key="retrieval">
                 <NavLink
                   href="/retrieval"
                 >
-                  {t('basic.header.routes.retrieval')}
+                  {t('layout.header.routes.retrieval')}
                 </NavLink>
               </Nav.Item>
               <Nav.Item className="col" key="terms">
                 <NavLink
                   href="/terms"
                 >
-                  {t('basic.header.routes.terms')}
+                  {t('layout.header.routes.terms')}
                 </NavLink>
               </Nav.Item>
             </Nav>
@@ -45,16 +47,34 @@ export default function Footer() {
         </Col>
 
         <Col>
-          <Row className="my-2">
+          <Row className="my-2 gap-1">
             <Col>Social:</Col>
-            <Col>Telegram</Col>
-            <Col>TikTok</Col>
+            <Col>
+              <a
+                href="https://www.t.me/vnaidin"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'inherit' }}
+              >
+                <LiaTelegram size={20} className="mx-1" />
+              </a>
+            </Col>
+            <Col>
+              <a
+                href="https://www.tiktok.com/@vnaidin"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'inherit' }}
+              >
+                <PiTiktokLogo size={20} className="mx-1" />
+              </a>
+            </Col>
           </Row>
         </Col>
 
       </Row>
       <Row className="justify-content-center mt-3">
-        { `Librarie © ${new Date().getFullYear()}`}
+        { `Alineabooks © ${new Date().getFullYear()}`}
       </Row>
     </Container>
   );

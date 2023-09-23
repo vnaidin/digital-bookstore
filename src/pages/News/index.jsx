@@ -77,7 +77,7 @@ export default function Main() { // TODO: split into components
 
         <Row className="my-2" title="book-cards-row">
           {value && value.news.length > 0 ? value.news.map(
-            (bookObj) => <NewsItem {...bookObj} key={bookObj.id} />,
+            (newsObj) => <NewsItem {...newsObj} key={newsObj.id} />,
           )
             : <Container><h3>No Data</h3></Container>}
         </Row>

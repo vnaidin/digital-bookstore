@@ -7,18 +7,17 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { FiUpload } from 'react-icons/fi';
 import AppContext from '../../appContext';
-import BookService from '../../services/book';
-import { BOOK_CATEGORIES, BOOK_COVER_TYPES, BOOK_TAGS } from '../../utils/constants';
-import { bookType } from '../../utils/types';
+import MerchService from '../../services/merch';
+import { BOOK_TAGS } from '../../utils/constants';
+import { merchType } from '../../utils/types';
 
-export default function CreateUpdateBookModal({
-  handleCloseModal, existingBook, authors, publishers,
+export default function CreateUpdateMerchModal({
+  handleCloseModal, existingMerch,
 }) {
   const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
-    ...existingBook,
-    category: existingBook?.category.length > 0 ? Array.from(existingBook?.category.split(',')).map((cat) => Number(cat)) : [],
-    tags: existingBook?.tags.length > 0 ? Array.from(existingBook?.tags.split(',')).map((tag) => Number(tag)) : [],
+    ...existingMerch,
+    tags: existingMerch?.tags.length > 0 ? Array.from(existingMerch?.tags.split(',')).map((tag) => Number(tag)) : [],
   });
 
   const { t } = useTranslation();
@@ -40,9 +39,9 @@ export default function CreateUpdateBookModal({
       fd.append('image', image);
       // if (image) { fd.append('image', image); }
 
-      if (existingBook?.id && existingBook?.id > 0) {
+      if (existingMerch?.id && existingMerch?.id > 0) {
         // perform edit
-        BookService.editBook(existingBook.id, fd).then(
+        MerchService.editMerch(existingMerch.id, fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
             dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
@@ -53,7 +52,7 @@ export default function CreateUpdateBookModal({
         });
       } else {
         // creating
-        BookService.createBook(fd).then(
+        MerchService.createMerch(fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
             dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
@@ -85,7 +84,7 @@ export default function CreateUpdateBookModal({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>{existingBook?.id ? 'Update' : 'Create'}</Modal.Title>
+        <Modal.Title>{existingMerch?.id ? 'Update' : 'Create'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -105,22 +104,6 @@ export default function CreateUpdateBookModal({
                 className="d-flex flex-column gap-1"
                 onSubmit={handleSubmit}
               >
-                <Form.Label>Author</Form.Label>
-                <Form.Control
-                  size="sm"
-                  placeholder="Author"
-                  onChange={handleChange}
-                  list="authors"
-                  title="author"
-                  autoComplete="off"
-                  defaultValue={existingBook?.author || ''}
-                  required
-                />
-                <datalist id="authors">
-                  {authors && authors.map((author) => (
-                    <option value={author} key={author} />
-                  ))}
-                </datalist>
 
                 <Form.Label>Title</Form.Label>
                 <Form.Control
@@ -129,204 +112,10 @@ export default function CreateUpdateBookModal({
                   onChange={handleChange}
                   title="title"
                   autoComplete="off"
-                  defaultValue={existingBook?.title || ''}
+                  defaultValue={existingMerch?.title || ''}
                   required
                 />
 
-                <Row>
-                  <Form.Group
-                    as={Col}
-                    md="6"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Publisher</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder="Publisher"
-                      onChange={handleChange}
-                      title="publisher"
-                      list="publishers"
-                      // autoComplete="off"
-                      defaultValue={existingBook?.publisher || ''}
-                      required
-                    />
-                    <datalist id="publishers">
-                      {publishers && publishers.map((author) => (
-                        <option value={author} key={author} />
-                      ))}
-                    </datalist>
-                  </Form.Group>
-
-                  <Form.Group
-                    as={Col}
-                    md="2"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Year</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder="Year"
-                      type="number"
-                      onChange={handleChange}
-                      title="year"
-                      list="year"
-                      autoComplete="off"
-                      // autoComplete="off"
-                      defaultValue={existingBook?.year || null}
-                      required
-                    />
-                    <datalist id="year">
-                      {[2017, 2018, 2019, 2020, 2021, 2022, 2023].map((author) => (
-                        <option value={author} key={author} />
-                      ))}
-                    </datalist>
-                  </Form.Group>
-
-                  <Form.Group
-                    as={Col}
-                    md="4"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>ISBN</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder="ISBN"
-                      type="number"
-                      onChange={handleChange}
-                      title="isbn"
-                      autoComplete="off"
-                      defaultValue={existingBook?.isbn || ''}
-                      required
-                    />
-                  </Form.Group>
-                </Row>
-                <Row className="align-items-center">
-
-                  <Form.Group
-                    as={Col}
-                    md="4"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Page count</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder="PageCount"
-                      type="number"
-                      onChange={handleChange}
-                      title="pageCount"
-                      autoComplete="off"
-                      defaultValue={existingBook?.pageCount || null}
-                      required
-                    />
-                  </Form.Group>
-
-                  <Form.Group
-                    as={Col}
-                    md="4"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Cover</Form.Label>
-
-                    <Form.Select
-                      size="sm"
-                      placeholder="cover"
-                      onChange={handleChange}
-                      title="coverType"
-                      list="cover"
-                      autoComplete="off"
-                      defaultValue={existingBook?.coverType || ''}
-                      required
-                    >
-                      <option hidden value={null}>none</option>
-                      {BOOK_COVER_TYPES.map(
-                        (collection, ind) => (
-                          <option
-                            key={collection}
-                            value={ind}
-                          >
-                            {collection}
-                          </option>
-                        ),
-                      )}
-                    </Form.Select>
-                  </Form.Group>
-
-                  <Form.Group
-                    as={Col}
-                    md="4"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Language</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder="Language"
-                      onChange={handleChange}
-                      title="lang"
-                      list="language"
-                      autoComplete="off"
-                      defaultValue={existingBook?.lang || ''}
-                      required
-                    />
-                    <datalist id="language">
-                      {['українська', 'english'].map((author) => (
-                        <option value={author} key={author} />
-                      ))}
-                    </datalist>
-                  </Form.Group>
-
-                  <Form.Group
-                    as={Col}
-                    md="12"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>Category</Form.Label>
-                    <div>
-                      <Accordion>
-                        <Accordion.Item eventKey="0">
-                          <Accordion.Header>Categories</Accordion.Header>
-                          <Accordion.Body as={Row} className="gap-1">
-                            {BOOK_CATEGORIES.map((category, ind) => (
-                              <Form.Check
-                                className="col md-3"
-                                key={category}
-                                style={{ border: '1px solid black' }}
-                                type="checkbox"
-                                label={category}
-                                value={ind}
-                                checked={new Set(formData.category).has(ind)}
-                                // required
-                                onChange={(event) => {
-                                  if (event.target.checked) {
-                                    setFormData((prev) => ({
-                                      ...prev,
-                                      category: prev.category?.concat(+event.target.value),
-                                    }));
-                                  } else {
-                                    const temp = [...formData.category];
-                                    const indToRemove = temp.findIndex(
-                                      (x) => x === +event.target.value,
-                                    );
-                                    temp.splice(indToRemove, 1);
-                                    setFormData((prev) => ({ ...prev, category: temp }));
-                                  }
-                                }}
-                              />
-                            ))}
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      </Accordion>
-
-                    </div>
-                  </Form.Group>
-
-                </Row>
                 <Row className="align-items-center">
 
                   <Form.Group
@@ -343,7 +132,7 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="price"
                       autoComplete="off"
-                      defaultValue={existingBook?.price || null}
+                      defaultValue={existingMerch?.price || null}
                       required
                     />
                   </Form.Group>
@@ -361,8 +150,8 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="reducedPrice"
                       autoComplete="off"
-                      defaultValue={existingBook?.reducedPrice !== null
-                        ? existingBook?.reducedPrice : 0}
+                      defaultValue={existingMerch?.reducedPrice !== null
+                        ? existingMerch?.reducedPrice : 0}
                     />
                   </Form.Group>
 
@@ -377,7 +166,7 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="isReducedNow"
                       // eslint-disable-next-line no-unsafe-optional-chaining
-                      defaultValue={+existingBook?.isReducedNow || false}
+                      defaultValue={+existingMerch?.isReducedNow || false}
                       required
                     >
                       <option value={0}>No</option>
@@ -394,7 +183,7 @@ export default function CreateUpdateBookModal({
                   maxLength={2000}
                   onChange={handleChange}
                   title="annotation"
-                  defaultValue={existingBook?.annotation || ''}
+                  defaultValue={existingMerch?.annotation || ''}
                   rows={8}
                   required
                 />
@@ -459,8 +248,8 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="amount"
                       autoComplete="off"
-                      defaultValue={existingBook?.item_management?.amount !== null
-                        ? existingBook?.item_management?.amount : 0}
+                      defaultValue={existingMerch?.item_management?.amount !== null
+                        ? existingMerch?.item_management?.amount : 0}
                       required
                     />
                   </Form.Group>
@@ -480,7 +269,7 @@ export default function CreateUpdateBookModal({
                       maxLength={2000}
                       onChange={handleChange}
                       title="comments"
-                      defaultValue={existingBook?.item_management?.comments || ''}
+                      defaultValue={existingMerch?.item_management?.comments || ''}
                       rows={5}
                     />
                   </Form.Group>
@@ -490,7 +279,7 @@ export default function CreateUpdateBookModal({
                   className="m-2 place-self-center"
                   type="submit"
                 >
-                  {existingBook?.id ? 'Update' : 'Create'}
+                  {existingMerch?.id ? 'Update' : 'Create'}
                 </Button>
               </Form.Group>
             </Col>
@@ -508,11 +297,11 @@ export default function CreateUpdateBookModal({
               className="align-items-center"
             >
 
-              {(image || existingBook?.image) && (
+              {(image || existingMerch?.image) && (
                 <Card.Img
                   variant="top"
                   src={image ? URL.createObjectURL(image)
-                    : `${existingBook?.image ? '' : process.env.REACT_APP_BE_URL}${existingBook.image}`}
+                    : `${existingMerch?.image ? '' : process.env.REACT_APP_BE_URL}${existingMerch.image}`}
                 />
               )}
               <Card.Body>
@@ -550,31 +339,20 @@ export default function CreateUpdateBookModal({
   );
 }
 
-CreateUpdateBookModal.defaultProps = {
-  existingBook: {
+CreateUpdateMerchModal.defaultProps = {
+  existingMerch: {
     id: null,
-    author: null,
     title: null,
     // image: null,
-    publisher: null,
-    year: null,
-    isbn: null,
-    pageCount: null,
-    lang: null,
     price: null,
     reducedPrice: 0,
     isReducedNow: false,
     annotation: null,
-    category: '',
     tags: '',
   },
-  authors: null,
-  publishers: null,
 };
 
-CreateUpdateBookModal.propTypes = {
+CreateUpdateMerchModal.propTypes = {
   handleCloseModal: PropTypes.func.isRequired,
-  existingBook: bookType,
-  authors: PropTypes.arrayOf(PropTypes.string),
-  publishers: PropTypes.arrayOf(PropTypes.string),
+  existingMerch: merchType,
 };

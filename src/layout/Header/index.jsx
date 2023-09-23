@@ -32,39 +32,39 @@ export default function Header() {
         >
           <img alt="librarie.com" src={logo} width={150} />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav " />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle aria-controls="layout-navbar-nav " />
+        <Navbar.Collapse id="layout-navbar-nav">
           <Nav className="mx-auto gap-3 align-items-center" justify>
-            <Nav.Item key="authors">
+            {/* <Nav.Item key="authors">
               <NavLink
                 active={pathname.substring(1) === 'authors'}
                 href="/authors"
               >
-                {t('basic.header.routes.authors')}
+                {t('layout.header.routes.authors')}
               </NavLink>
-            </Nav.Item>
+            </Nav.Item> */}
             <Nav.Item key="news">
               <NavLink
                 active={pathname.substring(1) === 'news'}
                 href="/news"
               >
-                {t('basic.header.routes.news')}
+                {t('layout.header.routes.news')}
               </NavLink>
             </Nav.Item>
-            {/* <Nav.Item key="merch">
+            <Nav.Item key="merch">
               <NavLink
                 active={pathname.substring(1) === 'merch'}
                 href="/merch"
               >
-                {t('basic.header.routes.merch')}
+                {t('layout.header.routes.merch')}
               </NavLink>
-            </Nav.Item> */}
+            </Nav.Item>
             <Nav.Item key="delivery">
               <NavLink
                 active={pathname.substring(1) === 'delivery'}
                 href="/delivery"
               >
-                {t('basic.header.routes.delivery')}
+                {t('layout.header.routes.delivery')}
               </NavLink>
             </Nav.Item>
 
@@ -74,7 +74,7 @@ export default function Header() {
                 active={pathname.substring(1) === 'moderator'}
                 href="/moderator"
               >
-                {t('basic.header.routes.moderator')}
+                {t('layout.header.routes.moderator')}
               </NavLink>
             </Nav.Item>
             )}

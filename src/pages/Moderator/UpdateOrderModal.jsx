@@ -10,7 +10,6 @@ import OrderService from '../../services/order';
 
 export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
   const [formData, setFormData] = useState({
-    isRejected: existingOrder?.isRejected,
     status: existingOrder?.status,
   });
 
@@ -42,7 +41,7 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
         type: 'setToast',
         payload: {
           visible: 5,
-          body: t('basic.toasts.6'),
+          body: t('layout.toasts.6'),
           callee: t('pages.create-nft.btns.create-nft'),
         },
       });
@@ -84,27 +83,16 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
                 required
               >
                 <option hidden value={null}>none</option>
-                {ORDER_STATUSES.map(
+                {Object.values(ORDER_STATUSES).map(
                   (collection, ind) => (
                     <option
-                      key={collection}
+                      key={collection.title}
                       value={ind}
                     >
-                      {collection}
+                      {collection.title}
                     </option>
                   ),
                 )}
-              </Form.Select>
-
-              <Form.Label>Rejected?</Form.Label>
-              <Form.Select
-                onChange={handleChange}
-                title="isRejected"
-                  // eslint-disable-next-line no-unsafe-optional-chaining
-                defaultValue={+existingOrder?.isRejected || false}
-              >
-                <option value={0}>No</option>
-                <option value={1}>Yes</option>
               </Form.Select>
 
               <Button

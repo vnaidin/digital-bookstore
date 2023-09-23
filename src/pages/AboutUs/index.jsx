@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 
 export default function AboutUs() {
@@ -8,7 +8,8 @@ export default function AboutUs() {
       <Helmet>
         <title>About Us</title>
       </Helmet>
-      About Us page
+      <Row className="my-2"><h2>About us</h2></Row>
+      <Row>SOME TEXT</Row>
     </Container>
   );
 }

@@ -31,13 +31,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     status: {
-      type: Sequelize.INTEGER// new, inProgress, finished
+      type: Sequelize.INTEGER
     },
     paymentMethodId:{
       type: Sequelize.INTEGER
-    },
-    rejected: {
-      type: Sequelize.BOOLEAN
     }
   });
 

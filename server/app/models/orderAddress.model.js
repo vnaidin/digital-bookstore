@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     houseNr: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     },
     flatNr: {
       type: Sequelize.INTEGER

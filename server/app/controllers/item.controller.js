@@ -98,7 +98,6 @@ exports.updateBook = async (req, res) => {
   }
 }
 
-
 exports.deleteBook = async (req, res) => {
   const itemId = req.params.id;
 
@@ -110,10 +109,38 @@ exports.deleteBook = async (req, res) => {
   res.status(200).json({ message: "Deleted book " + itemId });
 }
 
+
 exports.getMerch = async (req, res) => {
   // Find all merch
-  const merch = await Item.findAll({ where: { itemType: 'merch' } });
-  res.status(200).json(merch);
+  const { page, order, priceRange } = req.query;
+  const paginationQuery = {
+    order: order ? [order ? [...order.split(",")] : db.sequelize.random()] : null,
+    where: {
+      [Op.and]: [
+        { itemType: 'merch' },
+        { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
+      ]
+    },
+    offset: page > 0 ? 12 * page : 0,// page n increments
+    limit: page ? 12 : null,// show per page
+    include: { model: ItemsManagement, attributes: ['amount', 'comments'] }
+  };
+  const attributesQuery = {
+  /* attributes: ['author', 'publisher', "price"], */ where: {
+      [Op.and]: [
+        { itemType: 'merch' },
+        { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
+      ]
+    }
+  };
+  const { count, rows } = await Item.findAndCountAll(paginationQuery);
+  const authors = await Item.findAll(attributesQuery);
+  const priceValues = authors.map(({ price }) => +price)
+  res.status(200).json({
+    merch: rows,
+    total: count,
+    minMaxPrice: [Math.min(...priceValues), Math.max(...priceValues)]
+  });
 };
 
 exports.getMerchById = async (req, res) => {
@@ -162,22 +189,21 @@ exports.deleteMerch = async (req, res) => {
 /**
  *  Common for both book and merch, search and getting by list of ID's
  */
-
-exports.getItemsOfOrder = async (req, res) => {
-  const orderItems = req.query.items;
-  const items = await Item.findAll({
-    attributes: ['id', 'author', 'title', 'image'],
+exports.getItemsById = async (req, res) => {
+  const itemId = req.params.id;
+  const items = await Item.findOne({
     where: {
-      id: orderItems.split(',')
+      id: itemId
     }
   });
   res.status(200).json(items);
 }
 
-exports.searchItems = async (req, res) => {
+exports.searchBooks = async (req, res) => {
   // console.log(req?.query)
   const result = await Item.findAll({
     where: {
+      itemType: 'book',
       [Op.or]: [
         {
           title: {
@@ -195,7 +221,24 @@ exports.searchItems = async (req, res) => {
           }
         }
       ]
-    }
+    }, include: { model: ItemsManagement, attributes: ['amount', 'comments'] }
   })
-  res.status(200).json(result)
+  res.status(200).json({ books: result })
+}
+
+exports.searchMerch = async (req, res) => {
+  // console.log(req?.query)
+  const result = await Item.findAll({
+    where: {
+      itemType: 'merch',
+      [Op.or]: [
+        {
+          title: {
+            [Op.like]: `%${req.query.search}%`
+          }
+        },
+      ]
+    }, include: { model: ItemsManagement, attributes: ['amount', 'comments'] }
+  })
+  res.status(200).json({ merch: result })
 }

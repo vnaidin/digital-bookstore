@@ -277,5 +277,37 @@ module.exports = function(app) {
   *       404:
   *         description: The order was not found
   */
-  app.delete('/api/order/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteOrder)
+  app.delete('/api/order/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteOrder);
+
+  /**
+   * @swagger
+   * /orders/search:
+   *   get:
+   *     summary: Get search items
+   *     tags: [Orders]
+   *     parameters:
+   *      - in: query
+   *        name: search
+   *        schema:
+   *          type: string
+   *        required: true
+   *        description: Query 
+   *     responses:
+   *       200:
+   *         description: The items of search.
+   *         content:
+   *           application/json:
+   *            schema:
+   *              type: array
+   *              items:
+   *               $ref: '#/components/schemas/Order'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.get(
+    "/api/orders/search",
+     /* [authJwt.verifyToken,authJwt.isModerator], */
+    controller.searchOrder
+  );
 };

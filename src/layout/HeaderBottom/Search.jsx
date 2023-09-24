@@ -31,14 +31,14 @@ export default function SearchBar() {
         value={search}
       />
 
-      {value && (
+      {value && value.books.length > 0 && (
         <ListGroup
           style={{
             position: 'absolute', width: 'inherit', zIndex: '1',
           }}
           className="container-fluid px-0"
         >
-            {value.map((result) => (
+            {value.books.map((result) => (
               <ListGroupItem
                 key={result.id}
                 style={{

@@ -1,7 +1,6 @@
 const db = require("../models");
 const nodemailer = require('../../mailSender');
 const Order = db.order;
-// const Item = db.item;
 const ItemsManagement = db.itemsManagement;
 const OrderItems = db.orderItems;
 const OrderAddress = db.orderAddress;
@@ -10,7 +9,13 @@ const Op = db.Sequelize.Op;
 
 exports.getOrders = async (req, res) => {
   // Find all orders
-  const orders = await Order.findAll({ include: [OrderItems, OrderAddress] });
+  const { status } = req.query;
+
+  const orders = await Order.findAll({where: {
+    [Op.and]: [
+      { status: status ? status : { [Op.not]: null } },
+    ]
+  }, include: [OrderItems, OrderAddress] });
   res.status(200).json(orders);
 
 };
@@ -32,7 +37,6 @@ exports.getOrdersOfUser = async (req, res) => {
 exports.createOrder = async (req, res) => {
   const { userId, name, surname, phoneNumber, receiverName, receiverSurname, receiverPhoneNumber,
     email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price } = req.body;
-  console.log(order_items)
   const mailOptions = {
     from: process.env.EMAIL_SENDER,
     to: email,
@@ -76,7 +80,6 @@ exports.createOrder = async (req, res) => {
     // If the execution reaches this line, the transaction has been committed successfully
     // `result` is whatever was returned from the transaction callback (the `user`, in this case)
     res.status(200).json({ message: `New order created`, id: result.id })
-    //TODO: send email
     nodemailer.transporter.sendMail({
       ...mailOptions,
       context: { ...mailOptions.context, orderPage: req.headers.origin + '/order/' + result.id }
@@ -98,12 +101,39 @@ exports.createOrder = async (req, res) => {
 }
 
 exports.updateOrder = async (req, res) => {
+  const mailOptions = {
+    from: process.env.EMAIL_SENDER,
+    subject: 'Зміна статусу замовлення',
+    template: 'orderStatusChange',
+    context: {
+      address: req.headers.origin,
+    }
+  };
+  const MAILING_STATUSES = { 2: { title: 'Доставка' }, 3: { title: 'Завершений' }, 4: { title: 'Скасований' } };
   const id = req.params.id;
   await Order.update({ ...req.body }, {
     where: {
       id: id
     }
-  }).then(order => res.status(200).json({ message: `Order ${id} updated` }))
+  }).then(async orderId => {
+    res.status(200).json({ message: `Order ${orderId} updated` })
+    const updatedOrder = await Order.findOne({ where: { id: id }, include: [OrderItems, OrderAddress] })
+    if (req.body.status > 1 && req.body.status < 5) {
+      nodemailer.transporter.sendMail({
+        ...mailOptions, to: updatedOrder.email,
+        context: {
+          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + orderId, status: MAILING_STATUSES[+updatedOrder.status].title,
+          nOfItems: updatedOrder.order_items.length
+        }
+      }, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    }
+  })
 }
 
 exports.deleteOrder = async (req, res) => {//TODO: do we need it?
@@ -114,4 +144,29 @@ exports.deleteOrder = async (req, res) => {//TODO: do we need it?
     }
   });
   res.status(200).json({ message: "Deleted order " + orderId })
+}
+
+exports.searchOrder = async (req, res) => {
+  const result = await Order.findAll({
+    where: {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: `%${req.query.search}%`
+          }
+        },
+        {
+          surname: {
+            [Op.like]: `%${req.query.search}%`
+          }
+        },
+        {
+          phoneNumber: {
+            [Op.like]: `%${req.query.search}%`
+          }
+        }
+      ]
+    }, include: [OrderItems, OrderAddress]
+  })
+  res.status(200).json(result)
 }

@@ -166,21 +166,12 @@ module.exports = function(app) {
    *         itemType:
    *           type: string
    *           description: Item Type
-   *         author:
-   *           type: string
-   *           description: Merch author
    *         title:
    *           type: string
    *           description: The title of Merch
    *         image:
    *           type: string
    *           description: The Merch img path
-   *         year:
-   *           type: integer
-   *           description: The Merch manufacturing year
-   *         lang:
-   *           type: string
-   *           description: The Merch language
    *         price:
    *           type: integer
    *           description: The Merch price
@@ -193,24 +184,17 @@ module.exports = function(app) {
    *         annotation:
    *           type: string
    *           description: The Merch annotation
-   *         category:
-   *           type: integer
-   *           description: The Merch category
    *         tags:
    *           type: string
    *           description: The Merch tags
    *       example:
    *         itemType: merch
-   *         author: test
    *         title: test
    *         image: test
-   *         year: 2023
-   *         lang: lang
    *         price: 500
    *         reducedPrice: 450
    *         isReducedNow: 1
    *         annotation: annotation
-   *         category: military
    *         tags: new
    *     MerchCreate:
    *       type: object
@@ -218,9 +202,6 @@ module.exports = function(app) {
    *         itemType:
    *           type: string
    *           description: Item Type
-   *         author:
-   *           type: string
-   *           description: Book author
    *         title:
    *           type: string
    *           description: The title of book
@@ -228,12 +209,6 @@ module.exports = function(app) {
    *           type: string
    *           description: The books img path
    *           format: binary
-   *         year:
-   *           type: integer
-   *           description: The books publish year
-   *         lang:
-   *           type: string
-   *           description: The books language
    *         price:
    *           type: integer
    *           description: The books price
@@ -246,9 +221,6 @@ module.exports = function(app) {
    *         annotation:
    *           type: string
    *           description: The books annotation
-   *         category:
-   *           type: integer
-   *           description: The books category
    *         tags:
    *           type: string
    *           description: The books tags
@@ -593,15 +565,15 @@ module.exports = function(app) {
 
   /**
    * @swagger
-   * /items/order:
+   * /item/:id:
    *   get:
    *     summary: Get items of the order
    *     tags: [Items]
    *     parameters:
    *      - in: query
-   *        name: items
+   *        name: id
    *        schema:
-   *          type: string
+   *          type: integer
    *        required: true
    *        description: Items to show 
    *     responses:
@@ -612,23 +584,23 @@ module.exports = function(app) {
    *            schema:
    *              type: array
    *              items:
-   *               $ref: '#/components/schemas/Items'
+   *               $ref: '#/components/schemas/Book'
    *       500:
    *         description: Some server error
    *
    */
   app.get(
-    "/api/items/order",
+    "/api/item/:id",
     // [authJwt.verifyToken],
-    controller.getItemsOfOrder
+    controller.getItemsById
   );
 
   /**
    * @swagger
-   * /items/search:
+   * /books/search:
    *   get:
    *     summary: Get search items
-   *     tags: [Items]
+   *     tags: [Books]
    *     parameters:
    *      - in: query
    *        name: search
@@ -644,14 +616,44 @@ module.exports = function(app) {
    *            schema:
    *              type: array
    *              items:
-   *               $ref: '#/components/schemas/Items'
+   *               $ref: '#/components/schemas/Book'
    *       500:
    *         description: Some server error
    *
    */
   app.get(
-    "/api/items/search",
-    // [authJwt.verifyToken],
-    controller.searchItems
+    "/api/books/search",
+    controller.searchBooks
+  );
+
+  /**
+   * @swagger
+   * /merches/search:
+   *   get:
+   *     summary: Get search items
+   *     tags: [Merch]
+   *     parameters:
+   *      - in: query
+   *        name: search
+   *        schema:
+   *          type: string
+   *        required: true
+   *        description: Query 
+   *     responses:
+   *       200:
+   *         description: The items of search.
+   *         content:
+   *           application/json:
+   *            schema:
+   *              type: array
+   *              items:
+   *               $ref: '#/components/schemas/Merch'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.get(
+    "/api/merches/search",
+    controller.searchMerch
   );
 };

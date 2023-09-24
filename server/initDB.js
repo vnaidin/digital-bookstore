@@ -33,6 +33,7 @@ exports.initialDBFill = function () {
     });
     // create some users
     User.create({
+        name: "Владислав",
         email: 'shniperson62@gmail.com',
         password: bcrypt.hashSync(`Nxjg2n5cuiGTSpA`, 8)
     })
@@ -53,8 +54,8 @@ exports.initialDBFill = function () {
             });
         });
     User.create({
-        // username: req.body.username,
-        email: 'Jane@gmail.com',
+        name: "Олександр",
+        email: 'rodionovoleksandr84@gmail.com',
         password: bcrypt.hashSync(`@'Sq12RRaass`, 8)
     })
         .then(user => {
@@ -64,6 +65,7 @@ exports.initialDBFill = function () {
                         [Op.or]: [
                             "user",
                             "seller",
+                            "moderator",
                         ]
                     }
                 }
@@ -92,7 +94,6 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
     }, {
@@ -118,7 +119,6 @@ exports.initialDBFill = function () {
         tags: '0,1',
         item_management: {
             amount: 4,
-            purchasePrice: 100,
             comments: null,
         }
     }, {
@@ -144,10 +144,9 @@ exports.initialDBFill = function () {
         tags: '0,1',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -170,10 +169,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 0,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -196,10 +194,9 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -222,10 +219,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -248,10 +244,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 200,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -274,10 +269,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 300,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -300,10 +294,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -326,10 +319,9 @@ exports.initialDBFill = function () {
         tags: '1,2',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -352,10 +344,9 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     }
     );
@@ -379,10 +370,9 @@ exports.initialDBFill = function () {
         tags: '1,2',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -411,10 +401,9 @@ exports.initialDBFill = function () {
         tags: '1,2',
         item_management: {
             amount: 10,
-            purchasePrice: 300,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -437,10 +426,9 @@ exports.initialDBFill = function () {
         tags: '1,2',
         item_management: {
             amount: 10,
-            purchasePrice: 200,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -467,10 +455,9 @@ exports.initialDBFill = function () {
         tags: '1,2',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -493,10 +480,9 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -519,10 +505,9 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -545,10 +530,9 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 200,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -575,10 +559,9 @@ exports.initialDBFill = function () {
         tags: '0,1',
         item_management: {
             amount: 10,
-            purchasePrice: 300,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -603,10 +586,9 @@ exports.initialDBFill = function () {
         tags: '0',
         item_management: {
             amount: 10,
-            purchasePrice: 600,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -629,10 +611,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 200,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -656,10 +637,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 300,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -686,10 +666,9 @@ exports.initialDBFill = function () {
         tags: '1,2',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -714,10 +693,9 @@ exports.initialDBFill = function () {
         tags: '',
         item_management: {
             amount: 10,
-            purchasePrice: 100,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -741,10 +719,9 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 300,
             comments: null,
         }
-    },{
+    }, {
         include: [ItemsManagement]
     });
     Item.create({
@@ -769,10 +746,29 @@ exports.initialDBFill = function () {
         tags: '1',
         item_management: {
             amount: 10,
-            purchasePrice: 200,
             comments: null,
         }
-    },{
+    }, {
+        include: [ItemsManagement]
+    });
+    //create merch
+    Item.create({
+        id: 27,
+        itemType: "merch",
+        title: "Photo of Goga",
+        image: "https://book-ye.com.ua/upload/resize_cache/iblock/c9f/520_860_1/7e431340_320a_11ee_8187_00505684ea69_8bf8e5a1_320b_11ee_8187_00505684ea69.jpg",
+        price: 564,
+        reducedPrice: 349,
+        isReducedNow: true,
+        annotation: `«Шалені авторки» — це антологія текстів українських письменниць, своєрідна мандрівка крізь останні два століття, під час якої різні авторки, маючи несхожі стильові уподобання й естетичні орієнтації, змальовують усю множинність і складність жіночого досвіду.
+        Перед читачами постануть декадансні персонажки Ольги Кобилянської, екзотичні героїні Софії Яблонської, рішучі бунтарки Ірини Вільде. Публікуються і найбільш резонансні тексти сучасних письменниць, зокрема Оксани Забужко і Людмили Таран.
+        Книжка підготована у співпраці з ютуб-каналом «Шалені автор(к)и», авторами якого є літературознавці Віра Агеєва й Ростислав Семків.`,
+        tags: '1',
+        item_management: {
+            amount: 10,
+            comments: null,
+        }
+    }, {
         include: [ItemsManagement]
     });
     //create some orders
@@ -781,7 +777,7 @@ exports.initialDBFill = function () {
         name: "Владислав",
         surname: "Найдін",
         phoneNumber: "+380954279092",
-        email: "vlad_naidin@outlook.com",
+        email: "shniperson62@gmail.com",
         order_address: {
             city: "Kyiv",
             branch: 21,
@@ -846,14 +842,14 @@ exports.initialDBFill = function () {
     }, {
         include: [OrderItems, OrderAddress]
     });
-// add fake news
+    // add fake news
     News.create({
         id: 1,
         author: `Леся Українка`,
         title: "Шалені авторки. Мала проза українських письменниць",
         image: "https://book-ye.com.ua/upload/resize_cache/iblock/c9f/520_860_1/7e431340_320a_11ee_8187_00505684ea69_8bf8e5a1_320b_11ee_8187_00505684ea69.jpg",
         showImage: true,
-        publisher:'vnaidin',
+        publisher: 'vnaidin',
         text: `«Шалені авторки» — це антологія текстів українських письменниць, своєрідна мандрівка крізь останні два століття, під час якої різні авторки, маючи несхожі стильові уподобання й естетичні орієнтації, змальовують усю множинність і складність жіночого досвіду.
         Перед читачами постануть декадансні персонажки Ольги Кобилянської, екзотичні героїні Софії Яблонської, рішучі бунтарки Ірини Вільде. Публікуються і найбільш резонансні тексти сучасних письменниць, зокрема Оксани Забужко і Людмили Таран.
         Книжка підготована у співпраці з ютуб-каналом «Шалені автор(к)и», авторами якого є літературознавці Віра Агеєва й Ростислав Семків.`,

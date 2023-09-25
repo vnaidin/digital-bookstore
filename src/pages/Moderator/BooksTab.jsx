@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import {
   Button, Container, Table, Row, Col, Form, Spinner,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useDebounce, useFetch } from '../../utils/hooks';
 import BookService from '../../services/book';
 import CreateUpdateBookModal from './CreateUpdateBookModal';
@@ -10,6 +11,7 @@ import AppContext from '../../appContext';
 
 export default function BooksTab() {
   const { dispatch } = useContext(AppContext);
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [currentBook, updateBookObject] = useState();
 
@@ -30,7 +32,7 @@ export default function BooksTab() {
   );
   const handleBookDelete = (id) => {
     BookService.deleteBook(id).then((response) => {
-      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
       console.warn('refetch');
       updSearch('');
     });// FIXME: refetch
@@ -61,7 +63,7 @@ export default function BooksTab() {
             />
           </Col>
           <Col className="d-flex gap-2 align-items-center">
-            <Button variant="success" onClick={handleOpenModal}>Create Book</Button>
+            <Button variant="success" onClick={handleOpenModal}>{t('pages.moderator.tabs.book.create')}</Button>
           </Col>
         </Row>
 
@@ -85,12 +87,12 @@ export default function BooksTab() {
           <thead>
             <tr>
               <th>#</th>
-              <th>Author_Title</th>
+              <th>{t('pages.moderator.tabs.book.table.author-title')}</th>
               <th>ISBN</th>
-              <th>Price</th>
-              <th>Reduced_Price</th>
-              <th>Is Reduced</th>
-              <th>Actions</th>
+              <th>{t('pages.moderator.tabs.book.table.price')}</th>
+              <th>{t('pages.moderator.tabs.book.table.red-price')}</th>
+              <th>{t('pages.moderator.tabs.book.table.isReduced')}</th>
+              <th>{t('pages.moderator.tabs.book.table.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -106,8 +108,8 @@ export default function BooksTab() {
                 <td>{reducedPrice}</td>
                 <td>{isReducedNow?.toString() || 'false'}</td>
                 <td className="d-flex gap-1">
-                  <Button variant="danger" onClick={() => handleBookDelete(id)}>Remove</Button>
-                  <Button variant="warning" onClick={() => { handleBookUpdate(id); }}>Update</Button>
+                  <Button variant="danger" onClick={() => handleBookDelete(id)}>{t('pages.moderator.tabs.merch.remove')}</Button>
+                  <Button variant="warning" onClick={() => { handleBookUpdate(id); }}>{t('pages.moderator.tabs.merch.update')}</Button>
                 </td>
               </tr>
             ))}

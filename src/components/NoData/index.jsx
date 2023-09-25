@@ -1,16 +1,12 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
-export default function Authors() {
+export default function NoDataComponent() {
   const { t } = useTranslation();
   return (
     <Container>
-      <Helmet>
-        <title>{t('pages.authors.title')}</title>
-      </Helmet>
-      authors page
+      <h3>{t('components.nodata')}</h3>
     </Container>
   );
 }

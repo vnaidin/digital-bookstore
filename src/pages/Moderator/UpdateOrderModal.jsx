@@ -31,7 +31,7 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
         { isRejected: formData?.isRejected, status: +formData.status },
       ).then(
         (response) => {
-          dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           handleCloseModal();
         },
       ).catch((err) => console.error(new Error(err).message));
@@ -58,7 +58,7 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Update</Modal.Title>
+        <Modal.Title>{t('pages.moderator.tabs.order.modal.update')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -73,12 +73,12 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
               onSubmit={handleSubmit}
             >
 
-              <Form.Label>Status</Form.Label>
+              <Form.Label>{t('pages.moderator.tabs.order.table.status')}</Form.Label>
               <Form.Select
                 aria-label="collection-select"
                 onChange={handleChange}
                 title="status"
-                placeholder="Status"
+                placeholder={t('pages.moderator.tabs.order.table.status')}
                 defaultValue={existingOrder?.status || null}
                 required
               >
@@ -86,10 +86,10 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
                 {Object.values(ORDER_STATUSES).map(
                   (collection, ind) => (
                     <option
-                      key={collection.title}
+                      key={t(`constants.orderStatus.${ind}`)}
                       value={ind}
                     >
-                      {collection.title}
+                      {t(`constants.orderStatus.${ind}`)}
                     </option>
                   ),
                 )}
@@ -99,7 +99,7 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
                 className="m-2 place-self-center"
                 type="submit"
               >
-                Update
+                {t('pages.moderator.tabs.order.modal.update')}
               </Button>
             </Form.Group>
 

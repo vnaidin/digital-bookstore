@@ -1,5 +1,13 @@
 {
-    "components": {},
+    "components": {
+        "bookCard": {
+            "item-ending": "Ending",
+            "item-ended": "Ended"
+        },
+        "buyBtn": "Buy",
+        "nodata": "No Data...",
+        "pagination-label": "Page"
+    },
     "layout": {
         "header": {
             "routes": {
@@ -15,23 +23,320 @@
             }
         },
         "footer": {
-            "bla": "bla"
+            "social": "Social"
         },
-        "toasts": {
-            "successful": "Successful",
-            "waiting-staking": "NFT is waiting to be staked",
-            "stake-as-soon": "Your NFT will be staked as soon as possible",
-            "1": "Log into TronLink",
-            "2": "Looking for blockchain connectivity...",
-            "3": "Item is already sold!",
-            "4": "You have the rights for NFT Creation",
-            "5": "You don't have the rights for NFT Creation",
-            "6": "You have missed some information",
-            "7": "You will get the reward as soon as possible",
-            "8": "Nothing to withdraw",
-            "9": "Invalid Wallet Address",
-            "10": "Please, put the NFT ID to which we will assign the bonus"
+        "headerBottom": {
+            "greeting": "Hello",
+            "auth": {
+                "or": "or",
+                "register": "Register",
+                "login": "Log In",
+                "logout": "Log Out",
+                "reset-pass": "Reset Password",
+                "save": "Save changes",
+                "user-info": "User Info",
+                "form": {
+                    "name": "Name",
+                    "surname": "Surname",
+                    "tel": "Phone Number",
+                    "email": "Email",
+                    "pass": "Password",
+                    "forgot-pass": "Forgot password?",
+                    "valid-feedback": "Looks good!",
+                    "reset-pass": "Reset"
+                },
+                "ordersTable": {
+                    "title": "Orders",
+                    "items": "Items",
+                    "price": "Price",
+                    "status": "Status"
+                }
+            },
+            "catalog": {
+                "title": "Catalogue"
+            },
+            "search": {
+                "placeholder": "Author, Title or Publisher"
+            },
+            "shopping-cart": {
+                "title": "Shopping Cart",
+                "is-empty": "Your shopping cart is empty. Start buying now!",
+                "total": "Total",
+                "empty-cart": "Empty Cart",
+                "continue": "Continue buying",
+                "make-order": "Make an Order"
+            }
         }
     },
-    "pages": {}
+    "pages": {
+        "404": {},
+        "aboutUs": {
+            "title": "About Us"
+        },
+        "authors": {
+            "title": "Authors"
+        },
+        "bookPage": {
+            "author": "Author",
+            "year": "Year",
+            "lang": "Language",
+            "cover": "Cover",
+            "pgCount": "Page Count",
+            "publisher": "Publisher",
+            "category": "Category",
+            "annotation": "Annotation"
+        },
+        "contacts": {
+            "title": "Contacts",
+            "email": "Email",
+            "tel": "Telephone"
+        },
+        "delivery": {
+            "title": "Delivery",
+            "free-from": "Free delivery from",
+            "methods": {
+                "1": "UkrPoshta Express (delivery to branch)",
+                "2": "Nova Poshta. Branch",
+                "3": "New Post. Postman",
+                "4": "Nova Poshta. Courier",
+                "5": "Meest Post. Branch / mini-branch",
+                "6": "Meest Post. Courier"
+            }
+        },
+        "mainPage": {
+            "title": "Internet bookstore",
+            "books": "Books",
+            "book-filters": {
+                "price-ranges": "Price ranges",
+                "ok": "Ok",
+                "author": "Author",
+                "publisher": "Publisher"
+            },
+            "order": {
+                "title": "Order by",
+                "0": "Price High > Low",
+                "1": "Price Low > High"
+            }
+        },
+        "merch": {
+            "title": "Merch",
+            "merch-filters": {
+                "price-ranges": "Price ranges",
+                "ok": "Ok"
+            }
+        },
+        "merchPage": {
+            "description": "Description"
+        },
+        "moderator": {
+            "tabs": {
+                "order": {
+                    "filter": "Filter",
+                    "filter-p": "By Status",
+                    "table": {
+                        "name": "Name",
+                        "surname": "Surname",
+                        "email": "Email",
+                        "price": "Price",
+                        "status": "Status",
+                        "actions": "Actions",
+                        "more-info-line": {
+                            "delivery": "Delivery",
+                            "address": "Address",
+                            "tel": "Telephone",
+                            "receiver": "Receiver",
+                            "comments": "Comments"
+                        }
+                    },
+                    "modal": {
+                        "update": "Update"
+                    }
+                },
+                "merch": {
+                    "create": "Create Merch",
+                    "remove": "Remove",
+                    "update": "Update",
+                    "table": {
+                        "title": "Title",
+                        "price": "Price",
+                        "red-price": "Reduced Price",
+                        "isReduced": "Is Reduced",
+                        "actions": "Actions"
+                    },
+                    "modal": {
+                        "update": "Update",
+                        "create": "Create",
+                        "title": "Title",
+                        "price": "Price",
+                        "red-price": "Reduced Price",
+                        "isReduced": "Is Reduced",
+                        "description": "Description",
+                        "tags": "Tags",
+                        "amount": "Amount",
+                        "comments": "Comments"
+                    }
+                },
+                "book": {
+                    "create": "Create Book",
+                    "remove": "Remove",
+                    "update": "Update",
+                    "table": {
+                        "author-title": "Author_Title",
+                        "price": "Price",
+                        "red-price": "Reduced Price",
+                        "isReduced": "Is Reduced",
+                        "actions": "Actions"
+                    },
+                    "modal": {
+                        "update": "Update",
+                        "create": "Create",
+                        "title": "Title",
+                        "author": "Author",
+                        "publisher": "Publisher",
+                        "year": "Year",
+                        "lang": "Language",
+                        "pgCount": "Page Count",
+                        "cover": "Cover",
+                        "price": "Price",
+                        "red-price": "Reduced Price",
+                        "isReduced": "Is Reduced",
+                        "category": "Category",
+                        "annotation": "Annotation",
+                        "tags": "Tags",
+                        "amount": "Amount",
+                        "comments": "Comments"
+                    }
+                },
+                "news": {
+                    "create": "Create News",
+                    "remove": "Remove",
+                    "update": "Update",
+                    "table": {
+                        "author": "Author",
+                        "title": "Title",
+                        "publisher": "Publisher",
+                        "actions": "Actions"
+                    },
+                    "modal": {
+                        "update": "Update",
+                        "create": "Create",
+                        "title": "Title",
+                        "author": "Author",
+                        "publisher": "Publisher",
+                        "category": "Category",
+                        "text": "Text",
+                        "showImg": "Show Image"
+                    }
+                }
+            }
+        },
+        "news": {
+            "title": "News"
+        },
+        "order": {
+            "title": "Order",
+            "cart-total": "Total",
+            "form": {
+                "personal-info": "Personal Information",
+                "name": "Name",
+                "name-p": "John",
+                "surname": "Surname",
+                "surname-p": "Appleseed",
+                "tel": "Phone Number",
+                "email": "Email",
+                "email-p": "john@appleseed.com",
+                "receiver": "Receiver",
+                "receive-me": "Me",
+                "receive-not-me": "Not Me",
+                "delivery": "Delivery",
+                "del-free-from-1": "Orders higher",
+                "del-free-from-2": "have free delivery. Otherwise delivery is paid by customer!",
+                "del-method": "Delivery Method",
+                "choose-del-method": "Choose delivery method",
+                "city": "City",
+                "city-p": "E.g Kyiv",
+                "street": "Street",
+                "street-p": "E.g Khreschatyk",
+                "house-nr": "House №",
+                "flat-nr": "Flat №",
+                "branch": "Branch",
+                "payment-method": "Payment Method",
+                "comments": "Comments",
+                "submit-order": "Submit Order"
+            }
+        },
+        "orderPage": {
+            "title": "Order from ",
+            "table": {
+                "name": "Name",
+                "surname": "Surname",
+                "email": "Email",
+                "price": "Price",
+                "status": "Status",
+                "actions": "Actions",
+                "items": "Items",
+                "created": "Created",
+                "updated": "Updated"
+            }
+        },
+        "retrieval": {
+            "title": "Retrieval"
+        },
+        "terms-of-use": {
+            "title": "Terms of Use"
+        }
+    },
+    "toasts": {
+        "callee-sys": "System",
+        "add-to-cart": "added to the cart!",
+        "1": "Log into TronLink",
+        "2": "Looking for blockchain connectivity...",
+        "3": "Item is already sold!",
+        "4": "You have the rights for NFT Creation",
+        "5": "You don't have the rights for NFT Creation",
+        "6": "You have missed some information",
+        "7": "You will get the reward as soon as possible",
+        "8": "Nothing to withdraw",
+        "9": "Invalid Wallet Address",
+        "10": "Please, put the NFT ID to which we will assign the bonus"
+    },
+    "constants": {
+        "orderStatus": {
+            "0": "New",
+            "1": "In Process",
+            "2": "Delivering",
+            "3": "Finished",
+            "4": "Cancelled"
+        },
+        "coverTypes": {
+            "0": "Paperback",
+            "1": "Hard cover"
+        },
+        "paymentMethods": {
+            "0": "Cash",
+            "1": "LiqPay"
+        },
+        "bookCategories": {
+            "0": "Action and adventure",
+            "1": "Art/architecture",
+            "2": "Alternate history",
+            "3": "Autobiography",
+            "4": "Anthology",
+            "5": "Biography",
+            "6": "Chick lit",
+            "7": "Business/economics",
+            "8": "Children's",
+            "9": "Crafts/hobbies",
+            "10": "Classic",
+            "11": "Cookbook",
+            "12": "Comic book",
+            "13": "Coming-of-age",
+            "14": "Dictionary",
+            "15": "Crime",
+            "16": "Encyclopedia",
+            "17": "Drama",
+            "18": "Guide",
+            "19": "Fairytale"
+        }
+    }
 }

@@ -7,11 +7,10 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import BuyButton from '../../components/BuyButton';
-import { BOOK_CATEGORIES, BOOK_COVER_TYPES } from '../../utils/constants';
 
 export default function BookPage() {
   const { id } = useParams();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { loading, error, value } = useFetch(
     `${process.env.REACT_APP_BE_URL}/api/book/${id}`,
     {},
@@ -67,31 +66,31 @@ export default function BookPage() {
           <Row className="mx-0 my-2 text-start">
             <ListGroup>
               <ListGroup.Item>
-                {`Author: ${value?.author}`}
+                {`${t('pages.bookPage.author')}: ${value?.author}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`Year: ${value?.year}`}
+                {`${t('pages.bookPage.year')}: ${value?.year}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`Language: ${value?.lang}`}
+                {`${t('pages.bookPage.lang')}: ${value?.lang}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`Cover: ${BOOK_COVER_TYPES[value?.coverType]}`}
+                {`${t('pages.bookPage.cover')}: ${t(`constants.coverTypes.${value?.coverType}`)}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`Page count: ${value?.pageCount}`}
+                {`${t('pages.bookPage.pgCount')}: ${value?.pageCount}`}
               </ListGroup.Item>
               <ListGroup.Item>
                 {`ISBN: ${value?.isbn}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`Publisher: ${value?.publisher}`}
+                {`${t('pages.bookPage.publisher')}: ${value?.publisher}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`Category: ${BOOK_CATEGORIES[value?.category]}`}
+                {`${t('pages.bookPage.category')}: ${t(`constants.bookCategories.${value?.category}`)}`}
               </ListGroup.Item>
             </ListGroup>
-            {/** TODO: add price */}
+            {/** TODO: add tags */}
             <div className="d-flex flex-column align-items-center my-2">
               {value?.isReducedNow ? (
                 <>
@@ -116,7 +115,10 @@ export default function BookPage() {
         </Col>
       </Row>
       <Row className="my-3">
-        <h4>Annotation:</h4>
+        <h4>
+          {t('pages.bookPage.annotation')}
+          :
+        </h4>
         <p style={{ textAlign: 'justify' }}>{value?.annotation}</p>
       </Row>
     </Container>

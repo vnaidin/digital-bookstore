@@ -33,7 +33,7 @@ export function useFetch(url, options = {}, dependencies = []) {
   const { dispatch } = useContext(AppContext);
   return useAsync(() => fetch(url, { ...DEFAULT_OPTIONS, ...options }).then((res) => {
     if (res.ok) { return res.json(); } if (res.status === 401) {
-      sessionStorage.removeItem('user');
+      localStorage.removeItem('user');
       dispatch({ type: 'logOut' });
     }
     return res.json().then((json) => Promise.reject(json));

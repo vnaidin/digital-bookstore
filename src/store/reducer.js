@@ -1,6 +1,6 @@
 export const initialState = {
   toast: null/* { visible: 3, body: 'body', callee: 'syatem' } */,
-  currentUser: JSON.parse(sessionStorage.getItem('user')) || undefined,
+  currentUser: JSON.parse(localStorage.getItem('user')) || undefined,
   shoppingCart: JSON.parse(localStorage.getItem('cart')) || [],
 };
 

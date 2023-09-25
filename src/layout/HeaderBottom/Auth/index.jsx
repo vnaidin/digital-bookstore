@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Button, Offcanvas, Row } from 'react-bootstrap';
 import { FiUser } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 import Register from './Register';
 import Login from './Login';
 import AppContext from '../../../appContext';
@@ -8,6 +9,7 @@ import UserPanel from './UserPanel';
 
 export default function Auth() {
   const { state } = useContext(AppContext);
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
@@ -18,18 +20,18 @@ export default function Auth() {
   const notLoggedView = (
     <>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{showRegister ? 'Register' : 'Log In'}</Offcanvas.Title>
+        <Offcanvas.Title>{showRegister ? t('layout.headerBottom.auth.register') : t('layout.headerBottom.auth.login')}</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <Row className="justify-content-center">
           {showRegister ? <Register /> : <Login />}
-          <p className="text-center">or</p>
+          <p className="text-center">{t('layout.headerBottom.auth.or')}</p>
           <u
             className="text-center"
             onClick={handleComponentSwitch}
             role="none"
           >
-            {!showRegister ? 'Register' : 'Log In'}
+            {!showRegister ? t('layout.headerBottom.auth.register') : t('layout.headerBottom.auth.login')}
           </u>
         </Row>
       </Offcanvas.Body>
@@ -39,7 +41,7 @@ export default function Auth() {
   const loggedView = (
     <>
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{`Hello ${state?.currentUser?.name || state?.currentUser?.email}!`}</Offcanvas.Title>
+        <Offcanvas.Title>{`${t('layout.headerBottom.greeting')} ${state?.currentUser?.name || state?.currentUser?.email}!`}</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
         <UserPanel />

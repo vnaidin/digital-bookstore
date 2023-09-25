@@ -3,10 +3,12 @@ import {
   Col, ListGroup, ListGroupItem, Form,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useDebounce, useSearch } from '../../utils/hooks';
 
 export default function SearchBar() {
   const [search, updSearch] = useState('');
+  const { t } = useTranslation();
   const debouncedSearch = useDebounce(search, 600);
   const value = useSearch(debouncedSearch);
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ export default function SearchBar() {
     >
       <Form.Control
         size="lg"
-        placeholder="Author, Title or Publisher"
+        placeholder={t('layout.headerBottom.search.placeholder')}
         onChange={(e) => { updSearch(e.target.value); }}
         title="search"
         autoComplete="off"

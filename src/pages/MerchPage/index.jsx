@@ -6,11 +6,11 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
-import BuyButton from '../../components/BuyButton';
+import { BuyButton } from '../../components';
 
 export default function MerchPage() {
   const { id } = useParams();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { loading, error, value } = useFetch(
     `${process.env.REACT_APP_BE_URL}/api/merch/${id}`,
     {},
@@ -64,33 +64,6 @@ export default function MerchPage() {
             </h2>
           </Row>
           <Row className="mx-0 my-2 text-start">
-            {/* <ListGroup>
-              <ListGroup.Item>
-                {`Author: ${value?.author}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`Year: ${value?.year}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`Language: ${value?.lang}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`Cover: ${BOOK_COVER_TYPES[value?.coverType]}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`Page count: ${value?.pageCount}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`ISBN: ${value?.isbn}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`Publisher: ${value?.publisher}`}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {`Category: ${BOOK_CATEGORIES[value?.category]}`}
-              </ListGroup.Item>
-            </ListGroup> */}
-            {/** TODO: add price */}
             <div className="d-flex flex-column align-items-center my-2">
               {value?.isReducedNow ? (
                 <>
@@ -115,7 +88,10 @@ export default function MerchPage() {
         </Col>
       </Row>
       <Row className="my-3">
-        <h4>Annotation:</h4>
+        <h4>
+          {t('pages.merchPage.description')}
+          :
+        </h4>
         <p style={{ textAlign: 'justify' }}>{value?.annotation}</p>
       </Row>
     </Container>

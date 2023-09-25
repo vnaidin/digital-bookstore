@@ -5,10 +5,12 @@ import {
 import * as formik from 'formik';
 import * as yup from 'yup';
 
+import { useTranslation } from 'react-i18next';
 import AuthService from '../../../services/auth';
 
 export default function Register() {
   const { Formik } = formik;
+  const { t } = useTranslation();
 
   const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
   // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
@@ -19,7 +21,7 @@ export default function Register() {
       .string()
       .matches(passwordRules, { message: 'Please create a stronger password' })
       .required('Required'),
-  });
+  });// TODO: translate
 
   return (
     <Formik
@@ -37,7 +39,7 @@ export default function Register() {
         <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
           <Row className="my-1">
             <Form.Group as={Row} controlId="validationFormik2011">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>{t('layout.headerBottom.auth.form.name')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="text"
@@ -47,14 +49,14 @@ export default function Register() {
                   isValid={touched.name && !errors.name}
                   isInvalid={errors.name}
                 />
-                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.name}
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
             <Form.Group as={Row} controlId="validationFormik011">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>{t('layout.headerBottom.auth.form.email')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="email"
@@ -64,14 +66,14 @@ export default function Register() {
                   isValid={touched.email && !errors.email}
                   isInvalid={errors.email}
                 />
-                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.email}
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
             <Form.Group as={Row} controlId="validationFormik021">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>{t('layout.headerBottom.auth.form.pass')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="password"
@@ -82,14 +84,14 @@ export default function Register() {
                   isValid={touched.password && !errors.password}
                   isInvalid={errors.password}
                 />
-                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.password}
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
           </Row>
-          <Button type="submit" className="my-2 align-self-center" style={{ width: '6em' }}>Register</Button>
+          <Button type="submit" className="my-2 align-self-center" style={{ width: '6em' }}>{t('layout.headerBottom.auth.register')}</Button>
         </Form>
       )}
     </Formik>

@@ -3,19 +3,22 @@ import {
   Container, Row, Col,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import OrderForm from './OrderForm';
 import CartItems from './CartItems';
 import AppContext from '../../appContext';
+import { NoDataComponent } from '../../components';
 
 export default function Order() {
   const { state } = useContext(AppContext);
+  const { t } = useTranslation();
   const totalBooksPrice = state.shoppingCart.reduce((acc, curr) => acc + curr.price, 0);
   const totalPrice = state.deliveryMethod && totalBooksPrice < state.deliveryMethod?.freeFrom
     ? totalBooksPrice : totalBooksPrice;// TODO: review, as we don't have different delivery prices
   return (
     <Container className="my-3">
       <Helmet>
-        <title>Order</title>
+        <title>{t('pages.order.title')}</title>
       </Helmet>
       {state.shoppingCart && state.shoppingCart.length > 0 ? (
         <Row className="gap-0 my-2">
@@ -42,7 +45,7 @@ export default function Order() {
             <OrderForm totalPrice={totalPrice} />
           </Col>
         </Row>
-      ) : <Row>No orders yet</Row>}
+      ) : <NoDataComponent />}
     </Container>
   );
 }

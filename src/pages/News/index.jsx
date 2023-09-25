@@ -3,19 +3,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import {
-  Container, Row, Spinner, Pagination, Col,
+  Container, Row, Spinner, Col,
 } from 'react-bootstrap';
 
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
-import NewsItem from '../../components/NewsItem';
+import { NewsItem, NoDataComponent, PaginationComponent } from '../../components';
 
-export default function Main() { // TODO: split into components
+export default function News() { // TODO: split into components
   const { search } = useLocation();
   const [filters, setFilters] = useState({ // TODO:
     page: 0,
   });
+  const { t } = useTranslation();
 
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/news`);
   url.searchParams.append('page', filters.page);
@@ -26,21 +28,10 @@ export default function Main() { // TODO: split into components
     [search, filters],
   );
 
-  const paginationItems = Array(value?.total ? Math.ceil(value.total / 12) : 1)
-    .fill(0).map((x, i) => (
-      <Pagination.Item
-        // eslint-disable-next-line react/no-array-index-key
-        key={`page-${i}`}
-        active={i === filters.page}
-        onClick={() => setFilters((prev) => ({ ...prev, page: i }))}
-      >
-        {i + 1}
-      </Pagination.Item>
-    ));
   return (
     <Container as={Row}>
       <Helmet>
-        <title>News</title>
+        <title>{t('pages.news.title')}</title>
       </Helmet>
       <Col
         xs={12}
@@ -65,11 +56,12 @@ export default function Main() { // TODO: split into components
           <Row title="order-pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
               <Col sm={4}>
-                <Pagination>
-                  Page:
-                  {' '}
-                  {paginationItems}
-                </Pagination>
+                <PaginationComponent
+                  itemsLength={value.total}
+                  itemsPerPage={12}
+                  activeIndex={filters.page}
+                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
+                />
               </Col>
             )}
           </Row>
@@ -79,18 +71,19 @@ export default function Main() { // TODO: split into components
           {value && value.news.length > 0 ? value.news.map(
             (newsObj) => <NewsItem {...newsObj} key={newsObj.id} />,
           )
-            : <Container><h3>No Data</h3></Container>}
+            : <NoDataComponent />}
         </Row>
 
         {value && (
           <Row title="pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
               <Col>
-                <Pagination>
-                  Page:
-                  {' '}
-                  {paginationItems}
-                </Pagination>
+                <PaginationComponent
+                  itemsLength={value.total}
+                  itemsPerPage={12}
+                  activeIndex={filters.page}
+                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
+                />
               </Col>
             )}
           </Row>

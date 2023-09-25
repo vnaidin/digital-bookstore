@@ -5,15 +5,17 @@ import {
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import AuthService from '../../../services/auth';
 import AppContext from '../../../appContext';
 import UserService from '../../../services/user';
 import { useFetch } from '../../../utils/hooks';
 import authHeader from '../../../services/auth-header';
-import { ORDER_STATUSES } from '../../../utils/constants';
+import { NoDataComponent } from '../../../components';
 
 export default function UserPanel() {
   const { state, dispatch } = useContext(AppContext);
+  const { t } = useTranslation();
   const { loading, error, value } = useFetch(
     `${process.env.REACT_APP_BE_URL}/api/all/orders/${state?.currentUser?.id}`,
     { headers: authHeader() },
@@ -33,16 +35,16 @@ export default function UserPanel() {
 
   const handleUpdateUserInfoSubmit = (values) => {
     UserService.editUser(state.currentUser.id, values).then((response) => {
-      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
       // replace info locally
       dispatch({ type: 'logIn', payload: { ...state.currentUser, ...values } });
-      sessionStorage.setItem('user', JSON.stringify({ ...state.currentUser, ...values }));
+      localStorage.setItem('user', JSON.stringify({ ...state.currentUser, ...values }));
     }).catch((err) => console.error(new Error(err)));
   };
   return (
     <>
       <Row className="my-3">
-        <h3 className="text-center">User Info</h3>
+        <h3 className="text-center">{t('layout.headerBottom.auth.user-info')}</h3>
         <Formik
           validationSchema={schema}
           onSubmit={handleUpdateUserInfoSubmit}
@@ -63,7 +65,7 @@ export default function UserPanel() {
                   controlId="validationFormik010"
                   className="position-relative"
                 >
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>{t('layout.headerBottom.auth.form.name')}</Form.Label>
                   <Form.Control
                     type="text"
                     name="name"
@@ -71,7 +73,7 @@ export default function UserPanel() {
                     onChange={handleChange}
                     isValid={touched.name && !errors.name}
                   />
-                  <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group
                   as={Col}
@@ -79,7 +81,7 @@ export default function UserPanel() {
                   controlId="validationFormik1020"
                   className="position-relative"
                 >
-                  <Form.Label>Last name</Form.Label>
+                  <Form.Label>{t('layout.headerBottom.auth.form.surname')}</Form.Label>
                   <Form.Control
                     type="text"
                     name="surname"
@@ -88,10 +90,10 @@ export default function UserPanel() {
                     isValid={touched.surname && !errors.surname}
                   />
 
-                  <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group as={Col} sm="12" controlId="validationFormikUsername200">
-                  <Form.Label>Phone number</Form.Label>
+                  <Form.Label>{t('layout.headerBottom.auth.form.tel')}</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
                       type="phoneNumber"
@@ -109,13 +111,13 @@ export default function UserPanel() {
                   </InputGroup>
                 </Form.Group>
               </Row>
-              <Button type="submit" variant="success">Save changes</Button>
+              <Button type="submit" variant="success">{t('layout.headerBottom.auth.save')}</Button>
             </Form>
           )}
         </Formik>
       </Row>
 
-      <Row className="my-3">
+      {/* <Row className="my-3">
 
         <h3 className="text-center">Roles</h3>
         <ListGroup>
@@ -126,12 +128,11 @@ export default function UserPanel() {
               {role}
             </ListGroup.Item>
           ))}
-          {/* <ListGroup.Item key="jwt">{state?.currentUser?.accessToken}</ListGroup.Item> */}
         </ListGroup>
-      </Row>
+      </Row> */}
 
       <Row className="my-3">
-        <h3 className="text-center">Orders</h3>
+        <h3 className="text-center">{t('layout.headerBottom.auth.ordersTable.title')}</h3>
         {error && (
         <p>
           {new Error(error).message}
@@ -150,9 +151,9 @@ export default function UserPanel() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Items</th>
-                <th>Price</th>
-                <th>Status</th>
+                <th>{t('layout.headerBottom.auth.ordersTable.items')}</th>
+                <th>{t('layout.headerBottom.auth.ordersTable.price')}</th>
+                <th>{t('layout.headerBottom.auth.ordersTable.status')}</th>
               </tr>
             </thead>
             <tbody>
@@ -161,15 +162,15 @@ export default function UserPanel() {
                   <td>{ind + 1}</td>
                   <OrderItemsCell items={order.order_items} />
                   <td>{order.price}</td>
-                  <td>{ORDER_STATUSES[order.status].title}</td>
+                  <td>{t(`constants.orderStatus.${order.status}`)}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
-        ) : <h4>No Data...</h4>}
+        ) : <NoDataComponent />}
       </Row>
 
-      <Button variant="danger" onClick={logout}>Log out</Button>
+      <Button variant="danger" onClick={logout}>{t('layout.headerBottom.auth.logout')}</Button>
     </>
   );
 }

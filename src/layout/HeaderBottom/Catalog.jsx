@@ -3,12 +3,14 @@ import {
   Button, Offcanvas, ListGroup, NavLink,
 } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BOOK_CATEGORIES } from '../../utils/constants';
 
 export default function Catalog() {
   const [show, setShow] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,7 +21,7 @@ export default function Catalog() {
         variant="dark"
         onClick={handleShow}
       >
-        Catalogue
+        {t('layout.headerBottom.catalog.title')}
       </Button>
 
       <Offcanvas
@@ -28,7 +30,7 @@ export default function Catalog() {
         scroll
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Catalogue</Offcanvas.Title>
+          <Offcanvas.Title>{t('layout.headerBottom.catalog.title')}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ListGroup>
@@ -41,7 +43,7 @@ export default function Catalog() {
                     handleClose();
                   }}
                 >
-                  {category}
+                  {t(`constants.bookCategories.${index}`)}
                 </NavLink>
 
               </ListGroup.Item>

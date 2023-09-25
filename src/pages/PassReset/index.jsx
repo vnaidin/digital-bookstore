@@ -5,11 +5,13 @@ import {
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AppContext from '../../appContext';
 import AuthService from '../../services/auth';
 
 export default function PassReset() {
   const { Formik } = formik;
+  const { t } = useTranslation();
   const { dispatch } = useContext(AppContext);
   const schema = yup.object().shape({
     password: yup.string().required(),
@@ -23,10 +25,10 @@ export default function PassReset() {
 
   const handleResetPass = (values) => {
     AuthService.resetPassword({ token, id: userId, password: values.password }).then((response) => {
-      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
       navigate('/');
     }).catch((error) => {
-      dispatch({ type: 'setToast', payload: { body: error?.message, callee: 'System' } });
+      dispatch({ type: 'setToast', payload: { body: error?.message, callee: t('toasts.callee-sys') } });
     });
   };
 
@@ -45,7 +47,7 @@ export default function PassReset() {
         <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
           <Row className="m-1 p-0">
             <Form.Group as={Col} controlId="validationFormik021">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>{t('layout.headerBottom.auth.form.pass')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="password"
@@ -56,7 +58,7 @@ export default function PassReset() {
                   isValid={touched.password && !errors.password}
                   isInvalid={errors.password}
                 />
-                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.password}
                 </Form.Control.Feedback>
@@ -68,7 +70,7 @@ export default function PassReset() {
             className="my-2 align-self-center"
             style={{ width: '6em' }}
           >
-            Reset
+            {t('layout.headerBottom.auth.form.reset-pass')}
           </Button>
         </Form>
       )}

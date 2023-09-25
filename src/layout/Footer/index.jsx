@@ -3,8 +3,7 @@ import {
   Col, Container, Row, Nav, NavLink, Navbar,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { LiaTelegram } from 'react-icons/lia';
-import { PiTiktokLogo } from 'react-icons/pi';
+import { FiFacebook, FiInstagram } from 'react-icons/fi';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -48,25 +47,28 @@ export default function Footer() {
 
         <Col>
           <Row className="my-2 gap-1">
-            <Col>Social:</Col>
+            <Col>
+              {t('layout.footer.social')}
+              :
+            </Col>
             <Col>
               <a
-                href="https://www.t.me/vnaidin"
+                href="https://www.instagram.com/vnaidin"
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: 'inherit' }}
               >
-                <LiaTelegram size={20} className="mx-1" />
+                <FiInstagram size={20} className="mx-1" />
               </a>
             </Col>
             <Col>
               <a
-                href="https://www.tiktok.com/@vnaidin"
+                href="https://www.instagram.com/vnaidin"
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: 'inherit' }}
               >
-                <PiTiktokLogo size={20} className="mx-1" />
+                <FiFacebook size={20} className="mx-1" />
               </a>
             </Col>
           </Row>

@@ -1,18 +1,22 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 
 export default function Contacts() {
+  const { t } = useTranslation();
   return (
     <Container>
       <Helmet>
-        <title>Contacts</title>
+        <title>{t('pages.contacts.title')}</title>
       </Helmet>
-      <Row className="my-2"><h2>Contacts</h2></Row>
+      <Row className="my-2"><h2>{t('pages.contacts.title')}</h2></Row>
       <Row>SOME TEXT</Row>
       <Row>
         <p>
-          Email -
+          {t('pages.contacts.email')}
+          {' '}
+          -
           <strong>
             <a
               href="mailto:alineabookshop@gmail.com"
@@ -23,7 +27,9 @@ export default function Contacts() {
           </strong>
         </p>
         <p>
-          Tel -
+          {t('pages.contacts.tel')}
+          {' '}
+          -
           <strong>
             <a
               href="tel:+380636320017"

@@ -1,0 +1,120 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import React, { useRef, useState } from 'react';
+import { Form, Row, Button } from 'react-bootstrap';
+import RangeSlider from 'react-range-slider-input';
+import 'react-range-slider-input/dist/style.css';
+import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+
+export default function BookFilters({
+  minMaxPrice, authors, publishers, updFilter, resetStartPage,
+}) {
+  const [priceLocalValues, setLocalValues] = useState([0, 1000]);
+  const myRef = useRef(null);
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Row className="gap-3 my-3">
+        <Form.Label className="m-0">
+          {t('pages.mainPage.book-filters.price-ranges')}
+          :
+          {' '}
+          <div className="d-flex justify-content-between p-0" style={{ marginBottom: '-25px' }}>
+            {(priceLocalValues || minMaxPrice) && (
+            <>
+              <p>
+                {priceLocalValues[0]}
+              </p>
+              <p>
+                {priceLocalValues[1]}
+              </p>
+            </>
+            )}
+          </div>
+        </Form.Label>
+        <RangeSlider
+          defaultValue={priceLocalValues}
+          className="m-0 p-0"
+          min={0}
+          max={2000}
+          ref={myRef}
+          onInput={(values) => setLocalValues(values)}
+        />
+        <Button onClick={() => {
+          updFilter('priceRange', Object.values(myRef.current.value));
+          resetStartPage();
+        }}
+        >
+          {t('pages.mainPage.book-filters.ok')}
+        </Button>
+      </Row>
+
+      <Row className="my-3">
+        <Form.Label>
+          {t('pages.mainPage.book-filters.author')}
+          :
+          {' '}
+        </Form.Label>
+        <Form.Control
+          type="text"
+          placeholder={t('pages.mainPage.book-filters.author')}
+          list="authors"
+          onChange={(event) => {
+            if (authors.some((auth) => event.target.value === auth)) {
+              updFilter('author', event.target.value);
+              resetStartPage();
+            } else if (event.target.value.length === 0) {
+              updFilter('author', null);
+            }
+          }}
+        />
+        <datalist id="authors">
+          {authors && authors.map((author) => (
+            <option value={author} key={author} />
+          ))}
+        </datalist>
+      </Row>
+
+      <Row className="my-3">
+        <Form.Label>
+          {t('pages.mainPage.book-filters.publisher')}
+          :
+          {' '}
+        </Form.Label>
+        <Form.Control
+          type="text"
+          placeholder={t('pages.mainPage.book-filters.publisher')}
+          list="publishers"
+          onChange={(event) => {
+            if (publishers.some((auth) => event.target.value === auth)) {
+              updFilter('publisher', event.target.value);
+              resetStartPage();
+            } else if (event.target.value.length === 0) {
+              updFilter('publisher', null);
+            }
+          }}
+        />
+        <datalist id="publishers">
+          {publishers && publishers.map((publisher) => (
+            <option value={publisher} key={publisher} />
+          ))}
+        </datalist>
+      </Row>
+    </>
+  );
+}
+
+BookFilters.defaultProps = {
+  authors: null,
+  publishers: null,
+  minMaxPrice: [0, 1000],
+};
+
+BookFilters.propTypes = {
+  updFilter: PropTypes.func.isRequired,
+  resetStartPage: PropTypes.func.isRequired,
+  minMaxPrice: PropTypes.arrayOf(PropTypes.number),
+  authors: PropTypes.arrayOf(PropTypes.string),
+  publishers: PropTypes.arrayOf(PropTypes.string),
+};

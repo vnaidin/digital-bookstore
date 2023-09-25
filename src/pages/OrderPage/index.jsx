@@ -4,15 +4,17 @@ import {
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
-import { ORDER_STATUSES } from '../../utils/constants';
 import { OrderItemsCell } from '../../layout/HeaderBottom/Auth/UserPanel';
 import AppContext from '../../appContext';
 import { OrderTableLine } from '../Moderator/OrdersTab';
 import UpdateOrderModal from '../Moderator/UpdateOrderModal';
+import { NoDataComponent } from '../../components';
 
 export default function OrderPage() {
   const { state } = useContext(AppContext);
+  const { t } = useTranslation();
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
   const { loading, error, value } = useFetch(
@@ -24,7 +26,7 @@ export default function OrderPage() {
   return (
     <Container>
       <Helmet>
-        <title>Order</title>
+        <title>{t('pages.orderPage.title') + new Date(value ? value[0].createdAt : null).toLocaleString()}</title>
       </Helmet>
 
       {showModal && (
@@ -46,7 +48,7 @@ export default function OrderPage() {
       </Row>
 
       <Row className="my-3">
-        <h3 className="text-center my-2">Orders</h3>
+        <h3 className="text-center my-2">{t('pages.order.title')}</h3>
         {value && value[0] !== null && value.length > 0 ? (
           <Table
             striped
@@ -61,21 +63,21 @@ export default function OrderPage() {
                     {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                     <th />
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>Email</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>{t('pages.orderPage.table.name')}</th>
+                    <th>{t('pages.orderPage.table.surname')}</th>
+                    <th>{t('pages.orderPage.table.email')}</th>
+                    <th>{t('pages.orderPage.table.price')}</th>
+                    <th>{t('pages.orderPage.table.status')}</th>
+                    <th>{t('pages.orderPage.table.actions')}</th>
                   </>
                 ) : (
                   <>
                     {' '}
                     <th>ID</th>
-                    <th>Items</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Updated</th>
+                    <th>{t('pages.orderPage.table.items')}</th>
+                    <th>{t('pages.orderPage.table.status')}</th>
+                    <th>{t('pages.orderPage.table.created')}</th>
+                    <th>{t('pages.orderPage.table.updated')}</th>
                   </>
                 )}
               </tr>
@@ -90,14 +92,14 @@ export default function OrderPage() {
                 <tr key={order?.id}>
                   <td>{ind + 1}</td>
                   <OrderItemsCell items={order?.order_items} />
-                  <td>{ORDER_STATUSES[+order.status].title}</td>
+                  <td>{t(`constants.orderStatus.${order.status}`)}</td>
                   <td>{new Date(order?.createdAt).toLocaleString()}</td>
                   <td>{new Date(order?.updatedAt).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
           </Table>
-        ) : <h4>No Data...</h4>}
+        ) : <NoDataComponent />}
       </Row>
     </Container>
   );

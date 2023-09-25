@@ -5,12 +5,15 @@ import {
   Button, Container, Table, Spinner, OverlayTrigger, Tooltip, ListGroup, Row, Col, Form,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { useDebounce, useFetch } from '../../utils/hooks';
 import authHeader from '../../services/auth-header';
 import { DELIVERY_METHODS, ORDER_STATUSES } from '../../utils/constants';
 import UpdateOrderModal from './UpdateOrderModal';
+import { NoDataComponent } from '../../components';
 
 export default function OrdersTab() {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [currentOrder, updateOrderObject] = useState();
 
@@ -58,16 +61,19 @@ export default function OrdersTab() {
             />
           </Col>
           <Col className="d-flex gap-2 align-items-center">
-            <Form.Label>Filter</Form.Label>
+            <Form.Label>{t('pages.moderator.tabs.order.filter')}</Form.Label>
             <Form.Select
               aria-label="Default select example"
               onChange={(event) => setFilters(
                 (prev) => ({ ...prev, status: event.target.value === 'By status:' ? null : event.target.value }),
               )}
             >
-              <option value={null}>By status:</option>
+              <option value={null}>
+                {t('pages.moderator.tabs.order.filter-p')}
+                :
+              </option>
               {Object.entries(ORDER_STATUSES).map(
-                ([id, { title }]) => <option key={id} value={id}>{title}</option>,
+                ([id]) => <option key={id} value={id}>{t(`constants.orderStatus.${id}`)}</option>,
               )}
             </Form.Select>
 
@@ -96,12 +102,12 @@ export default function OrdersTab() {
                 {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                 <th />
                 <th>#</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>{t('pages.moderator.tabs.order.table.name')}</th>
+                <th>{t('pages.moderator.tabs.order.table.surname')}</th>
+                <th>{t('pages.moderator.tabs.order.table.email')}</th>
+                <th>{t('pages.moderator.tabs.order.table.price')}</th>
+                <th>{t('pages.moderator.tabs.order.table.status')}</th>
+                <th>{t('pages.moderator.tabs.order.table.actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -114,7 +120,7 @@ export default function OrdersTab() {
               ))}
             </tbody>
           </Table>
-        ) : <h4>No Data...</h4>}
+        ) : <NoDataComponent />}
       </Container>
     </>
   );
@@ -122,6 +128,7 @@ export default function OrdersTab() {
 
 export function OrderTableLine({ order, handleOrderUpdate }) {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
       <tr>
@@ -161,9 +168,9 @@ export function OrderTableLine({ order, handleOrderUpdate }) {
         {/*  <td>{order.phoneNumber}</td> */}
         <td>{order.price}</td>
         {/* <td>{order.comments}</td> */}
-        <td>{ORDER_STATUSES[order.status].title}</td>
+        <td>{t(`constants.orderStatus.${order.status}`)}</td>
         <td className="d-flex gap-1">
-          <Button variant="warning" onClick={() => { handleOrderUpdate(order.id); }}>Update</Button>
+          <Button variant="warning" onClick={() => { handleOrderUpdate(order.id); }}>{t('pages.moderator.tabs.order.modal.update')}</Button>
         </td>
       </tr>
       {showMoreInfo && (
@@ -213,6 +220,7 @@ OrderTableLine.propTypes = {
 function OrderMoreInfoLine({
   items, address, phoneNumber, comments, receiver,
 }) {
+  const { t } = useTranslation();
   // console.log(items)
   const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
@@ -235,18 +243,27 @@ function OrderMoreInfoLine({
 
         <Row className="my-3 gap-1">
           <Col>
-            <strong>Delivery:</strong>
+            <strong>
+              {t('pages.moderator.tabs.order.table.more-info-line.delivery')}
+              :
+            </strong>
             {' '}
             <u>{currentDeliveryMethod?.title}</u>
           </Col>
           <Col>
-            <strong>Address:</strong>
+            <strong>
+              {t('pages.moderator.tabs.order.table.more-info-line.address')}
+              :
+            </strong>
             {currentDeliveryMethod.stateFullAddress
               ? <u>{` ${address.city}, ${address.street}, ${address.houseNr}, ${address.flatNr}`}</u>
               : <u>{` ${address.city}, ${address.branch}`}</u>}
           </Col>
           <Col>
-            <strong>Tel:</strong>
+            <strong>
+              {t('pages.moderator.tabs.order.table.more-info-line.tel')}
+              :
+            </strong>
             {' '}
             <u>{phoneNumber}</u>
           </Col>
@@ -254,7 +271,8 @@ function OrderMoreInfoLine({
         </Row>
         {receiver && (
         <Row className="p-3">
-          Receiver:
+          {t('pages.moderator.tabs.order.table.more-info-line.receiver')}
+          :
           {' '}
           {receiver}
         </Row>
@@ -263,11 +281,12 @@ function OrderMoreInfoLine({
         <ListGroup as={Row} className="p-3">
           {orderItemsToShow && orderItemsToShow.length > 0 ? orderItemsToShow.map((item, index) => (
             <ListGroup.Item className="text-start" key={item.id}>{`${index + 1}.${item.author}, ${item.title} ${itemsAmountById[item.id] > 1 ? (`(${itemsAmountById[item.id]} items)`) : ''} `}</ListGroup.Item>
-          )) : <ListGroup.Item>No Data...</ListGroup.Item>}
+          )) : <ListGroup.Item><NoDataComponent /></ListGroup.Item>}
         </ListGroup>
         {comments && (
         <Row className="p-3">
-          Comments:
+          {t('pages.moderator.tabs.order.table.more-info-line.comments')}
+          :
           {' '}
           {comments}
         </Row>

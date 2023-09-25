@@ -45,10 +45,9 @@ export const BOOK_CATEGORIES = [
   'Encyclopedia',
   'Drama',
   'Guide',
-  'Fairytale',
 ];
 
-export const BOOK_ORDERING = [{ title: 'Price high>low', value: 'price,DESC' }, { title: 'Price low>high', value: 'price,ASC' }];
+export const BOOK_ORDERING = [{ id: 0, value: 'price,DESC' }, { id: 1, value: 'price,ASC' }];
 
 export const BOOK_COVER_TYPES = ['Мʼяка', 'Тверда'];
 

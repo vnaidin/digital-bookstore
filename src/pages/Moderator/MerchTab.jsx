@@ -3,13 +3,16 @@ import React, { useContext, useState } from 'react';
 import {
   Button, Container, Table, Row, Spinner, Col, Form,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useDebounce, useFetch } from '../../utils/hooks';
 import MerchService from '../../services/merch';
 import CreateUpdateMerchModal from './CreateUpdateMerchModal';
+import { NoDataComponent } from '../../components';
 import AppContext from '../../appContext';
 
 export default function MerchTab() {
   const { dispatch } = useContext(AppContext);
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [currentMerch, updateMerchObject] = useState();
 
@@ -31,7 +34,7 @@ export default function MerchTab() {
 
   const handleMerchDelete = (id) => {
     MerchService.deleteMerch(id).then((response) => {
-      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+      dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
       console.warn('refetch');
     });// FIXME: refetch
   };
@@ -59,7 +62,7 @@ export default function MerchTab() {
             />
           </Col>
           <Col className="d-flex gap-2 align-items-center">
-            <Button variant="success" onClick={handleOpenModal}>Create Merch</Button>
+            <Button variant="success" onClick={handleOpenModal}>{t('pages.moderator.tabs.merch.create')}</Button>
           </Col>
         </Row>
         <Row className="my-2">
@@ -82,11 +85,11 @@ export default function MerchTab() {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Reduced_Price</th>
-                <th>Is Reduced</th>
-                <th>Actions</th>
+                <th>{t('pages.moderator.tabs.merch.table.title')}</th>
+                <th>{t('pages.moderator.tabs.merch.table.price')}</th>
+                <th>{t('pages.moderator.tabs.merch.table.red-price')}</th>
+                <th>{t('pages.moderator.tabs.merch.table.isReduced')}</th>
+                <th>{t('pages.moderator.tabs.merch.table.actions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -101,14 +104,14 @@ export default function MerchTab() {
                   <td>{reducedPrice}</td>
                   <td>{isReducedNow?.toString() || 'false'}</td>
                   <td className="d-flex gap-1">
-                    <Button variant="danger" onClick={() => handleMerchDelete(id)}>Remove</Button>
-                    <Button variant="warning" onClick={() => { handleMerchUpdate(id); }}>Update</Button>
+                    <Button variant="danger" onClick={() => handleMerchDelete(id)}>{t('pages.moderator.tabs.merch.remove')}</Button>
+                    <Button variant="warning" onClick={() => { handleMerchUpdate(id); }}>{t('pages.moderator.tabs.merch.update')}</Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </Table>
-        ) : <h4>No Data...</h4>}
+        ) : <NoDataComponent />}
 
       </Container>
     </>

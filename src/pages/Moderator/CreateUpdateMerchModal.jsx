@@ -44,10 +44,10 @@ export default function CreateUpdateMerchModal({
         MerchService.editMerch(existingMerch.id, fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
-            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
-          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: t('toasts.callee-sys') } });
           console.error(new Error(err).message);
         });
       } else {
@@ -55,10 +55,10 @@ export default function CreateUpdateMerchModal({
         MerchService.createMerch(fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
-            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
-          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: t('toasts.callee-sys') } });
           console.error(new Error(err).message);
         });
       }
@@ -84,7 +84,7 @@ export default function CreateUpdateMerchModal({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>{existingMerch?.id ? 'Update' : 'Create'}</Modal.Title>
+        <Modal.Title>{existingMerch?.id ? t('pages.moderator.tabs.merch.modal.update') : t('pages.moderator.tabs.merch.modal.create')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -105,10 +105,10 @@ export default function CreateUpdateMerchModal({
                 onSubmit={handleSubmit}
               >
 
-                <Form.Label>Title</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.merch.modal.title')}</Form.Label>
                 <Form.Control
                   size="sm"
-                  placeholder="Title"
+                  placeholder={t('pages.moderator.tabs.merch.modal.title')}
                   onChange={handleChange}
                   title="title"
                   autoComplete="off"
@@ -124,10 +124,10 @@ export default function CreateUpdateMerchModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Price</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.merch.modal.price')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Price"
+                      placeholder={t('pages.moderator.tabs.merch.modal.price')}
                       type="number"
                       onChange={handleChange}
                       title="price"
@@ -142,10 +142,10 @@ export default function CreateUpdateMerchModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Reduced Price</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.merch.modal.red-price')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="ReducedPrice"
+                      placeholder={t('pages.moderator.tabs.merch.modal.red-price')}
                       type="number"
                       onChange={handleChange}
                       title="reducedPrice"
@@ -161,7 +161,7 @@ export default function CreateUpdateMerchModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>isReducedNow</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.merch.modal.isReduced')}</Form.Label>
                     <Form.Select
                       onChange={handleChange}
                       title="isReducedNow"
@@ -175,11 +175,11 @@ export default function CreateUpdateMerchModal({
                   </Form.Group>
                 </Row>
 
-                <Form.Label>Annotation</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.merch.modal.description')}</Form.Label>
                 <Form.Control
                   size="sm"
                   as="textarea"
-                  placeholder="Annotation"
+                  placeholder={t('pages.moderator.tabs.merch.modal.description')}
                   maxLength={2000}
                   onChange={handleChange}
                   title="annotation"
@@ -193,11 +193,11 @@ export default function CreateUpdateMerchModal({
                   controlId="validationFormik151"
                   className="position-relative"
                 >
-                  <Form.Label>Tags</Form.Label>
+                  <Form.Label>{t('pages.moderator.tabs.merch.modal.tags')}</Form.Label>
                   <div>
                     <Accordion>
                       <Accordion.Item eventKey="0">
-                        <Accordion.Header>Tags</Accordion.Header>
+                        <Accordion.Header>{t('pages.moderator.tabs.merch.modal.tags')}</Accordion.Header>
                         <Accordion.Body as={Row} className="gap-1">
                           {BOOK_TAGS.map((tag, ind) => (
                             <Form.Check
@@ -240,10 +240,10 @@ export default function CreateUpdateMerchModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Amount</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.merch.modal.amount')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Amount"
+                      placeholder={t('pages.moderator.tabs.merch.modal.amount')}
                       type="number"
                       onChange={handleChange}
                       title="amount"
@@ -261,11 +261,11 @@ export default function CreateUpdateMerchModal({
                     className="position-relative"
                   >
                     {' '}
-                    <Form.Label>Comments</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.merch.modal.comments')}</Form.Label>
                     <Form.Control
                       size="sm"
                       as="textarea"
-                      placeholder="Comments"
+                      placeholder={t('pages.moderator.tabs.merch.modal.comments')}
                       maxLength={2000}
                       onChange={handleChange}
                       title="comments"
@@ -279,7 +279,7 @@ export default function CreateUpdateMerchModal({
                   className="m-2 place-self-center"
                   type="submit"
                 >
-                  {existingMerch?.id ? 'Update' : 'Create'}
+                  {existingMerch?.id ? t('pages.moderator.tabs.merch.modal.update') : t('pages.moderator.tabs.merch.modal.create')}
                 </Button>
               </Form.Group>
             </Col>

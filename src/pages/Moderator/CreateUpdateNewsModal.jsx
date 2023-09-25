@@ -42,10 +42,10 @@ export default function CreateUpdateNewsModal({
         NewsService.editNews(existingNews.id, fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
-            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
-          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: t('toasts.callee-sys') } });
           console.error(new Error(err).message);
         });
       } else {
@@ -53,10 +53,10 @@ export default function CreateUpdateNewsModal({
         NewsService.createNews(fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
-            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
-          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: t('toasts.callee-sys') } });
           console.error(new Error(err).message);
         });
       }
@@ -82,7 +82,7 @@ export default function CreateUpdateNewsModal({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>{existingNews?.id ? 'Update' : 'Create'}</Modal.Title>
+        <Modal.Title>{existingNews?.id ? t('pages.moderator.tabs.news.modal.update') : t('pages.moderator.tabs.news.modal.create')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -102,10 +102,10 @@ export default function CreateUpdateNewsModal({
                 className="d-flex flex-column gap-1"
                 onSubmit={handleSubmit}
               >
-                <Form.Label>Author</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.news.modal.author')}</Form.Label>
                 <Form.Control
                   size="sm"
-                  placeholder="Author"
+                  placeholder={t('pages.moderator.tabs.news.modal.author')}
                   onChange={handleChange}
                   list="authors"
                   title="author"
@@ -119,10 +119,10 @@ export default function CreateUpdateNewsModal({
                   ))}
                 </datalist> */}
 
-                <Form.Label>Title</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.news.modal.title')}</Form.Label>
                 <Form.Control
                   size="sm"
-                  placeholder="Title"
+                  placeholder={t('pages.moderator.tabs.news.modal.title')}
                   onChange={handleChange}
                   title="title"
                   autoComplete="off"
@@ -137,10 +137,10 @@ export default function CreateUpdateNewsModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Publisher</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.news.modal.publisher')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Publisher"
+                      placeholder={t('pages.moderator.tabs.news.modal.publisher')}
                       onChange={handleChange}
                       title="publisher"
                       list="publishers"
@@ -160,10 +160,10 @@ export default function CreateUpdateNewsModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>showImage</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.news.modal.showImg')}</Form.Label>
                     <Form.Select
                       onChange={handleChange}
-                      title="showImage"
+                      title={t('pages.moderator.tabs.news.modal.showImg')}
                       // eslint-disable-next-line no-unsafe-optional-chaining
                       defaultValue={+existingNews?.showImage || false}
                       required
@@ -174,11 +174,11 @@ export default function CreateUpdateNewsModal({
                   </Form.Group>
                 </Row>
 
-                <Form.Label>Text</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.news.modal.text')}</Form.Label>
                 <Form.Control
                   size="sm"
                   as="textarea"
-                  placeholder="Text"
+                  placeholder={t('pages.moderator.tabs.news.modal.text')}
                   maxLength={2000}
                   onChange={handleChange}
                   title="text"
@@ -191,7 +191,7 @@ export default function CreateUpdateNewsModal({
                   className="m-2 place-self-center"
                   type="submit"
                 >
-                  {existingNews?.id ? 'Update' : 'Create'}
+                  {existingNews?.id ? t('pages.moderator.tabs.news.modal.update') : t('pages.moderator.tabs.news.modal.create')}
                 </Button>
               </Form.Group>
             </Col>

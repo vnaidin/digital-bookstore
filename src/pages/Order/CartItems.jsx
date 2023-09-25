@@ -8,7 +8,7 @@ import AppContext from '../../appContext';
 
 export default function CartItems({ totalPrice }) {
   const { state, dispatch } = useContext(AppContext);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const handleAddToCart = (id, price, title, image) => {
     const payload = {
       id, price, title, image,
@@ -83,7 +83,8 @@ export default function CartItems({ totalPrice }) {
         ))}
       </Container>
       <h4>
-        Total:
+        {t('pages.order.cart-total')}
+        :
         {' '}
         {totalPrice}
         {i18n.language === 'en' ? ' UAH' : ' грн'}

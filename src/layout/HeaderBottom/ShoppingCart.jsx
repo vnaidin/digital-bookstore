@@ -9,7 +9,7 @@ import AppContext from '../../appContext';
 
 export default function ShoppingCart() {
   const { state, dispatch } = useContext(AppContext);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ export default function ShoppingCart() {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Shopping Cart</Modal.Title>
+          <Modal.Title>{t('layout.headerBottom.shopping-cart.title')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
@@ -93,13 +93,14 @@ export default function ShoppingCart() {
 
                 </Col>
               </Row>
-            )) : <h4>Your shopping cart is empty. Start buying now!</h4>}
+            )) : <h4>{t('layout.headerBottom.shopping-cart.is-empty')}</h4>}
 
           </Container>
         </Modal.Body>
         <Modal.Footer className="justify-content-around">
           <h4 className="text-start">
-            Total:
+            {t('layout.headerBottom.shopping-cart.total')}
+            :
             {' '}
             {totalPrice}
             {i18n.language === 'en' ? ' UAH' : ' грн'}
@@ -110,17 +111,17 @@ export default function ShoppingCart() {
               onClick={handleEmptyCart}
               disabled={nOfItemsInCart === 0}
             >
-              Empty Cart
+              {t('layout.headerBottom.shopping-cart.empty-cart')}
             </Button>
             <Button variant="warning" onClick={handleClose}>
-              Continue buying
+              {t('layout.headerBottom.shopping-cart.continue')}
             </Button>
             <Button
               variant="success"
               onClick={() => { navigate('/order'); handleClose(); }}
               disabled={nOfItemsInCart === 0}
             >
-              Make an Order
+              {t('layout.headerBottom.shopping-cart.make-order')}
             </Button>
 
           </div>

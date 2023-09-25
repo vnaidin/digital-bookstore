@@ -1,31 +1,30 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
-  Container, Row, Spinner, Pagination, Form, Col, Button,
+  Container, Row, Spinner, Form, Col,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-import RangeSlider from 'react-range-slider-input';
-import 'react-range-slider-input/dist/style.css';
-
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import { BOOK_ORDERING } from '../../utils/constants';
-import BookCard from '../../components/BookCard';
+import { BookCard, PaginationComponent, NoDataComponent } from '../../components';
+import BookFilters from './BookFilters';
 
-export default function Main() { // TODO: split into components
+export default function Main() {
   const { search } = useLocation();
+  // eslint-disable-next-line no-unused-vars
+  const { t } = useTranslation(); // TODO: translate order
   const bookCategory = search?.split('=').pop();
-  const [filters, setFilters] = useState({ // TODO:
+  const [filters, setFilters] = useState({
     page: 0,
     order: null,
     priceRange: null,
     author: null,
     publisher: null,
   });
-  const myRef = useRef(null);
-  const [priceLocalValues, setLocalValues] = useState([0, 1000]);
 
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
   url.searchParams.append('page', filters.page);
@@ -41,24 +40,13 @@ export default function Main() { // TODO: split into components
     [search, filters],
   );
 
-  const paginationItems = Array(value?.total ? Math.ceil(value.total / 12) : 1)
-    .fill(0).map((x, i) => (
-      <Pagination.Item
-        // eslint-disable-next-line react/no-array-index-key
-        key={`page-${i}`}
-        active={i === filters.page}
-        onClick={() => setFilters((prev) => ({ ...prev, page: i }))}
-      >
-        {i + 1}
-      </Pagination.Item>
-    ));
   return (
     <Container as={Row}>
       <Helmet titleTemplate="Alineabooks - %s">
         <title>
-          Інтернет-магазин книг - Alineabooks
+          {t('pages.mainPage.title')}
         </title>
-
+        {/** Інтернет-магазин книг */}
       </Helmet>
       <Col
         xs={12}
@@ -68,89 +56,15 @@ export default function Main() { // TODO: split into components
         xl={2}
         xxl={2}
       >
-        <Row className="gap-3 my-3">
-          <Form.Label className="m-0">
-            Price ranges:
-            {' '}
-            <div className="d-flex justify-content-between p-0" style={{ marginBottom: '-25px' }}>
-              {(priceLocalValues || value?.minMaxPrice) && (
-                <>
-                  <p>
-                    {priceLocalValues[0]}
-                  </p>
-                  <p>
-                    {priceLocalValues[1]}
-                  </p>
-                </>
-              )}
-            </div>
-          </Form.Label>
-          <RangeSlider
-            defaultValue={priceLocalValues}
-            className="m-0 p-0"
-            min={0}
-            max={2000}
-            ref={myRef}
-            onInput={(values) => setLocalValues(values)}
-          />
-          <Button onClick={() => {
-            setFilters(
-              (prev) => ({ ...prev, priceRange: Object.values(myRef.current.value), page: 0 }),
-            );
-          }}
-          >
-            OK
-          </Button>
-        </Row>
-
-        <Row className="my-3">
-          <Form.Label>
-            Author:
-            {' '}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Author"
-            list="authors"
-            onChange={(event) => {
-              if (value?.authors.some((auth) => event.target.value === auth)) {
-                setFilters((prev) => ({ ...prev, author: event.target.value, page: 0 }));
-              } else if (event.target.value.length === 0) {
-                setFilters((prev) => ({ ...prev, author: null }));
-              }
-            }}
-          />
-          <datalist id="authors">
-            {value && value.authors.map((author) => (
-              <option value={author} key={author} />
-            ))}
-          </datalist>
-        </Row>
-
-        <Row className="my-3">
-          <Form.Label>
-            Publisher:
-            {' '}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Publisher"
-            list="publishers"
-            onChange={(event) => {
-              if (value?.publishers.some((auth) => event.target.value === auth)) {
-                setFilters((prev) => ({ ...prev, publisher: event.target.value, page: 0 }));
-              } else if (event.target.value.length === 0) {
-                setFilters((prev) => ({ ...prev, publisher: null }));
-              }
-            }}
-          />
-          <datalist id="publishers">
-            {value && value.publishers.map((publisher) => (
-              <option value={publisher} key={publisher} />
-            ))}
-          </datalist>
-        </Row>
+        <BookFilters
+          authors={value?.authors}
+          publishers={value?.publishers}
+          minMaxPrice={value?.minMaxPrice}
+          updFilter={(key, val) => setFilters((prev) => ({ ...prev, [key]: val }))}
+          resetStartPage={() => setFilters((prev) => ({ ...prev, page: 0 }))}
+        />
       </Col>
+
       <Col
         xs={12}
         sm={12}
@@ -176,23 +90,22 @@ export default function Main() { // TODO: split into components
               as={Col}
               sm="4"
             >
-              {/* <Form.Label>Order:</Form.Label> */}
               <Form.Select
                 aria-label="order-select"
                 onChange={(event) => setFilters((prev) => ({ ...prev, order: event.target.value }))}
                 title="order"
-                placeholder="Order"
+                placeholder={t('pages.mainPage.order.title')}
                 defaultValue={filters?.order || null}
                 required
               >
-                <option hidden value={null}>Order</option>
+                <option hidden value={null}>{t('pages.mainPage.order.title')}</option>
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option
-                      key={opt.title}
+                      key={opt.id}
                       value={opt.value}
                     >
-                      {opt.title}
+                      {t(`pages.mainPage.order.${opt.id}`)}
                     </option>
                   ),
                 )}
@@ -200,10 +113,12 @@ export default function Main() { // TODO: split into components
             </Form.Group>
             {value.total > 12 && (
               <Col sm={4}>
-                <Pagination className="d-flex align-items-center">
-                  <p style={{ fontSize: 'x-large', margin: '0 1em', padding: '0' }}>Page: </p>
-                  {paginationItems}
-                </Pagination>
+                <PaginationComponent
+                  itemsLength={value.total}
+                  itemsPerPage={12}
+                  activeIndex={filters.page}
+                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
+                />
               </Col>
             )}
           </Row>
@@ -213,17 +128,19 @@ export default function Main() { // TODO: split into components
           {value && value.books.length > 0 ? value.books.map(
             (bookObj) => <BookCard {...bookObj} key={bookObj.id} />,
           )
-            : <Container><h3>No Data</h3></Container>}
+            : <NoDataComponent />}
         </Row>
 
         {value && (
           <Row title="pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
               <Col>
-                <Pagination className="d-flex align-items-center">
-                  <p style={{ fontSize: 'x-large', margin: '0 1em', padding: '0' }}>Page: </p>
-                  {paginationItems}
-                </Pagination>
+                <PaginationComponent
+                  itemsLength={value.total}
+                  itemsPerPage={12}
+                  activeIndex={filters.page}
+                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
+                />
               </Col>
             )}
           </Row>

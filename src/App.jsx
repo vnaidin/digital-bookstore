@@ -4,7 +4,7 @@ import Footer from './layout/Footer';
 import { AppStateProvider } from './appContext';
 import { initialState, reducer } from './store/reducer';
 import AppRouter from './Routers/Router';
-import InfoToast from './components/InfoToast/InfoToast';
+import { InfoToast } from './components';
 import './utils/axios';
 import './App.css';
 
@@ -15,7 +15,7 @@ function App() {
     // validate response
     if (error.response.status === 401) {
       dispatch({ type: 'logOut' });
-      sessionStorage.removeItem('user');
+      localStorage.removeItem('user');
     }
     return Promise.reject(error);
   });

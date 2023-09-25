@@ -45,10 +45,10 @@ export default function CreateUpdateBookModal({
         BookService.editBook(existingBook.id, fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
-            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
-          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: t('toasts.callee-sys') } });
           console.error(new Error(err).message);
         });
       } else {
@@ -56,10 +56,10 @@ export default function CreateUpdateBookModal({
         BookService.createBook(fd).then(
           (response) => {
             /* console.log(response); */ handleCloseModal();
-            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+            dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
-          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: 'System' } });
+          dispatch({ type: 'setToast', payload: { body: new Error(err).message, callee: t('toasts.callee-sys') } });
           console.error(new Error(err).message);
         });
       }
@@ -68,7 +68,7 @@ export default function CreateUpdateBookModal({
       dispatch({
         type: 'setToast',
         payload: {
-          body: t('layout.toasts.6'),
+          body: t('basic.toasts.6'),
           callee: t('pages.create-nft.btns.create-nft'),
         },
       });
@@ -85,7 +85,7 @@ export default function CreateUpdateBookModal({
       fullscreen="md-down"
     >
       <Modal.Header closeButton>
-        <Modal.Title>{existingBook?.id ? 'Update' : 'Create'}</Modal.Title>
+        <Modal.Title>{existingBook?.id ? t('pages.moderator.tabs.book.modal.update') : t('pages.moderator.tabs.book.modal.create')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -105,10 +105,10 @@ export default function CreateUpdateBookModal({
                 className="d-flex flex-column gap-1"
                 onSubmit={handleSubmit}
               >
-                <Form.Label>Author</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.book.modal.author')}</Form.Label>
                 <Form.Control
                   size="sm"
-                  placeholder="Author"
+                  placeholder={t('pages.moderator.tabs.book.modal.author')}
                   onChange={handleChange}
                   list="authors"
                   title="author"
@@ -122,10 +122,10 @@ export default function CreateUpdateBookModal({
                   ))}
                 </datalist>
 
-                <Form.Label>Title</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.book.modal.title')}</Form.Label>
                 <Form.Control
                   size="sm"
-                  placeholder="Title"
+                  placeholder={t('pages.moderator.tabs.book.modal.title')}
                   onChange={handleChange}
                   title="title"
                   autoComplete="off"
@@ -140,10 +140,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Publisher</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.publisher')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Publisher"
+                      placeholder={t('pages.moderator.tabs.book.modal.publisher')}
                       onChange={handleChange}
                       title="publisher"
                       list="publishers"
@@ -164,10 +164,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Year</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.year')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Year"
+                      placeholder={t('pages.moderator.tabs.book.modal.year')}
                       type="number"
                       onChange={handleChange}
                       title="year"
@@ -211,10 +211,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Page count</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.pgCount')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="PageCount"
+                      placeholder={t('pages.moderator.tabs.book.modal.pgCount')}
                       type="number"
                       onChange={handleChange}
                       title="pageCount"
@@ -230,11 +230,11 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Cover</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.cover')}</Form.Label>
 
                     <Form.Select
                       size="sm"
-                      placeholder="cover"
+                      placeholder={t('pages.moderator.tabs.book.modal.cover')}
                       onChange={handleChange}
                       title="coverType"
                       list="cover"
@@ -246,10 +246,10 @@ export default function CreateUpdateBookModal({
                       {BOOK_COVER_TYPES.map(
                         (collection, ind) => (
                           <option
-                            key={collection}
+                            key={t(`constants.coverTypes.${ind}`)}
                             value={ind}
                           >
-                            {collection}
+                            {t(`constants.coverTypes.${ind}`)}
                           </option>
                         ),
                       )}
@@ -262,10 +262,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Language</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.lang')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Language"
+                      placeholder={t('pages.moderator.tabs.book.modal.lang')}
                       onChange={handleChange}
                       title="lang"
                       list="language"
@@ -286,11 +286,11 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Category</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.category')}</Form.Label>
                     <div>
                       <Accordion>
                         <Accordion.Item eventKey="0">
-                          <Accordion.Header>Categories</Accordion.Header>
+                          <Accordion.Header>{t('pages.moderator.tabs.book.modal.category')}</Accordion.Header>
                           <Accordion.Body as={Row} className="gap-1">
                             {BOOK_CATEGORIES.map((category, ind) => (
                               <Form.Check
@@ -298,7 +298,7 @@ export default function CreateUpdateBookModal({
                                 key={category}
                                 style={{ border: '1px solid black' }}
                                 type="checkbox"
-                                label={category}
+                                label={t(`constants.bookCategories.${ind}`)}
                                 value={ind}
                                 checked={new Set(formData.category).has(ind)}
                                 // required
@@ -335,10 +335,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Price</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.price')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Price"
+                      placeholder={t('pages.moderator.tabs.book.modal.price')}
                       type="number"
                       onChange={handleChange}
                       title="price"
@@ -353,10 +353,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Reduced Price</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.red-price')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="ReducedPrice"
+                      placeholder={t('pages.moderator.tabs.book.modal.red-price')}
                       type="number"
                       onChange={handleChange}
                       title="reducedPrice"
@@ -372,7 +372,7 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>isReducedNow</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.isReduced')}</Form.Label>
                     <Form.Select
                       onChange={handleChange}
                       title="isReducedNow"
@@ -386,11 +386,11 @@ export default function CreateUpdateBookModal({
                   </Form.Group>
                 </Row>
 
-                <Form.Label>Annotation</Form.Label>
+                <Form.Label>{t('pages.moderator.tabs.book.modal.annotation')}</Form.Label>
                 <Form.Control
                   size="sm"
                   as="textarea"
-                  placeholder="Annotation"
+                  placeholder={t('pages.moderator.tabs.book.modal.annotation')}
                   maxLength={2000}
                   onChange={handleChange}
                   title="annotation"
@@ -404,11 +404,11 @@ export default function CreateUpdateBookModal({
                   controlId="validationFormik151"
                   className="position-relative"
                 >
-                  <Form.Label>Tags</Form.Label>
+                  <Form.Label>{t('pages.moderator.tabs.book.modal.tags')}</Form.Label>
                   <div>
                     <Accordion>
                       <Accordion.Item eventKey="0">
-                        <Accordion.Header>Tags</Accordion.Header>
+                        <Accordion.Header>{t('pages.moderator.tabs.book.modal.tags')}</Accordion.Header>
                         <Accordion.Body as={Row} className="gap-1">
                           {BOOK_TAGS.map((tag, ind) => (
                             <Form.Check
@@ -451,10 +451,10 @@ export default function CreateUpdateBookModal({
                     controlId="validationFormik151"
                     className="position-relative"
                   >
-                    <Form.Label>Amount</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.amount')}</Form.Label>
                     <Form.Control
                       size="sm"
-                      placeholder="Amount"
+                      placeholder={t('pages.moderator.tabs.book.modal.amount')}
                       type="number"
                       onChange={handleChange}
                       title="amount"
@@ -472,11 +472,11 @@ export default function CreateUpdateBookModal({
                     className="position-relative"
                   >
                     {' '}
-                    <Form.Label>Comments</Form.Label>
+                    <Form.Label>{t('pages.moderator.tabs.book.modal.comments')}</Form.Label>
                     <Form.Control
                       size="sm"
                       as="textarea"
-                      placeholder="Comments"
+                      placeholder={t('pages.moderator.tabs.book.modal.comments')}
                       maxLength={2000}
                       onChange={handleChange}
                       title="comments"
@@ -490,7 +490,7 @@ export default function CreateUpdateBookModal({
                   className="m-2 place-self-center"
                   type="submit"
                 >
-                  {existingBook?.id ? 'Update' : 'Create'}
+                  {existingBook?.id ? t('pages.moderator.tabs.book.modal.update') : t('pages.moderator.tabs.book.modal.create')}
                 </Button>
               </Form.Group>
             </Col>

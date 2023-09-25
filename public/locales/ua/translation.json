@@ -1,0 +1,342 @@
+{
+    "components": {
+        "bookCard": {
+            "item-ending": "Закінчується",
+            "item-ended": "Закінчилося"
+        },
+        "buyBtn": "Купити",
+        "nodata": "Немає даних...",
+        "pagination-label": "Сторінка"
+    },
+    "layout": {
+        "header": {
+            "routes": {
+                "authors": "Автори",
+                "news": "Новини",
+                "merch": "Мерч",
+                "delivery": "Доставка",
+                "moderator": "Модератор",
+                "aboutUs": "Про нас",
+                "contactUs": "Контакти",
+                "retrieval": "Повернення",
+                "terms": "Умови використання"
+            }
+        },
+        "footer": {
+            "social": "Соц. мережі"
+        },
+        "headerBottom": {
+            "greeting": "Привіт",
+            "auth": {
+                "or": "або",
+                "register": "Зареєструватися",
+                "login": "Увійти",
+                "logout": "Вийти",
+                "reset-pass": "Скинути пароль",
+                "save": "Зберегти зміни",
+                "user-info": "Інформація про користувача",
+                "form": {
+                    "name": "Імʼя",
+                    "surname": "Прізвище",
+                    "tel": "Номер телефону",
+                    "email": "Пошта",
+                    "pass": "Пароль",
+                    "forgot-pass": "Забули пароль?",
+                    "valid-feedback": "Виглядає добре!",
+                    "reset-pass": "Скинути"
+                },
+                "ordersTable": {
+                    "title": "Замовлення",
+                    "items": "Предмети",
+                    "price": "Ціна",
+                    "status": "Статус"
+                }
+            },
+            "catalog": {
+                "title": "Каталог"
+            },
+            "search": {
+                "placeholder": "Автор, назва або видавець"
+            },
+            "shopping-cart": {
+                "title": "Кошик",
+                "is-empty": "Ваш кошик порожній. Почніть купувати зараз!",
+                "total": "Усього",
+                "empty-cart": "Видалити все",
+                "continue": "Продовжити покупки",
+                "make-order": "Зробити замовлення"
+            }
+        }
+    },
+    "pages": {
+        "404": {},
+        "aboutUs": {
+            "title": "Про нас"
+        },
+        "authors": {
+            "title": "Автори"
+        },
+        "bookPage": {
+            "author": "Автор",
+            "year": "Рік",
+            "lang": "Мова",
+            "cover": "Обкладинка",
+            "pgCount": "Кількість сторінок",
+            "publisher": "Видавець",
+            "category": "Категорія",
+            "annotation": "Аннотація"
+        },
+        "contacts": {
+            "title": "Контакти",
+            "email": "Пошта",
+            "tel": "Телефон"
+        },
+        "delivery": {
+            "title": "Доставка",
+            "free-from": "Безкоштовна доставка з",
+            "methods": {
+                "1": "УкрПошта Експрес (доставка до відділення)",
+                "2": "Нова Пошта. Відділення",
+                "3": "Нова Пошта. Поштомати",
+                "4": "Нова Пошта. Кур'єр",
+                "5": "Meest Пошта. Відділення / міні-відділення",
+                "6": "Meest Пошта. Кур'єр"
+            }
+        },
+        "mainPage": {
+            "title": "Книжковий магазин",
+            "books": "Книги",
+            "book-filters": {
+                "price-ranges": "Цінові діапазони",
+                "ok": "Ok",
+                "author": "Автор",
+                "publisher": "Видавець"
+            },
+            "order": {
+                "title": "Сортувати по",
+                "0": "Спадання ціни",
+                "1": "Зростання ціни"
+            }
+        },
+        "merch": {
+            "title": "Мерч",
+            "merch-filters": {
+                "price-ranges": "Цінові діапазони",
+                "ok": "Ok"
+            }
+        },
+        "merchPage": {
+            "description": "Опис"
+        },
+        "moderator": {
+            "tabs": {
+                "order": {
+                    "filter": "Фільтр",
+                    "filter-p": "За статусом",
+                    "table": {
+                        "name": "Імʼя",
+                        "surname": "Прізвище",
+                        "email": "Пошта",
+                        "price": "Ціна",
+                        "status": "Статус",
+                        "actions": "Дії",
+                        "more-info-line": {
+                            "delivery": "Доставка",
+                            "address": "Адреса",
+                            "tel": "Номер телефону",
+                            "receiver": "Отримувач",
+                            "comments": "Коментарі"
+                        }
+                    },
+                    "modal": {
+                        "update": "Оновити"
+                    }
+                },
+                "merch": {
+                    "create": "Створити Мерч",
+                    "remove": "Видалити",
+                    "update": "Оновити",
+                    "table": {
+                        "title": "Назва",
+                        "price": "Ціна",
+                        "red-price": "Знижена ціна",
+                        "isReduced": "Знижено ціну",
+                        "actions": "Дії"
+                    },
+                    "modal": {
+                        "update": "Оновити",
+                        "create": "Створити",
+                        "title": "Назва",
+                        "price": "Ціна",
+                        "red-price": "Знижена ціна",
+                        "isReduced": "Знижено ціну",
+                        "description": "Опис",
+                        "tags": "Теги",
+                        "amount": "Кількість",
+                        "comments": "Коментарі"
+                    }
+                },
+                "book": {
+                    "create": "Створити Книгу",
+                    "remove": "Видалити",
+                    "update": "Оновити",
+                    "table": {
+                        "author-title": "Автор_Разва",
+                        "price": "Ціна",
+                        "red-price": "Знижена ціна",
+                        "isReduced": "Знижено ціну",
+                        "actions": "Дії"
+                    },
+                    "modal": {
+                        "update": "Оновити",
+                        "create": "Створити",
+                        "title": "Назва",
+                        "author": "Автор",
+                        "publisher": "Видавець",
+                        "year": "Рік",
+                        "lang": "Мова",
+                        "pgCount": "Кількість сторінок",
+                        "cover": "Обкладинка",
+                        "price": "Ціна",
+                        "red-price": "Знижена ціна",
+                        "isReduced": "Знижено ціну",
+                        "category": "Категорія",
+                        "annotation": "Аннотація",
+                        "tags": "Теги",
+                        "amount": "Кількість",
+                        "comments": "Коментарі"
+                    }
+                },
+                "news": {
+                    "create": "Створити Новину",
+                    "remove": "Видалити",
+                    "update": "Оновити",
+                    "table": {
+                        "author": "Автор",
+                        "title": "Назва",
+                        "publisher": "Видавець",
+                        "actions": "Дії"
+                    },
+                    "modal": {
+                        "update": "Оновити",
+                        "create": "Створити",
+                        "title": "Назва",
+                        "author": "Автор",
+                        "publisher": "Видавець",
+                        "category": "Категорія",
+                        "text": "Текст",
+                        "showImg": "Показувати картинку"
+                    }
+                }
+            }
+        },
+        "news": {
+            "title": "Новини"
+        },
+        "order": {
+            "title": "Замовлення",
+            "cart-total": "Всього",
+            "form": {
+                "personal-info": "Персональна інформація",
+                "name": "Імʼя",
+                "name-p": "John",
+                "surname": "Прізвище",
+                "surname-p": "Appleseed",
+                "tel": "Номер телефону",
+                "email": "Пошта",
+                "email-p": "john@appleseed.com",
+                "receiver": "Отримувач",
+                "receive-me": "Я",
+                "receive-not-me": "Інша особа",
+                "delivery": "Доставка",
+                "del-free-from-1": "Замовлення від",
+                "del-free-from-2": "безкоштовна доставка. В іншому випадку доставка оплачується клієнтом!",
+                "del-method": "Спосіб доставки",
+                "choose-del-method": "Оберіть спосіб доставки",
+                "city": "Місто",
+                "city-p": "E.g Kyiv",
+                "street": "Вулиця",
+                "street-p": "E.g Khreschatyk",
+                "house-nr": "Будинок №",
+                "flat-nr": "Квартира №",
+                "branch": "Відділення",
+                "payment-method": "Спосіб оплати",
+                "comments": "Коментарі",
+                "submit-order": "Підтвердити Замовлення"
+            }
+        },
+        "orderPage": {
+            "title": "Замовлення від ",
+            "table": {
+                "name": "Імʼя",
+                "surname": "Прізвище",
+                "email": "Пошта",
+                "price": "Ціна",
+                "status": "Статус",
+                "actions": "Дії",
+                "items": "Предмети",
+                "created": "Створено",
+                "updated": "Оновлено"
+            }
+        },
+        "retrieval": {
+            "title": "Повернення"
+        },
+        "terms-of-use": {
+            "title": "Умови використання"
+        }
+    },
+    "toasts": {
+        "callee-sys": "Система",
+        "add-to-cart": "додано до кошика!",
+        "1": "Log into TronLink",
+        "2": "Looking for blockchain connectivity...",
+        "3": "Item is already sold!",
+        "4": "You have the rights for NFT Creation",
+        "5": "You don't have the rights for NFT Creation",
+        "6": "You have missed some information",
+        "7": "You will get the reward as soon as possible",
+        "8": "Nothing to withdraw",
+        "9": "Invalid Wallet Address",
+        "10": "Please, put the NFT ID to which we will assign the bonus"
+    },
+    "constants": {
+        "orderStatus": {
+            "0": "Новий",
+            "1": "В обробці",
+            "2": "Доставка",
+            "3": "Завершений",
+            "4": "Скасованe"
+        },
+        "coverTypes": {
+            "0": "Мʼяка",
+            "1": "Тверда"
+        },
+        "paymentMethods": {
+            "0": "Готівка",
+            "1": "LiqPay"
+        },
+        "bookCategories": {
+            "0": "Екшн і пригоди",
+            "1": "Мистецтво/архітектура",
+            "2": "Альтернативна історія",
+            "3": "Автобіографія",
+            "4": "Антологія",
+            "5": "Біографія",
+            "6": "Chick lit",
+            "7": "Бізнес/економіка",
+            "8": "Дитячий",
+            "9": "Ремесла/хобі",
+            "10": "Класичний",
+            "11": "Кулінарна книга",
+            "12": "Книга коміксів",
+            "13": "Повноліття",
+            "14": "Словник",
+            "15": "Злочин",
+            "16": "Енциклопедія",
+            "17": "Драма",
+            "18": "Посібник",
+            "19": "Казка"
+        }
+    }
+}

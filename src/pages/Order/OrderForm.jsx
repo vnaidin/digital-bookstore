@@ -17,7 +17,7 @@ export default function OrderForm({ totalPrice }) {
   const [addReceiver, setReceiver] = useState(false);
   const { dispatch, state } = useContext(AppContext);
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { Formik } = formik;
 
   const schema = yup.object().shape({ // TODO: validation to improve
@@ -66,7 +66,7 @@ export default function OrderForm({ totalPrice }) {
     OrderService.createOrder(objectToPost).then(
       (response) => {
         localStorage.setItem('cart', JSON.stringify([]));
-        dispatch({ type: 'setToast', payload: { body: response.data.message, callee: 'System' } });
+        dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
         setTimeout(() => {
           dispatch({ type: 'addItemToCart', payload: [] });
           navigate('/');
@@ -102,26 +102,30 @@ export default function OrderForm({ totalPrice }) {
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
-            <h2 className="text-start my-1">1. Personal Information</h2>
+            <h2 className="text-start my-1">
+              1.
+              {' '}
+              {t('pages.order.form.personal-info')}
+            </h2>
             <Form.Group
               as={Col}
               md="6"
               controlId="validationFormik0131"
               className="position-relative"
             >
-              <Form.Label>Name</Form.Label>
+              <Form.Label>{t('pages.order.form.name')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="text"
                   name="name"
-                  placeholder="John"
+                  placeholder={t('pages.order.form.name-p')}
                   value={values.name}
                   onChange={handleChange}
                   isValid={touched.name && !!errors.name}
                   isInvalid={/* touched.surname &&  */errors.name}
                   readOnly={state.currentUser?.name}
                 />
-                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.name}
                 </Form.Control.Feedback>
@@ -134,19 +138,19 @@ export default function OrderForm({ totalPrice }) {
               controlId="validationFormik102"
               className="position-relative"
             >
-              <Form.Label>Last name</Form.Label>
+              <Form.Label>{t('pages.order.form.surname')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="text"
                   name="surname"
-                  placeholder="Appleseed"
+                  placeholder={t('pages.order.form.surname-p')}
                   value={values.surname}
                   onChange={handleChange}
                   isValid={touched.surname && !!errors.surname}
                   isInvalid={/* touched.surname &&  */errors.surname}
                   readOnly={state.currentUser?.surname}
                 />
-                <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {errors.surname}
                 </Form.Control.Feedback>
@@ -154,7 +158,7 @@ export default function OrderForm({ totalPrice }) {
             </Form.Group>
 
             <Form.Group as={Col} sm="12" controlId="validationFormikUsername2">
-              <Form.Label>Phone number</Form.Label>
+              <Form.Label>{t('pages.order.form.tel')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="tel"
@@ -174,11 +178,11 @@ export default function OrderForm({ totalPrice }) {
             </Form.Group>
 
             <Form.Group as={Col} sm="12" controlId="validationFormikEmail2">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>{t('pages.order.form.email')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Control
                   type="email"
-                  placeholder="John@appleseed.com"
+                  placeholder={t('pages.order.form.email-p')}
                   width={100}
                   aria-describedby="inputGroupPrepend"
                   name="email"
@@ -194,20 +198,20 @@ export default function OrderForm({ totalPrice }) {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Receiver</Form.Label>
+              <Form.Label>{t('pages.order.form.receiver')}</Form.Label>
               <div
                 className="d-flex my-0 gap-1 justify-content-center"
               >
                 <Form.Check
                   type="radio"
-                  label="me"
+                  label={t('pages.order.form.receive-me')}
                   value={0}
                   checked={!addReceiver}
                   onChange={() => setReceiver(false)}
                 />
                 <Form.Check
                   type="radio"
-                  label="not me"
+                  label={t('pages.order.form.receive-not-me')}
                   value={1}
                   checked={addReceiver}
                   onChange={() => setReceiver(true)}
@@ -223,18 +227,18 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik0131"
                   className="position-relative"
                 >
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>{t('pages.order.form.name')}</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
                       type="text"
                       name="receiverName"
-                      placeholder="John"
+                      placeholder={t('pages.order.form.name-p')}
                       value={values.receiverName}
                       onChange={handleChange}
                       isValid={touched.receiverName && !!errors.receiverName}
                       isInvalid={/* touched.surname &&  */errors.receiverName}
                     />
-                    <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid" tooltip>
                       {errors.receiverName}
                     </Form.Control.Feedback>
@@ -247,19 +251,19 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik102"
                   className="position-relative"
                 >
-                  <Form.Label>Last name</Form.Label>
+                  <Form.Label>{t('pages.order.form.surname')}</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
                       type="text"
                       name="receiverSurname"
-                      placeholder="Appleseed"
+                      placeholder={t('pages.order.form.surname')}
                       value={values.receiverSurname}
                       onChange={handleChange}
                       isValid={touched.receiverSurname && !!errors.receiverSurname}
                       isInvalid={/* touched.receiverSurname &&  */errors.receiverSurname}
                       readOnly={state.currentUser?.receiverSurname}
                     />
-                    <Form.Control.Feedback tooltip>Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid" tooltip>
                       {errors.receiverSurname}
                     </Form.Control.Feedback>
@@ -267,7 +271,7 @@ export default function OrderForm({ totalPrice }) {
                 </Form.Group>
 
                 <Form.Group as={Col} sm="12" controlId="validationFormikUsername2">
-                  <Form.Label>Phone number</Form.Label>
+                  <Form.Label>{t('pages.order.form.tel')}</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
                       type="tel"
@@ -289,17 +293,20 @@ export default function OrderForm({ totalPrice }) {
             )}
 
             <hr className="my-3" />
-            <h2 className="text-start my-1">2. Delivery</h2>
+            <h2 className="text-start my-1">
+              2.
+              {' '}
+              {t('pages.order.form.delivery')}
+            </h2>
             <u className="text-start">
-              Orders higher
-
+              {t('pages.order.form.del-free-from-1')}
               {` ${DELIVERY_METHODS[0].freeFrom} ${i18n.language === 'en' ? ' UAH' : ' грн'} `}
               {' '}
-              have free delivery. Otherwise delivery is paid by customer!
+              {t('pages.order.form.del-free-from-2')}
             </u>
 
             <Form.Group as={Col} sm="12" controlId="delMethod">
-              <Form.Label>DeliveryMethod</Form.Label>
+              <Form.Label>{t('pages.order.form.del-method')}</Form.Label>
               <InputGroup hasValidation>
                 <Form.Select
                   aria-label="collection-select"
@@ -316,7 +323,7 @@ export default function OrderForm({ totalPrice }) {
                   isValid={!!errors.delMethod}
                 //  defaultValue={existingBook?.category || null}
                 >
-                  <option hidden value={null}>Choose delivery method</option>
+                  <option hidden value={null}>{t('pages.order.form.choose-del-method')}</option>
                   {DELIVERY_METHODS.map(
                     ({
                       id, title,
@@ -325,7 +332,7 @@ export default function OrderForm({ totalPrice }) {
                         key={title}
                         value={+id}
                       >
-                        {title}
+                        {t(`pages.delivery.methods.${id}`)}
                       </option>
                     ),
                   )}
@@ -348,10 +355,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik103"
                   className="position-relative"
                 >
-                  <Form.Label>City</Form.Label>
+                  <Form.Label>{t('pages.order.form.city')}</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="City"
+                    placeholder={t('pages.order.form.city-p')}
                     name="city"
                     value={values.city}
                     onChange={handleChange}
@@ -368,10 +375,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik104"
                   className="position-relative"
                 >
-                  <Form.Label>Street</Form.Label>
+                  <Form.Label>{t('pages.order.form.street')}</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Street"
+                    placeholder={t('pages.order.form.street-p')}
                     name="street"
                     value={values.street}
                     onChange={handleChange}
@@ -387,10 +394,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik105"
                   className="position-relative"
                 >
-                  <Form.Label>House №</Form.Label>
+                  <Form.Label>{t('pages.order.form.house-nr')}</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="House №"
+                    placeholder={t('pages.order.form.house-nr')}
                     name="houseNr"
                     value={values.houseNr}
                     onChange={handleChange}
@@ -407,10 +414,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik1051"
                   className="position-relative"
                 >
-                  <Form.Label>Flat №</Form.Label>
+                  <Form.Label>{t('pages.order.form.house-nr')}</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="Flat №"
+                    placeholder={t('pages.order.form.house-nr')}
                     name="flatNr"
                     value={values.flatNr}
                     onChange={handleChange}
@@ -430,10 +437,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik50"
                   className="position-relative"
                 >
-                  <Form.Label>City</Form.Label>
+                  <Form.Label>{t('pages.order.form.city')}</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="City"
+                    placeholder={t('pages.order.form.city-p')}
                     name="city"
                     value={values.city}
                     onChange={handleChange}
@@ -450,10 +457,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik151"
                   className="position-relative"
                 >
-                  <Form.Label>Branch</Form.Label>
+                  <Form.Label>{t('pages.order.form.branch')}</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="Branch"
+                    placeholder={t('pages.order.form.branch')}
                     name="branch"
                     value={values.branch}
                     onChange={handleChange}
@@ -468,8 +475,12 @@ export default function OrderForm({ totalPrice }) {
             )}
             <hr className="my-3" />
 
-            <h2 className="text-start my-1">3. Payment Method</h2>
-            {/** TODO: */}
+            <h2 className="text-start my-1">
+              3.
+              {' '}
+              {t('pages.order.form.payment-method')}
+            </h2>
+            {/** TODO: translate payments, add liqpay */}
             <Form.Group
               as={Col}
               sm="12"
@@ -490,7 +501,7 @@ export default function OrderForm({ totalPrice }) {
                       type="radio"
                       name="paymentMethodId"
                       id={payMethod}
-                      label={payMethod}
+                      label={t(`constants.paymentMethods.${ind}`)}
                       value={+ind}
                       onChange={handleChange}
                       isInvalid={errors.paymentMethodId}
@@ -510,10 +521,10 @@ export default function OrderForm({ totalPrice }) {
               controlId="validationFormik106"
               className="position-relative"
             >
-              <Form.Label>Comments</Form.Label>
+              <Form.Label>{t('pages.order.form.comments')}</Form.Label>
               <Form.Control
                 as="textarea"
-                placeholder="Comments"
+                placeholder={t('pages.order.form.comments')}
                 name="comments"
                 value={values.comments}
                 onChange={handleChange}
@@ -526,7 +537,7 @@ export default function OrderForm({ totalPrice }) {
             </Form.Group>
           </Row>
 
-          <Button type="submit" variant="success">Submit Order</Button>
+          <Button type="submit" variant="success">{t('pages.order.form.submit-order')}</Button>
         </Form>
       )}
     </Formik>

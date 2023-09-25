@@ -11,7 +11,7 @@ export default function MerchCard({
   id, title, image,
   price, reducedPrice, isReducedNow, tags, item_management,
 }) {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <Col
       xs={12}
@@ -58,8 +58,8 @@ export default function MerchCard({
               )}
             </div>
             <div className="align-self-center">
-              { item_management.amount > 0 && item_management.amount <= 2 && <Badge pill bg="danger">Ending</Badge>}
-              {item_management.amount === 0 && <Badge pill bg="secondary">Ended</Badge>}
+              { item_management.amount > 0 && item_management.amount <= 2 && <Badge pill bg="danger">{t('components.bookCard.item-ending')}</Badge>}
+              {item_management.amount === 0 && <Badge pill bg="secondary">{t('components.bookCard.item-ended')}</Badge>}
             </div>
           </div>
           <BuyButton id={id} price={price} title={title} image={image} />

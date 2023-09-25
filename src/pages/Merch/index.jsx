@@ -1,28 +1,27 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
-  Container, Row, Spinner, Pagination, Form, Col, Button,
+  Container, Row, Spinner, Form, Col,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-import RangeSlider from 'react-range-slider-input';
-import 'react-range-slider-input/dist/style.css';
 
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import { BOOK_ORDERING } from '../../utils/constants';
-import MerchCard from '../../components/MerchCard';
+import { MerchCard, NoDataComponent, PaginationComponent } from '../../components';
+import MerchFilters from './MerchFilters';
 
 export default function Merch() { // TODO: split into components
   const { search } = useLocation();
+  const { t } = useTranslation();
   const [filters, setFilters] = useState({ // TODO:
     page: 0,
     order: null,
     priceRange: null,
   });
-  const myRef = useRef(null);
-  const [priceLocalValues, setLocalValues] = useState([0, 1000]);
 
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/merch`);
   url.searchParams.append('page', filters.page);
@@ -35,22 +34,11 @@ export default function Merch() { // TODO: split into components
     [search, filters],
   );
 
-  const paginationItems = Array(value?.total ? Math.ceil(value.total / 12) : 1)
-    .fill(0).map((x, i) => (
-      <Pagination.Item
-        // eslint-disable-next-line react/no-array-index-key
-        key={`page-${i}`}
-        active={i === filters.page}
-        onClick={() => setFilters((prev) => ({ ...prev, page: i }))}
-      >
-        {i + 1}
-      </Pagination.Item>
-    ));
   return (
     <Container as={Row}>
       <Helmet>
         <title>
-          Merch
+          {t('pages.merch.title')}
         </title>
 
       </Helmet>
@@ -62,41 +50,11 @@ export default function Merch() { // TODO: split into components
         xl={2}
         xxl={2}
       >
-        <Row className="gap-3 my-3">
-          <Form.Label className="m-0">
-            Price ranges:
-            {' '}
-            <div className="d-flex justify-content-between p-0" style={{ marginBottom: '-25px' }}>
-              {(priceLocalValues || value?.minMaxPrice) && (
-                <>
-                  <p>
-                    {priceLocalValues[0]}
-                  </p>
-                  <p>
-                    {priceLocalValues[1]}
-                  </p>
-                </>
-              )}
-            </div>
-          </Form.Label>
-          <RangeSlider
-            defaultValue={priceLocalValues}
-            className="m-0 p-0"
-            min={0}
-            max={2000}
-            ref={myRef}
-            onInput={(values) => setLocalValues(values)}
-          />
-          <Button onClick={() => {
-            setFilters(
-              (prev) => ({ ...prev, priceRange: Object.values(myRef.current.value), page: 0 }),
-            );
-          }}
-          >
-            OK
-          </Button>
-        </Row>
-
+        <MerchFilters
+          minMaxPrice={value?.minMaxPrice}
+          updFilter={(key, val) => setFilters((prev) => ({ ...prev, [key]: val }))}
+          resetStartPage={() => setFilters((prev) => ({ ...prev, page: 0 }))}
+        />
       </Col>
       <Col
         xs={12}
@@ -128,18 +86,18 @@ export default function Merch() { // TODO: split into components
                 aria-label="order-select"
                 onChange={(event) => setFilters((prev) => ({ ...prev, order: event.target.value }))}
                 title="order"
-                placeholder="Order"
+                placeholder={t('pages.mainPage.order.title')}
                 defaultValue={filters?.order || null}
                 required
               >
-                <option hidden value={null}>Order</option>
+                <option hidden value={null}>{t('pages.mainPage.order.title')}</option>
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option
                       key={opt.title}
                       value={opt.value}
                     >
-                      {opt.title}
+                      {t(`pages.mainPage.order.${opt.id}`)}
                     </option>
                   ),
                 )}
@@ -147,11 +105,12 @@ export default function Merch() { // TODO: split into components
             </Form.Group>
             {value.total > 12 && (
               <Col sm={4}>
-                <Pagination>
-                  Page:
-                  {' '}
-                  {paginationItems}
-                </Pagination>
+                <PaginationComponent
+                  itemsLength={value.total}
+                  itemsPerPage={12}
+                  activeIndex={filters.page}
+                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
+                />
               </Col>
             )}
           </Row>
@@ -161,18 +120,19 @@ export default function Merch() { // TODO: split into components
           {value && value.merch.length > 0 ? value.merch.map(
             (merchObj) => <MerchCard {...merchObj} key={merchObj.id} />,
           )
-            : <Container><h3>No Data</h3></Container>}
+            : <NoDataComponent />}
         </Row>
 
         {value && (
           <Row title="pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
               <Col>
-                <Pagination>
-                  Page:
-                  {' '}
-                  {paginationItems}
-                </Pagination>
+                <PaginationComponent
+                  itemsLength={value.total}
+                  itemsPerPage={12}
+                  activeIndex={filters.page}
+                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
+                />
               </Col>
             )}
           </Row>

@@ -74,7 +74,7 @@ export default function News() { // TODO: split into components
             : <NoDataComponent />}
         </Row>
 
-        {value && (
+        {!loading && value && (
           <Row title="pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
               <Col>

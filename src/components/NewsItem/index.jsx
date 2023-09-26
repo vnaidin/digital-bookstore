@@ -2,11 +2,13 @@ import React from 'react';
 import {
   Card, Col, NavLink,
 } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { newsType } from '../../utils/types';
 
 export default function NewsItem({
   id, author, title, image,
 }) {
+  const navigate = useNavigate();
   return (
     <Col
       xs={12}
@@ -24,6 +26,8 @@ export default function NewsItem({
           width={300}
           className="p-3"
           alt={`${author}_${title}`}
+          onClick={() => navigate(`/merch/${id}`)}
+
         />
         <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2">
           <NavLink href={`/news/${id}`}>

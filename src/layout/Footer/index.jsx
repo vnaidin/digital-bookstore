@@ -8,33 +8,40 @@ import { FiFacebook, FiInstagram } from 'react-icons/fi';
 export default function Footer() {
   const { t } = useTranslation();
   return (
-    <Container as="footer" className="py-3" fluid>
+    <Container as="footer" className="p-3" fluid>
       <Row className="align-items-center">
-        <Col>
-          <Navbar className="row" variant="dark">
-            <Nav className="mx-auto gap-2 align-items-center" fill>
-              <Nav.Item className="col" key="aboutUs">
+        <Col
+          xs={12}
+          sm={6}
+          md={6}
+          lg={6}
+          xl={6}
+          xxl={6}
+        >
+          <Navbar variant="dark">
+            <Nav className="mx-auto gap-1 d-flex flex-column" justify>
+              <Nav.Item className="col text-start" key="aboutUs">
                 <NavLink
                   href="/about"
                 >
                   {t('layout.header.routes.aboutUs')}
                 </NavLink>
               </Nav.Item>
-              <Nav.Item className="col" key="contactUs">
+              <Nav.Item className="col text-start" key="contactUs">
                 <NavLink
                   href="/contact"
                 >
                   {t('layout.header.routes.contactUs')}
                 </NavLink>
               </Nav.Item>
-              <Nav.Item className="col" key="retrieval">
+              <Nav.Item className="col text-start" key="retrieval">
                 <NavLink
                   href="/retrieval"
                 >
                   {t('layout.header.routes.retrieval')}
                 </NavLink>
               </Nav.Item>
-              <Nav.Item className="col" key="terms">
+              <Nav.Item className="col text-start" key="terms">
                 <NavLink
                   href="/terms"
                 >
@@ -45,7 +52,14 @@ export default function Footer() {
           </Navbar>
         </Col>
 
-        <Col>
+        <Col
+          xs={12}
+          sm={6}
+          md={4}
+          lg={4}
+          xl={4}
+          xxl={4}
+        >
           <Row className="my-2 gap-1">
             <Col>
               {t('layout.footer.social')}
@@ -73,8 +87,8 @@ export default function Footer() {
             </Col>
           </Row>
         </Col>
-
       </Row>
+
       <Row className="justify-content-center mt-3">
         { `Alineabooks © ${new Date().getFullYear()}`}
       </Row>

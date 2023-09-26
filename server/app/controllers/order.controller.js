@@ -103,7 +103,7 @@ exports.createOrder = async (req, res) => {
 exports.updateOrder = async (req, res) => {
   const mailOptions = {
     from: process.env.EMAIL_SENDER,
-    subject: 'Зміна статусу замовлення',
+    subject: 'Ваше замовлення',
     template: 'orderStatusChange',
     context: {
       address: req.headers.origin,

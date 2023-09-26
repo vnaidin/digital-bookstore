@@ -4,6 +4,7 @@ import {
   Card, Col, NavLink, Badge,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import BuyButton from '../BuyButton';
 import { bookType } from '../../utils/types';
 
@@ -11,6 +12,7 @@ export default function BookCard({ // TODO: add tags
   id, author, title, image, price, reducedPrice, isReducedNow, tags, item_management,
 }) {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Col
       xs={12}
@@ -28,6 +30,7 @@ export default function BookCard({ // TODO: add tags
           width={300}
           className="p-3"
           alt={`${author}_${title}`}
+          onClick={() => navigate(`/book/${id}`)}
         />
         <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2">
           <NavLink href={`/book/${id}`}>

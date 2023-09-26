@@ -84,7 +84,7 @@ export default function Main() {
           )}
         </Row>
 
-        {value && (
+        {!loading && value && (
           <Row title="order-pagination-row" className="gap-2 justify-center">
             <Form.Group
               as={Col}

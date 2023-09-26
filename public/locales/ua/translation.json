@@ -107,6 +107,7 @@
             "title": "Книжковий магазин",
             "books": "Книги",
             "book-filters": {
+                "title": "Фільтри",
                 "price-ranges": "Цінові діапазони",
                 "ok": "Ok",
                 "author": "Автор",

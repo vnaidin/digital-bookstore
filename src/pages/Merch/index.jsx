@@ -75,7 +75,7 @@ export default function Merch() { // TODO: split into components
           )}
         </Row>
 
-        {value && (
+        {!loading && value && (
           <Row title="order-pagination-row" className="gap-2 justify-center">
             <Form.Group
               as={Col}
@@ -94,7 +94,7 @@ export default function Merch() { // TODO: split into components
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option
-                      key={opt.title}
+                      key={opt.id}
                       value={opt.value}
                     >
                       {t(`pages.mainPage.order.${opt.id}`)}

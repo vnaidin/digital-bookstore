@@ -107,6 +107,7 @@
             "title": "Internet bookstore",
             "books": "Books",
             "book-filters": {
+                "title": "Filters",
                 "price-ranges": "Price ranges",
                 "ok": "Ok",
                 "author": "Author",

@@ -156,7 +156,24 @@ export default function CreateUpdateNewsModal({
                   </Form.Group>
                   <Form.Group
                     as={Col}
-                    md="4"
+                    md="3"
+                    controlId="validationFormik151"
+                    className="position-relative"
+                  >
+                    <Form.Label>{t('pages.moderator.tabs.news.modal.category')}</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      placeholder={t('pages.moderator.tabs.news.modal.category')}
+                      onChange={handleChange}
+                      title="category"
+                      // autoComplete="off"
+                      defaultValue={existingNews?.publisher || ''}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    md="3"
                     controlId="validationFormik151"
                     className="position-relative"
                   >

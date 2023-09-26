@@ -4,6 +4,7 @@ import {
   Card, Col, NavLink, Badge,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import BuyButton from '../BuyButton';
 import { merchType } from '../../utils/types';
 
@@ -12,6 +13,7 @@ export default function MerchCard({
   price, reducedPrice, isReducedNow, tags, item_management,
 }) {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Col
       xs={12}
@@ -29,6 +31,7 @@ export default function MerchCard({
           width={300}
           className="p-3"
           alt={title}
+          onClick={() => navigate(`/merch/${id}`)}
         />
         <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2">
           <NavLink href={`/merch/${id}`}>

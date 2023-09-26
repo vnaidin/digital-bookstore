@@ -67,6 +67,9 @@ module.exports = function(app) {
    *         text:
    *           type: string
    *           description: The new
+   *         category:
+   *           type: string
+   *           description: category of the new
    * 
    *       example:
    *         author: test
@@ -75,6 +78,7 @@ module.exports = function(app) {
    *         publisher: test
    *         showImage: 1
    *         text: annotation
+   *         category: book review
    */
 
   /**

@@ -7,7 +7,7 @@ import Auth from './Auth';
 
 export default function HeaderBottom() {
   return (
-    <Container fluid className="header-bottom px-3 py-1 sticky-top">
+    <Container fluid className="header-bottom px-4 py-1 sticky-top">
       <Row className="gap-1">
         <Catalog />
         <SearchBar />

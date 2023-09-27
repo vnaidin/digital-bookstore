@@ -19,13 +19,13 @@ export default function InfoToast() {
   return (
     <ToastContainer
       className="p-3 mb-3"
-      position="middle-center"
-      /* style={{
+      // position="middle-center"
+      style={{
         zIndex: '1100',
         position: 'absolute',
-        top: document.body.getBoundingClientRect().top * -1,
+        top: (document.body.getBoundingClientRect().top * -1),
         right: '0',
-      }} */
+      }}
     >
       <Toast
         show={state.toast !== null}
@@ -43,7 +43,7 @@ export default function InfoToast() {
           />
           <strong className="me-auto">{state.toast?.callee}</strong>
         </Toast.Header>
-        <Toast.Body>{state.toast?.body || ''}</Toast.Body>
+        <Toast.Body as="h5" className="m-0">{state.toast?.body || ''}</Toast.Body>
       </Toast>
     </ToastContainer>
   );

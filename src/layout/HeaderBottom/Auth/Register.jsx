@@ -91,7 +91,7 @@ export default function Register() {
               </InputGroup>
             </Form.Group>
           </Row>
-          <Button type="submit" className="my-2 align-self-center" style={{ width: '6em' }}>{t('layout.headerBottom.auth.register')}</Button>
+          <Button type="submit" className="my-2 align-self-center">{t('layout.headerBottom.auth.register')}</Button>
         </Form>
       )}
     </Formik>

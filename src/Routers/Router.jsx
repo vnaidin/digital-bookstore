@@ -15,7 +15,6 @@ const Delivery = lazy(() => import('../pages/Delivery'));
 const Order = lazy(() => import('../pages/Order'));
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const Contacts = lazy(() => import('../pages/Contacts'));
-const Retrieval = lazy(() => import('../pages/Retrieval'));
 const TermsOfUse = lazy(() => import('../pages/TermsOfUse'));
 const Moderator = lazy(() => import('../pages/Moderator'));
 const BookPage = lazy(() => import('../pages/BookPage'));
@@ -45,7 +44,6 @@ export default function AppRouter() {
           <Route path="/merch/:id" element={<MerchPage />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contacts />} />
-          <Route path="/retrieval" element={<Retrieval />} />
           <Route path="/order" element={<Order />} />
           <Route path="/order/:id" element={<OrderPage />} />
           <Route path="/terms" element={<TermsOfUse />} />

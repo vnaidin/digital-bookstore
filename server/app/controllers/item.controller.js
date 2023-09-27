@@ -8,7 +8,7 @@ exports.getBooks = async (req, res) => {
   // Find all books
   const { cat, page, order, priceRange, author, publisher } = req.query;
   const paginationQuery = {
-    order: order ? [order ? [...order.split(",")] : db.sequelize.random()] : null,
+    order: order ? [order == 0 ? db.sequelize.random() : [...order.split(",")]] : null,
     where: {
       [Op.and]: [
         { itemType: 'book' },
@@ -114,7 +114,7 @@ exports.getMerch = async (req, res) => {
   // Find all merch
   const { page, order, priceRange } = req.query;
   const paginationQuery = {
-    order: order ? [order ? [...order.split(",")] : db.sequelize.random()] : null,
+    order: order ? [order == 0 ? db.sequelize.random() : [...order.split(",")]] : null,
     where: {
       [Op.and]: [
         { itemType: 'merch' },

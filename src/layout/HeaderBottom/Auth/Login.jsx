@@ -90,7 +90,7 @@ export default function Login() {
           <Button
             type="submit"
             className="my-2 align-self-center"
-            style={{ width: '6em' }}
+
           >
             {forgotPass ? t('layout.headerBottom.auth.reset-pass') : t('layout.headerBottom.auth.login')}
           </Button>

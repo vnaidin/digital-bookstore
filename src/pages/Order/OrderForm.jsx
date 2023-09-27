@@ -415,10 +415,10 @@ export default function OrderForm({ totalPrice }) {
                   controlId="validationFormik1051"
                   className="position-relative"
                 >
-                  <Form.Label>{t('pages.order.form.house-nr')}</Form.Label>
+                  <Form.Label>{t('pages.order.form.flat-nr')}</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder={t('pages.order.form.house-nr')}
+                    placeholder={t('pages.order.form.flat-nr')}
                     name="flatNr"
                     value={values.flatNr}
                     onChange={handleChange}

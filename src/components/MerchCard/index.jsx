@@ -65,7 +65,14 @@ export default function MerchCard({
               {item_management.amount === 0 && <Badge pill bg="secondary">{t('components.bookCard.item-ended')}</Badge>}
             </div>
           </div>
-          <BuyButton id={id} price={price} title={title} image={image} />
+          <BuyButton
+            id={id}
+            price={price}
+            title={title}
+            image={image}
+            reducedPrice={reducedPrice}
+            isReducedNow={isReducedNow}
+          />
 
         </Card.Body>
       </Card>

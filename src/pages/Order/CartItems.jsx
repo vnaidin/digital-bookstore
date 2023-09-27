@@ -9,9 +9,9 @@ import AppContext from '../../appContext';
 export default function CartItems({ totalPrice }) {
   const { state, dispatch } = useContext(AppContext);
   const { t, i18n } = useTranslation();
-  const handleAddToCart = (id, price, title, image) => {
+  const handleAddToCart = (id, price, title, image, reducedPrice, isReducedNow) => {
     const payload = {
-      id, price, title, image,
+      id, price, title, image, isReducedNow, reducedPrice,
     };
     localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
     dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
@@ -28,11 +28,15 @@ export default function CartItems({ totalPrice }) {
   };
 
   const reducedBooks = state.shoppingCart.reduce((acc, {
-    id, price, title, image,
+    id, price, title, image, reducedPrice, isReducedNow,
   }) => (
     {
       ...acc,
-      [id]: acc[id] ? [...acc[id], { price, title }] : [{ price, title, image }],
+      [id]: acc[id] ? [...acc[id], {
+        price, title, reducedPrice, isReducedNow,
+      }] : [{
+        price, title, image, reducedPrice, isReducedNow,
+      }],
     }
   ), {});
 
@@ -53,7 +57,7 @@ export default function CartItems({ totalPrice }) {
               <p className="m-2">
                 {value[0].title}
                 {' '}
-                {`${value[0].price}${i18n.language === 'en' ? ' UAH' : ' грн'}`}
+                {`${value[0].isReducedNow ? value[0].reducedPrice : value[0].price}${i18n.language === 'en' ? ' UAH' : ' грн'}`}
               </p>
             </Col>
             <Col
@@ -71,7 +75,14 @@ export default function CartItems({ totalPrice }) {
                   variant="success"
                   className="mx-1"
                   onClick={
-                () => handleAddToCart(+key, value[0].price, value[0].title, value[0].image)
+                () => handleAddToCart(
+                  +key,
+                  value[0].price,
+                  value[0].title,
+                  value[0].image,
+                  value[0].reducedPrice,
+                  value[0].isReducedNow,
+                )
 }
                 >
                   +

@@ -111,7 +111,14 @@ export default function BookPage() {
               )}
             </div>
           </Row>
-          <BuyButton id={id} price={value?.price} title={value?.title} image={value?.image} />
+          <BuyButton
+            id={id}
+            price={value?.price}
+            title={value?.title}
+            image={value?.image}
+            reducedPrice={value?.reducedPrice}
+            isReducedNow={value?.isReducedNow}
+          />
         </Col>
       </Row>
       <Row className="my-3">

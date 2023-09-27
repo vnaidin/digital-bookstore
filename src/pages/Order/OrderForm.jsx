@@ -49,7 +49,9 @@ export default function OrderForm({ totalPrice }) {
       receiverName: values.receiverName,
       receiverSurname: values.receiverSurname,
       receiverPhoneNumber: values.receiverPhoneNumber,
-      order_items: state.shoppingCart.map(({ id, price }) => ({ itemId: id, price })),
+      order_items: state.shoppingCart.map(({
+        id, price, reducedPrice, isReducedNow,
+      }) => ({ itemId: id, price: isReducedNow ? reducedPrice : price })),
       order_address: {
         delMethodId: +values.delMethod,
         city: values.city,

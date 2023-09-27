@@ -285,7 +285,8 @@
         },
         "terms-of-use": {
             "title-b": "Terms of Use",
-            "title": "PUBLIC CONTRACT [BID]"
+            "title-1": "PUBLIC CONTRACT",
+            "title-2":"[BID]"
 
         }
     },

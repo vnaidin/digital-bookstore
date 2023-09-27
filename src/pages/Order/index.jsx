@@ -12,7 +12,12 @@ import { NoDataComponent } from '../../components';
 export default function Order() {
   const { state } = useContext(AppContext);
   const { t } = useTranslation();
-  const totalBooksPrice = state.shoppingCart.reduce((acc, curr) => acc + curr.price, 0);
+  const totalBooksPrice = state.shoppingCart.reduce((acc, curr) => {
+    if (curr.isReducedNow) {
+      return acc + curr.reducedPrice;
+    }
+    return acc + curr.price;
+  }, 0);
   const totalPrice = state.deliveryMethod && totalBooksPrice < state.deliveryMethod?.freeFrom
     ? totalBooksPrice : totalBooksPrice;// TODO: review, as we don't have different delivery prices
   return (

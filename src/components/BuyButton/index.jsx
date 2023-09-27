@@ -5,14 +5,14 @@ import { useTranslation } from 'react-i18next';
 import AppContext from '../../appContext';
 
 export default function BuyButton({
-  id, price, title, image,
+  id, price, title, image, reducedPrice, isReducedNow,
 }) {
   const { dispatch, state } = useContext(AppContext);
   const { t } = useTranslation();
 
   const handleAddToCart = () => {
     const payload = {
-      id, price, title, image,
+      id, price, title, image, reducedPrice, isReducedNow,
     };
     localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
     dispatch({ type: 'setToast', payload: { body: `${title} ${t('toasts.add-to-cart')}`, callee: t('toasts.callee-sys') } });
@@ -26,6 +26,8 @@ BuyButton.defaultProps = {
   title: null,
   image: null,
   price: null,
+  reducedPrice: null,
+  isReducedNow: false,
 };
 
 BuyButton.propTypes = {
@@ -33,4 +35,6 @@ BuyButton.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string,
   price: PropTypes.number,
+  reducedPrice: PropTypes.number,
+  isReducedNow: PropTypes.bool,
 };

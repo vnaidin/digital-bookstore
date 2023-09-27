@@ -60,6 +60,7 @@ export default function OrderForm({ totalPrice }) {
       },
       price: totalPrice,
       status: false,
+      comments: values.comments,
       paymentMethodId: +values.paymentMethodId,
     };
     //  console.log(objectToPost);

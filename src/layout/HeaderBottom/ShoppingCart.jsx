@@ -42,14 +42,21 @@ export default function ShoppingCart() {
   };
 
   const reducedBooks = state.shoppingCart.reduce((acc, {
-    id, price, title, image,
+    id, price, title, image, reducedPrice, isReducedNow,
   }) => (
     {
       ...acc,
-      [id]: acc[id] ? [...acc[id], { price, title }] : [{ price, title, image }],
+      [id]: acc[id] ? [...acc[id], { price, title }] : [{
+        price, title, image, reducedPrice, isReducedNow,
+      }],
     }
   ), {});
-  const totalPrice = state.shoppingCart.reduce((acc, curr) => acc + curr.price, 0);
+  const totalPrice = state.shoppingCart.reduce((acc, curr) => {
+    if (curr.isReducedNow) {
+      return acc + curr.reducedPrice;
+    }
+    return acc + curr.price;
+  }, 0);
   return (
     <>
       <Modal
@@ -83,7 +90,7 @@ export default function ShoppingCart() {
                     <Col className="text-start my-1" style={{ fontSize: 'large' }}>
                       {value[0].title}
                       {' '}
-                      {`${value[0].price}${i18n.language === 'en' ? ' UAH' : ' грн'}`}
+                      {`${value[0].isReducedNow ? value[0].reducedPrice : value[0].price}${i18n.language === 'en' ? ' UAH' : ' грн'}`}
                     </Col>
                   </Row>
 

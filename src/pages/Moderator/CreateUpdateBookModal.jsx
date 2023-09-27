@@ -295,11 +295,11 @@ export default function CreateUpdateBookModal({
                             {BOOK_CATEGORIES.map((category, ind) => (
                               <Form.Check
                                 className="col md-3"
-                                key={category}
+                                key={category.id}
                                 style={{ border: '1px solid black' }}
                                 type="checkbox"
-                                label={t(`constants.bookCategories.${ind}`)}
-                                value={ind}
+                                label={t(`constants.bookCategories.${category.id}`)}
+                                value={category.id}
                                 checked={new Set(formData.category).has(ind)}
                                 // required
                                 onChange={(event) => {

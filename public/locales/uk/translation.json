@@ -286,8 +286,7 @@
         "terms-of-use": {
             "title-b": "Terms of Use",
             "title-1": "PUBLIC CONTRACT",
-            "title-2":"[BID]"
-
+            "title-2": "[BID]"
         }
     },
     "toasts": {
@@ -321,26 +320,22 @@
             "1": "LiqPay"
         },
         "bookCategories": {
-            "0": "Action and adventure",
-            "1": "Art/architecture",
-            "2": "Alternate history",
-            "3": "Autobiography",
-            "4": "Anthology",
-            "5": "Biography",
-            "6": "Chick lit",
-            "7": "Business/economics",
-            "8": "Children's",
-            "9": "Crafts/hobbies",
-            "10": "Classic",
-            "11": "Cookbook",
-            "12": "Comic book",
-            "13": "Coming-of-age",
-            "14": "Dictionary",
-            "15": "Crime",
-            "16": "Encyclopedia",
-            "17": "Drama",
-            "18": "Guide",
-            "19": "Fairytale"
+            "1": "Fiction",
+            "2": "Non-fiction",
+            "3": "Military literature",
+            "4": "War literature",
+            "5": "Detectives/thrillers",
+            "6": "Science/fantasy",
+            "7": "Popular scientific literature",
+            "8": "Textbooks/manuals",
+            "9": "Children's literature",
+            "10": "Juvenile literature",
+            "11": "Biographies/memoirs",
+            "12": "Poetry",
+            "13": "Comics",
+            "14": "Historical literature",
+            "15": "Psychology",
+            "16": "Chronicles"
         }
     }
 }

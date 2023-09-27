@@ -25,26 +25,70 @@ export const ORDER_STATUSES = {
 export const PAYMENT_METHODS = ['cash', 'liqpay'];
 
 export const BOOK_CATEGORIES = [
-  'Action and adventure',
-  'Art/architecture',
-  'Alternate history',
-  'Autobiography',
-  'Anthology',
-  'Biography',
-  'Chick lit',
-  'Business/economics',
-  "Children's",
-  'Crafts/hobbies',
-  'Classic',
-  'Cookbook',
-  'Comic book',
-  'Diary',
-  'Coming-of-age',
-  'Dictionary',
-  'Crime',
-  'Encyclopedia',
-  'Drama',
-  'Guide',
+  {
+    id: 1,
+    title: 'Художня література',
+  },
+  {
+    id: 2,
+    title: 'Нон-фікшн',
+  },
+  {
+    id: 3,
+    title: 'Військова література',
+  },
+  {
+    id: 4,
+    title: 'Воєнна література',
+  },
+  {
+    id: 5,
+    title: 'Детективи/триллери',
+  },
+  {
+    id: 6,
+    title: 'Фантастика/фентезі',
+  },
+  {
+    id: 7,
+    title: 'Науково-популярна література',
+  },
+  {
+    id: 8,
+    title: 'Підручники/посібники',
+  },
+  {
+    id: 9,
+    title: 'Дитяча література',
+  },
+  {
+    id: 10,
+    title: 'Підліткова література',
+  },
+  {
+    id: 11,
+    title: 'Біографії/мемуари',
+  },
+  {
+    id: 12,
+    title: 'Поезія',
+  },
+  {
+    id: 13,
+    title: 'Комікси',
+  },
+  {
+    id: 14,
+    title: 'Історична література',
+  },
+  {
+    id: 15,
+    title: 'Психологія',
+  },
+  {
+    id: 16,
+    title: 'Хроніки',
+  },
 ];
 
 export const BOOK_ORDERING = [{ id: 0, value: 'price,DESC' }, { id: 1, value: 'price,ASC' }];

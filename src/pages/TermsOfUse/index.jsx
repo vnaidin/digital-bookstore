@@ -187,7 +187,7 @@ export default function TermsOfUse() {
           <br />
 
           <li>
-            <h3 className="text-center" style={{ fontWeight: 'bold' }}> ПРАВА ТА ОБОВЯЗКИ СТОРІН</h3>
+            <h3 className="text-center" style={{ fontWeight: 'bold' }}> ПРАВА ТА ОБОВʼЯЗКИ СТОРІН</h3>
             <ol>
               <li>
                 Продавець має право:

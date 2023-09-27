@@ -34,10 +34,10 @@ export default function Catalog() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ListGroup>
-            {BOOK_CATEGORIES.map((category, index) => (
-              <ListGroup.Item className="text-start" key={category}>
+            {BOOK_CATEGORIES.map(({ id }, index) => (
+              <ListGroup.Item className="text-start" key={id}>
                 <NavLink
-                  active={pathname.substring(1) === category}
+                  active={pathname.substring(1) === id}
                   onClick={() => {
                     navigate({ pathname: '/', search: `?cat=${index}` });
                     handleClose();

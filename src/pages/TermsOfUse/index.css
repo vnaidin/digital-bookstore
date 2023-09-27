@@ -3,6 +3,7 @@ ol {
     counter-reset: item;
     margin: 0;
     padding: 0;
+    font-size: large;
   }
   
   ol > li {
@@ -24,5 +25,5 @@ ol {
   }
   
   li ol > li:before {
-    content: counters(item, ".") " ";
+    content: counters(item, ".") ". ";
   }

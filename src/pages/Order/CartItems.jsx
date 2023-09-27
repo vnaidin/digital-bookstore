@@ -50,10 +50,10 @@ export default function CartItems({ totalPrice }) {
               xxl={6}
             >
               <img src={value[0].image} alt={value[0].title} width={80} />
-              <p>
+              <p className="m-2">
                 {value[0].title}
                 {' '}
-                {value[0].price}
+                {`${value[0].price}${i18n.language === 'en' ? ' UAH' : ' грн'}`}
               </p>
             </Col>
             <Col

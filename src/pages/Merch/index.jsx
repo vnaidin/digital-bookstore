@@ -84,13 +84,18 @@ export default function Merch() { // TODO: split into components
               {/* <Form.Label>Order:</Form.Label> */}
               <Form.Select
                 aria-label="order-select"
-                onChange={(event) => setFilters((prev) => ({ ...prev, order: event.target.value }))}
+                onChange={(event) => setFilters(
+                  (prev) => ({
+                    ...prev,
+                    order: event.target.value === 0 ? null : event.target.value,
+                  }),
+                )}
                 title="order"
                 placeholder={t('pages.mainPage.order.title')}
                 defaultValue={filters?.order || null}
                 required
               >
-                <option hidden value={null}>{t('pages.mainPage.order.title')}</option>
+                <option value={0}>{t('pages.mainPage.order.title')}</option>
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option

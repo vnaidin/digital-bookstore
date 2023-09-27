@@ -16,7 +16,7 @@ import BookFilters from './BookFilters';
 export default function Main() {
   const { search } = useLocation();
   // eslint-disable-next-line no-unused-vars
-  const { t } = useTranslation(); // TODO: translate order
+  const { t } = useTranslation();
   const bookCategory = search?.split('=').pop();
   const [filters, setFilters] = useState({
     page: 0,
@@ -41,7 +41,7 @@ export default function Main() {
   );
 
   return (
-    <Container as={Row}>
+    <Container as={Row} className="m-0">
       <Helmet titleTemplate="Alineabooks - %s">
         <title>
           {t('pages.mainPage.title')}
@@ -92,13 +92,20 @@ export default function Main() {
             >
               <Form.Select
                 aria-label="order-select"
-                onChange={(event) => setFilters((prev) => ({ ...prev, order: event.target.value }))}
+                onChange={(event) => {
+                  setFilters(
+                    (prev) => ({
+                      ...prev,
+                      order: event.target.value === 0 ? null : event.target.value,
+                    }),
+                  );
+                }}
                 title="order"
                 placeholder={t('pages.mainPage.order.title')}
                 defaultValue={filters?.order || null}
                 required
               >
-                <option hidden value={null}>{t('pages.mainPage.order.title')}</option>
+                <option value={0} key="none">{t('pages.mainPage.order.title')}</option>
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option

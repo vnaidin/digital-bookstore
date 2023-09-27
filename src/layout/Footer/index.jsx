@@ -34,13 +34,6 @@ export default function Footer() {
                   {t('layout.header.routes.contactUs')}
                 </NavLink>
               </Nav.Item>
-              <Nav.Item className="col text-start" key="retrieval">
-                <NavLink
-                  href="/retrieval"
-                >
-                  {t('layout.header.routes.retrieval')}
-                </NavLink>
-              </Nav.Item>
               <Nav.Item className="col text-start" key="terms">
                 <NavLink
                   href="/terms"

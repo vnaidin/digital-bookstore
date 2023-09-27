@@ -1,4 +1,4 @@
-.App, .modal-body, .offcanvas-body {
+.App, .modal-body, .offcanvas-body/* ,.toast-body */ {
   text-align: center;
   background-color: #DDC3A5;
 }
@@ -7,13 +7,27 @@ main {
   min-height: 70vh;
 }
 
-header, .modal-header, .offcanvas-header {
+header, .modal-header, .offcanvas-header,.toast-header {
   background-color: #E0A96D;
 }
 
 footer, .header-bottom, .modal-footer {
   background-color: #201E20;
   color: rgb(255 255 255 / 55%);
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media print {
+  html, body {
+    display: none;  /* hide whole page */
+  }
 }
 
 

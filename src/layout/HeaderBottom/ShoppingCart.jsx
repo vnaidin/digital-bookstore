@@ -63,14 +63,36 @@ export default function ShoppingCart() {
         <Modal.Body>
           <Container style={{ overflowY: 'scroll', maxHeight: '50vh' }}>
             {nOfItemsInCart > 0 ? Object.entries(reducedBooks).map(([key, value]) => (
-              <Row key={key} className="align-items-center">
-                <Col className="text-start my-1">
-                  <img src={value[0].image} alt={value[0].title} width={80} />
-                  {value[0].title}
-                  {' '}
-                  {value[0].price}
+              <Row
+                key={key}
+                className="align-items-center"
+              >
+                <Col
+                  xs={6}
+                  sm={6}
+                >
+                  <Row>
+                    <Col className="text-start my-1">
+                      <img
+                        src={value[0].image}
+                        alt={value[0].title}
+                        width={80}
+                        className="my-1 mx-1"
+                      />
+                    </Col>
+                    <Col className="text-start my-1" style={{ fontSize: 'large' }}>
+                      {value[0].title}
+                      {' '}
+                      {`${value[0].price}${i18n.language === 'en' ? ' UAH' : ' грн'}`}
+                    </Col>
+                  </Row>
+
                 </Col>
-                <Col>
+
+                <Col
+                  xs={6}
+                  sm={6}
+                >
                   <div>
                     <Button
                       variant="danger"

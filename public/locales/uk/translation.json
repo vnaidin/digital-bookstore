@@ -284,7 +284,9 @@
             "title": "Retrieval"
         },
         "terms-of-use": {
-            "title": "Terms of Use"
+            "title-b": "Terms of Use",
+            "title": "PUBLIC CONTRACT [BID]"
+
         }
     },
     "toasts": {
@@ -314,7 +316,7 @@
             "1": "Hard cover"
         },
         "paymentMethods": {
-            "0": "Cash",
+            "0": "Postpayment",
             "1": "LiqPay"
         },
         "bookCategories": {

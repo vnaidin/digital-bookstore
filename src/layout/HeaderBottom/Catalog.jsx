@@ -34,16 +34,16 @@ export default function Catalog() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ListGroup>
-            {BOOK_CATEGORIES.map(({ id }, index) => (
+            {BOOK_CATEGORIES.map(({ id }) => (
               <ListGroup.Item className="text-start" key={id}>
                 <NavLink
                   active={pathname.substring(1) === id}
                   onClick={() => {
-                    navigate({ pathname: '/', search: `?cat=${index}` });
+                    navigate({ pathname: '/', search: `?cat=${id}` });
                     handleClose();
                   }}
                 >
-                  {t(`constants.bookCategories.${index}`)}
+                  {t(`constants.bookCategories.${id}`)}
                 </NavLink>
 
               </ListGroup.Item>

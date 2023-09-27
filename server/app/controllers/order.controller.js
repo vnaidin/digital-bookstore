@@ -115,14 +115,14 @@ exports.updateOrder = async (req, res) => {
     where: {
       id: id
     }
-  }).then(async orderId => {
-    res.status(200).json({ message: `Order ${orderId} updated` })
+  }).then(async() => {
     const updatedOrder = await Order.findOne({ where: { id: id }, include: [OrderItems, OrderAddress] })
+    res.status(200).json({ message: `Order ${id} updated` })
     if (req.body.status > 1 && req.body.status < 5) {
       nodemailer.transporter.sendMail({
         ...mailOptions, to: updatedOrder.email,
         context: {
-          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + orderId, status: MAILING_STATUSES[+updatedOrder.status].title,
+          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + id, status: MAILING_STATUSES[+updatedOrder.status].title,
           nOfItems: updatedOrder.order_items.length
         }
       }, function (error, info) {

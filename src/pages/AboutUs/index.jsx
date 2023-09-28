@@ -14,7 +14,6 @@ export default function AboutUs() { // TODO: more text!
         className="my-2 pageTitle"
       >
         <h2 style={{ fontSize: '48px' }}>{t('pages.aboutUs.title')}</h2>
-
       </Row>
       <p style={{ fontSize: 'x-large', textAlign: 'justify' }}>
         {t('pages.aboutUs.1')}

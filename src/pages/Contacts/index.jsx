@@ -49,7 +49,8 @@ export default function Contacts() {
               rel="nofollow noreferrer"
               target="_blank"
             >
-              Вул. А. Малишка, буд. 9
+              Україна, 01001,місто Київ,
+              вулиця Андрія Малишка, буд. 9, кв. 37
             </a>
           </strong>
         </p>

@@ -2,142 +2,58 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Container, Row, Spinner, Form, Col,
+  Container, Row, Spinner, Form, Col, Carousel,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useFetch } from '../../utils/hooks';
-import { BOOK_ORDERING } from '../../utils/constants';
-import { BookCard, PaginationComponent, NoDataComponent } from '../../components';
+import {
+  BookCard, PaginationComponent, NoDataComponent, NewsItem,
+} from '../../components';
 
 export default function Main() {
-  const { search } = useLocation();
-  // eslint-disable-next-line no-unused-vars
+  const [data, setData] = useState();
   const { t } = useTranslation();
-  const bookCategory = search?.split('=').pop();
-  const [filters, setFilters] = useState({
-    page: 0,
-    order: null,
-    priceRange: null,
-    author: null,
-    publisher: null,
-  });
 
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
-  url.searchParams.append('page', filters.page);
-  bookCategory && url.searchParams.append('cat', bookCategory);
-  filters.order && url.searchParams.append('order', filters.order);
-  filters.priceRange && url.searchParams.append('priceRange', filters.priceRange);
-  filters.author && url.searchParams.append('author', filters.author);
-  filters.publisher && url.searchParams.append('publisher', filters.publisher);
+  const options = { method: 'GET', headers: { accept: 'application/json' } };
 
-  const { loading, error, value } = useFetch(
-    url,
-    {},
-    [search, filters],
-  );
+  useEffect(() => {
+    Promise.all(['books', 'merch', 'news'].map((entity) => fetch(`${process.env.REACT_APP_BE_URL}/api/all/${entity}`, options).then(
+      (response) => response.json(),
+    ))).then(
+      ([{ books }, { merch }, { news }]) => setData({ books, merch, news }),
+    ).catch((error) => console.error(error));
+  }, []);
 
   return (
-    <Container as={Row} className="m-0">
+    <Container as={Row} className="m-0" fluid>
       <Helmet titleTemplate="Alineabooks - %s">
         <title>
           {t('pages.mainPage.title')}
         </title>
-        {/** Інтернет-магазин книг */}
       </Helmet>
+      <h3>News</h3>
+      <Row className="d-flex flex-nowrap" style={{ overflowX: 'scroll' }}>
+        {data && data.news && data.news.map((book) => (
+          <NewsItem {...book} />
+        ))}
+      </Row>
 
-      {/*  <Col
-        xs={12}
-        sm={12}
-        md={10}
-        lg={10}
-        xl={10}
-        xxl={10}
-      >
-        <Row className="my-2">
-          {error && (
-            <p>
-              {new Error(error).message}
-            </p>
-          )}
-          {loading && (
-            <Spinner animation="border" />
-          )}
-        </Row>
+      <h3>Books</h3>
+      <Row className="d-flex flex-nowrap" style={{ overflowX: 'scroll' }}>
+        {data && data.books && data.books.map((book) => (
+          <BookCard {...book} />
+        ))}
+      </Row>
 
-        {!loading && value && (
-          <Row title="order-pagination-row" className="gap-2 justify-center">
-            <Form.Group
-              as={Col}
-              sm="4"
-            >
-              <Form.Select
-                aria-label="order-select"
-                onChange={(event) => {
-                  setFilters(
-                    (prev) => ({
-                      ...prev,
-                      order: event.target.value === 0 ? null : event.target.value,
-                    }),
-                  );
-                }}
-                title="order"
-                placeholder={t('pages.mainPage.order.title')}
-                defaultValue={filters?.order || null}
-                required
-              >
-                <option value={0} key="none">{t('pages.mainPage.order.title')}</option>
-                {BOOK_ORDERING.map(
-                  (opt) => (
-                    <option
-                      key={opt.id}
-                      value={opt.value}
-                    >
-                      {t(`pages.mainPage.order.${opt.id}`)}
-                    </option>
-                  ),
-                )}
-              </Form.Select>
-            </Form.Group>
-            {value.total > 12 && (
-              <Col sm={4}>
-                <PaginationComponent
-                  itemsLength={value.total}
-                  itemsPerPage={12}
-                  activeIndex={filters.page}
-                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
-                />
-              </Col>
-            )}
-          </Row>
-        )}
-
-        <Row className="my-2" title="book-cards-row">
-          {value && value.books.length > 0 ? value.books.map(
-            (bookObj) => <BookCard {...bookObj} key={bookObj.id} />,
-          )
-            : <NoDataComponent />}
-        </Row>
-
-        {value && (
-          <Row title="pagination-row" className="gap-2 justify-center">
-            {value.total > 12 && (
-              <Col>
-                <PaginationComponent
-                  itemsLength={value.total}
-                  itemsPerPage={12}
-                  activeIndex={filters.page}
-                  onClick={(ind) => setFilters((prev) => ({ ...prev, page: ind }))}
-                />
-              </Col>
-            )}
-          </Row>
-        )}
-
-      </Col> */}
+      <h3>Merch</h3>
+      <Row className="d-flex flex-nowrap" style={{ overflowX: 'scroll' }}>
+        {data && data.merch && data.merch.map((book) => (
+          <BookCard {...book} />
+        ))}
+      </Row>
 
     </Container>
   );

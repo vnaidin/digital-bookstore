@@ -76,10 +76,11 @@ export default function News() { // TODO: split into components
                 md={6}
                 lg={4}
                 xl={4}
-                xxl={4}
+                xxl={3}
+                key={newsObj.id}
                 className="d-flex justify-content-center my-1"
               >
-                <NewsItem {...newsObj} key={newsObj.id} />
+                <NewsItem {...newsObj} />
               </Col>
             ),
           )

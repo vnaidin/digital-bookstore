@@ -142,8 +142,9 @@ export default function Books() {
                 xl={4}
                 xxl={3}
                 className="d-flex justify-content-center my-1"
+                key={bookObj.id}
               >
-                <BookCard {...bookObj} key={bookObj.id} />
+                <BookCard {...bookObj} />
               </Col>
             ),
           )

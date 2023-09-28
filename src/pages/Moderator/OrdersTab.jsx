@@ -92,7 +92,7 @@ export default function OrdersTab() {
 
         {value && value.length > 0 ? (
           <Table
-            striped
+            /* striped */
             bordered
             hover
             responsive

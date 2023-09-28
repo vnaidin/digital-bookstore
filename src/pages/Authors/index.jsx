@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 export default function Authors() {
   const { t } = useTranslation();
   return (
-    <Container>
+    <Container style={{ padding: '3em 0px' }}>
       <Helmet>
         <title>{t('pages.authors.title')}</title>
       </Helmet>

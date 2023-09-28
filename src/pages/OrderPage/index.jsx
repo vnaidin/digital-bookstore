@@ -51,7 +51,7 @@ export default function OrderPage() {
         <h3 className="text-center my-2">{t('pages.order.title')}</h3>
         {value && value[0] !== null && value.length > 0 ? (
           <Table
-            striped
+            /* striped */
             bordered
             hover
             responsive

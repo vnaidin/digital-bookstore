@@ -119,7 +119,7 @@ export default function ShoppingCart() {
                           value[0].title,
                           value[0].image,
                           value[0].reducedPrice,
-                          value[0].isReducedNow,
+                          value[0].isRedu,
                         )
 }
                     >

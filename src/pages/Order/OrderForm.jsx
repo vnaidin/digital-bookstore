@@ -540,7 +540,13 @@ export default function OrderForm({ totalPrice }) {
             </Form.Group>
           </Row>
 
-          <Button type="submit" variant="success">{t('pages.order.form.submit-order')}</Button>
+          <Button
+            type="submit"
+            style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+          >
+            {t('pages.order.form.submit-order')}
+
+          </Button>
         </Form>
       )}
     </Formik>

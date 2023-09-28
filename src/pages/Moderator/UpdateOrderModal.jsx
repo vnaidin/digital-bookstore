@@ -111,6 +111,8 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
               <Button
                 className="m-2 place-self-center"
                 type="submit"
+                style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+
               >
                 {t('pages.moderator.tabs.order.modal.update')}
               </Button>

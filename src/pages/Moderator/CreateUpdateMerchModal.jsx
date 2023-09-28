@@ -278,6 +278,8 @@ export default function CreateUpdateMerchModal({
                 <Button
                   className="m-2 place-self-center"
                   type="submit"
+                  style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+
                 >
                   {existingMerch?.id ? t('pages.moderator.tabs.merch.modal.update') : t('pages.moderator.tabs.merch.modal.create')}
                 </Button>

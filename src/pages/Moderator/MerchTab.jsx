@@ -77,7 +77,7 @@ export default function MerchTab() {
         </Row>
         {value && value.merch.length > 0 ? (
           <Table
-            striped
+            /* striped */
             bordered
             hover
             responsive

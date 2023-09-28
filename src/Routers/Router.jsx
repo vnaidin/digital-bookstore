@@ -12,6 +12,7 @@ import AppContext from '../appContext';
 
 // const Authors = lazy(() => import('../pages/Authors'));
 const Order = lazy(() => import('../pages/Order'));
+const Books = lazy(() => import('../pages/Books'));
 const AboutUs = lazy(() => import('../pages/AboutUs'));
 const Contacts = lazy(() => import('../pages/Contacts'));
 const TermsOfUse = lazy(() => import('../pages/TermsOfUse'));
@@ -34,6 +35,7 @@ export default function AppRouter() {
       <Container as="main">
         <Routes>
           <Route index path="/" element={<Main />} />
+          <Route index path="/books" element={<Books />} />
           {/* <Route path="/authors" element={<Authors />} /> */}
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/news" element={<News />} />

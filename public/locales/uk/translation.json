@@ -12,6 +12,7 @@
         "header": {
             "routes": {
                 "authors": "Authors",
+                "books": "Books",
                 "news": "News",
                 "merch": "Merch",
                 "delivery": "Delivery",
@@ -78,6 +79,9 @@
         "authors": {
             "title": "Authors"
         },
+        "mainPage": {
+            "title": "Main"
+        },
         "bookPage": {
             "author": "Author",
             "year": "Year",
@@ -91,7 +95,8 @@
         "contacts": {
             "title": "Contacts",
             "email": "Email",
-            "tel": "Telephone"
+            "tel": "Telephone",
+            "address": "Address"
         },
         "delivery": {
             "title": "Delivery",
@@ -105,9 +110,8 @@
                 "6": "Meest Post. Courier"
             }
         },
-        "mainPage": {
-            "title": "Internet bookstore",
-            "books": "Books",
+        "books": {
+            "title": "Books",
             "book-filters": {
                 "title": "Filters",
                 "price-ranges": "Price ranges",

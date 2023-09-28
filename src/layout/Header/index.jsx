@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import LanguageSelect from './LanguageSelect/LanguageSelect';
 
-import logo from '../../logo.svg';
 import AppContext from '../../appContext';
 
 export default function Header() {
@@ -30,7 +29,7 @@ export default function Header() {
           href="/"
           className="col-xs d-flex align-items-center"
         >
-          <img alt="librarie.com" src={logo} width={150} />
+          <img alt="alineabooks.com" src="/logo.png" width={150} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="layout-navbar-nav " />
         <Navbar.Collapse id="layout-navbar-nav">
@@ -43,14 +42,6 @@ export default function Header() {
                 {t('layout.header.routes.authors')}
               </NavLink>
             </Nav.Item> */}
-            <Nav.Item key="news">
-              <NavLink
-                active={pathname.substring(1) === 'news'}
-                href="/news"
-              >
-                {t('layout.header.routes.news')}
-              </NavLink>
-            </Nav.Item>
             <Nav.Item key="merch">
               <NavLink
                 active={pathname.substring(1) === 'merch'}
@@ -59,12 +50,12 @@ export default function Header() {
                 {t('layout.header.routes.merch')}
               </NavLink>
             </Nav.Item>
-            <Nav.Item key="delivery">
+            <Nav.Item key="news">
               <NavLink
-                active={pathname.substring(1) === 'delivery'}
-                href="/delivery"
+                active={pathname.substring(1) === 'news'}
+                href="/news"
               >
-                {t('layout.header.routes.delivery')}
+                {t('layout.header.routes.news')}
               </NavLink>
             </Nav.Item>
 

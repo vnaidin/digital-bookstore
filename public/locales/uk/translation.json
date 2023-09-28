@@ -71,7 +71,9 @@
     "pages": {
         "404": {},
         "aboutUs": {
-            "title": "About Us"
+            "title": "About Us",
+            "1": "A Linea is an online bookstore where you can find those books that will inspire, give an impetus to find new ways, show the artistic world, allow you to plunge into intrigue and adventure, and also open up new knowledge.",
+            "2": "A linea is translated from Latin as 'from a new line'. Start your thoughts with us from a new line, from a new paragraph - unknown emotions, from a new chapter - your other interesting life story. Books are reborn from the inside, so quickly choose the ones you like the most. Your inner world is your fortress, fill yourself with new content with the A Linea online bookstore."
         },
         "authors": {
             "title": "Authors"

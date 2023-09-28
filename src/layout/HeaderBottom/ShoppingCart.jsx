@@ -23,9 +23,9 @@ export default function ShoppingCart() {
     handleClose();
   };
 
-  const handleAddToCart = (id, price, title, image) => {
+  const handleAddToCart = (id, price, title, image, reducedPrice, isReducedNow) => {
     const payload = {
-      id, price, title, image,
+      id, price, title, image, reducedPrice, isReducedNow,
     };
     localStorage.setItem('cart', JSON.stringify([...state.shoppingCart, payload]));
     dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
@@ -113,7 +113,14 @@ export default function ShoppingCart() {
                       variant="success"
                       className="mx-1"
                       onClick={
-                        () => handleAddToCart(+key, value[0].price, value[0].title, value[0].image)
+                        () => handleAddToCart(
+                          +key,
+                          value[0].price,
+                          value[0].title,
+                          value[0].image,
+                          value[0].reducedPrice,
+                          value[0].isReducedNow,
+                        )
 }
                     >
                       +
@@ -142,9 +149,9 @@ export default function ShoppingCart() {
             >
               {t('layout.headerBottom.shopping-cart.empty-cart')}
             </Button>
-            <Button variant="warning" onClick={handleClose}>
+            {/* <Button variant="warning" onClick={handleClose}>
               {t('layout.headerBottom.shopping-cart.continue')}
-            </Button>
+            </Button> */}
             <Button
               variant="success"
               onClick={() => { navigate('/order'); handleClose(); }}

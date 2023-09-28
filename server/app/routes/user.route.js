@@ -29,11 +29,15 @@ module.exports = function(app) {
  *         phoneNumber:
  *           type: string
  *           description: UA-type phone number
+ *         birthday:
+ *           type: string
+ *           description: User's birthday
  *   
  *       example:
  *         name: John
  *         surname: Smith
  *         phoneNumber: "0951234567"
+ *         birthday: "13.12.13"
  */
 
   /**

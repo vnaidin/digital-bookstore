@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { Toast, ToastContainer } from 'react-bootstrap';
 import AppContext from '../../appContext';
-import logo from '../../logo.svg';
 
 export default function InfoToast() {
   const { state, dispatch } = useContext(AppContext);
@@ -35,7 +34,7 @@ export default function InfoToast() {
       >
         <Toast.Header>
           <img
-            src={logo}
+            src="/logo.png"
             width={20}
             height={20}
             className="rounded me-2"

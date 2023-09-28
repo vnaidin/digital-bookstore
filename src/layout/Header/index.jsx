@@ -5,8 +5,9 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import LanguageSelect from './LanguageSelect/LanguageSelect';
-
 import AppContext from '../../appContext';
+
+import './index.css';
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -32,24 +33,16 @@ export default function Header() {
         >
           <img alt="alineabooks.com" src="/logo.png" width={150} />
           {' '}
-          A Linea
+          <p className="m-0" style={{ fontSize: 'xx-large' }}>A Linea</p>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="layout-navbar-nav " />
         <Navbar.Collapse id="layout-navbar-nav">
           <Nav className="mx-auto gap-3 align-items-center" justify>
-            {/* <Nav.Item key="authors">
-              <NavLink
-                active={pathname.substring(1) === 'authors'}
-                href="/authors"
-              >
-                {t('layout.header.routes.authors')}
-              </NavLink>
-            </Nav.Item> */}
+
             <Nav.Item key="books">
               <NavLink
                 active={pathname.substring(1) === 'books'}
-                className="pageTitle"
-                style={{ fontWeight: '900' }}
+                className="header-nav"
                 href="/books"
               >
                 {t('layout.header.routes.books')}
@@ -58,18 +51,24 @@ export default function Header() {
             <Nav.Item key="merch">
               <NavLink
                 active={pathname.substring(1) === 'merch'}
-                className="pageTitle"
-                style={{ fontWeight: '900' }}
+                className="header-nav"
                 href="/merch"
               >
                 {t('layout.header.routes.merch')}
               </NavLink>
             </Nav.Item>
+            {/* <Nav.Item key="authors">
+              <NavLink
+                active={pathname.substring(1) === 'authors'}
+                href="/authors"
+              >
+                {t('layout.header.routes.authors')}
+              </NavLink>
+            </Nav.Item> */}
             <Nav.Item key="news">
               <NavLink
                 active={pathname.substring(1) === 'news'}
-                className="pageTitle"
-                style={{ fontWeight: '900' }}
+                className="header-nav"
                 href="/news"
               >
                 {t('layout.header.routes.news')}
@@ -80,8 +79,7 @@ export default function Header() {
             <Nav.Item key="moderator">
               <NavLink
                 active={pathname.substring(1) === 'moderator'}
-                className="pageTitle"
-                style={{ fontWeight: '900' }}
+                className="header-nav"
                 href="/moderator"
               >
                 {t('layout.header.routes.moderator')}

@@ -27,7 +27,7 @@ export default function Moderator() {
         </Tab>
         <Tab
           eventKey="books"
-          title={t('pages.mainPage.books')}
+          title={t('pages.books.title')}
           disabled={userRoles.some((role) => role === 'ROLE_SELLER')
             && !userRoles.some((role) => role === 'ROLE_MODERATOR') && !userRoles.some((role) => role === 'ROLE_ADMIN')}
         >

@@ -91,18 +91,18 @@ export default function Merch() { // TODO: split into components
                   }),
                 )}
                 title="order"
-                placeholder={t('pages.mainPage.order.title')}
+                placeholder={t('pages.books.order.title')}
                 defaultValue={filters?.order || null}
                 required
               >
-                <option value={0}>{t('pages.mainPage.order.title')}</option>
+                <option value={0}>{t('pages.books.order.title')}</option>
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option
                       key={opt.id}
                       value={opt.value}
                     >
-                      {t(`pages.mainPage.order.${opt.id}`)}
+                      {t(`pages.books.order.${opt.id}`)}
                     </option>
                   ),
                 )}
@@ -123,7 +123,19 @@ export default function Merch() { // TODO: split into components
 
         <Row className="my-2" title="book-cards-row">
           {value && value.merch.length > 0 ? value.merch.map(
-            (merchObj) => <MerchCard {...merchObj} key={merchObj.id} />,
+            (merchObj) => (
+              <Col
+                xs={12}
+                sm={6}
+                md={6}
+                lg={4}
+                xl={4}
+                xxl={3}
+                className="d-flex justify-content-center my-1"
+              >
+                <MerchCard {...merchObj} key={merchObj.id} />
+              </Col>
+            ),
           )
             : <NoDataComponent />}
         </Row>

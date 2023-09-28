@@ -69,7 +69,19 @@ export default function News() { // TODO: split into components
 
         <Row className="my-2" title="book-cards-row">
           {value && value.news.length > 0 ? value.news.map(
-            (newsObj) => <NewsItem {...newsObj} key={newsObj.id} />,
+            (newsObj) => (
+              <Col
+                xs={12}
+                sm={6}
+                md={6}
+                lg={4}
+                xl={4}
+                xxl={4}
+                className="d-flex justify-content-center my-1"
+              >
+                <NewsItem {...newsObj} key={newsObj.id} />
+              </Col>
+            ),
           )
             : <NoDataComponent />}
         </Row>

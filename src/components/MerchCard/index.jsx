@@ -15,68 +15,64 @@ export default function MerchCard({
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   return (
-    <Col
-      xs={12}
-      sm={6}
-      md={6}
-      lg={4}
-      xl={4}
-      xxl={3}
-      className="d-flex justify-content-center my-1"
-    >
-      <Card style={{ backgroundColor: 'inherit' }}>
-        <Card.Img
-          variant="top"
-          src={image}
-          width={300}
-          className="p-3"
-          alt={title}
-          onClick={() => navigate(`/merch/${id}`)}
-        />
-        <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2">
-          <NavLink href={`/merch/${id}`}>
-            <Card.Title>{title}</Card.Title>
-          </NavLink>
-          <div className="d-flex m-2 p-1 gap-1 justify-content-center">
-            <div className="d-flex flex-column">
-              {isReducedNow ? (
-                <>
-                  <s style={{ fontSize: 'small' }}>
-                    {price}
-                    {i18n.language === 'en' ? ' UAH' : ' грн'}
 
-                  </s>
-                  <b style={{ fontSize: 'larger' }}>
-                    {reducedPrice}
-                    {i18n.language === 'en' ? ' UAH' : ' грн'}
-
-                  </b>
-                </>
-              ) : (
-                <b style={{ fontSize: 'larger' }}>
+    <Card style={{ backgroundColor: 'inherit' }}>
+      <Card.Img
+        variant="top"
+        src={image}
+        height={330}
+        className="p-3"
+        alt={title}
+        onClick={() => navigate(`/merch/${id}`)}
+      />
+      <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2" style={{ minHeight: '180px' }}>
+        <NavLink href={`/merch/${id}`}>
+          <Card.Title style={{
+            width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+          }}
+          >
+            {title}
+          </Card.Title>
+        </NavLink>
+        <div className="d-flex m-2 p-1 gap-1 justify-content-center">
+          <div className="d-flex flex-column">
+            {isReducedNow ? (
+              <>
+                <s style={{ fontSize: 'small' }}>
                   {price}
                   {i18n.language === 'en' ? ' UAH' : ' грн'}
 
-                </b>
-              )}
-            </div>
-            <div className="align-self-center">
-              { item_management.amount > 0 && item_management.amount <= 2 && <Badge pill bg="danger">{t('components.bookCard.item-ending')}</Badge>}
-              {item_management.amount === 0 && <Badge pill bg="secondary">{t('components.bookCard.item-ended')}</Badge>}
-            </div>
-          </div>
-          <BuyButton
-            id={id}
-            price={price}
-            title={title}
-            image={image}
-            reducedPrice={reducedPrice}
-            isReducedNow={isReducedNow}
-          />
+                </s>
+                <b style={{ fontSize: 'larger' }}>
+                  {reducedPrice}
+                  {i18n.language === 'en' ? ' UAH' : ' грн'}
 
-        </Card.Body>
-      </Card>
-    </Col>
+                </b>
+              </>
+            ) : (
+              <b style={{ fontSize: 'larger' }}>
+                {price}
+                {i18n.language === 'en' ? ' UAH' : ' грн'}
+
+              </b>
+            )}
+          </div>
+          <div className="align-self-center">
+            { item_management.amount > 0 && item_management.amount <= 2 && <Badge pill bg="danger">{t('components.bookCard.item-ending')}</Badge>}
+            {item_management.amount === 0 && <Badge pill bg="secondary">{t('components.bookCard.item-ended')}</Badge>}
+          </div>
+        </div>
+        <BuyButton
+          id={id}
+          price={price}
+          title={title}
+          image={image}
+          reducedPrice={reducedPrice}
+          isReducedNow={isReducedNow}
+        />
+
+      </Card.Body>
+    </Card>
   );
 }
 

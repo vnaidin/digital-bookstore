@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import {
-  Container, Row, Form, Modal, Button,
+  Container, Row, Form, Modal, Button, Col,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ import OrderService from '../../services/order';
 export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
   const [formData, setFormData] = useState({
     status: existingOrder?.status,
+    ttn: existingOrder?.ttn,
   });
 
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
       // perform edit
       OrderService.updateOrder(
         existingOrder.id,
-        { isRejected: formData?.isRejected, status: +formData.status },
+        { ttn: formData?.ttn, status: +formData.status },
       ).then(
         (response) => {
           dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
@@ -95,6 +96,18 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
                 )}
               </Form.Select>
 
+              <Form.Label>TTN</Form.Label>
+              <Form.Control
+                size="sm"
+                placeholder="TTN"
+                type="text"
+                onChange={handleChange}
+                title="ttn"
+                autoComplete="off"
+                defaultValue={existingOrder?.ttn || null}
+                required={formData.status >= 2}
+              />
+
               <Button
                 className="m-2 place-self-center"
                 type="submit"
@@ -102,6 +115,13 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }) {
                 {t('pages.moderator.tabs.order.modal.update')}
               </Button>
             </Form.Group>
+
+            <Form.Group
+              as={Col}
+              md="12"
+              controlId="validationFormik15111"
+              className="position-relative"
+            />
 
           </Row>
 
@@ -120,6 +140,6 @@ UpdateOrderModal.propTypes = {
   existingOrder: PropTypes.shape({
     id: PropTypes.number,
     status: PropTypes.number,
-    isRejected: PropTypes.bool,
+    ttn: PropTypes.string,
   }).isRequired,
 };

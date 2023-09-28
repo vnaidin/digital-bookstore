@@ -11,11 +11,13 @@ exports.getOrders = async (req, res) => {
   // Find all orders
   const { status } = req.query;
 
-  const orders = await Order.findAll({where: {
-    [Op.and]: [
-      { status: status ? status : { [Op.not]: null } },
-    ]
-  }, include: [OrderItems, OrderAddress] });
+  const orders = await Order.findAll({
+    where: {
+      [Op.and]: [
+        { status: status ? status : { [Op.not]: null } },
+      ]
+    }, include: [OrderItems, OrderAddress]
+  });
   res.status(200).json(orders);
 
 };
@@ -111,14 +113,15 @@ exports.updateOrder = async (req, res) => {
   };
   const MAILING_STATUSES = { 2: { title: 'Доставка' }, 3: { title: 'Завершений' }, 4: { title: 'Скасований' } };
   const id = req.params.id;
-  await Order.update({ ...req.body }, {
+  const { status, ttn } = req.body;
+  await Order.update({ status, ttn }, {
     where: {
       id: id
     }
-  }).then(async() => {
+  }).then(async () => {
     const updatedOrder = await Order.findOne({ where: { id: id }, include: [OrderItems, OrderAddress] })
     res.status(200).json({ message: `Order ${id} updated` })
-    if (req.body.status > 1 && req.body.status < 5) {
+    if (status > 1 && status < 5) {
       nodemailer.transporter.sendMail({
         ...mailOptions, to: updatedOrder.email,
         context: {

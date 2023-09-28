@@ -64,9 +64,9 @@ module.exports = function(app) {
    *         status:
    *           type: boolean
    *           description: Done or not done
-   *         rejected:
-   *           type: boolean
-   *           description: Was it rejected?
+   *         ttn:
+   *           type: string
+   *           description: Tracking number
    * 
    *       example:
    *         userId: 1
@@ -93,7 +93,7 @@ module.exports = function(app) {
    *              itemId: 2 
    *            }]
    *         status: 0
-   *         rejected: false
+   *         ttn: soon
    */
 
   /**

@@ -33,8 +33,11 @@ module.exports = (sequelize, Sequelize) => {
     status: {
       type: Sequelize.INTEGER
     },
-    paymentMethodId:{
+    paymentMethodId: {
       type: Sequelize.INTEGER
+    },
+    ttn: {
+      type: Sequelize.STRING
     }
   });
 

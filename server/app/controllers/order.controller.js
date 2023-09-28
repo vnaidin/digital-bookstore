@@ -125,7 +125,9 @@ exports.updateOrder = async (req, res) => {
       nodemailer.transporter.sendMail({
         ...mailOptions, to: updatedOrder.email,
         context: {
-          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + id, status: MAILING_STATUSES[+updatedOrder.status].title,
+          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + id, 
+          status: MAILING_STATUSES[+updatedOrder.status].title,
+          ttn: ttn,
           nOfItems: updatedOrder.order_items.length
         }
       }, function (error, info) {

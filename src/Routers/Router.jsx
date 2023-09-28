@@ -10,7 +10,6 @@ import HeaderBottom from '../layout/HeaderBottom';
 import Main from '../pages/MainPage';
 import AppContext from '../appContext';
 
-const Delivery = lazy(() => import('../pages/Delivery'));
 // const Authors = lazy(() => import('../pages/Authors'));
 const Order = lazy(() => import('../pages/Order'));
 const AboutUs = lazy(() => import('../pages/AboutUs'));
@@ -39,7 +38,6 @@ export default function AppRouter() {
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/news" element={<News />} />
           <Route path="/news/:id" element={<NewsPage />} />
-          <Route path="/delivery" element={<Delivery />} />
           <Route path="/merch" element={<Merch />} />
           <Route path="/merch/:id" element={<MerchPage />} />
           <Route path="/about" element={<AboutUs />} />

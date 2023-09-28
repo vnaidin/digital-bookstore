@@ -79,7 +79,7 @@ export default function BooksTab() {
         </Row>
         {value && value.books.length > 0 && (
         <Table
-          striped
+          /* striped */
           bordered
           hover
           responsive

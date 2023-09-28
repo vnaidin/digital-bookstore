@@ -45,7 +45,7 @@ export default function NewsTab() {
           <Button variant="success" onClick={handleOpenModal}>{t('pages.moderator.tabs.news.create')}</Button>
         </Row>
         <Table
-          striped
+          /* striped */
           bordered
           hover
           responsive

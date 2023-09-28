@@ -489,6 +489,8 @@ export default function CreateUpdateBookModal({
                 <Button
                   className="m-2 place-self-center"
                   type="submit"
+                  style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+
                 >
                   {existingBook?.id ? t('pages.moderator.tabs.book.modal.update') : t('pages.moderator.tabs.book.modal.create')}
                 </Button>

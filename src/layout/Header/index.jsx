@@ -21,6 +21,7 @@ export default function Header() {
       onToggle={() => setExp((prev) => !prev)}
       expanded={exp}
       as="header"
+      // style={{ background: 'url(/header-footer.jpg)' }}
       // sticky='top'
       // variant={variant}
     >
@@ -30,6 +31,8 @@ export default function Header() {
           className="col-xs d-flex align-items-center"
         >
           <img alt="alineabooks.com" src="/logo.png" width={150} />
+          {' '}
+          A Linea
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="layout-navbar-nav " />
         <Navbar.Collapse id="layout-navbar-nav">
@@ -42,9 +45,21 @@ export default function Header() {
                 {t('layout.header.routes.authors')}
               </NavLink>
             </Nav.Item> */}
+            <Nav.Item key="books">
+              <NavLink
+                active={pathname.substring(1) === 'books'}
+                className="pageTitle"
+                style={{ fontWeight: '900' }}
+                href="/books"
+              >
+                {t('layout.header.routes.books')}
+              </NavLink>
+            </Nav.Item>
             <Nav.Item key="merch">
               <NavLink
                 active={pathname.substring(1) === 'merch'}
+                className="pageTitle"
+                style={{ fontWeight: '900' }}
                 href="/merch"
               >
                 {t('layout.header.routes.merch')}
@@ -53,6 +68,8 @@ export default function Header() {
             <Nav.Item key="news">
               <NavLink
                 active={pathname.substring(1) === 'news'}
+                className="pageTitle"
+                style={{ fontWeight: '900' }}
                 href="/news"
               >
                 {t('layout.header.routes.news')}
@@ -63,6 +80,8 @@ export default function Header() {
             <Nav.Item key="moderator">
               <NavLink
                 active={pathname.substring(1) === 'moderator'}
+                className="pageTitle"
+                style={{ fontWeight: '900' }}
                 href="/moderator"
               >
                 {t('layout.header.routes.moderator')}

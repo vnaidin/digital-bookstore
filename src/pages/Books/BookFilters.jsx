@@ -4,7 +4,6 @@ import {
   Form, Row, Button, Accordion,
 } from 'react-bootstrap';
 import RangeSlider from 'react-range-slider-input';
-import 'react-range-slider-input/dist/style.css';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -18,7 +17,7 @@ export default function BookFilters({
     <>
       <Row className="gap-3 my-3">
         <Form.Label className="m-0">
-          {t('pages.mainPage.book-filters.price-ranges')}
+          {t('pages.books.book-filters.price-ranges')}
           :
           {' '}
           <div className="d-flex justify-content-between p-0" style={{ marginBottom: '-25px' }}>
@@ -36,30 +35,32 @@ export default function BookFilters({
         </Form.Label>
         <RangeSlider
           defaultValue={priceLocalValues}
-          className="m-0 p-0"
+          className="m-0 p-0 slider"
           min={0}
           max={2000}
           ref={myRef}
           onInput={(values) => setLocalValues(values)}
         />
-        <Button onClick={() => {
-          updFilter('priceRange', Object.values(myRef.current.value));
-          resetStartPage();
-        }}
+        <Button
+          onClick={() => {
+            updFilter('priceRange', Object.values(myRef.current.value));
+            resetStartPage();
+          }}
+          style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
         >
-          {t('pages.mainPage.book-filters.ok')}
+          {t('pages.books.book-filters.ok')}
         </Button>
       </Row>
 
       <Row className="my-3">
         <Form.Label>
-          {t('pages.mainPage.book-filters.author')}
+          {t('pages.books.book-filters.author')}
           :
           {' '}
         </Form.Label>
         <Form.Control
           type="text"
-          placeholder={t('pages.mainPage.book-filters.author')}
+          placeholder={t('pages.books.book-filters.author')}
           list="authors"
           onChange={(event) => {
             if (authors.some((auth) => event.target.value === auth)) {
@@ -79,13 +80,13 @@ export default function BookFilters({
 
       <Row className="my-3">
         <Form.Label>
-          {t('pages.mainPage.book-filters.publisher')}
+          {t('pages.books.book-filters.publisher')}
           :
           {' '}
         </Form.Label>
         <Form.Control
           type="text"
-          placeholder={t('pages.mainPage.book-filters.publisher')}
+          placeholder={t('pages.books.book-filters.publisher')}
           list="publishers"
           onChange={(event) => {
             if (publishers.some((auth) => event.target.value === auth)) {
@@ -108,7 +109,7 @@ export default function BookFilters({
   return window.innerWidth > 768 ? largeScreenView : (
     <Accordion className="my-2">
       <Accordion.Item eventKey="0">
-        <Accordion.Header>{t('pages.mainPage.book-filters.title')}</Accordion.Header>
+        <Accordion.Header>{t('pages.books.book-filters.title')}</Accordion.Header>
         <Accordion.Body as={Row} className="gap-1 p-1 m-0 justify-content-center">
           {largeScreenView}
         </Accordion.Body>

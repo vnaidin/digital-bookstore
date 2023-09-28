@@ -1,18 +1,25 @@
-.App, .modal-body, .offcanvas-body/* ,.toast-body */ {
+
+.App, .modal-body, .offcanvas-body,.list-group-item,table>tbody/* ,.toast-body */ {
   text-align: center;
-  background-color: #DDC3A5;
+  background-color: #ffefdd;
+  /* background: url("/main.jpg"); */
 }
+
 
 main {
   min-height: 70vh;
 }
 
 header, .modal-header, .offcanvas-header,.toast-header {
-  background-color: #E0A96D;
+  background-color:#95714a;
 }
 
-footer, .header-bottom, .modal-footer {
-  background-color: #201E20;
+.header-bottom {
+  background-color: #5d4830;
+}
+
+footer, .modal-footer {
+  background-color: #95714a;
   color: rgb(255 255 255 / 55%);
 }
 
@@ -23,6 +30,20 @@ footer, .header-bottom, .modal-footer {
   -ms-user-select: none;
   user-select: none;
 }
+/* #b38757 */
+.page-link.active, .active > .page-link{
+  background-color: #05aac2;
+}
+
+.page-link{
+  color: #05aac2;
+}
+
+.range-slider__thumb {
+  background: #05aac2 !important;
+  /* CSS for range */
+}
+@import 'react-range-slider-input/dist/style.css';
 
 @media print {
   html, body {

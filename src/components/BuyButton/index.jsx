@@ -18,7 +18,14 @@ export default function BuyButton({
     dispatch({ type: 'setToast', payload: { body: `${title} ${t('toasts.add-to-cart')}`, callee: t('toasts.callee-sys') } });
     dispatch({ type: 'addItemToCart', payload: [...state.shoppingCart, payload] });
   };
-  return <Button variant="success" style={{ width: '10em' }} onClick={handleAddToCart}>{t('components.buyBtn')}</Button>;
+  return (
+    <Button
+      style={{ backgroundColor: '#05aac2', width: '10em', fontWeight: '900' }}
+      onClick={handleAddToCart}
+    >
+      {t('components.buyBtn')}
+    </Button>
+  );
 }
 
 BuyButton.defaultProps = {

@@ -111,7 +111,13 @@ export default function UserPanel() {
                   </InputGroup>
                 </Form.Group>
               </Row>
-              <Button type="submit" variant="success">{t('layout.headerBottom.auth.save')}</Button>
+              <Button
+                type="submit"
+                style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+              >
+                {t('layout.headerBottom.auth.save')}
+
+              </Button>
             </Form>
           )}
         </Formik>
@@ -143,7 +149,7 @@ export default function UserPanel() {
         )}
         {value && value.length > 0 ? (
           <Table
-            striped
+            /* striped */
             bordered
             hover
             responsive

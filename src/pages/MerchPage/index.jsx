@@ -17,7 +17,7 @@ export default function MerchPage() {
     [],
   );
   return (
-    <Container>
+    <Container style={{ padding: '3em 0px' }}>
       <Helmet>
         <title>{value?.title}</title>
       </Helmet>

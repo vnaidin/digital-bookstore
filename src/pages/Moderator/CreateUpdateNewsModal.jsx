@@ -207,6 +207,8 @@ export default function CreateUpdateNewsModal({
                 <Button
                   className="m-2 place-self-center"
                   type="submit"
+                  style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+
                 >
                   {existingNews?.id ? t('pages.moderator.tabs.news.modal.update') : t('pages.moderator.tabs.news.modal.create')}
                 </Button>

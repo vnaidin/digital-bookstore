@@ -82,6 +82,7 @@ export default function Login() {
           <Button
             type="submit"
             variant="link"
+      // style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
             className="my-2"
             onClick={() => setForgotPass(true)}
           >
@@ -90,6 +91,7 @@ export default function Login() {
           <Button
             type="submit"
             className="my-2 align-self-center"
+            style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
 
           >
             {forgotPass ? t('layout.headerBottom.auth.reset-pass') : t('layout.headerBottom.auth.login')}

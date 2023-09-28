@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  Button, Form, Row, InputGroup, Col,
+  Button, Form, Row, InputGroup, Col, Container,
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
@@ -33,47 +33,50 @@ export default function PassReset() {
   };
 
   return (
-    <Formik
-      validationSchema={schema}
+    <Container style={{ padding: '3em 0px' }}>
+      <Formik
+        validationSchema={schema}
       // eslint-disable-next-line no-unused-expressions
-      onSubmit={(values) => { handleResetPass(values); }}
-      initialValues={{
-        password: '',
-      }}
-    >
-      {({
-        handleSubmit, handleChange, values, touched, errors,
-      }) => (
-        <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
-          <Row className="m-1 p-0">
-            <Form.Group as={Col} controlId="validationFormik021">
-              <Form.Label>{t('layout.headerBottom.auth.form.pass')}</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  autoComplete="new-password"
-                  value={values.password}
-                  onChange={handleChange}
-                  isValid={touched.password && !errors.password}
-                  isInvalid={errors.password}
-                />
-                <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.password}
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </Row>
-          <Button
-            type="submit"
-            className="my-2 align-self-center"
-            style={{ width: '6em' }}
-          >
-            {t('layout.headerBottom.auth.form.reset-pass')}
-          </Button>
-        </Form>
-      )}
-    </Formik>
+        onSubmit={(values) => { handleResetPass(values); }}
+        initialValues={{
+          password: '',
+        }}
+      >
+        {({
+          handleSubmit, handleChange, values, touched, errors,
+        }) => (
+          <Form noValidate onSubmit={handleSubmit} className="d-flex flex-column">
+            <Row className="m-1 p-0">
+              <Form.Group as={Col} controlId="validationFormik021">
+                <Form.Label>{t('layout.headerBottom.auth.form.pass')}</Form.Label>
+                <InputGroup hasValidation>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    autoComplete="new-password"
+                    value={values.password}
+                    onChange={handleChange}
+                    isValid={touched.password && !errors.password}
+                    isInvalid={errors.password}
+                  />
+                  <Form.Control.Feedback tooltip>{t('layout.headerBottom.auth.form.valid-feedback')}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+            </Row>
+            <Button
+              type="submit"
+              className="my-2 align-self-center"
+              style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+            >
+              {t('layout.headerBottom.auth.form.reset-pass')}
+            </Button>
+          </Form>
+        )}
+      </Formik>
+
+    </Container>
   );
 }

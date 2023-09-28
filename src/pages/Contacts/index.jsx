@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next';
 export default function Contacts() {
   const { t } = useTranslation();
   return (
-    <Container>
+    <Container style={{ padding: '3em 0px' }}>
       <Helmet>
         <title>{t('pages.contacts.title')}</title>
       </Helmet>
       <Row className="my-2"><h2>{t('pages.contacts.title')}</h2></Row>
-      <Row>SOME TEXT</Row>
+      {/* <Row>SOME TEXT</Row> */}
       <Row>
         <p>
           {t('pages.contacts.email')}
@@ -36,6 +36,20 @@ export default function Contacts() {
               rel="nofollow"
             >
               +380 (63) 632 00 17
+            </a>
+          </strong>
+        </p>
+        <p>
+          {t('pages.contacts.address')}
+          {' '}
+          -
+          <strong>
+            <a
+              href="http://maps.google.com/?q=Вул. А. Малишка, буд. 9"
+              rel="nofollow noreferrer"
+              target="_blank"
+            >
+              Вул. А. Малишка, буд. 9
             </a>
           </strong>
         </p>

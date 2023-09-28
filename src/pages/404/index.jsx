@@ -7,7 +7,7 @@ export default function PageNotFound() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   return (
-    <Container>
+    <Container style={{ padding: '3em 0px' }}>
       <div style={{
         display: 'flex', flexFlow: 'column', gap: '2em', margin: '3em',
       }}

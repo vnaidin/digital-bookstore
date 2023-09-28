@@ -2,7 +2,6 @@
 import React, { useRef, useState } from 'react';
 import { Form, Row, Button } from 'react-bootstrap';
 import RangeSlider from 'react-range-slider-input';
-import 'react-range-slider-input/dist/style.css';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -40,10 +39,13 @@ export default function MerchFilters({
         ref={myRef}
         onInput={(values) => setLocalValues(values)}
       />
-      <Button onClick={() => {
-        updFilter('priceRange', Object.values(myRef.current.value));
-        resetStartPage();
-      }}
+      <Button
+        onClick={() => {
+          updFilter('priceRange', Object.values(myRef.current.value));
+          resetStartPage();
+        }}
+        style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+
       >
         {t('pages.merch.merch-filters.ok')}
       </Button>

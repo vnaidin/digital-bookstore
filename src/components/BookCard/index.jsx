@@ -23,7 +23,7 @@ export default function BookCard({ // TODO: add tags
       xxl={3}
       className="d-flex justify-content-center my-1"
     >
-      <Card>
+      <Card style={{ backgroundColor: 'inherit' }}>
         <Card.Img
           variant="top"
           src={image}

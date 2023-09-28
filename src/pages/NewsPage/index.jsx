@@ -14,7 +14,7 @@ export default function NewsPage() {
     [],
   );
   return (
-    <Container>
+    <Container style={{ padding: '3em 0px' }}>
       <Helmet>
         <title>{value?.title}</title>
       </Helmet>

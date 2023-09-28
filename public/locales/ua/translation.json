@@ -12,6 +12,7 @@
         "header": {
             "routes": {
                 "authors": "Автори",
+                "books": "Книги",
                 "news": "Новини",
                 "merch": "Сувеніри",
                 "delivery": "Доставка",
@@ -82,6 +83,9 @@
         "authors": {
             "title": "Автори"
         },
+        "mainPage": {
+            "title": "Головна"
+        },
         "bookPage": {
             "author": "Автор",
             "year": "Рік",
@@ -95,7 +99,8 @@
         "contacts": {
             "title": "Контакти",
             "email": "Пошта",
-            "tel": "Телефон"
+            "tel": "Телефон",
+            "address": "Юридична адреса"
         },
         "delivery": {
             "title": "Доставка",
@@ -109,13 +114,12 @@
                 "6": "Meest Пошта. Кур'єр"
             }
         },
-        "mainPage": {
-            "title": "Книжковий магазин",
-            "books": "Книги",
+        "books": {
+            "title": "Книги",
             "book-filters": {
                 "title": "Фільтри",
                 "price-ranges": "Ціновий діапазон",
-                "ok": "Ok",
+                "ok": "Ок",
                 "author": "Автор",
                 "publisher": "Видавництво"
             },

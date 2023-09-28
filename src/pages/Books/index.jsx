@@ -11,8 +11,9 @@ import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import { BOOK_ORDERING } from '../../utils/constants';
 import { BookCard, PaginationComponent, NoDataComponent } from '../../components';
+import BookFilters from './BookFilters';
 
-export default function Main() {
+export default function Books() {
   const { search } = useLocation();
   // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
@@ -41,14 +42,30 @@ export default function Main() {
 
   return (
     <Container as={Row} className="m-0">
-      <Helmet titleTemplate="Alineabooks - %s">
+      <Helmet>
         <title>
-          {t('pages.mainPage.title')}
+          {t('pages.books.title')}
         </title>
         {/** Інтернет-магазин книг */}
       </Helmet>
+      <Col
+        xs={12}
+        sm={12}
+        md={2}
+        lg={2}
+        xl={2}
+        xxl={2}
+      >
+        <BookFilters
+          authors={value?.authors}
+          publishers={value?.publishers}
+          minMaxPrice={value?.minMaxPrice}
+          updFilter={(key, val) => setFilters((prev) => ({ ...prev, [key]: val }))}
+          resetStartPage={() => setFilters((prev) => ({ ...prev, page: 0 }))}
+        />
+      </Col>
 
-      {/*  <Col
+      <Col
         xs={12}
         sm={12}
         md={10}
@@ -84,18 +101,18 @@ export default function Main() {
                   );
                 }}
                 title="order"
-                placeholder={t('pages.mainPage.order.title')}
+                placeholder={t('pages.books.order.title')}
                 defaultValue={filters?.order || null}
                 required
               >
-                <option value={0} key="none">{t('pages.mainPage.order.title')}</option>
+                <option value={0} key="none">{t('pages.books.order.title')}</option>
                 {BOOK_ORDERING.map(
                   (opt) => (
                     <option
                       key={opt.id}
                       value={opt.value}
                     >
-                      {t(`pages.mainPage.order.${opt.id}`)}
+                      {t(`pages.books.order.${opt.id}`)}
                     </option>
                   ),
                 )}
@@ -136,7 +153,7 @@ export default function Main() {
           </Row>
         )}
 
-      </Col> */}
+      </Col>
 
     </Container>
   );

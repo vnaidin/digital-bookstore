@@ -46,7 +46,7 @@ export default function BookFilters({
             updFilter('priceRange', Object.values(myRef.current.value));
             resetStartPage();
           }}
-          style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+          style={{ backgroundColor: '#4a5a69', fontWeight: '900' }}
         >
           {t('pages.books.book-filters.ok')}
         </Button>

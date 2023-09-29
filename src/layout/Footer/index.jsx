@@ -5,6 +5,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { FiFacebook, FiInstagram } from 'react-icons/fi';
 
+import './index.css';
+
 export default function Footer() {
   const { t } = useTranslation();
   return (
@@ -22,6 +24,7 @@ export default function Footer() {
             <Nav className="mx-auto gap-1 d-flex flex-column" justify>
               <Nav.Item className="col text-start" key="aboutUs">
                 <NavLink
+                  className="footer-nav"
                   href="/about"
                 >
                   {t('layout.header.routes.aboutUs')}
@@ -29,6 +32,7 @@ export default function Footer() {
               </Nav.Item>
               <Nav.Item className="col text-start" key="contactUs">
                 <NavLink
+                  className="footer-nav"
                   href="/contact"
                 >
                   {t('layout.header.routes.contactUs')}
@@ -36,6 +40,7 @@ export default function Footer() {
               </Nav.Item>
               <Nav.Item className="col text-start" key="terms">
                 <NavLink
+                  className="footer-nav"
                   href="/terms"
                 >
                   {t('layout.header.routes.terms')}

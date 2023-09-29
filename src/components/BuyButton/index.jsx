@@ -20,7 +20,9 @@ export default function BuyButton({
   };
   return (
     <Button
-      style={{ backgroundColor: '#05aac2', width: '10em', fontWeight: '900' }}
+      style={{
+        backgroundColor: '#4a5a69', borderColor: '#2e3943', width: '10em', fontWeight: '900',
+      }}
       onClick={handleAddToCart}
     >
       {t('components.buyBtn')}

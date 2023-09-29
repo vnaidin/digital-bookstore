@@ -1,26 +1,20 @@
 
 .App, .modal-body, .offcanvas-body,.list-group-item,table>tbody/* ,.toast-body */ {
   text-align: center;
-  background-color: #ffefdd;
-  /* background: url("/main.jpg"); */
+  background-color: #f9f3e7;
 }
-
 
 main {
   min-height: 70vh;
 }
 
 header, .modal-header, .offcanvas-header,.toast-header {
-  background-color:#95714a;
+  background-color:#d9c5ba;
 }
 
-.header-bottom {
-  background-color: #5d4830;
-}
-
-footer, .modal-footer {
-  background-color: #95714a;
-  color: rgb(255 255 255 / 55%);
+footer, .modal-footer,.header-bottom {
+  background-color: #d9c5ba;
+  /* color: rgb(255 255 255 / 55%); */
 }
 
 .unselectable {
@@ -32,15 +26,15 @@ footer, .modal-footer {
 }
 /* #b38757 */
 .page-link.active, .active > .page-link{
-  background-color: #05aac2;
+  background-color: #4a5a69;
 }
 
 .page-link{
-  color: #05aac2;
+  color: #4a5a69;
 }
 
 .range-slider__thumb {
-  background: #05aac2 !important;
+  background: #4a5a69 !important;
   /* CSS for range */
 }
 @import 'react-range-slider-input/dist/style.css';

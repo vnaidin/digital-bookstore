@@ -1,5 +1,6 @@
 const db = require("../models");
 const nodemailer = require('../../mailSender');
+const crypto = require('crypto');
 const Order = db.order;
 const ItemsManagement = db.itemsManagement;
 const OrderItems = db.orderItems;
@@ -125,7 +126,7 @@ exports.updateOrder = async (req, res) => {
       nodemailer.transporter.sendMail({
         ...mailOptions, to: updatedOrder.email,
         context: {
-          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + id, 
+          ...mailOptions.context, orderPage: req.headers.origin + '/order/' + id,
           status: MAILING_STATUSES[+updatedOrder.status].title,
           ttn: ttn,
           nOfItems: updatedOrder.order_items.length
@@ -141,10 +142,24 @@ exports.updateOrder = async (req, res) => {
   })
 }
 
-exports.updateOrderPaymentResult= async (req,res)=>{
-  console.log('params',req.params)
-  console.log('body',req.body)
-  // const id = req.params.id;
+exports.updateOrderPaymentResult = async (req, res) => {
+  console.log('params', req.params)
+  console.log('body', req.body)
+  const { signature, data } = req.body;
+  const encodedData = Buffer.from(data, 'base64').toString('utf8');
+  console.log('data from liqpay', encodedData)
+
+  const sha1 = crypto.createHash('sha1');
+  sha1.update(process.env.LIQ_PAY_PRIVATE + data + process.env.LIQ_PAY_PRIVATE);
+  const sha1Sign = sha1.digest('base64');
+
+  const localEncodedSignature = Buffer.from(sha1Sign, 'utf8').toString('base64')
+  console.log('received sign', signature, 'local sign', localEncodedSignature, 'equal?', signature === localEncodedSignature)
+  await Order.update({ hasPaid: true }, {
+    where: {
+      id: encodedData.order_id
+    }
+  }).then(result => console.log('result', result))
 }
 
 exports.deleteOrder = async (req, res) => {//TODO: do we need it?

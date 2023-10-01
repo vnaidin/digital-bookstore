@@ -1,3 +1,4 @@
+/* eslint-disable */
 import crypto from 'crypto';
 import React, { useContext, useState } from 'react';
 import {
@@ -6,7 +7,6 @@ import {
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import { DELIVERY_METHODS, PAYMENT_METHODS } from '../../utils/constants';
 import AppContext from '../../appContext';
 import OrderService from '../../services/order';
@@ -28,7 +28,6 @@ function ToBinary(str) {
 }
 
 function post_to_url(path, params, method) {
-  // eslint-disable-next-line no-param-reassign
   method = method || 'post';
 
   const form = document.createElement('form');

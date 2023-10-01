@@ -143,10 +143,10 @@ exports.updateOrder = async (req, res) => {
 }
 
 exports.updateOrderPaymentResult = async (req, res) => {
-  console.log('params', req.params)
   console.log('body', req.body)
   const { signature, data } = req.body;
-  const encodedData = JSON.parse(Buffer.from(data, 'base64').toString('utf8'));
+  const dataCopy = data.slice()
+  const encodedData = JSON.parse(Buffer.from(dataCopy, 'base64').toString('utf8'));
   console.log('data from liqpay', encodedData)
 
   const sha1 = crypto.createHash('sha1');

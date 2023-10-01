@@ -224,15 +224,23 @@ module.exports = function(app) {
   * @swagger
   * /order/payment-update:
   *   post:
-  *    summary: Update the order by the id
+  *    summary: Updates the order by the liqpay
   *    tags: [Orders]
   *    parameters:
   *    requestBody:
-  *      required: true
+  *      required: false
   *      content:
   *        application/json:
   *          schema:
-  *            $ref: '#/components/schemas/Order'
+  *             type: object
+  *             properties:
+  *               data:
+  *                 type: string
+  *                 description: UserId might not be stated
+  *               signature:
+  *                 type: string
+  *                 description: Array of books ordered
+  *            
   *    responses:
   *      200:
   *        description: The order was updated

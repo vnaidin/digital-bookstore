@@ -141,13 +141,16 @@ exports.updateOrder = async (req, res) => {
     }
   })
 }
-
+/* const sha1 = crypto.createHash('sha1');
+  sha1.update(process.env.LIQ_PAY_PRIVATE + 'eyJwYXltZW50X2lkIjoyMzcyOTk5MTk2LCJhY3Rpb24iOiJwYXkiLCJzdGF0dXMiOiJzdWNjZXNzIiwidmVyc2lvbiI6MywidHlwZSI6ImJ1eSIsInBheXR5cGUiOiJwcml2YXQyNCIsInB1YmxpY19rZXkiOiJpOTM4ODYzMTE1ODEiLCJhY3FfaWQiOjQxNDk2Mywib3JkZXJfaWQiOiI0IiwibGlxcGF5X29yZGVyX2lkIjoiUVNZQ0RMSEoxNjk2MTkyNTE0NDgxNDk1IiwiZGVzY3JpcHRpb24iOiLRgtC10YHRgiIsInNlbmRlcl9waG9uZSI6IjM4MDk1NDI3OTA5MiIsInNlbmRlcl9jYXJkX21hc2syIjoiNDE0OTQzKjAwIiwic2VuZGVyX2NhcmRfYmFuayI6InBiIiwic2VuZGVyX2NhcmRfdHlwZSI6InZpc2EiLCJzZW5kZXJfY2FyZF9jb3VudHJ5Ijo4MDQsImFtb3VudCI6MS4wLCJjdXJyZW5jeSI6IlVBSCIsInNlbmRlcl9jb21taXNzaW9uIjowLjAsInJlY2VpdmVyX2NvbW1pc3Npb24iOjAuMDIsImFnZW50X2NvbW1pc3Npb24iOjAuMCwiYW1vdW50X2RlYml0IjoxLjAsImFtb3VudF9jcmVkaXQiOjEuMCwiY29tbWlzc2lvbl9kZWJpdCI6MC4wLCJjb21taXNzaW9uX2NyZWRpdCI6MC4wMiwiY3VycmVuY3lfZGViaXQiOiJVQUgiLCJjdXJyZW5jeV9jcmVkaXQiOiJVQUgiLCJzZW5kZXJfYm9udXMiOjAuMCwiYW1vdW50X2JvbnVzIjowLjAsImF1dGhjb2RlX2RlYml0IjoiMDIyMDUyIiwicnJuX2RlYml0IjoiMDA0NDU4NDg5MDc0IiwibXBpX2VjaSI6IjciLCJpc18zZHMiOmZhbHNlLCJsYW5ndWFnZSI6InVrIiwiY3JlYXRlX2RhdGUiOjE2OTYxOTI1MTQ0ODQsImVuZF9kYXRlIjoxNjk2MTkyNTE3MDA5LCJ0cmFuc2FjdGlvbl9pZCI6MjM3Mjk5OTE5Nn0=' + process.env.LIQ_PAY_PRIVATE);
+  const sha1Sign = sha1.digest('base64');
+  console.log(sha1Sign==='objIU8q+zqb6EoiAsdKkKffSzWs='); */
 exports.updateOrderPaymentResult = async (req, res) => {
+  console.log('params', req.params)
   console.log('body', req.body)
   const { signature, data } = req.body;
-  const dataCopy = data.slice()
-  const encodedData = JSON.parse(Buffer.from(dataCopy, 'base64').toString('utf8'));
-  console.log('data from liqpay', encodedData)
+  // const encodedData = JSON.parse(Buffer.from(dataCopy, 'base64').toString('utf8'));
+  console.log('data from liqpay', data)
 
   const sha1 = crypto.createHash('sha1');
   sha1.update(process.env.LIQ_PAY_PRIVATE + data + process.env.LIQ_PAY_PRIVATE);
@@ -157,7 +160,7 @@ exports.updateOrderPaymentResult = async (req, res) => {
   if (signature === sha1Sign) {
     await Order.update({ hasPaid: true }, {
       where: {
-        id: encodedData?.order_id
+        id: JSON.parse(Buffer.from(dataCopy, 'base64').toString('utf8'))?.order_id
       }
     }).then(result => console.log('result', result))
 

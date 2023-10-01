@@ -146,20 +146,22 @@ exports.updateOrderPaymentResult = async (req, res) => {
   console.log('params', req.params)
   console.log('body', req.body)
   const { signature, data } = req.body;
-  const encodedData = Buffer.from(data, 'base64').toString('utf8');
+  const encodedData = JSON.parse(Buffer.from(data, 'base64').toString('utf8'));
   console.log('data from liqpay', encodedData)
 
   const sha1 = crypto.createHash('sha1');
   sha1.update(process.env.LIQ_PAY_PRIVATE + data + process.env.LIQ_PAY_PRIVATE);
   const sha1Sign = sha1.digest('base64');
 
-  const localEncodedSignature = Buffer.from(sha1Sign, 'utf8').toString('base64')
-  console.log('received sign', signature, 'local sign', localEncodedSignature, 'equal?', signature === localEncodedSignature)
-  await Order.update({ hasPaid: true }, {
-    where: {
-      id: encodedData.order_id
-    }
-  }).then(result => console.log('result', result))
+  console.log('received sign', signature, 'local sign', sha1Sign, 'equal?', signature === localEncodedSignature)
+  if (signature === localEncodedSignature) {
+    await Order.update({ hasPaid: true }, {
+      where: {
+        id: encodedData?.order_id
+      }
+    }).then(result => console.log('result', result))
+
+  }
 }
 
 exports.deleteOrder = async (req, res) => {//TODO: do we need it?

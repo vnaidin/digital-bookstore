@@ -153,8 +153,8 @@ exports.updateOrderPaymentResult = async (req, res) => {
   sha1.update(process.env.LIQ_PAY_PRIVATE + data + process.env.LIQ_PAY_PRIVATE);
   const sha1Sign = sha1.digest('base64');
 
-  console.log('received sign', signature, 'local sign', sha1Sign, 'equal?', signature === localEncodedSignature)
-  if (signature === localEncodedSignature) {
+  console.log('received sign', signature, 'local sign', sha1Sign, 'equal?', signature === sha1Sign)
+  if (signature === sha1Sign) {
     await Order.update({ hasPaid: true }, {
       where: {
         id: encodedData?.order_id

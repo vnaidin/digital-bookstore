@@ -121,7 +121,7 @@ export default function OrderForm({ totalPrice }) {
             action: 'pay',
             amount: 1, // totalPrice,
             currency: 'UAH',
-            description: 'Оплата за книги',
+            description: 'тест',//'Оплата за книги',
             result_url: window.location.origin,
             server_url: `${window.location.origin}/api/order/payment-update`,
             language: 'uk',

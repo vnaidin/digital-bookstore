@@ -141,6 +141,12 @@ exports.updateOrder = async (req, res) => {
   })
 }
 
+exports.updateOrderPaymentResult= async (req,res)=>{
+  console.log('params',req.params)
+  console.log('body',req.body)
+  // const id = req.params.id;
+}
+
 exports.deleteOrder = async (req, res) => {//TODO: do we need it?
   const orderId = req.params.id;
   await Order.destroy({

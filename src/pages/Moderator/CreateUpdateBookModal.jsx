@@ -292,7 +292,7 @@ export default function CreateUpdateBookModal({
                         <Accordion.Item eventKey="0">
                           <Accordion.Header>{t('pages.moderator.tabs.book.modal.category')}</Accordion.Header>
                           <Accordion.Body as={Row} className="gap-1">
-                            {BOOK_CATEGORIES.map((category, ind) => (
+                            {BOOK_CATEGORIES.map((category) => (
                               <Form.Check
                                 className="col md-3"
                                 key={category.id}
@@ -300,7 +300,7 @@ export default function CreateUpdateBookModal({
                                 type="checkbox"
                                 label={t(`constants.bookCategories.${category.id}`)}
                                 value={category.id}
-                                checked={new Set(formData.category).has(ind)}
+                                checked={new Set(formData.category).has(category.id)}
                                 // required
                                 onChange={(event) => {
                                   if (event.target.checked) {

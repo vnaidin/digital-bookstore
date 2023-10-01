@@ -772,7 +772,7 @@ exports.initialDBFill = function () {
         include: [ItemsManagement]
     });
     //create some orders
-    Order.create({
+    /* Order.create({
         userId: 1,
         name: "Владислав",
         surname: "Найдін",
@@ -841,7 +841,7 @@ exports.initialDBFill = function () {
         status: 0
     }, {
         include: [OrderItems, OrderAddress]
-    });
+    }); */
     // add fake news
     News.create({
         id: 1,

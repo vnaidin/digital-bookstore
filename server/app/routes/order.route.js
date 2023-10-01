@@ -220,6 +220,33 @@ module.exports = function(app) {
       controller.createOrder
     );
 
+    /**
+  * @swagger
+  * /order/payment-update:
+  *   put:
+  *    summary: Update the order by the id
+  *    tags: [Orders]
+  *    parameters:
+  *    requestBody:
+  *      required: true
+  *      content:
+  *        application/json:
+  *          schema:
+  *            $ref: '#/components/schemas/Order'
+  *    responses:
+  *      200:
+  *        description: The order was updated
+  *        content:
+  *          application/json:
+  *            schema:
+  *              $ref: '#/components/schemas/Order'
+  *      404:
+  *        description: The order was not found
+  *      500:
+  *        description: Some error happened
+  */
+  app.put('/api/order/payment-update',controller.updateOrderPaymentResult)
+
   /**
   * @swagger
   * /order/{id}:

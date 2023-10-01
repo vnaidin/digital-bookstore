@@ -36,6 +36,9 @@ module.exports = (sequelize, Sequelize) => {
     paymentMethodId: {
       type: Sequelize.INTEGER
     },
+    hasPaid:{
+      type: Sequelize.BOOLEAN
+    },
     ttn: {
       type: Sequelize.STRING
     }

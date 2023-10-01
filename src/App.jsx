@@ -13,7 +13,7 @@ function App() {
   // FIXME: replace it into axios.js but how to dispatch?
   axios.interceptors.response.use((response) => response, (error) => {
     // validate response
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       dispatch({ type: 'logOut' });
       localStorage.removeItem('user');
     }

@@ -223,7 +223,7 @@ module.exports = function(app) {
     /**
   * @swagger
   * /order/payment-update:
-  *   put:
+  *   post:
   *    summary: Update the order by the id
   *    tags: [Orders]
   *    parameters:
@@ -245,7 +245,7 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/order/payment-update',controller.updateOrderPaymentResult)
+  app.post('/api/order/payment-update',controller.updateOrderPaymentResult)
 
   /**
   * @swagger

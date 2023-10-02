@@ -1,10 +1,10 @@
-/* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import {
   Button, ListGroup, Table, Row, Form, Col, InputGroup, Spinner, Image,
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import AuthService from '../../../services/auth';
 import AppContext from '../../../appContext';
@@ -209,3 +209,15 @@ export function OrderItemsCell({ items }) {
     </td>
   );
 }
+
+OrderItemsCell.defaultProps = {
+  items: [],
+};
+
+OrderItemsCell.propTypes = {
+  items: {
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  },
+};

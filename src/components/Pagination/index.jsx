@@ -10,8 +10,7 @@ export default function PaginationComponent({
   const paginationItems = Array(itemsLength ? Math.ceil(itemsLength / itemsPerPage) : 1)
     .fill(0).map((x, i) => (
       <Pagination.Item
-        // eslint-disable-next-line react/no-array-index-key
-        key={`page-${i}`}
+        key={`page-${x + i}`}
         active={i === activeIndex}
         onClick={() => onClick(i)}
       >

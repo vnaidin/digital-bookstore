@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import {
@@ -8,12 +6,12 @@ import {
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import {
-  BookCard, NoDataComponent, NewsItem, MerchCard,
+  BookCard, /*  NoDataComponent, */ NewsItem, MerchCard,
 } from '../../components';
 
 import './index.css';
 
-export default function Main() { // TODO: translations, debug
+export default function Main() { // TODO: debug
   const [data, setData] = useState();
   const { t } = useTranslation();
 
@@ -34,7 +32,8 @@ export default function Main() { // TODO: translations, debug
           {t('pages.mainPage.title')}
         </title>
       </Helmet>
-      <h3>News</h3>
+
+      {data && data.news && <h3>{t('pages.mainPage.news')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.news && data.news.map((book) => (
           <div className="news-card-container" key={book.id} style={{ width: '280px', paddingBlock: '1em' }}>
@@ -43,7 +42,7 @@ export default function Main() { // TODO: translations, debug
         ))}
       </Row>
 
-      <h3>Books</h3>
+      {data && data.books && <h3>{t('pages.mainPage.books')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.books && data.books.map((book) => (
           <div className="book-card-container" key={book.id} style={{ width: '280px', paddingBlock: '1em' }}>
@@ -52,11 +51,10 @@ export default function Main() { // TODO: translations, debug
         ))}
       </Row>
 
-      <h3>Merch</h3>
+      {data && data.merch && <h3>{t('pages.mainPage.merch')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.merch && data.merch.map((book) => (
           <div className="merch-card-container" key={book.id} style={{ width: '280px', paddingBlock: '1em' }}>
-
             <MerchCard {...book} key={book.id} />
           </div>
         ))}

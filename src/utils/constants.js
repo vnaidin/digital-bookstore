@@ -24,6 +24,8 @@ export const ORDER_STATUSES = {
 
 export const PAYMENT_METHODS = ['cash', 'liqpay'];
 
+export const BOOK_LANGUAGES = ['українська', 'english'];
+
 export const BOOK_CATEGORIES = [
   {
     id: 1,

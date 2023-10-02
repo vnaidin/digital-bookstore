@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import {
   Button, Container, Table, Row, Spinner, Col, Form,
@@ -94,8 +93,8 @@ export default function MerchTab() {
             </thead>
             <tbody>
               {value && value.merch.map(({
-                id, author, title, image, publisher, year, isbn,
-                pageCount, lang, price, reducedPrice, isReducedNow, annotation,
+                id, /*  author, */ title, /* image, publisher, year, isbn, */
+                /* pageCount, lang,  */price, reducedPrice, isReducedNow, /* , annotation, */
               }, index) => (
                 <tr key={id}>
                   <td>{index + 1}</td>

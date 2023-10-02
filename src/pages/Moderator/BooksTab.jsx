@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import {
   Button, Container, Table, Row, Col, Form, Spinner,
@@ -97,8 +96,8 @@ export default function BooksTab() {
           </thead>
           <tbody>
             {value && value.books.map(({
-              id, author, title, image, publisher, year, isbn,
-              pageCount, lang, price, reducedPrice, isReducedNow, annotation,
+              id, author, title, /*  image, publisher, year, */ isbn,
+              /* pageCount, lang, */ price, reducedPrice, isReducedNow, /* , annotation, */
             }, index) => (
               <tr key={id}>
                 <td>{index + 1}</td>

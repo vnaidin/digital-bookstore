@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, Table, Row,
+  Button, Container, Table, Row, Spinner,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
@@ -41,6 +40,16 @@ export default function NewsTab() {
       />
       )}
       <Container>
+        <Row className="my-2">
+          {error && (
+          <p>
+            {new Error(error).message}
+          </p>
+          )}
+          {loading && (
+          <Spinner animation="border" />
+          )}
+        </Row>
         <Row className="my-3">
           <Button variant="success" onClick={handleOpenModal}>{t('pages.moderator.tabs.news.create')}</Button>
         </Row>
@@ -61,7 +70,7 @@ export default function NewsTab() {
           </thead>
           <tbody>
             {value && value.news.map(({
-              id, author, title, image, publisher, text,
+              id, author, title, /*  image,  */publisher, /* , text, */
             }) => (
               <tr key={id}>
                 <td>{id}</td>

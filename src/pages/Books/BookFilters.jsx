@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useRef, useState } from 'react';
 import {
   Form, Row, Button, Accordion,
@@ -46,7 +45,7 @@ export default function BookFilters({
             updFilter('priceRange', Object.values(myRef.current.value));
             resetStartPage();
           }}
-          style={{ backgroundColor: '#4a5a69', fontWeight: '900' }}
+          style={{ backgroundColor: 'rgb(74, 90, 105)', fontWeight: '900' }}
         >
           {t('pages.books.book-filters.ok')}
         </Button>
@@ -73,7 +72,17 @@ export default function BookFilters({
         />
         <datalist id="authors">
           {authors && authors.map((author) => (
-            <option value={author} key={author} />
+            <label
+              htmlFor="opt"
+              className="checkbox__label"
+              key={author}
+            >
+              {author}
+              <option
+                aria-label="opt"
+                value={author}
+              />
+            </label>
           ))}
         </datalist>
       </Row>
@@ -99,7 +108,17 @@ export default function BookFilters({
         />
         <datalist id="publishers">
           {publishers && publishers.map((publisher) => (
-            <option value={publisher} key={publisher} />
+            <label
+              htmlFor="opt"
+              className="checkbox__label"
+              key={publisher}
+            >
+              {publisher}
+              <option
+                aria-label="opt"
+                value={publisher}
+              />
+            </label>
           ))}
         </datalist>
       </Row>

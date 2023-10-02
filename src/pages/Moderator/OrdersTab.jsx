@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
@@ -28,7 +27,9 @@ export default function OrdersTab() {
     status: null,
   });
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'orders/search' : 'all/orders'}`);
+  // eslint-disable-next-line no-unused-expressions
   search.length > 1 && url.searchParams.append('search', debouncedSearch);
+  // eslint-disable-next-line no-unused-expressions
   filters.status && url.searchParams.append('status', filters.status);
 
   const { loading, error, value } = useFetch(

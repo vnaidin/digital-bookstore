@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useRef, useState } from 'react';
 import { Form, Row, Button } from 'react-bootstrap';
 import RangeSlider from 'react-range-slider-input';
@@ -44,7 +43,7 @@ export default function MerchFilters({
           updFilter('priceRange', Object.values(myRef.current.value));
           resetStartPage();
         }}
-        style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+        style={{ backgroundColor: 'rgb(74, 90, 105)', fontWeight: '900' }}
 
       >
         {t('pages.merch.merch-filters.ok')}

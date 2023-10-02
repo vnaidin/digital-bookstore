@@ -103,7 +103,7 @@ export default function ShoppingCart() {
                   <div>
                     <Button
                       variant="danger"
-                      className="mx-1"
+                      className="mx-1 p-1"
                       onClick={() => handleRemoveFromCart(+key)}
                     >
                       -
@@ -111,7 +111,7 @@ export default function ShoppingCart() {
                     {value.length}
                     <Button
                       variant="success"
-                      className="mx-1"
+                      className="mx-1 p-1"
                       onClick={
                         () => handleAddToCart(
                           +key,
@@ -164,15 +164,31 @@ export default function ShoppingCart() {
         </Modal.Footer>
       </Modal>
       <Button
-        className="col"
-        variant="link"
+        className="col d-flex align-items-center justify-content-center gap-1"
+        // variant="light"
         onClick={handleShow}
+        style={{
+          backgroundColor: 'rgb(74, 90, 105)', border: 'none', fontSize: 'large',
+        }}
       >
-        <FiShoppingCart
-          size={20}
-          className="mx-1"
-        />
-        {nOfItemsInCart > 0 && <Badge bg="warning">{nOfItemsInCart}</Badge>}
+        {window.innerWidth > 768 ? (
+          <>
+            {t('layout.headerBottom.shopping-cart.title')}
+            <FiShoppingCart
+              size={20}
+              className="mx-1"
+            />
+            {nOfItemsInCart > 0 && <Badge bg="warning">{nOfItemsInCart}</Badge>}
+          </>
+        ) : (
+          <>
+            <FiShoppingCart
+              size={20}
+              className="mx-1"
+            />
+            {nOfItemsInCart > 0 && <Badge bg="warning">{nOfItemsInCart}</Badge>}
+          </>
+        )}
       </Button>
     </>
   );

@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import {
@@ -12,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import { NewsItem, NoDataComponent, PaginationComponent } from '../../components';
 
-export default function News() { // TODO: split into components
+export default function News() {
   const { search } = useLocation();
   const [filters, setFilters] = useState({ // TODO:
     page: 0,

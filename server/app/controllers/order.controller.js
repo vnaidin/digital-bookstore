@@ -143,7 +143,7 @@ exports.updateOrder = async (req, res) => {
 }
 
 exports.updateOrderPaymentResult = async (req, res) => {
-   console.log('body', req.body)
+  // console.log('body', req.body)
   const { signature, data } = req.body;
   // console.log('data from liqpay', data)
 
@@ -157,7 +157,7 @@ exports.updateOrderPaymentResult = async (req, res) => {
       where: {
         id: JSON.parse(Buffer.from(data, 'base64').toString('utf8'))?.order_id
       }
-    }).then(result => console.log('result', result))
+    }).then(result => res.status(200))
 
   }
 }

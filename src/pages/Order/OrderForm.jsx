@@ -1,4 +1,3 @@
-/* eslint-disable */
 import crypto from 'crypto';
 import React, { useContext, useState } from 'react';
 import {
@@ -10,48 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { DELIVERY_METHODS, PAYMENT_METHODS } from '../../utils/constants';
 import AppContext from '../../appContext';
 import OrderService from '../../services/order';
-import { telegramBotSendMsg } from '../../utils/axios';
-
-function ToBinary(str) {
-  let result = '';
-
-  str = encodeURIComponent(str);
-
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] == '%') {
-      result += String.fromCharCode(parseInt(str.substring(i + 1, i + 3), 16));
-      i += 2;
-    } else result += str[i];
-  }
-
-  return result;
-}
-
-function post_to_url(path, params, method) {
-  method = method || 'post';
-
-  const form = document.createElement('form');
-
-  // Move the submit function to another variable
-  // so that it doesn't get overwritten.
-  form._submit_function_ = form.submit;
-
-  form.setAttribute('method', method);
-  form.setAttribute('action', path);
-  // form.setAttribute('target', '_blank');
-
-  for (const key in params) {
-    const hiddenField = document.createElement('input');
-    hiddenField.setAttribute('type', 'hidden');
-    hiddenField.setAttribute('name', key);
-    hiddenField.setAttribute('value', params[key]);
-
-    form.appendChild(hiddenField);
-  }
-
-  document.body.appendChild(form);
-  form._submit_function_(); // Call the renamed function.
-}
+import { post_to_url, telegramBotSendMsg } from '../../utils/axios';
+import { toBinary } from '../../utils/helpers';
 
 export default function OrderForm({ totalPrice }) {
   const [deliveryMethod, setDeliveryMethod] = useState();
@@ -119,21 +78,20 @@ export default function OrderForm({ totalPrice }) {
             public_key: REACT_APP_LIQ_PAY_PUBLIC,
             version: '3',
             action: 'pay',
-            amount: 1, // totalPrice,
+            amount: totalPrice,
             currency: 'UAH',
-            description: 'тест',//'Оплата за книги',
+            description: 'Оплата за книги',
             result_url: window.location.origin,
             server_url: `${window.location.origin}/api/order/payment-update`,
             language: 'uk',
             order_id: String(response.data.id),
           };
-          const liqpayData = btoa(ToBinary(JSON.stringify(json_string)));
+          const liqpayData = btoa(toBinary(JSON.stringify(json_string)));
           // console.log('liqpayData', liqpayData);
 
           const sign_string = REACT_APP_LIQ_PAY_PRIVATE + liqpayData + REACT_APP_LIQ_PAY_PRIVATE;
           const sha1 = crypto.createHash('sha1');
           sha1.update(sign_string);
-
           const signature = sha1.digest('base64');
           post_to_url('https://www.liqpay.ua/api/3/checkout', { submit: 'submit', data: liqpayData, signature });
         } else {
@@ -279,6 +237,7 @@ export default function OrderForm({ totalPrice }) {
                   placeholder={t('pages.order.form.name-p')}
                   defaultValue={formData?.receiverName}
                   onChange={(event) => handleChange(event.target.title, event.target.value)}
+                  required={addReceiver}
                 />
               </InputGroup>
 
@@ -297,6 +256,7 @@ export default function OrderForm({ totalPrice }) {
                   placeholder={t('pages.order.form.surname')}
                   defaultValue={formData?.receiverSurname}
                   onChange={(event) => handleChange(event.target.title, event.target.value)}
+                  required={addReceiver}
                 />
               </InputGroup>
             </Form.Group>
@@ -312,6 +272,7 @@ export default function OrderForm({ totalPrice }) {
                   title="receiverPhoneNumber"
                   defaultValue={formData?.receiverPhoneNumber}
                   onChange={(event) => handleChange(event.target.title, event.target.value)}
+                  required={addReceiver}
                 />
               </InputGroup>
             </Form.Group>
@@ -347,7 +308,7 @@ export default function OrderForm({ totalPrice }) {
              // placeholder="Category"
               required
             >
-              <option hidden value={null}>{t('pages.order.form.choose-del-method')}</option>
+              <option value="">{t('pages.order.form.choose-del-method')}</option>
               {DELIVERY_METHODS.map(
                 ({
                   id, title,
@@ -400,6 +361,7 @@ export default function OrderForm({ totalPrice }) {
                 title="street"
                 defaultValue={formData?.street}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
+                required={deliveryMethod?.stateFullAddress}
               />
             </Form.Group>
             <Form.Group
@@ -415,6 +377,7 @@ export default function OrderForm({ totalPrice }) {
                 title="houseNr"
                 defaultValue={formData?.houseNr}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
+                required={deliveryMethod?.stateFullAddress}
               />
 
             </Form.Group>
@@ -431,6 +394,7 @@ export default function OrderForm({ totalPrice }) {
                 title="flatNr"
                 defaultValue={formData?.flatNr}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
+                required={deliveryMethod?.stateFullAddress}
               />
             </Form.Group>
           </Row>
@@ -466,6 +430,8 @@ export default function OrderForm({ totalPrice }) {
                 title="branch"
                 defaultValue={formData?.branch}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
+                required
+                autoComplete="off"
               />
             </Form.Group>
           </>
@@ -489,10 +455,10 @@ export default function OrderForm({ totalPrice }) {
               md="5"
               controlId="validationFormik15134"
               className="position-relative"
-              required
             >
               {PAYMENT_METHODS.map((payMethod, ind) => (
                 <Form.Check
+                  name="grouped"
                   required
                   key={payMethod}
                   type="radio"
@@ -531,23 +497,6 @@ export default function OrderForm({ totalPrice }) {
       >
         {t('pages.order.form.submit-order')}
       </Button>
-
-      {/* formData && +formData?.paymentMethodId === 1 && (
-        <form method="POST" acceptCharset="utf-8" target="_blank" action="https://www.liqpay.ua/api/3/checkout">
-          <input
-            type="hidden"
-            name="data"
-            value={liqpayData}
-          />
-          <input type="hidden" name="signature" value={signature} />
-          <Button
-            type="submit"
-            style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
-          >
-            Pay
-          </Button>
-        </form>
-      ) */}
     </Form>
 
   );

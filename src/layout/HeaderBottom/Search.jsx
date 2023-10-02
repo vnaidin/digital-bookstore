@@ -29,7 +29,7 @@ export default function SearchBar() {
         onChange={(e) => { updSearch(e.target.value); }}
         title="search"
         autoComplete="off"
-        className="p-1"
+        className="px-3"
         value={search}
       />
 

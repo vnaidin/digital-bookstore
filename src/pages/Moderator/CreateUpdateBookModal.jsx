@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useContext } from 'react';
 import {
   Container, Row, Col, Card, Form, Modal, Button, Accordion,
@@ -8,7 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { FiUpload } from 'react-icons/fi';
 import AppContext from '../../appContext';
 import BookService from '../../services/book';
-import { BOOK_CATEGORIES, BOOK_COVER_TYPES, BOOK_TAGS } from '../../utils/constants';
+import {
+  BOOK_CATEGORIES, BOOK_COVER_TYPES, BOOK_LANGUAGES, BOOK_TAGS,
+} from '../../utils/constants';
 import { bookType } from '../../utils/types';
 
 export default function CreateUpdateBookModal({
@@ -118,7 +119,17 @@ export default function CreateUpdateBookModal({
                 />
                 <datalist id="authors">
                   {authors && authors.map((author) => (
-                    <option value={author} key={author} />
+                    <label
+                      htmlFor="opt"
+                      className="checkbox__label"
+                      key={author}
+                    >
+                      {author}
+                      <option
+                        aria-label="opt"
+                        value={author}
+                      />
+                    </label>
                   ))}
                 </datalist>
 
@@ -152,8 +163,18 @@ export default function CreateUpdateBookModal({
                       required
                     />
                     <datalist id="publishers">
-                      {publishers && publishers.map((author) => (
-                        <option value={author} key={author} />
+                      {publishers && publishers.map((publisher) => (
+                        <label
+                          htmlFor="opt"
+                          className="checkbox__label"
+                          key={publisher}
+                        >
+                          {publisher}
+                          <option
+                            aria-label="opt"
+                            value={publisher}
+                          />
+                        </label>
                       ))}
                     </datalist>
                   </Form.Group>
@@ -178,8 +199,18 @@ export default function CreateUpdateBookModal({
                       required
                     />
                     <datalist id="year">
-                      {[2017, 2018, 2019, 2020, 2021, 2022, 2023].map((author) => (
-                        <option value={author} key={author} />
+                      {[2017, 2018, 2019, 2020, 2021, 2022, 2023].map((year) => (
+                        <label
+                          htmlFor="opt"
+                          className="checkbox__label"
+                          key={year}
+                        >
+                          {year}
+                          <option
+                            aria-label="opt"
+                            value={year}
+                          />
+                        </label>
                       ))}
                     </datalist>
                   </Form.Group>
@@ -274,8 +305,18 @@ export default function CreateUpdateBookModal({
                       required
                     />
                     <datalist id="language">
-                      {['українська', 'english'].map((author) => (
-                        <option value={author} key={author} />
+                      {BOOK_LANGUAGES.map((lang) => (
+                        <label
+                          htmlFor="opt"
+                          className="checkbox__label"
+                          key={lang}
+                        >
+                          {lang}
+                          <option
+                            aria-label="opt"
+                            value={lang}
+                          />
+                        </label>
                       ))}
                     </datalist>
                   </Form.Group>

@@ -29,6 +29,7 @@
         "headerBottom": {
             "greeting": "Hello",
             "auth": {
+                "title": "Account",
                 "or": "or",
                 "register": "Register",
                 "login": "Log In",
@@ -80,7 +81,10 @@
             "title": "Authors"
         },
         "mainPage": {
-            "title": "Main"
+            "title": "Main",
+            "news": "News",
+            "books": "Books",
+            "merch": "Merch"
         },
         "bookPage": {
             "author": "Author",

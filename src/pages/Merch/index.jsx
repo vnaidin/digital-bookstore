@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import {
@@ -14,7 +12,7 @@ import { BOOK_ORDERING } from '../../utils/constants';
 import { MerchCard, NoDataComponent, PaginationComponent } from '../../components';
 import MerchFilters from './MerchFilters';
 
-export default function Merch() { // TODO: split into components
+export default function Merch() {
   const { search } = useLocation();
   const { t } = useTranslation();
   const [filters, setFilters] = useState({ // TODO:
@@ -25,7 +23,9 @@ export default function Merch() { // TODO: split into components
 
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/merch`);
   url.searchParams.append('page', filters.page);
+  // eslint-disable-next-line no-unused-expressions
   filters.order && url.searchParams.append('order', filters.order);
+  // eslint-disable-next-line no-unused-expressions
   filters.priceRange && url.searchParams.append('priceRange', filters.priceRange);
 
   const { loading, error, value } = useFetch(

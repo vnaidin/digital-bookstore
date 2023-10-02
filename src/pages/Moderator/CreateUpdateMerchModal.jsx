@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useContext } from 'react';
 import {
   Container, Row, Col, Card, Form, Modal, Button, Accordion,

@@ -11,8 +11,8 @@ export default function HeaderBottom() {
       <Row className="gap-2 my-2">
         <Catalog />
         <SearchBar />
-        <ShoppingCart />
         <Auth />
+        <ShoppingCart />
       </Row>
     </Container>
   );

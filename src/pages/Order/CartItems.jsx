@@ -69,21 +69,27 @@ export default function CartItems({ totalPrice }) {
               xxl={6}
             >
               <div>
-                <Button onClick={() => handleRemoveFromCart(+key)} variant="danger" className="mx-1">-</Button>
+                <Button
+                  onClick={() => handleRemoveFromCart(+key)}
+                  variant="danger"
+                  className="mx-1 p-1"
+                >
+                  -
+                </Button>
                 {value.length}
                 <Button
                   variant="success"
-                  className="mx-1"
+                  className="mx-1 p-1"
                   onClick={
-                () => handleAddToCart(
-                  +key,
-                  value[0].price,
-                  value[0].title,
-                  value[0].image,
-                  value[0].reducedPrice,
-                  value[0].isReducedNow,
-                )
-}
+                    () => handleAddToCart(
+                      +key,
+                      value[0].price,
+                      value[0].title,
+                      value[0].image,
+                      value[0].reducedPrice,
+                      value[0].isReducedNow,
+                    )
+                  }
                 >
                   +
                 </Button>

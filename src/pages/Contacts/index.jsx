@@ -39,7 +39,7 @@ export default function Contacts() {
             </a>
           </strong>
         </p>
-        <p>
+        {/* <p>
           {t('pages.contacts.address')}
           {' '}
           -
@@ -53,7 +53,7 @@ export default function Contacts() {
               вулиця Андрія Малишка, буд. 9, кв. 37
             </a>
           </strong>
-        </p>
+        </p> */}
       </Row>
     </Container>
   );

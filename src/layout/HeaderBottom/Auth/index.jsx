@@ -51,11 +51,19 @@ export default function Auth() {
   return (
     <>
       <Button
-        className="col"
-        variant="link"
+        className="col d-flex align-items-center justify-content-center gap-1"
+        // variant="light"
         onClick={handleShowCanvas}
+        style={{
+          backgroundColor: 'rgb(74, 90, 105)', border: 'none', fontSize: 'large',
+        }}
       >
-        <FiUser size={20} />
+        {window.innerWidth > 768 ? (
+          <>
+            <FiUser size={20} />
+            {t('layout.headerBottom.auth.title')}
+          </>
+        ) : <FiUser size={20} />}
       </Button>
 
       <Offcanvas

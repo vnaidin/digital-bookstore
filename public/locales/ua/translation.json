@@ -29,6 +29,7 @@
         "headerBottom": {
             "greeting": "Привіт",
             "auth": {
+                "title": "Кабінет",
                 "or": "або",
                 "register": "Зареєструватися",
                 "login": "Увійти",
@@ -84,7 +85,10 @@
             "title": "Автори"
         },
         "mainPage": {
-            "title": "Головна"
+            "title": "Головна",
+            "news": "Новини",
+            "books": "Книги",
+            "merch": "Сувеніри"
         },
         "bookPage": {
             "author": "Автор",

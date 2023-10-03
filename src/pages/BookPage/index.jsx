@@ -40,14 +40,16 @@ export default function BookPage() {
           xl={6}
           xxl={6}
         >
+          {value?.image && (
           <Image
-            src={value?.image}
+            src={`${process.env.REACT_APP_BE_URL}/${value.image}`}
             className="p-2"
             alt={value?.title}
             width={300}
             rounded
             fluid
           />
+          )}
         </Col>
 
         <Col

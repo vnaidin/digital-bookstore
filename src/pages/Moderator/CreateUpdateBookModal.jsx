@@ -37,6 +37,7 @@ export default function CreateUpdateBookModal({
       const fd = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
         fd.append(key, value);
+        console.log(key, value);
       });
       fd.append('image', image);
       // if (image) { fd.append('image', image); }

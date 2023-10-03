@@ -67,12 +67,11 @@ exports.createBook = async (req, res) => {
 exports.updateBook = async (req, res) => {
   const id = req.params.id;
   const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, comments } = req.body;
-
   try {
 
     const result = await db.sequelize.transaction(async (t) => {
 
-      const user = await Item.update({
+      const book = await Item.update({
         pageCount, isReducedNow, price, reducedPrice, author, lang,
         annotation, isbn, title, tags, publisher, year, category, image: req.file?.filename
       }, {
@@ -83,7 +82,7 @@ exports.updateBook = async (req, res) => {
 
       await ItemsManagement.update({ amount, comments }, { where: { itemId: id } }, { transaction: t })
 
-      return user;
+      return book;
 
     });
     // If the execution reaches this line, the transaction has been committed successfully
@@ -91,7 +90,8 @@ exports.updateBook = async (req, res) => {
     res.status(200).json({ message: `Book ${author}-${title} updated` })
 
   } catch (error) {
-    res.status(500).send({ message: "Server Error" })
+    console.log()
+    res.status(500).send({ message: "Server Error", error: error })
     // If the execution reaches this line, an error occurred.
     // The transaction has already been rolled back automatically by Sequelize!
 

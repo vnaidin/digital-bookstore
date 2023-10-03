@@ -113,7 +113,7 @@ export default function UserPanel() {
               </Row>
               <Button
                 type="submit"
-                style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+                style={{ backgroundColor: 'rgb(74, 90, 105)', fontWeight: '900' }}
               >
                 {t('layout.headerBottom.auth.save')}
 

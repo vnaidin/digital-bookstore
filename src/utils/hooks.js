@@ -75,3 +75,20 @@ export function useSearch(value) {
 
   return searchResult;
 }
+
+export function useGetPromoCodes() {
+  const [searchResult, setResult] = useState();
+
+  useEffect(
+    () => {
+      fetch(`${process.env.REACT_APP_BE_URL}/api/all/promo`, { ...DEFAULT_OPTIONS }).then((res) => res.json())
+        // eslint-disable-next-line no-console
+        .then((res) => {
+          setResult(JSON.parse(window.atob(res)));
+        }).catch((err) => console.error(err));
+    },
+    [],
+  );
+
+  return searchResult;
+}

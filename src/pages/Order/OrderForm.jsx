@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Row, Col, Button, Form, InputGroup,
 } from 'react-bootstrap';
@@ -11,10 +11,13 @@ import AppContext from '../../appContext';
 import OrderService from '../../services/order';
 import { post_to_url, telegramBotSendMsg } from '../../utils/axios';
 import { toBinary } from '../../utils/helpers';
+import { useGetPromoCodes } from '../../utils/hooks';
 
-export default function OrderForm({ totalPrice }) {
+export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
   const [deliveryMethod, setDeliveryMethod] = useState();
   const [addReceiver, setReceiver] = useState(false);
+  const promocodesArray = useGetPromoCodes();
+
   const { dispatch, state } = useContext(AppContext);
   const [formData, setFormData] = useState({
     name: state.currentUser?.name,
@@ -34,7 +37,16 @@ export default function OrderForm({ totalPrice }) {
 
   const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE } = process.env;
 
-  // console.log('signature', signature);
+  useEffect(() => {
+    // if we have valid promocode we pass promo object to parent
+    if (formData?.promocode && promocodesArray.some(
+      (promo) => promo.name === formData?.promocode.toUpperCase(),
+    )) {
+      updatePriceWithPromocode(promocodesArray.find(
+        (p) => p.name === formData?.promocode.toUpperCase(),
+      ));
+    }
+  }, [formData?.promocode]);
 
   const handleSubmit = (values) => {
     const objectToPost = {
@@ -62,6 +74,7 @@ export default function OrderForm({ totalPrice }) {
       status: false,
       comments: values.comments,
       paymentMethodId: +values.paymentMethodId,
+      promocode: values.promocode,
     };
 
     //  console.log('object to post', objectToPost);
@@ -305,7 +318,7 @@ export default function OrderForm({ totalPrice }) {
                 );
               }}
               title="delMethod"
-             // placeholder="Category"
+              // placeholder="Category"
               required
             >
               <option value="">{t('pages.order.form.choose-del-method')}</option>
@@ -474,6 +487,45 @@ export default function OrderForm({ totalPrice }) {
           </InputGroup>
         </Form.Group>
 
+        <hr className="my-3" />
+
+        <h2 className="text-start my-1">
+          4.
+          {' '}
+          {t('pages.order.form.promocode')}
+        </h2>
+        <Form.Group
+          as={Row}
+        >
+          <Form.Group
+            as={Col}
+            sm="6"
+            controlId="validationFormik106"
+            className="position-relative"
+          >
+            <Form.Label>
+              {t('pages.order.form.enter-promo')}
+            </Form.Label>
+
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            sm="6"
+            controlId="validationFormik106"
+            className="position-relative"
+          >
+            <Form.Control
+              type="text"
+              placeholder={t('pages.order.form.promocode-p')}
+              title="promocode"
+              // defaultValue={formData?.comments}
+              onChange={(event) => handleChange(event.target.title, event.target.value)}
+              autoComplete="off"
+            />
+          </Form.Group>
+
+        </Form.Group>
+
         <Form.Group
           as={Col}
           sm="12"
@@ -493,7 +545,7 @@ export default function OrderForm({ totalPrice }) {
 
       <Button
         type="submit"
-        style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+        style={{ backgroundColor: 'rgb(74, 90, 105)', fontWeight: '900' }}
       >
         {t('pages.order.form.submit-order')}
       </Button>
@@ -507,4 +559,5 @@ OrderForm.defaultProps = {
 
 OrderForm.propTypes = {
   totalPrice: PropTypes.number.isRequired,
+  updatePriceWithPromocode: PropTypes.func.isRequired,
 };

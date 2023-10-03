@@ -29,6 +29,7 @@ db.order = require("./order.model.js")(sequelize, Sequelize);
 db.news = require('./news.model.js')(sequelize, Sequelize);
 db.orderItems = require("./orderItems.model.js")(sequelize, Sequelize);
 db.orderAddress = require("./orderAddress.model.js")(sequelize, Sequelize);
+db.orderPromoCode = require("./orderPromoCode.model.js")(sequelize, Sequelize);
 db.itemsManagement = require('./itemManagement.model.js')(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {

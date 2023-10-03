@@ -7,6 +7,7 @@ const Order = db.order;
 const Item = db.item;
 const OrderItems = db.orderItems;
 const OrderAddress = db.orderAddress;
+const OrderPromoCode = db.orderPromoCode;
 const ItemsManagement = db.itemsManagement;
 const User = db.user;
 const News = db.news;
@@ -124,7 +125,7 @@ exports.initialDBFill = function () {
     }, {
         include: [ItemsManagement]
     });
-    Item.create({
+    /* Item.create({
         id: 3,
         itemType: "book",
         author: 'Фредрік Бакман',
@@ -750,9 +751,9 @@ exports.initialDBFill = function () {
         }
     }, {
         include: [ItemsManagement]
-    });
+    }); */
     //create merch
-    Item.create({
+    /* Item.create({
         id: 27,
         itemType: "merch",
         title: "Photo of Goga",
@@ -770,9 +771,9 @@ exports.initialDBFill = function () {
         }
     }, {
         include: [ItemsManagement]
-    });
+    }); */
     //create some orders
-    /* Order.create({
+   /*  Order.create({
         userId: 1,
         name: "Владислав",
         surname: "Найдін",
@@ -808,7 +809,8 @@ exports.initialDBFill = function () {
         ],
         price: 3428,
         paymentMethodId: 1,
-        status: 0
+        status: 0,
+        promocode: "FORUM"
     }, {
         include: [OrderItems, OrderAddress]
     });
@@ -843,7 +845,7 @@ exports.initialDBFill = function () {
         include: [OrderItems, OrderAddress]
     }); */
     // add fake news
-    News.create({
+    /* News.create({
         id: 1,
         author: `Леся Українка`,
         title: "Шалені авторки. Мала проза українських письменниць",
@@ -853,5 +855,13 @@ exports.initialDBFill = function () {
         text: `«Шалені авторки» — це антологія текстів українських письменниць, своєрідна мандрівка крізь останні два століття, під час якої різні авторки, маючи несхожі стильові уподобання й естетичні орієнтації, змальовують усю множинність і складність жіночого досвіду.
         Перед читачами постануть декадансні персонажки Ольги Кобилянської, екзотичні героїні Софії Яблонської, рішучі бунтарки Ірини Вільде. Публікуються і найбільш резонансні тексти сучасних письменниць, зокрема Оксани Забужко і Людмили Таран.
         Книжка підготована у співпраці з ютуб-каналом «Шалені автор(к)и», авторами якого є літературознавці Віра Агеєва й Ростислав Семків.`,
+    }); */
+    // add promocode
+    OrderPromoCode.create({
+        id: 1,
+        name: `FORUM`,
+        percent: 10,
+        from: new Date('October 6, 2023'),
+        till: new Date('October 8, 2023'),
     });
 }

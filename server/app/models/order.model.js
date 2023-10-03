@@ -41,6 +41,9 @@ module.exports = (sequelize, Sequelize) => {
     },
     ttn: {
       type: Sequelize.STRING
+    },
+    promocode: {
+      type: Sequelize.STRING
     }
   });
 

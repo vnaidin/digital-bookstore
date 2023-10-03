@@ -94,13 +94,13 @@ secureApp.use(express.static(`${process.env.TOKEN_FILES_PATH}`, { maxAge: 43200 
 // database
 const db = require("./app/models");
 
- db.sequelize.sync();//FIXME: touch only in alert situations
+ // db.sequelize.sync();//FIXME: touch only in alert situations
 // force: true will drop the table if it already exists
-/* const { initialDBFill } = require('./initDB')
+const { initialDBFill } = require('./initDB')
 db.sequelize.sync({ force: true }).then(() => {
   console.log('Drop and Resync Database with { force: true }');
   initialDBFill();
-}); */
+});
 
 // routes
 require('./app/routes/auth.route')(secureApp);
@@ -108,6 +108,7 @@ require('./app/routes/user.route')(secureApp);
 require('./app/routes/item.route')(secureApp);
 require('./app/routes/order.route')(secureApp);
 require('./app/routes/news.route')(secureApp);
+require('./app/routes/promocode.route')(secureApp);
 
 // Handles any requests that don't match the ones above
 secureApp.get('*', (req, res) => {

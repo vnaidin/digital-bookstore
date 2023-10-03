@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Container, Row, Col,
 } from 'react-bootstrap';
@@ -12,14 +12,24 @@ import { NoDataComponent } from '../../components';
 export default function Order() {
   const { state } = useContext(AppContext);
   const { t } = useTranslation();
-  const totalBooksPrice = state.shoppingCart.reduce((acc, curr) => {
-    if (curr.isReducedNow) {
-      return acc + curr.reducedPrice;
+  const [totalPrice, updateTotalPrice] = useState();
+  const [promoObject, updatePromoObject] = useState({});
+
+  useEffect(() => {
+    const basicTotalPrice = state.shoppingCart.reduce((acc, curr) => {
+      if (curr.isReducedNow) {
+        return acc + curr.reducedPrice;
+      }
+      return acc + curr.price;
+    }, 0);
+    const promoPercent = (100 - +promoObject.percent) / 100;
+    if (Number.isNaN(promoPercent)) {
+      updateTotalPrice(basicTotalPrice);
+    } else {
+      updateTotalPrice(basicTotalPrice * promoPercent);
     }
-    return acc + curr.price;
-  }, 0);
-  const totalPrice = state.deliveryMethod && totalBooksPrice < state.deliveryMethod?.freeFrom
-    ? totalBooksPrice : totalBooksPrice;// TODO: review, as we don't have different delivery prices
+  }, [state.shoppingCart, promoObject]);
+
   return (
     <Container className="my-3">
       <Helmet>
@@ -36,7 +46,7 @@ export default function Order() {
             xxl={4}
             title="cart-items"
           >
-            <CartItems totalPrice={totalPrice} />
+            <CartItems totalPrice={Math.round(totalPrice)} />
           </Col>
           <Col
             xs={12}
@@ -47,7 +57,10 @@ export default function Order() {
             xxl={6}
             title="order-form"
           >
-            <OrderForm totalPrice={totalPrice} />
+            <OrderForm
+              totalPrice={Math.round(totalPrice)}
+              updatePriceWithPromocode={updatePromoObject}
+            />
           </Col>
         </Row>
       ) : <NoDataComponent />}

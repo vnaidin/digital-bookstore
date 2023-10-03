@@ -272,6 +272,9 @@
                 "flat-nr": "Flat №",
                 "branch": "Branch",
                 "payment-method": "Payment Method",
+                "promocode": "Promocode",
+                "enter-promo": "Enter promo code if available",
+                "promocode-p": "code",
                 "comments": "Comments",
                 "submit-order": "Submit Order"
             }

@@ -40,7 +40,7 @@ export default function Catalog() {
                 <NavLink
                   active={pathname.substring(1) === id}
                   onClick={() => {
-                    navigate({ pathname: '/', search: `?cat=${id}` });
+                    navigate({ pathname: '/books/', search: `?cat=${id}` });
                     handleClose();
                   }}
                 >

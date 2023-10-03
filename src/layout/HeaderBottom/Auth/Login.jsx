@@ -91,7 +91,7 @@ export default function Login() {
           <Button
             type="submit"
             className="my-2 align-self-center"
-            style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
+            style={{ backgroundColor: 'rgb(74, 90, 105)', fontWeight: '900' }}
 
           >
             {forgotPass ? t('layout.headerBottom.auth.reset-pass') : t('layout.headerBottom.auth.login')}

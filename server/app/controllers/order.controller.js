@@ -39,7 +39,7 @@ exports.getOrdersOfUser = async (req, res) => {
 
 exports.createOrder = async (req, res) => {
   const { userId, name, surname, phoneNumber, receiverName, receiverSurname, receiverPhoneNumber,
-    email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price } = req.body;
+    email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price, promocode } = req.body;
   const mailOptions = {
     from: process.env.EMAIL_SENDER,
     to: email,
@@ -67,7 +67,7 @@ exports.createOrder = async (req, res) => {
       // create order
       const order = await Order.create({
         userId, name, surname, phoneNumber, receiverName, receiverSurname, receiverPhoneNumber,
-        email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price
+        email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price, promocode
       },
         {
           include: [OrderItems, OrderAddress]

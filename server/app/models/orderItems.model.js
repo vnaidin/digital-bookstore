@@ -5,13 +5,13 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true
     },
-    itemId:{
-      type:Sequelize.INTEGER
+    itemId: {
+      type: Sequelize.INTEGER
     },
     price: {
       type: Sequelize.INTEGER
-    }
-  },{
+    },
+  }, {
     timestamps: false
   });
 

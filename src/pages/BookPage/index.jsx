@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  Col, Container, Row, Spinner, Image, ListGroup,
+  Col, Container, Row, Spinner, Image, ListGroup, Badge,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import BuyButton from '../../components/BuyButton';
+import { BOOK_TAGS } from '../../utils/constants';
 
 export default function BookPage() {
   const { id } = useParams();
@@ -41,14 +42,27 @@ export default function BookPage() {
           xxl={6}
         >
           {value?.image && (
-          <Image
-            src={`${process.env.REACT_APP_BE_URL}/${value.image}`}
-            className="p-2"
-            alt={value?.title}
-            width={300}
-            rounded
-            fluid
-          />
+            <>
+              {value?.tags.split(',').map((tag) => (
+                <Badge
+                  bg="danger"
+                  key={tag}
+                  pill
+                  style={{ width: '5em', /* height: '2em', */ marginTop: '0px', fontSize: 'large' }}
+                >
+                  {BOOK_TAGS[tag]}
+                </Badge>
+              ))}
+              <Image
+                src={`${process.env.REACT_APP_BE_URL}/${value.image}`}
+                className="p-2 m-0"
+                alt={value?.title}
+                width={300}
+                rounded
+                fluid
+              />
+
+            </>
           )}
         </Col>
 

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {
@@ -8,7 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import BuyButton from '../BuyButton';
 import { bookType } from '../../utils/types';
 
-export default function BookCard({ // TODO: add tags
+import { BOOK_TAGS } from '../../utils/constants';
+
+export default function BookCard({
   id, author, title, image, price, reducedPrice, isReducedNow, tags, item_management,
 }) {
   const { t, i18n } = useTranslation();
@@ -16,14 +19,30 @@ export default function BookCard({ // TODO: add tags
   return (
 
     <Card style={{ backgroundColor: 'inherit' }}>
-      <Card.Img
-        variant="top"
-        src={image}
-        height={330}
-        className="p-3"
-        alt={`${author}_${title}`}
-        onClick={() => navigate(`/book/${id}`)}
-      />
+      <div>
+        {tags.split(',').map((tag) => (
+          <Badge
+            bg="danger"
+            pill
+            key={tag}
+            style={{
+              width: '5em', /* height: '2em', */ marginTop: '0px', fontSize: 'large',
+            }}
+          >
+            {BOOK_TAGS[tag]}
+          </Badge>
+        ))}
+        <Card.Img
+          variant="top"
+          src={image}
+          height={330}
+          className="p-3"
+          alt={`${author}_${title}`}
+          onClick={() => navigate(`/book/${id}`)}
+        />
+
+      </div>
+
       <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2" style={{ minHeight: '180px' }}>
         <NavLink href={`/book/${id}`}>
           <Card.Title style={{

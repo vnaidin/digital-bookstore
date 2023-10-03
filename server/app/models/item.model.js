@@ -43,7 +43,8 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: 0
     },
     isReducedNow: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
     annotation: {
       type: Sequelize.STRING(2000)

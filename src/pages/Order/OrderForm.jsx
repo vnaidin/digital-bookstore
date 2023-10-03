@@ -86,7 +86,7 @@ export default function OrderForm({ totalPrice }) {
             language: 'uk',
             order_id: String(response.data.id),
           };
-          const liqpayData = btoa(toBinary(JSON.stringify(json_string)));
+          const liqpayData = window.btoa(toBinary(JSON.stringify(json_string)));
           // console.log('liqpayData', liqpayData);
 
           const sign_string = REACT_APP_LIQ_PAY_PRIVATE + liqpayData + REACT_APP_LIQ_PAY_PRIVATE;

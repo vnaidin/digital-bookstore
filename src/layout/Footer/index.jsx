@@ -65,7 +65,7 @@ export default function Footer() {
             </Col>
             <Col>
               <a
-                href="https://www.instagram.com/vnaidin"
+                href="https://instagram.com/alinea_books"
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: 'inherit' }}
@@ -75,7 +75,7 @@ export default function Footer() {
             </Col>
             <Col>
               <a
-                href="https://www.instagram.com/vnaidin"
+                href="https://www.facebook.com/alinea.books"
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: 'inherit' }}

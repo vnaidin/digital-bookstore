@@ -215,9 +215,9 @@ OrderItemsCell.defaultProps = {
 };
 
 OrderItemsCell.propTypes = {
-  items: {
+  items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-  },
+  })),
 };

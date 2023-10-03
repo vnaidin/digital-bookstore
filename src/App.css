@@ -9,11 +9,11 @@ main {
 }
 
 header, .modal-header, .offcanvas-header,.toast-header {
-  background-color:#d9c5ba;
+  background-color:#e7d6cc;
 }
 
 footer, .modal-footer,.header-bottom {
-  background-color: #d9c5ba;
+  background-color: #e7d6cc;
   /* color: rgb(255 255 255 / 55%); */
 }
 

@@ -48,7 +48,7 @@ export default function BookPage() {
                   bg="danger"
                   key={tag}
                   pill
-                  style={{ width: '5em', /* height: '2em', */ marginTop: '0px', fontSize: 'large' }}
+                  style={{ width: '5em', /* height: '2em', */ marginTop: '1em', fontSize: 'large' }}
                 >
                   {BOOK_TAGS[tag]}
                 </Badge>
@@ -103,7 +103,7 @@ export default function BookPage() {
                 {`${t('pages.bookPage.publisher')}: ${value?.publisher}`}
               </ListGroup.Item>
               <ListGroup.Item>
-                {`${t('pages.bookPage.category')}: ${t(`constants.bookCategories.${value?.category}`)}`}
+                {`${t('pages.bookPage.category')}: ${value?.category.split(',').map((category) => t(`constants.bookCategories.${category}`))}`}
               </ListGroup.Item>
             </ListGroup>
             {/** TODO: add tags */}

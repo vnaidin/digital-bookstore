@@ -38,13 +38,20 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
   const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE } = process.env;
 
   useEffect(() => {
+    const today = new Date().toUTCString();
     // if we have valid promocode we pass promo object to parent
-    if (formData?.promocode && promocodesArray.some(
-      (promo) => promo.name === formData?.promocode.toUpperCase(),
+    // BE has UTC, so converting local datetime to UTC
+    if (formData?.promocode && formData?.promocode.length > 0 && promocodesArray.some(
+      ({ name, from, till }) => name === formData?.promocode.toUpperCase()
+      && Date.parse(from) < Date.parse(today)
+       && Date.parse(till) > Date.parse(today),
     )) {
       updatePriceWithPromocode(promocodesArray.find(
-        (p) => p.name === formData?.promocode.toUpperCase(),
+        ({ name/* , from, till */ }) => name === formData?.promocode.toUpperCase(),
+        /* && new Date(from) > today && new Date(till) < today, */
       ));
+    } else {
+      updatePriceWithPromocode({});
     }
   }, [formData?.promocode]);
 
@@ -545,7 +552,7 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
 
       <Button
         type="submit"
-        style={{ backgroundColor: 'rgb(74, 90, 105)', fontWeight: '900' }}
+        style={{ backgroundColor: '#748492', fontWeight: '900' }}
       >
         {t('pages.order.form.submit-order')}
       </Button>

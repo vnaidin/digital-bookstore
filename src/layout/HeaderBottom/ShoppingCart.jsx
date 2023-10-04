@@ -168,7 +168,7 @@ export default function ShoppingCart() {
         // variant="light"
         onClick={handleShow}
         style={{
-          backgroundColor: 'rgb(74, 90, 105)', border: 'none', fontSize: 'large',
+          backgroundColor: '#748492', border: 'none', fontSize: 'large',
         }}
       >
         {window.innerWidth > 768 ? (

@@ -312,12 +312,14 @@ module.exports = function(app) {
   *       404:
   *         description: The order was not found
   */
-  app.delete('/api/order/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteOrder);
+  app.delete('/api/order/:id',[authJwt.verifyToken,authJwt.isAdmin],controller.deleteOrder);
 
   /**
    * @swagger
    * /orders/search:
    *   get:
+  *     security: 
+  *       - bearer: []
    *     summary: Get search items
    *     tags: [Orders]
    *     parameters:
@@ -342,7 +344,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/orders/search",
-     /* [authJwt.verifyToken,authJwt.isModerator], */
+     [authJwt.verifyToken,authJwt.isModerator],
     controller.searchOrder
   );
 };

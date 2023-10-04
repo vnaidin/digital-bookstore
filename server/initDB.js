@@ -75,7 +75,7 @@ exports.initialDBFill = function () {
             });
         })
     // create some books
-    Item.create({
+    /* Item.create({
         id: 1,
         itemType: "book",
         author: 'Сергій Жадан',
@@ -125,7 +125,7 @@ exports.initialDBFill = function () {
     }, {
         include: [ItemsManagement]
     });
-    /* Item.create({
+    Item.create({
         id: 3,
         itemType: "book",
         author: 'Фредрік Бакман',
@@ -861,7 +861,7 @@ exports.initialDBFill = function () {
         id: 1,
         name: `FORUM`,
         percent: 10,
-        from: new Date('October 6, 2023'),
-        till: new Date('October 8, 2023'),
+        from: new Date('October 6, 2023 00:00:01'),
+        till: new Date('October 8, 2023 23:59:59'),
     });
 }

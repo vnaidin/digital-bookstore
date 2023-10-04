@@ -7,6 +7,8 @@ import { useDebounce, useFetch } from '../../utils/hooks';
 import BookService from '../../services/book';
 import CreateUpdateBookModal from './CreateUpdateBookModal';
 import AppContext from '../../appContext';
+import authHeader from '../../services/auth-header';
+import { NoDataComponent } from '../../components';
 
 export default function BooksTab() {
   const { dispatch } = useContext(AppContext);
@@ -26,7 +28,7 @@ export default function BooksTab() {
 
   const { loading, error, value } = useFetch(
     url,
-    {},
+    { headers: authHeader() },
     [showModal, debouncedSearch],
   );
   const handleBookDelete = (id) => {
@@ -76,6 +78,7 @@ export default function BooksTab() {
             <Spinner animation="border" />
           )}
         </Row>
+        {value && value.books.length === 0 && <NoDataComponent />}
         {value && value.books.length > 0 && (
         <Table
           /* striped */

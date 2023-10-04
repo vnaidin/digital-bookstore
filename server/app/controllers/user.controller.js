@@ -3,6 +3,7 @@ const User = db.user;
 const Role=db.role;
 
 const Op = db.Sequelize.Op;
+const bcrypt = require("bcryptjs");
 
 exports.userBoard = async (req, res) => {
   /* const allUsers = await db.sequelize.query("SELECT email,`users`.createdAt,`users`.updatedAt FROM users RIGHT JOIN user_roles ON users.id=user_roles.userId WHERE user_roles.roleId=1;", { type: db.sequelize.QueryTypes.SELECT });
@@ -12,9 +13,41 @@ exports.userBoard = async (req, res) => {
 };
 
 exports.moderatorBoard = async (req, res) => {
-  const allModerators = await db.sequelize.query("SELECT email,`users`.createdAt,`users`.updatedAt FROM users RIGHT JOIN user_roles ON users.id=user_roles.userId WHERE user_roles.roleId=2;", { type: db.sequelize.QueryTypes.SELECT });
+  const allModerators = await db.sequelize.query("SELECT id,email,`users`.createdAt,`users`.updatedAt FROM users RIGHT JOIN user_roles ON users.id=user_roles.userId WHERE user_roles.roleId=2;", { type: db.sequelize.QueryTypes.SELECT });
   res.status(200).json(allModerators);
 };
+
+exports.createUser = async(req,res)=>{
+  // Save User to Database
+  User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  })
+    .then(user => {
+      if (req.body.roles) {
+        Role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles
+            }
+          }
+        }).then(roles => {
+          user.setRoles(roles).then(() => {
+            res.send({ message: "User was registered successfully!" });
+          });
+        });
+      } else {
+        // user role = 1
+        user.setRoles([1]).then(() => {
+          res.send({ message: "User was registered successfully!" });
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+}
 
 exports.updateInfo = async (req, res) => {
   const userId = req.params.id;

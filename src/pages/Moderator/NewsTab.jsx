@@ -7,6 +7,7 @@ import { useFetch } from '../../utils/hooks';
 import NewsService from '../../services/news';
 import CreateUpdateNewsModal from './CreateUpdateNewsModal';
 import AppContext from '../../appContext';
+import { NoDataComponent } from '../../components';
 
 export default function NewsTab() {
   const { dispatch } = useContext(AppContext);
@@ -53,6 +54,8 @@ export default function NewsTab() {
         <Row className="my-3">
           <Button variant="success" onClick={handleOpenModal}>{t('pages.moderator.tabs.news.create')}</Button>
         </Row>
+        {value && value.news.length === 0 && <NoDataComponent />}
+        {value && value.news.length > 0 && (
         <Table
           /* striped */
           bordered
@@ -69,7 +72,7 @@ export default function NewsTab() {
             </tr>
           </thead>
           <tbody>
-            {value && value.news.map(({
+            { value.news.map(({
               id, author, title, /*  image,  */publisher, /* , text, */
             }) => (
               <tr key={id}>
@@ -85,6 +88,7 @@ export default function NewsTab() {
             ))}
           </tbody>
         </Table>
+        )}
 
       </Container>
     </>

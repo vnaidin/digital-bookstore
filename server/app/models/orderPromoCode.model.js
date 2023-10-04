@@ -12,10 +12,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER
     },
     from: {
-      type: Sequelize.DATEONLY
+      type: Sequelize.DATE
     },
     till: {
-      type: Sequelize.DATEONLY
+      type: Sequelize.DATE
     }
   },);
 

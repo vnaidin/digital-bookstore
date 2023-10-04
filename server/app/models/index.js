@@ -25,6 +25,7 @@ db.sequelize = sequelize;
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.item = require("./item.model.js")(sequelize, Sequelize);
+db.author = require("./author.model.js")(sequelize, Sequelize);
 db.order = require("./order.model.js")(sequelize, Sequelize);
 db.news = require('./news.model.js')(sequelize, Sequelize);
 db.orderItems = require("./orderItems.model.js")(sequelize, Sequelize);

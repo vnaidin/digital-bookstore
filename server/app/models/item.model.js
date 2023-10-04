@@ -17,10 +17,13 @@ module.exports = (sequelize, Sequelize) => {
     image: {
       type: Sequelize.STRING
     },
+    covers: {
+      type: Sequelize.STRING
+    },
     publisher: {
       type: Sequelize.STRING
     },
-    coverType:{
+    coverType: {
       type: Sequelize.INTEGER
     },
     year: {

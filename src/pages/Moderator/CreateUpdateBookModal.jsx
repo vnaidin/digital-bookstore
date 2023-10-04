@@ -16,6 +16,9 @@ export default function CreateUpdateBookModal({
   handleCloseModal, existingBook, authors, publishers,
 }) {
   const [image, setImage] = useState(null);
+  const [coverFront, setCoverFront] = useState(null);
+  const [coverBack, setCoverBack] = useState(null);
+
   const [formData, setFormData] = useState({
     ...existingBook,
     category: existingBook?.category.length > 0 ? Array.from(existingBook?.category.split(',')).map((cat) => Number(cat)) : [],
@@ -38,14 +41,21 @@ export default function CreateUpdateBookModal({
       Object.entries(formData).forEach(([key, value]) => {
         fd.append(key, value);
       });
-      fd.append('image', image);
-      // if (image) { fd.append('image', image); }
+      /*  fd.append('image', image);
+      fd.append('cover_front', coverFront);
+      fd.append('cover_back', coverBack); */
+      if (image) { fd.append('image', image); }
+      if (coverFront && coverBack) {
+        fd.append('cover_front', coverFront);
+        fd.append('cover_back', coverBack);
+      }
 
       if (existingBook?.id && existingBook?.id > 0) {
         // perform edit
         BookService.editBook(existingBook.id, fd).then(
           (response) => {
-            /* console.log(response); */ handleCloseModal();
+            // console.log(response);
+            handleCloseModal();
             dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
@@ -56,7 +66,8 @@ export default function CreateUpdateBookModal({
         // creating
         BookService.createBook(fd).then(
           (response) => {
-            /* console.log(response); */ handleCloseModal();
+            //  console.log(response);
+            handleCloseModal();
             dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
           },
         ).catch((err) => {
@@ -144,7 +155,7 @@ export default function CreateUpdateBookModal({
                   required
                 />
 
-                <Row>
+                <Row className="gap-0">
                   <Form.Group
                     as={Col}
                     md="6"
@@ -183,7 +194,7 @@ export default function CreateUpdateBookModal({
                     as={Col}
                     md="2"
                     controlId="validationFormik151"
-                    className="position-relative"
+                    className="position-relative p-0"
                   >
                     <Form.Label>{t('pages.moderator.tabs.book.modal.year')}</Form.Label>
                     <Form.Control
@@ -193,8 +204,9 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="year"
                       list="year"
+                      min={2017}
+                      max={2024}
                       autoComplete="off"
-                      // autoComplete="off"
                       defaultValue={existingBook?.year || null}
                       required
                     />
@@ -461,7 +473,7 @@ export default function CreateUpdateBookModal({
                               label={tag}
                               value={ind}
                               checked={new Set(formData.tags).has(ind)}
-                                // required
+                              // required
                               onChange={(event) => {
                                 if (event.target.checked) {
                                   setFormData((prev) => ({
@@ -532,59 +544,129 @@ export default function CreateUpdateBookModal({
                   className="m-2 place-self-center"
                   type="submit"
                   style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
-
                 >
                   {existingBook?.id ? t('pages.moderator.tabs.book.modal.update') : t('pages.moderator.tabs.book.modal.create')}
                 </Button>
               </Form.Group>
             </Col>
-
-            <Card
-              // bg={variant}
-              as={Col}
-              // xs={12}
+            <Col
               xs={{ order: 'first' }}
               sm={4}
               lg={4}
               xl={4}
               xxl={4}
-              style={{ border: 'none', backgroundColor: '#E0E0E0' }}
-              className="align-items-center"
+              // style={{ border: 'none', backgroundColor: '#E0E0E0' }}
+              className="align-items-center d-flex gap-2 flex-column"
             >
-
-              {(image || existingBook?.image) && (
-                <Card.Img
-                  variant="top"
-                  src={image ? URL.createObjectURL(image)
-                    : `${existingBook?.image ? '' : process.env.REACT_APP_BE_URL}${existingBook.image}`}
-                />
-              )}
-              <Card.Body>
-                <Form.Group
-                  controlId="formFile"
-                >
-                  <Form.Label
-                    className="p-2"
-                    style={{
-                      backgroundColor: '#515151',
-                      color: 'white',
-                      borderRadius: '24px',
-                    }}
-                  >
-                    <FiUpload size={20} className="mx-1" />
-                  </Form.Label>
-                  <Form.Control
-                    type="file"
-                    // id="img"
-                    accept="image/*"
-                    size="sm"
-                    style={{ display: 'none' }}
-                    onChange={(e) => setImage(e.target.files[0])}
+              <Card key="main">
+                {(image || existingBook?.image) && (
+                  <Card.Img
+                    variant="top"
+                    src={image ? URL.createObjectURL(image)
+                      : `${existingBook?.image ? '' : process.env.REACT_APP_BE_URL}${existingBook.image}`}
                   />
-                </Form.Group>
-              </Card.Body>
+                )}
+                <Card.Title>main</Card.Title>
+                <Card.Body>
+                  <Form.Group
+                    controlId="formFile"
+                  >
+                    <Form.Label
+                      className="p-2"
+                      style={{
+                        backgroundColor: '#515151',
+                        color: 'white',
+                        borderRadius: '24px',
+                      }}
+                    >
+                      <FiUpload size={20} className="mx-1" />
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      // id="img"
+                      accept="image/*"
+                      size="sm"
+                      style={{ display: 'none' }}
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </Form.Group>
+                </Card.Body>
+              </Card>
 
-            </Card>
+              <Card key="front">
+                {(coverFront || existingBook?.covers) && (
+                  <Card.Img
+                    variant="top"
+                    src={coverFront ? URL.createObjectURL(coverFront)
+                      : `${existingBook?.covers ? '' : process.env.REACT_APP_BE_URL}/${existingBook.covers.split(',')[0]}`}
+                  />
+                )}
+                <Card.Title>front</Card.Title>
+                <Card.Body>
+                  <Form.Group
+                    controlId="formFile1"
+                  >
+                    <Form.Label
+                      className="p-2"
+                      style={{
+                        backgroundColor: '#515151',
+                        color: 'white',
+                        borderRadius: '24px',
+                      }}
+                    >
+                      <FiUpload size={20} className="mx-1" />
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      // id="img"
+                      accept="image/*"
+                      size="sm"
+                      style={{ display: 'none' }}
+                      onChange={(e) => {
+                        console.log(e.target.files);
+                        setCoverFront(e.target.files[0]);
+                      }}
+                    />
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+
+              <Card key="back">
+                {(coverBack || existingBook?.covers) && (
+                  <Card.Img
+                    variant="top"
+                    src={coverBack ? URL.createObjectURL(coverBack)
+                      : `${existingBook?.covers ? '' : process.env.REACT_APP_BE_URL}/${existingBook.covers.split(',')[1]}`}
+                  />
+                )}
+                <Card.Title>back</Card.Title>
+                <Card.Body>
+                  <Form.Group
+                    controlId="formFile2"
+                  >
+                    <Form.Label
+                      className="p-2"
+                      style={{
+                        backgroundColor: '#515151',
+                        color: 'white',
+                        borderRadius: '24px',
+                      }}
+                    >
+                      <FiUpload size={20} className="mx-1" />
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      // id="img"
+                      accept="image/*"
+                      size="sm"
+                      style={{ display: 'none' }}
+                      onChange={(e) => setCoverBack(e.target.files[0])}
+                    />
+                  </Form.Group>
+                </Card.Body>
+              </Card>
+            </Col>
+
           </Row>
 
         </Container>

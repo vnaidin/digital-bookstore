@@ -26,7 +26,7 @@ export default function BookCard({
             pill
             key={tag}
             style={{
-              width: '5em', /* height: '2em', */ marginTop: '0px', fontSize: 'large',
+              width: '5em', /* height: '2em', */ marginTop: '1em', fontSize: 'large',
             }}
           >
             {BOOK_TAGS[tag]}

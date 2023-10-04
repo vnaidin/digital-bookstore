@@ -33,6 +33,18 @@ module.exports = function (app) {
    *         name:
    *           type: string
    *           description: The user name
+   *         surname:
+   *           type: string
+   *           description: The user surname
+   *         phoneNumber:
+   *           type: string
+   *           description: The user tel
+   *         wishlist:
+   *           type: string
+   *           description: Wishlist, string of item ID's
+   *         birthday:
+   *           type: string
+   *           description: The user's birthday, save only day
    *         roles:
    *           type: array
    *           items:

@@ -37,8 +37,8 @@ module.exports = function (app) {
 *       example:
 *         name: FEST
 *         percent: 5
-*         from: 2023-10-01
-*         till: 2023-10-02
+*         from: 'October 6, 2023 00:00:01'
+*         till: 'October 8, 2023 23:59:59'
 */
 
   /**
@@ -94,7 +94,7 @@ module.exports = function (app) {
   *      500:
   *        description: Some error happened
   */
-  app.post('/api/promo', [authJwt.verifyToken,authJwt.isModerator], controller.createPromo)//TODO: verify that it is exact user
+  app.post('/api/promo', [authJwt.verifyToken, authJwt.isModerator], controller.createPromo);
 
   /**
 * @swagger
@@ -118,5 +118,5 @@ module.exports = function (app) {
 *       404:
 *         description: The promocode was not found
 */
-  app.delete('/api/promo/:id', [authJwt.verifyToken,authJwt.isAdmin], controller.deletePromo)
+  app.delete('/api/promo/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deletePromo)
 };

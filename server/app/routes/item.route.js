@@ -29,7 +29,13 @@ const upload = multer({
       fileSize: 1024 * 1024 * 5// mb
   }, */
   fileFilter: fileFilter
-}).single('image');
+}).fields([
+  { name: 'image', maxCount: 1 },
+  { name: 'cover_front', maxCount: 1 },
+  { name: 'cover_back', maxCount: 1 },
+]);
+
+
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -61,9 +67,15 @@ module.exports = function(app) {
    *         image:
    *           type: string
    *           description: The books img path
+   *         covers:
+   *           type: string
+   *           description: The books front and back cover img path "front,back"
    *         publisher:
    *           type: string
    *           description: The books publisher
+   *         coverType:
+   *           type: integer
+   *           description: The books cover type
    *         year:
    *           type: integer
    *           description: The books publish year
@@ -100,7 +112,9 @@ module.exports = function(app) {
    *         author: test
    *         title: test
    *         image: test
+   *         covers: front,back
    *         publisher: test
+   *         coverType: 1
    *         year: 2023
    *         isbn: 787866756
    *         pageCount: 33
@@ -125,8 +139,19 @@ module.exports = function(app) {
    *           description: The title of book
    *         image:
    *           type: string
-   *           description: The books img path
+   *           description: The books MAIN img path
    *           format: binary
+   *         cover_front:
+   *           type: string
+   *           description: The books COVER img path
+   *           format: binary
+   *         cover_back:
+   *           type: string
+   *           description: The books COVER  img path
+   *           format: binary
+   *         coverType:
+   *           type: integer
+   *           description: The books cover type
    *         publisher:
    *           type: string
    *           description: The books publisher
@@ -599,6 +624,8 @@ module.exports = function(app) {
    * @swagger
    * /books/search:
    *   get:
+   *     security: 
+   *       - bearer: []
    *     summary: Get search items
    *     tags: [Books]
    *     parameters:
@@ -623,6 +650,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/books/search",
+    [authJwt.verifyToken,authJwt.isModerator],
     controller.searchBooks
   );
 
@@ -630,6 +658,8 @@ module.exports = function(app) {
    * @swagger
    * /merches/search:
    *   get:
+   *     security: 
+   *       - bearer: []
    *     summary: Get search items
    *     tags: [Merch]
    *     parameters:
@@ -654,6 +684,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/merches/search",
+    [authJwt.verifyToken,authJwt.isModerator],
     controller.searchMerch
   );
 };

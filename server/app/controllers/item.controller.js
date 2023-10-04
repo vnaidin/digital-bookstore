@@ -58,7 +58,10 @@ exports.createBook = async (req, res) => {
   await Item.create({
     itemType: 'book',
     pageCount, isReducedNow, price, reducedPrice, author, lang, coverType,
-    annotation, isbn, title, tags, publisher, year, category, image: req.file ? req.file.filename : null, item_management: { amount, comments }
+    annotation, isbn, title, tags, publisher, year, category,
+    image: req.files['image'] ? req.files['image'][0].filename : null,
+    covers: req.files['cover_front'] && req.files['cover_back'] ? `${req.files['cover_front'][0].filename || ''},${req.files['cover_back'][0].filename || ''}` : null,
+    item_management: { amount, comments }
   }, { include: [ItemsManagement] })
     .then(book => res.status(200).json({ message: `Book ${title} created` }))
 
@@ -66,14 +69,16 @@ exports.createBook = async (req, res) => {
 
 exports.updateBook = async (req, res) => {
   const id = req.params.id;
-  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation, isbn, title, tags, publisher, year, category, amount, comments } = req.body;
+  const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation,
+    isbn, title, tags, publisher, year, category, amount, comments, coverType, image, covers } = req.body;
   try {
 
     const result = await db.sequelize.transaction(async (t) => {
-
       const book = await Item.update({
         pageCount, isReducedNow, price, reducedPrice, author, lang,
-        annotation, isbn, title, tags, publisher, year, category, image: req.file?.filename
+        annotation, isbn, title, tags, publisher, year, category, coverType,
+        image: req.files['image'] ? req.files['image'][0].filename : image,
+        covers: req.files['cover_front'] && req.files['cover_back'] ? `${req.files['cover_front'][0].filename || ''},${req.files['cover_back'][0].filename || ''}` : covers,
       }, {
         where: {
           id: id
@@ -90,7 +95,7 @@ exports.updateBook = async (req, res) => {
     res.status(200).json({ message: `Book ${author}-${title} updated` })
 
   } catch (error) {
-    console.log()
+    console.log(error)
     res.status(500).send({ message: "Server Error", error: error })
     // If the execution reaches this line, an error occurred.
     // The transaction has already been rolled back automatically by Sequelize!

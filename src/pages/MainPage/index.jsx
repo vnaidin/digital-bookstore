@@ -6,7 +6,7 @@ import {
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import {
-  BookCard, /*  NoDataComponent, */ NewsItem, MerchCard,
+  BookCard, NewsItem, MerchCard, NoDataComponent,
 } from '../../components';
 
 import './index.css';
@@ -59,6 +59,8 @@ export default function Main() { // TODO: debug
           </div>
         ))}
       </Row>
+
+      {data && Object.values(data).every((value) => value.length === 0) && <NoDataComponent />}
 
     </Container>
   );

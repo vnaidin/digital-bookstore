@@ -1,44 +1,44 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
+module.exports = function (app) {
+  app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
     );
     next();
   });
-   /**
- * @swagger
- * components:
- *   schemas:
- *     UserUpdate:
- *       type: object
- *       required:
- *         - name
- *         - surname
- *         - phoneNumber
- *       properties:
- *         name:
- *           type: string
- *           description: User's name
- *         surname:
- *           type: string
- *           description: User's surname
- *         phoneNumber:
- *           type: string
- *           description: UA-type phone number
- *         birthday:
- *           type: string
- *           description: User's birthday
- *   
- *       example:
- *         name: John
- *         surname: Smith
- *         phoneNumber: "0951234567"
- *         birthday: "13.12.13"
- */
+  /**
+* @swagger
+* components:
+*   schemas:
+*     UserUpdate:
+*       type: object
+*       required:
+*         - name
+*         - surname
+*         - phoneNumber
+*       properties:
+*         name:
+*           type: string
+*           description: User's name
+*         surname:
+*           type: string
+*           description: User's surname
+*         phoneNumber:
+*           type: string
+*           description: UA-type phone number
+*         birthday:
+*           type: string
+*           description: User's birthday
+*   
+*       example:
+*         name: John
+*         surname: Smith
+*         phoneNumber: "0951234567"
+*         birthday: "13.12.13"
+*/
 
   /**
    * @swagger
@@ -64,7 +64,7 @@ module.exports = function(app) {
    *         description: Some server error
    *
    */
-    app.get(
+  app.get(
     "/api/all/user",
     [authJwt.verifyToken],
     controller.userBoard
@@ -91,6 +91,36 @@ module.exports = function(app) {
    *         description: Some server error
    *
    */
+
+  /**
+   * @swagger
+   * /user/create:
+   *   post:
+   *     security: 
+   *       - bearer: []
+   *     summary: Create a new user with roles
+   *     tags: [Users]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/User'
+   *     responses:
+   *       200:
+   *         description: The created user.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/User'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.post('/api/user/create',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.createUser);
+
   app.get(
     "/api/all/mod",
     [authJwt.verifyToken, authJwt.isModerator],
@@ -130,29 +160,29 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/user/:id',[authJwt.verifyToken],controller.updateInfo)//TODO: verify that it is exact user
+  app.put('/api/user/:id', [authJwt.verifyToken], controller.updateInfo)//TODO: verify that it is exact user
 
-    /**
-  * @swagger
-  * /user/{id}:
-  *   delete:
-  *     security: 
-  *       - bearer: []
-  *     summary: Remove the user by id
-  *     tags: [Users]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         schema:
-  *           type: number
-  *         required: true
-  *         description: The user id
-  *
-  *     responses:
-  *       200:
-  *         description: The user was deleted
-  *       404:
-  *         description: The book was not found
-  */
-  app.delete('/api/user/:id',[authJwt.verifyToken],controller.deleteUser)
+  /**
+* @swagger
+* /user/{id}:
+*   delete:
+*     security: 
+*       - bearer: []
+*     summary: Remove the user by id
+*     tags: [Users]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: number
+*         required: true
+*         description: The user id
+*
+*     responses:
+*       200:
+*         description: The user was deleted
+*       404:
+*         description: The book was not found
+*/
+  app.delete('/api/user/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deleteUser)
 };

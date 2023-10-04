@@ -8,6 +8,7 @@ import MerchService from '../../services/merch';
 import CreateUpdateMerchModal from './CreateUpdateMerchModal';
 import { NoDataComponent } from '../../components';
 import AppContext from '../../appContext';
+import authHeader from '../../services/auth-header';
 
 export default function MerchTab() {
   const { dispatch } = useContext(AppContext);
@@ -27,7 +28,7 @@ export default function MerchTab() {
 
   const { loading, error, value } = useFetch(
     url,
-    {},
+    { headers: authHeader() },
     [showModal, debouncedSearch],
   );
 

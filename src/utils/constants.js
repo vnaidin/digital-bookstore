@@ -91,6 +91,14 @@ export const BOOK_CATEGORIES = [
     id: 16,
     title: 'Хроніки',
   },
+  {
+    id: 17,
+    title: 'Ветеранська література',
+  },
+  {
+    id: 18,
+    title: 'Класична література',
+  },
 ];
 
 export const BOOK_ORDERING = [{ id: 0, value: 'price,DESC' }, { id: 1, value: 'price,ASC' }];

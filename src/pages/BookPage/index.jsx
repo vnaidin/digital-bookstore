@@ -106,7 +106,6 @@ export default function BookPage() {
                 {`${t('pages.bookPage.category')}: ${value?.category.split(',').map((category) => t(`constants.bookCategories.${category}`))}`}
               </ListGroup.Item>
             </ListGroup>
-            {/** TODO: add tags */}
             <div className="d-flex flex-column align-items-center my-2">
               {value?.isReducedNow ? (
                 <>

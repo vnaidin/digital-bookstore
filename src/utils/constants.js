@@ -99,6 +99,10 @@ export const BOOK_CATEGORIES = [
     id: 18,
     title: 'Класична література',
   },
+  {
+    id: 19,
+    title: 'Фотоальбоми/Артбуки',
+  },
 ];
 
 export const BOOK_ORDERING = [{ id: 0, value: 'price,DESC' }, { id: 1, value: 'price,ASC' }];

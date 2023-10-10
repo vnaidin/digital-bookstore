@@ -68,5 +68,5 @@
     "zlib": "npm:browserify-zlib",
     "assert": "npm:assert@2.1.0"
   },
-  "proxy": "https://localhost"
+  "proxy": "https://alineabooks.com"
 }

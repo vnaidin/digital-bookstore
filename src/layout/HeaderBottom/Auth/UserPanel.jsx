@@ -117,7 +117,6 @@ export default function UserPanel() {
                 style={{ fontWeight: '900' }}
               >
                 {t('layout.headerBottom.auth.save')}
-
               </Button>
             </Form>
           )}

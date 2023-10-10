@@ -81,7 +81,8 @@ export default function ShoppingCart() {
                   <Row>
                     <Col className="text-start my-1">
                       <img
-                        src={value[0].image}
+                        // src={value[0].image}
+                        src={`${process.env.REACT_APP_BE_URL}/${value[0].image}`}
                         alt={value[0].title}
                         width={80}
                         className="my-1 mx-1"
@@ -164,7 +165,7 @@ export default function ShoppingCart() {
         </Modal.Footer>
       </Modal>
       <Button
-        className="col d-flex align-items-center justify-content-center gap-1 button"
+        className="col button d-flex align-items-center justify-content-center gap-1 "
         // variant="light"
         onClick={handleShow}
         style={{

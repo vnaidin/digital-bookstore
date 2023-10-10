@@ -53,7 +53,12 @@ export default function CartItems({ totalPrice }) {
               xl={6}
               xxl={6}
             >
-              <img src={value[0].image} alt={value[0].title} width={80} />
+              <img
+                // src={value[0].image}
+                src={`${process.env.REACT_APP_BE_URL}/${value[0].image}`}
+                alt={value[0].title}
+                width={80}
+              />
               <p className="m-2">
                 {value[0].title}
                 {' '}

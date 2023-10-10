@@ -106,6 +106,7 @@ db.sequelize.sync();//FIXME: touch only in alert situations
 require('./app/routes/auth.route')(secureApp);
 require('./app/routes/user.route')(secureApp);
 require('./app/routes/item.route')(secureApp);
+require('./app/routes/author.route')(secureApp);
 require('./app/routes/order.route')(secureApp);
 require('./app/routes/news.route')(secureApp);
 require('./app/routes/promocode.route')(secureApp);

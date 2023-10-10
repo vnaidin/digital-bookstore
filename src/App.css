@@ -8,13 +8,12 @@ main {
   min-height: 70vh;
 }
 
-header, .modal-header, .offcanvas-header,.toast-header {
+header, .modal-header, .offcanvas-header,.toast-header,footer, .modal-footer,.header-bottom  {
   background-color:#e7d6cc;
 }
 
-footer, .modal-footer,.header-bottom {
-  background-color: #e7d6cc;
-  /* color: rgb(255 255 255 / 55%); */
+.button {
+  background-color: #748492;
 }
 
 .unselectable {

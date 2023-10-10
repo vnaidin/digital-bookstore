@@ -14,8 +14,8 @@ export default function Login() {
   const { Formik } = formik;
   const { dispatch } = useContext(AppContext);
   const schema = yup.object().shape({
-    email: yup.string().required().email(),
-    password: forgotPass ? yup.string().max(0) : yup.string().required(),
+    email: yup.string('Enter your email').required('Email is required').email('Enter a valid email'),
+    password: forgotPass ? yup.string().max(0) : yup.string('Enter your password').required('Password is required'),
   });
 
   const logIn = (values) => {
@@ -90,8 +90,8 @@ export default function Login() {
           </Button>
           <Button
             type="submit"
-            className="my-2 align-self-center"
-            style={{ backgroundColor: '#748492', fontWeight: '900' }}
+            className="my-2 align-self-center button"
+            style={{ fontWeight: '900' }}
 
           >
             {forgotPass ? t('layout.headerBottom.auth.reset-pass') : t('layout.headerBottom.auth.login')}

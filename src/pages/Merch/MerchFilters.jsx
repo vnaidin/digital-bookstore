@@ -43,7 +43,8 @@ export default function MerchFilters({
           updFilter('priceRange', Object.values(myRef.current.value));
           resetStartPage();
         }}
-        style={{ backgroundColor: '#748492', fontWeight: '900' }}
+        className="button"
+        style={{ fontWeight: '900' }}
 
       >
         {t('pages.merch.merch-filters.ok')}

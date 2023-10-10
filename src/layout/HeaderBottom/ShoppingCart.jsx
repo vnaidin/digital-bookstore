@@ -164,11 +164,11 @@ export default function ShoppingCart() {
         </Modal.Footer>
       </Modal>
       <Button
-        className="col d-flex align-items-center justify-content-center gap-1"
+        className="col d-flex align-items-center justify-content-center gap-1 button"
         // variant="light"
         onClick={handleShow}
         style={{
-          backgroundColor: '#748492', border: 'none', fontSize: 'large',
+          border: 'none', fontSize: 'large',
         }}
       >
         {window.innerWidth > 768 ? (

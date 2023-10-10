@@ -5,6 +5,7 @@
 /server/node_modules
 /server/uploads/*
 /server/.env
+/server/certs/*
 /.pnp
 .pnp.js
 

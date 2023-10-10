@@ -21,8 +21,9 @@ export default function BuyButton({
   return (
     <Button
       style={{
-        backgroundColor: '#748492', borderColor: '#2e3943', width: '10em', fontWeight: '900',
+        borderColor: '#2e3943', width: '10em', fontWeight: '900',
       }}
+      className="button"
       onClick={handleAddToCart}
     >
       {t('components.buyBtn')}

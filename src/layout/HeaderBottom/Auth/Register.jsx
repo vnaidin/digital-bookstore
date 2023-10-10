@@ -93,8 +93,8 @@ export default function Register() {
           </Row>
           <Button
             type="submit"
-            style={{ backgroundColor: '#748492', fontWeight: '900' }}
-            className="my-2 align-self-center"
+            style={{ fontWeight: '900' }}
+            className="my-2 align-self-center button"
           >
             {t('layout.headerBottom.auth.register')}
 

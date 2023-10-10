@@ -51,11 +51,11 @@ export default function Auth() {
   return (
     <>
       <Button
-        className="col d-flex align-items-center justify-content-center gap-1"
+        className="col d-flex align-items-center justify-content-center gap-1 button"
         // variant="light"
         onClick={handleShowCanvas}
         style={{
-          backgroundColor: '#748492', border: 'none', fontSize: 'large',
+          border: 'none', fontSize: 'large',
         }}
       >
         {window.innerWidth > 768 ? (

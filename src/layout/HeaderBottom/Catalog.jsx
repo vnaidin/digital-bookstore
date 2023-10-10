@@ -17,9 +17,9 @@ export default function Catalog() {
   return (
     <>
       <Button
-        className="col"
+        className="col button"
         variant="dark"
-        style={{ backgroundColor: '#748492', color: 'white' }}
+        style={{ color: 'white' }}
         onClick={handleShow}
       >
         {t('layout.headerBottom.catalog.title')}

@@ -12,7 +12,7 @@ header, .modal-header, .offcanvas-header,.toast-header,footer, .modal-footer,.he
   background-color:#e7d6cc;
 }
 
-.button {
+.button, .button:hover, .button:active, .button:focus-visible {
   background-color: #748492;
 }
 

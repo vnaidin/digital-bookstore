@@ -41,7 +41,8 @@ export default function MerchPage() {
           xxl={6}
         >
           <Image
-            src={value?.image}
+            // src={value?.image}
+            src={`${process.env.REACT_APP_BE_URL}/${value?.image}`}
             className="p-2"
             alt={value?.title}
             width={300}

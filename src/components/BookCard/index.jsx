@@ -34,7 +34,7 @@ export default function BookCard({
         ))}
         <Card.Img
           variant="top"
-          src={image}
+          src={`${process.env.REACT_APP_BE_URL}/${image}`}
           height={330}
           className="p-3"
           alt={`${author}_${title}`}

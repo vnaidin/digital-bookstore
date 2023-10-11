@@ -25,6 +25,7 @@ export default function BuyButton({
       }}
       className="button"
       onClick={handleAddToCart}
+      title={`${t('components.buyBtn')} ${title}`}
     >
       {t('components.buyBtn')}
     </Button>

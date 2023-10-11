@@ -36,7 +36,7 @@ export default function Main() { // TODO: debug
       {data && data.news.length > 0 && <h3>{t('pages.mainPage.news')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.news && data.news.map((book) => (
-          <div className="news-card-container" key={book.id} style={{ width: '280px', paddingBlock: '1em' }}>
+          <div className="news-card-container" key={book.id} style={{ width: '260px', paddingBlock: '2em' }}>
             <NewsItem {...book} key={book.id} />
           </div>
         ))}
@@ -45,7 +45,7 @@ export default function Main() { // TODO: debug
       {data && data.books.length > 0 && <h3>{t('pages.mainPage.books')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.books && data.books.map((book) => (
-          <div className="book-card-container" key={book.id} style={{ width: '280px', paddingBlock: '1em' }}>
+          <div className="book-card-container" key={book.id} style={{ width: '260px', paddingBlock: '2em' }}>
             <BookCard {...book} key={book.id} />
           </div>
         ))}
@@ -54,7 +54,7 @@ export default function Main() { // TODO: debug
       {data && data.merch.length > 0 && <h3>{t('pages.mainPage.merch')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.merch && data.merch.map((book) => (
-          <div className="merch-card-container" key={book.id} style={{ width: '280px', paddingBlock: '1em' }}>
+          <div className="merch-card-container" key={book.id} style={{ width: '260px', paddingBlock: '2em' }}>
             <MerchCard {...book} key={book.id} />
           </div>
         ))}

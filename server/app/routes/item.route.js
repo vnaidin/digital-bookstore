@@ -650,7 +650,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/books/search",
-    [authJwt.verifyToken,authJwt.isModerator],
+    // [authJwt.verifyToken,authJwt.isModerator],
     controller.searchBooks
   );
 

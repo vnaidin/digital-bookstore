@@ -21,12 +21,16 @@ export default function MerchCard({
         variant="top"
         // src={image}
         src={`${process.env.REACT_APP_BE_URL}/${image}`}
-        height={330}
+        height={250}
         className="p-3"
         alt={title}
         onClick={() => navigate(`/merch/${id}`)}
       />
-      <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2" style={{ minHeight: '180px' }}>
+      <Card.Body
+        className="d-flex flex-column align-items-center justify-content-end py-2"
+        style={{ minHeight: '180px' }}
+        title={title}
+      >
         <NavLink href={`/merch/${id}`}>
           <Card.Title style={{
             width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',

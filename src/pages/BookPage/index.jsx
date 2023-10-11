@@ -42,13 +42,20 @@ export default function BookPage() {
           xxl={6}
         >
           {value?.image && (
-            <>
+            <div className="badge-and-card">
               {value?.tags.split(',').map((tag) => (
                 <Badge
                   bg="danger"
                   key={tag}
                   pill
-                  style={{ width: '5em', /* height: '2em', */ marginTop: '1em', fontSize: 'large' }}
+                  style={{
+                    width: '5em',
+                    margin: '0px 1px',
+                    fontSize: 'large',
+                    position: 'absolute',
+                    /* right: '1px',
+                    top: '1px', */
+                  }}
                 >
                   {BOOK_TAGS[tag]}
                 </Badge>
@@ -62,7 +69,7 @@ export default function BookPage() {
                 fluid
               />
 
-            </>
+            </div>
           )}
         </Col>
 

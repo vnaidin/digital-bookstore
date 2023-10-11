@@ -19,14 +19,19 @@ export default function BookCard({
   return (
 
     <Card style={{ backgroundColor: 'inherit' }}>
-      <div>
+      <div className="badge-and-card">
         {tags.split(',').map((tag) => (
           <Badge
             bg="danger"
             pill
             key={tag}
             style={{
-              width: '5em', /* height: '2em', */ marginTop: '1em', fontSize: 'large',
+              width: '5em',
+              margin: '0px 1px',
+              fontSize: 'large',
+              position: 'absolute',
+              left: '1px',
+              top: '1px',
             }}
           >
             {BOOK_TAGS[tag]}
@@ -35,7 +40,7 @@ export default function BookCard({
         <Card.Img
           variant="top"
           src={`${process.env.REACT_APP_BE_URL}/${image}`}
-          height={330}
+          height={300}
           className="p-3"
           alt={`${author}_${title}`}
           onClick={() => navigate(`/book/${id}`)}
@@ -43,7 +48,11 @@ export default function BookCard({
 
       </div>
 
-      <Card.Body className="d-flex flex-column align-items-center justify-content-end py-2" style={{ minHeight: '180px' }}>
+      <Card.Body
+        className="d-flex flex-column align-items-center justify-content-end py-2"
+        style={{ minHeight: '180px' }}
+        title={`${author} ${title}`}
+      >
         <NavLink href={`/book/${id}`}>
           <Card.Title style={{
             width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',

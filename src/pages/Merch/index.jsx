@@ -121,7 +121,7 @@ export default function Merch() {
           </Row>
         )}
 
-        <Row className="my-2" title="book-cards-row">
+        <Row className="my-2">
           {value && value.merch.length > 0 ? value.merch.map(
             (merchObj) => (
               <Col

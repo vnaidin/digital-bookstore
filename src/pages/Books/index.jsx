@@ -84,10 +84,16 @@ export default function Books() {
         </Row>
 
         {!loading && value && (
-          <Row title="order-pagination-row" className="gap-2 justify-center">
+          <Row title="order-pagination-row" className="gap-1 justify-center">
             <Form.Group
               as={Col}
-              sm="4"
+              xs={12}
+              sm={12}
+              md={5}
+              lg={4}
+              xl={3}
+              xxl={3}
+              className="p-0"
             >
               <Form.Select
                 aria-label="order-select"
@@ -118,7 +124,15 @@ export default function Books() {
               </Form.Select>
             </Form.Group>
             {value.total > 12 && (
-              <Col sm={4}>
+              <Col
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+                xl={7}
+                xxl={7}
+                className="p-0"
+              >
                 <PaginationComponent
                   itemsLength={value.total}
                   itemsPerPage={12}
@@ -130,7 +144,7 @@ export default function Books() {
           </Row>
         )}
 
-        <Row className="my-2" title="book-cards-row">
+        <Row className="my-2">
           {value && value.books.length > 0 ? value.books.map(
             (bookObj) => (
               <Col
@@ -153,7 +167,14 @@ export default function Books() {
         {value && (
           <Row title="pagination-row" className="gap-2 justify-center">
             {value.total > 12 && (
-              <Col>
+              <Col
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+                xl={7}
+                xxl={7}
+              >
                 <PaginationComponent
                   itemsLength={value.total}
                   itemsPerPage={12}

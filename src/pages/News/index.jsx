@@ -65,7 +65,7 @@ export default function News() {
           </Row>
         )}
 
-        <Row className="my-2" title="book-cards-row">
+        <Row className="my-2">
           {value && value.news.length > 0 ? value.news.map(
             (newsObj) => (
               <Col

@@ -111,4 +111,6 @@ export const BOOK_COVER_TYPES = ['Мʼяка', 'Тверда'];
 
 export const BOOK_TAGS = ['New', 'Top', 'Exclusive'];
 
+export const BOOK_PUBLICATION_YEARS = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
+
 export const NEWS_CATEGORIES = [''];

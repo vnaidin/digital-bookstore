@@ -247,6 +247,7 @@ export default function CreateUpdateMerchModal({
                       onChange={handleChange}
                       title="amount"
                       autoComplete="off"
+                      min={1}
                       defaultValue={existingMerch?.item_management?.amount !== null
                         ? existingMerch?.item_management?.amount : 0}
                       required
@@ -278,7 +279,6 @@ export default function CreateUpdateMerchModal({
                   className="m-2 place-self-center"
                   type="submit"
                   style={{ backgroundColor: '#05aac2', fontWeight: '900' }}
-
                 >
                   {existingMerch?.id ? t('pages.moderator.tabs.merch.modal.update') : t('pages.moderator.tabs.merch.modal.create')}
                 </Button>

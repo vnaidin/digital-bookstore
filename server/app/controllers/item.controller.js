@@ -155,28 +155,52 @@ exports.getMerchById = async (req, res) => {
 
 }
 
-exports.createMerch = async (req, res) => {//TODO:
-  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
+exports.createMerch = async (req, res) => {
+  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, category, amount, comments } = req.body;
   await Item.create({
+    itemType: 'merch',
     isReducedNow, price, reducedPrice, author, lang,
-    annotation, title, tags, year, category, image: req.file.filename
-  })
+    annotation, title, tags, year, category,
+    image: req.file ? req.file.filename : null,
+    item_management: { amount, comments }
+  }, { include: [ItemsManagement] })
     .then(merch => res.status(200).json({ message: `Merch ${title} created` }))
 
 }
 
 exports.updateMerch = async (req, res) => {//TODO:
-  const itemId = req.params.id;
-  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, year, category } = req.body;
+  const id = req.params.id;
+  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, category, amount, comments } = req.body;
 
-  await Item.update({
-    isReducedNow, price, reducedPrice, author, lang,
-    annotation, title, tags, year, category, image: req.file?.filename
-  }, {
-    where: {
-      id: itemId
-    }
-  }).then(merch => res.status(200).json({ message: `Merch ${title} updated` }))
+  try {
+
+    const result = await db.sequelize.transaction(async (t) => {
+      const merch = await Item.update({
+        isReducedNow, price, reducedPrice, author, lang,
+        annotation, title, tags, category, amount, comments,
+        image: req.file ? req.file.filename : image,
+      }, {
+        where: {
+          id: id
+        }
+      }, { transaction: t })
+
+      await ItemsManagement.update({ amount, comments }, { where: { itemId: id } }, { transaction: t })
+
+      return merch;
+
+    });
+    // If the execution reaches this line, the transaction has been committed successfully
+    // `result` is whatever was returned from the transaction callback (the `user`, in this case)
+    res.status(200).json({ message: `Merch ${title} updated` })
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ message: "Server Error", error: error })
+    // If the execution reaches this line, an error occurred.
+    // The transaction has already been rolled back automatically by Sequelize!
+
+  }
 }
 
 

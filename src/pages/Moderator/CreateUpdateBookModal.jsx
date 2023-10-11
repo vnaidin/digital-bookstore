@@ -8,7 +8,7 @@ import { FiUpload } from 'react-icons/fi';
 import AppContext from '../../appContext';
 import BookService from '../../services/book';
 import {
-  BOOK_CATEGORIES, BOOK_COVER_TYPES, BOOK_LANGUAGES, BOOK_TAGS,
+  BOOK_CATEGORIES, BOOK_COVER_TYPES, BOOK_LANGUAGES, BOOK_PUBLICATION_YEARS, BOOK_TAGS,
 } from '../../utils/constants';
 import { bookType } from '../../utils/types';
 
@@ -204,14 +204,14 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="year"
                       list="year"
-                      min={2017}
-                      max={2024}
+                      min={[...BOOK_PUBLICATION_YEARS].shift()}
+                      max={[...BOOK_PUBLICATION_YEARS].pop()}
                       autoComplete="off"
                       defaultValue={existingBook?.year || null}
                       required
                     />
                     <datalist id="year">
-                      {[2017, 2018, 2019, 2020, 2021, 2022, 2023].map((year) => (
+                      {BOOK_PUBLICATION_YEARS.map((year) => (
                         <label
                           htmlFor="opt"
                           className="checkbox__label"
@@ -262,6 +262,7 @@ export default function CreateUpdateBookModal({
                       onChange={handleChange}
                       title="pageCount"
                       autoComplete="off"
+                      min={0}
                       defaultValue={existingBook?.pageCount || null}
                       required
                     />
@@ -512,6 +513,7 @@ export default function CreateUpdateBookModal({
                       type="number"
                       onChange={handleChange}
                       title="amount"
+                      min={1}
                       autoComplete="off"
                       defaultValue={existingBook?.item_management?.amount !== null
                         ? existingBook?.item_management?.amount : 0}
@@ -623,7 +625,6 @@ export default function CreateUpdateBookModal({
                       size="sm"
                       style={{ display: 'none' }}
                       onChange={(e) => {
-                        console.log(e.target.files);
                         setCoverFront(e.target.files[0]);
                       }}
                     />

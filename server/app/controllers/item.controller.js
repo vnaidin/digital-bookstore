@@ -156,11 +156,11 @@ exports.getMerchById = async (req, res) => {
 }
 
 exports.createMerch = async (req, res) => {
-  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, category, amount, comments } = req.body;
+  const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments } = req.body;
   await Item.create({
     itemType: 'merch',
-    isReducedNow, price, reducedPrice, author, lang,
-    annotation, title, tags, year, category,
+    isReducedNow, price, reducedPrice,
+    annotation, title, tags,
     image: req.file ? req.file.filename : null,
     item_management: { amount, comments }
   }, { include: [ItemsManagement] })
@@ -170,14 +170,14 @@ exports.createMerch = async (req, res) => {
 
 exports.updateMerch = async (req, res) => {//TODO:
   const id = req.params.id;
-  const { isReducedNow, price, reducedPrice, author, lang, annotation, title, tags, category, amount, comments } = req.body;
+  const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments } = req.body;
 
   try {
 
     const result = await db.sequelize.transaction(async (t) => {
       const merch = await Item.update({
-        isReducedNow, price, reducedPrice, author, lang,
-        annotation, title, tags, category, amount, comments,
+        isReducedNow, price, reducedPrice,
+        annotation, title, tags, amount, comments,
         image: req.file ? req.file.filename : image,
       }, {
         where: {

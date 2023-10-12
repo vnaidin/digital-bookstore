@@ -132,30 +132,7 @@ export default function CreateUpdateNewsModal({
                 <Row>
                   <Form.Group
                     as={Col}
-                    md="6"
-                    controlId="validationFormik151"
-                    className="position-relative"
-                  >
-                    <Form.Label>{t('pages.moderator.tabs.news.modal.publisher')}</Form.Label>
-                    <Form.Control
-                      size="sm"
-                      placeholder={t('pages.moderator.tabs.news.modal.publisher')}
-                      onChange={handleChange}
-                      title="publisher"
-                      list="publishers"
-                      // autoComplete="off"
-                      defaultValue={existingNews?.publisher || ''}
-                      required
-                    />
-                    {/* <datalist id="publishers">
-                      {publishers && publishers.map((author) => (
-                        <option value={author} key={author} />
-                      ))}
-                    </datalist> */}
-                  </Form.Group>
-                  <Form.Group
-                    as={Col}
-                    md="3"
+                    md="4"
                     controlId="validationFormik151"
                     className="position-relative"
                   >
@@ -172,7 +149,7 @@ export default function CreateUpdateNewsModal({
                   </Form.Group>
                   <Form.Group
                     as={Col}
-                    md="3"
+                    md="6"
                     controlId="validationFormik151"
                     className="position-relative"
                   >

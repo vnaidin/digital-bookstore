@@ -24,7 +24,7 @@ export const ORDER_STATUSES = {
 
 export const PAYMENT_METHODS = ['cash', 'liqpay'];
 
-export const BOOK_LANGUAGES = ['українська', 'english'];
+export const BOOK_LANGUAGES = ['українська', 'english', 'українська/english'];
 
 export const BOOK_CATEGORIES = [
   {
@@ -102,6 +102,26 @@ export const BOOK_CATEGORIES = [
   {
     id: 19,
     title: 'Фотоальбоми/Артбуки',
+  },
+  {
+    id: 20,
+    title: 'Публіцистіка/есеїстика',
+  },
+  {
+    id: 21,
+    title: 'Документалістика',
+  },
+  {
+    id: 22,
+    title: "П'єси",
+  },
+  {
+    id: 23,
+    title: 'Подарункові',
+  },
+  {
+    id: 24,
+    title: 'Культура/мистецтво',
   },
 ];
 

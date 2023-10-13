@@ -108,6 +108,8 @@ export default function OrdersTab() {
                 <th>{t('pages.moderator.tabs.order.table.email')}</th>
                 <th>{t('pages.moderator.tabs.order.table.price')}</th>
                 <th>{t('pages.moderator.tabs.order.table.status')}</th>
+                <th>{t('pages.moderator.tabs.order.table.hasPaid')}</th>
+                <th>{t('pages.moderator.tabs.order.table.created')}</th>
                 <th>{t('pages.moderator.tabs.order.table.actions')}</th>
               </tr>
             </thead>
@@ -170,6 +172,8 @@ export function OrderTableLine({ order, handleOrderUpdate }) {
         <td>{order.price}</td>
         {/* <td>{order.comments}</td> */}
         <td>{t(`constants.orderStatus.${order.status}`)}</td>
+        <td>{Boolean(order.hasPaid).toString()}</td>
+        <td>{new Date(order.createdAt).toLocaleString()}</td>
         <td className="d-flex gap-1">
           <Button variant="warning" onClick={() => { handleOrderUpdate(order.id); }}>{t('pages.moderator.tabs.order.modal.update')}</Button>
         </td>
@@ -210,6 +214,8 @@ OrderTableLine.propTypes = {
     comments: PropTypes.string,
     price: PropTypes.number,
     status: PropTypes.number,
+    hasPaid: PropTypes.bool,
+    createdAt: PropTypes.string,
     order_items: PropTypes.arrayOf(PropTypes.shape({
       itemId: PropTypes.number,
       price: PropTypes.number,

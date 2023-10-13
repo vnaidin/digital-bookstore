@@ -150,6 +150,8 @@
                         "email": "Email",
                         "price": "Price",
                         "status": "Status",
+                        "created": "Created",
+                        "hasPaid": "Is Paid",
                         "actions": "Actions",
                         "more-info-line": {
                             "delivery": "Delivery",
@@ -330,7 +332,7 @@
         },
         "paymentMethods": {
             "0": "Postpayment",
-            "1": "LiqPay"
+            "1": "Online with Card"
         },
         "bookCategories": {
             "1": "Fiction",

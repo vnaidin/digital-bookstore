@@ -154,6 +154,8 @@
                         "email": "Пошта",
                         "price": "Ціна",
                         "status": "Статус",
+                        "created":"Створено",
+                        "hasPaid": "Оплачено",
                         "actions": "Дії",
                         "more-info-line": {
                             "delivery": "Доставка",
@@ -334,7 +336,7 @@
         },
         "paymentMethods": {
             "0": "Післяплата",
-            "1": "LiqPay"
+            "1": "Картою онлайн"
         },
         "bookCategories": {
             "1": "Художня література",

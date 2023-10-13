@@ -170,7 +170,7 @@ exports.createMerch = async (req, res) => {
 
 exports.updateMerch = async (req, res) => {//TODO:
   const id = req.params.id;
-  const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments } = req.body;
+  const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments, image } = req.body;
 
   try {
 

@@ -246,7 +246,7 @@ export default function CreateUpdateMerchModal({
                       onChange={handleChange}
                       title="amount"
                       autoComplete="off"
-                      min={1}
+                      min={0}
                       defaultValue={existingMerch?.item_management?.amount !== null
                         ? existingMerch?.item_management?.amount : 0}
                       required

@@ -143,11 +143,7 @@ export default function Books() {
           </Row>
         )}
         <Row className="my-2">
-          {value && value.books.length > 0 ? value.books.filter(
-            // filtering additionally due to backend sends us also category 16 if we need 6
-            // FIXME: fix it on BE
-            (book) => (bookCategory && bookCategory.length > 0 ? book.category.split(',').some((cat) => cat === bookCategory) : book),
-          ).map(
+          {value && value.books.length > 0 ? value.books.map(
             (bookObj) => (
               <Col
                 xs={{ span: 10, offset: 1 }}

@@ -35,7 +35,7 @@ export default function Catalog() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ListGroup>
-            {BOOK_CATEGORIES.map(({ id }) => (
+            {BOOK_CATEGORIES.sort((a, b) => a.title.localeCompare(b.title)).map(({ id }) => (
               <ListGroup.Item className="text-start" key={id}>
                 <NavLink
                   active={pathname.substring(1) === id}

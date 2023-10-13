@@ -35,8 +35,7 @@ export default function CreateUpdateMerchModal({
       Object.entries(formData).forEach(([key, value]) => {
         fd.append(key, value);
       });
-      fd.append('image', image);
-      // if (image) { fd.append('image', image); }
+      if (image) { fd.append('image', image); }
 
       if (existingMerch?.id && existingMerch?.id > 0) {
         // perform edit

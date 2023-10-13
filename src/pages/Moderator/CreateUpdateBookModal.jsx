@@ -283,7 +283,7 @@ export default function CreateUpdateBookModal({
                       title="coverType"
                       list="cover"
                       autoComplete="off"
-                      defaultValue={existingBook?.coverType || ''}
+                      defaultValue={existingBook?.coverType || 0}
                       required
                     >
                       <option hidden value={null}>none</option>

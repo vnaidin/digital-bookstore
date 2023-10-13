@@ -125,8 +125,8 @@ export default function Merch() {
           {value && value.merch.length > 0 ? value.merch.map(
             (merchObj) => (
               <Col
-                xs={12}
-                sm={6}
+                xs={{ span: 10, offset: 1 }}
+                sm={{ span: 6, offset: 0 }}
                 md={6}
                 lg={4}
                 xl={4}

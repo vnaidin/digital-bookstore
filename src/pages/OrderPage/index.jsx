@@ -68,6 +68,8 @@ export default function OrderPage() {
                     <th>{t('pages.orderPage.table.email')}</th>
                     <th>{t('pages.orderPage.table.price')}</th>
                     <th>{t('pages.orderPage.table.status')}</th>
+                    <th>{t('pages.orderPage.table.hasPaid')}</th>
+                    <th>{t('pages.orderPage.table.created')}</th>
                     <th>{t('pages.orderPage.table.actions')}</th>
                   </>
                 ) : (

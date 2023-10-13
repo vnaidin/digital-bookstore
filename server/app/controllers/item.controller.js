@@ -12,7 +12,15 @@ exports.getBooks = async (req, res) => {
     where: {
       [Op.and]: [
         { itemType: 'book' },
-        { category: cat ? { [Op.substring]: cat } : { [Op.not]: null } }, // FIXME: when category 6 also finding 16...
+        {
+          category: cat ? {
+            [Op.or]: [
+              { [Op.startsWith]: `${cat},` },                 
+              { [Op.endsWith]: `,${cat}` },                    
+              { [Op.substring]: `,${cat},` },
+            ]
+          } : { [Op.not]: null }
+        },
         { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
         { author: author ? author : { [Op.not]: null } },
         { publisher: publisher ? publisher : { [Op.not]: null } }
@@ -26,7 +34,15 @@ exports.getBooks = async (req, res) => {
     /* attributes: ['author', 'publisher', "price"], */ where: {
       [Op.and]: [
         { itemType: 'book' },
-        { category: cat ? cat : { [Op.not]: null } },
+        {
+          category: cat ? {
+            [Op.or]: [
+              { [Op.startsWith]: `${cat},` },
+              { [Op.endsWith]: `,${cat}` },
+              { [Op.substring]: `,${cat},` },
+            ]
+          } : { [Op.not]: null }
+        },
         { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
         { author: author ? author : { [Op.not]: null } },
         { publisher: publisher ? publisher : { [Op.not]: null } }
@@ -35,7 +51,7 @@ exports.getBooks = async (req, res) => {
   };
   const { count, rows } = await Item.findAndCountAll(paginationQuery);
   const authors = await Item.findAll(attributesQuery);
-  const priceValues = authors.map(({ price }) => +price)
+  const priceValues = authors.map(({ price }) => +price);
   res.status(200).json({
     books: rows,
     total: count,

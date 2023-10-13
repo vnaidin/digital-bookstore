@@ -148,7 +148,7 @@ export default function Books() {
           {value && value.books.length > 0 ? value.books.filter(
             // filtering additionally due to backend sends us also category 16 if we need 6
             // FIXME: fix it on BE
-            (book) => book.category.split(',').some((cat) => cat === bookCategory),
+            (book) => (bookCategory ? book.category.split(',').some((cat) => cat === bookCategory) : book),
           ).map(
             (bookObj) => (
               <Col

@@ -14,7 +14,6 @@ import BookFilters from './BookFilters';
 
 export default function Books() {
   const { search } = useLocation();
-  // eslint-disable-next-line no-unused-vars
   const { t } = useTranslation();
   const bookCategory = search?.split('=').pop();
   const [filters, setFilters] = useState({
@@ -151,8 +150,8 @@ export default function Books() {
           ).map(
             (bookObj) => (
               <Col
-                xs={12}
-                sm={6}
+                xs={{ span: 10, offset: 1 }}
+                sm={{ span: 6, offset: 0 }}
                 md={6}
                 lg={4}
                 xl={4}

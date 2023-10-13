@@ -51,8 +51,8 @@ export default function NewsPage() {
           </Col>
 
           <Col
-            xs={12}
-            sm={6}
+            xs={{ span: 10, offset: 1 }}
+            sm={{ span: 6, offset: 0 }}
             md={6}
             lg={6}
             xl={6}

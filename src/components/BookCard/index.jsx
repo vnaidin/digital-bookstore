@@ -17,7 +17,6 @@ export default function BookCard({
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   return (
-
     <Card style={{ backgroundColor: 'inherit' }}>
       <div className="badge-and-card">
         {tags.split(',').map((tag) => (

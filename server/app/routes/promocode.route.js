@@ -23,7 +23,7 @@ module.exports = function (app) {
 *       properties:
 *         name:
 *           type: string
-*           description: Promo name
+*           description: Promo name in UPPERCASE
 *         percent:
 *           type: integer
 *           description: Percent to exclude

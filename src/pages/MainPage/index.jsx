@@ -18,7 +18,7 @@ export default function Main() { // TODO: debug
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   useEffect(() => {
-    Promise.all(['books', 'merch', 'news'].map((entity) => fetch(`${process.env.REACT_APP_BE_URL}/api/all/${entity}?page=0`, options).then(
+    Promise.all(['books', 'merch', 'news'].map((entity) => fetch(`${process.env.REACT_APP_BE_URL}/api/all/${entity}`, options).then(
       (response) => response.json(),
     ))).then(
       ([{ books }, { merch }, { news }]) => setData({ books, merch, news }),
@@ -44,7 +44,9 @@ export default function Main() { // TODO: debug
 
       {data && data.books.length > 0 && <h3>{t('pages.mainPage.books')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
-        {data && data.books && data.books.map((book) => (
+        {data && data.books && data.books.filter(
+          (book) => book.tags,
+        ).map((book) => (
           <div className="book-card-container" key={book.id} style={{ width: '260px', paddingBlock: '2em' }}>
             <BookCard {...book} key={book.id} />
           </div>

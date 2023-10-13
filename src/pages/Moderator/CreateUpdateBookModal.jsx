@@ -513,7 +513,7 @@ export default function CreateUpdateBookModal({
                       type="number"
                       onChange={handleChange}
                       title="amount"
-                      min={1}
+                      min={0}
                       autoComplete="off"
                       defaultValue={existingBook?.item_management?.amount !== null
                         ? existingBook?.item_management?.amount : 0}

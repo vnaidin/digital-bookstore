@@ -12,7 +12,7 @@ exports.getBooks = async (req, res) => {
     where: {
       [Op.and]: [
         { itemType: 'book' },
-        { category: cat ? { [Op.substring]: cat } : { [Op.not]: null } },
+        { category: cat ? { [Op.substring]: cat } : { [Op.not]: null } }, // FIXME: when category 6 also finding 16...
         { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
         { author: author ? author : { [Op.not]: null } },
         { publisher: publisher ? publisher : { [Op.not]: null } }

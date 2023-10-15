@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Button, Offcanvas, Row } from 'react-bootstrap';
+import {
+  Button, Offcanvas, Row,
+} from 'react-bootstrap';
 import { FiUser } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import Register from './Register';

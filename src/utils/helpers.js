@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export function toBinary(str) {
   let result = '';
 
@@ -15,4 +14,22 @@ export function toBinary(str) {
   }
 
   return result;
+}
+/**
+ * Function to transform [1,2,3,4] into [[1,2,3],[4]]
+ * @param {Array} array Array to reorganize
+ * @param {Number} size N of items in sub-arrays
+ * @returns Array of arrays of defined length
+ */
+export function chunkArray(array, size) {
+  const chunkedArray = [];
+  for (let i = 0; i < array.length; i += 1) {
+    const last = chunkedArray[chunkedArray.length - 1];
+    if (!last || last.length === size) {
+      chunkedArray.push([array[i]]);
+    } else {
+      last.push(array[i]);
+    }
+  }
+  return chunkedArray;
 }

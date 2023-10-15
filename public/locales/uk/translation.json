@@ -5,7 +5,7 @@
             "item-ended": "Ended"
         },
         "buyBtn": "Buy",
-        "nodata": "No Data...",
+        "nodata": "No Data",
         "pagination-label": "Page"
     },
     "layout": {
@@ -58,10 +58,11 @@
                 "title": "Catalogue"
             },
             "search": {
-                "placeholder": "Author, Title or Publisher"
+                "placeholder": "Author, Title or Publisher",
+                "and-others": "and others"
             },
             "shopping-cart": {
-                "title": "Shopping Cart",
+                "title": "Cart",
                 "is-empty": "Your shopping cart is empty. Start buying now!",
                 "total": "Total",
                 "empty-cart": "Empty Cart",
@@ -119,9 +120,13 @@
             "book-filters": {
                 "title": "Filters",
                 "price-ranges": "Price ranges",
-                "ok": "Ok",
+                "price-ranges-from": "From",
+                "price-ranges-to": "To",
+                "ok": "Apply",
                 "author": "Author",
-                "publisher": "Publisher"
+                "publisher": "Publisher",
+                "language": "Language",
+                "reset-filters": "Reset filters"
             },
             "order": {
                 "title": "Order by",
@@ -289,7 +294,7 @@
                 "email": "Email",
                 "price": "Price",
                 "status": "Status",
-                "hasPaid":"Is Paid",
+                "hasPaid": "Is Paid",
                 "actions": "Actions",
                 "items": "Items",
                 "created": "Created",

@@ -1,86 +1,84 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import {
-  Form, Row, Button, Accordion,
+  Form, Row, Accordion, Button, InputGroup,
 } from 'react-bootstrap';
-import RangeSlider from 'react-range-slider-input';
 import PropTypes from 'prop-types';
+import { MdClear } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { BOOK_LANGUAGES } from '../../utils/constants';
+import PriceRangeComponent from '../../components/PriceRange';
+import { useFetch } from '../../utils/hooks';
 
-export default function BookFilters({
-  minMaxPrice, authors, publishers, updFilter, resetStartPage,
+export default function BookFilters({ // TODO: add delete btn in input
+  minMaxPrice, updFilter, resetStartPage, resetFilters,
 }) {
-  const [priceLocalValues, setLocalValues] = useState([0, 1000]);
-  const myRef = useRef(null);
+  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
+  const { /*  loading, error, */ value } = useFetch(
+    url,
+    {},
+    [],
+  );
+  // console.log(value?.authors);
+  const uniqueAuthorArray = Array.from(new Set(value?.authors.map((a) => {
+    if (a.includes(',')) {
+      return a.trim().split(', ').map((x) => x.trim());
+    } return a.trimStart();
+  }).flat()));
+
   const { t } = useTranslation();
+  const authorRef = useRef();
+  const languageRef = useRef();
+  const publisherRef = useRef();
+
   const largeScreenView = (
     <>
-      <Row className="gap-3 my-3">
-        <Form.Label className="m-0">
-          {t('pages.books.book-filters.price-ranges')}
-          :
-          {' '}
-          <div className="d-flex justify-content-between p-0" style={{ marginBottom: '-25px' }}>
-            {(priceLocalValues || minMaxPrice) && (
-            <>
-              <p>
-                {priceLocalValues[0]}
-              </p>
-              <p>
-                {priceLocalValues[1]}
-              </p>
-            </>
-            )}
-          </div>
-        </Form.Label>
-        <RangeSlider
-          defaultValue={priceLocalValues}
-          className="m-0 p-0 slider"
-          min={0}
-          max={2000}
-          ref={myRef}
-          onInput={(values) => setLocalValues(values)}
+      <Row className="gap-3 mt-3 mb-1" key="price-filter">
+        <PriceRangeComponent
+          resetStartPage={resetStartPage}
+          minMaxPrice={minMaxPrice}
+          updFilter={updFilter}
         />
-        <Button
-          onClick={() => {
-            updFilter('priceRange', Object.values(myRef.current.value));
-            resetStartPage();
-          }}
-          className="button"
-          style={{ fontWeight: '900' }}
-        >
-          {t('pages.books.book-filters.ok')}
-        </Button>
       </Row>
 
-      <Row className="my-3">
+      <Row className="my-1" key="auth-label">
         <Form.Label>
           {t('pages.books.book-filters.author')}
           :
           {' '}
         </Form.Label>
-        <Form.Control
-          type="text"
-          placeholder={t('pages.books.book-filters.author')}
-          list="authors"
-          onChange={(event) => {
-            if (authors.some((auth) => event.target.value === auth)) {
-              updFilter('author', event.target.value);
-              resetStartPage();
-            } else if (event.target.value.length === 0) {
-              updFilter('author', null);
-            }
-          }}
-        />
+        <InputGroup>
+          <Form.Control
+            type="text"
+            placeholder={t('pages.books.book-filters.author')}
+            list="authors"
+            ref={authorRef}
+            onChange={(event) => {
+              if (uniqueAuthorArray.some((auth) => event.target.value === auth)) {
+                updFilter('author', event.target.value);
+                resetStartPage();
+              } else if (event.target.value.length === 0) {
+                updFilter('author', null);
+              }
+            }}
+          />
+          <InputGroup.Text
+            id="basic-addon2"
+            className="p-1"
+            onClick={() => { authorRef.current.value = ''; updFilter('author', null); }}
+          >
+            <MdClear size={10} />
+          </InputGroup.Text>
+        </InputGroup>
         <datalist id="authors">
-          {authors && authors.map((author) => (
+          {uniqueAuthorArray.map((author) => (
             <label
-              htmlFor="opt"
+              htmlFor={author}
               className="checkbox__label"
               key={author}
             >
               {author}
               <option
-                aria-label="opt"
+                aria-label={author}
                 value={author}
               />
             </label>
@@ -88,41 +86,104 @@ export default function BookFilters({
         </datalist>
       </Row>
 
-      <Row className="my-3">
+      <Row className="my-1" key="language-filter">
         <Form.Label>
-          {t('pages.books.book-filters.publisher')}
+          {t('pages.books.book-filters.language')}
           :
           {' '}
         </Form.Label>
-        <Form.Control
-          type="text"
-          placeholder={t('pages.books.book-filters.publisher')}
-          list="publishers"
-          onChange={(event) => {
-            if (publishers.some((auth) => event.target.value === auth)) {
-              updFilter('publisher', event.target.value);
-              resetStartPage();
-            } else if (event.target.value.length === 0) {
-              updFilter('publisher', null);
-            }
-          }}
-        />
-        <datalist id="publishers">
-          {publishers && publishers.map((publisher) => (
+        <InputGroup>
+          <Form.Control
+            type="text"
+            placeholder={t('pages.books.book-filters.language')}
+            list="language"
+            ref={languageRef}
+            onChange={(event) => {
+              if (BOOK_LANGUAGES.some((language) => event.target.value === language)) {
+                updFilter('language', event.target.value);
+                resetStartPage();
+              } else if (event.target.value.length === 0) {
+                updFilter('language', null);
+              }
+            }}
+          />
+          <InputGroup.Text
+            id="basic-addon2"
+            className="p-1"
+            onClick={() => { languageRef.current.value = ''; updFilter('language', null); }}
+          >
+            <MdClear size={10} />
+          </InputGroup.Text>
+        </InputGroup>
+        <datalist id="language">
+          {BOOK_LANGUAGES.map((lang) => (
             <label
-              htmlFor="opt"
+              htmlFor={lang}
               className="checkbox__label"
-              key={publisher}
+              key={lang}
             >
-              {publisher}
+              {lang}
               <option
-                aria-label="opt"
-                value={publisher}
+                aria-label={lang}
+                value={lang}
               />
             </label>
           ))}
         </datalist>
       </Row>
+
+      <Row className="my-1" key="publisher-filter">
+        <Form.Label>
+          {t('pages.books.book-filters.publisher')}
+          :
+          {' '}
+        </Form.Label>
+        <InputGroup>
+          <Form.Control
+            type="text"
+            placeholder={t('pages.books.book-filters.publisher')}
+            list="publishers"
+            ref={publisherRef}
+            onChange={(event) => {
+              if (value?.publishers.some((publisher) => event.target.value === publisher)) {
+                updFilter('publisher', event.target.value);
+                resetStartPage();
+              } else if (event.target.value.length === 0) {
+                updFilter('publisher', null);
+              }
+            }}
+          />
+          <InputGroup.Text
+            id="basic-addon2"
+            className="p-1"
+            onClick={() => { publisherRef.current.value = ''; updFilter('publisher', null); }}
+          >
+            <MdClear size={10} />
+          </InputGroup.Text>
+        </InputGroup>
+        <datalist id="publishers">
+          {value?.publishers && value?.publishers.map((publ) => (
+            <label
+              htmlFor="opt-publ"
+              className="checkbox__label"
+              key={publ}
+            >
+              {publ}
+              <option
+                aria-label="opt-publ"
+                value={publ}
+              />
+            </label>
+          ))}
+        </datalist>
+      </Row>
+      <Button
+        onClick={resetFilters}
+        className="button my-2"
+        style={{ fontWeight: '900' }}
+      >
+        {t('pages.books.book-filters.reset-filters')}
+      </Button>
     </>
   );
 
@@ -139,15 +200,12 @@ export default function BookFilters({
 }
 
 BookFilters.defaultProps = {
-  authors: null,
-  publishers: null,
-  minMaxPrice: [0, 1000],
+  minMaxPrice: [50, 1000],
 };
 
 BookFilters.propTypes = {
   updFilter: PropTypes.func.isRequired,
   resetStartPage: PropTypes.func.isRequired,
+  resetFilters: PropTypes.func.isRequired,
   minMaxPrice: PropTypes.arrayOf(PropTypes.number),
-  authors: PropTypes.arrayOf(PropTypes.string),
-  publishers: PropTypes.arrayOf(PropTypes.string),
 };

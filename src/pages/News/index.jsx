@@ -27,7 +27,7 @@ export default function News() {
   );
 
   return (
-    <Container as={Row}>
+    <Container as={Row} className="m-0">
       <Helmet>
         <title>{t('pages.news.title')}</title>
       </Helmet>

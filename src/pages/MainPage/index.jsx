@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import {
-  Container, Row,
+  Container, Row, Carousel, Col,
 } from 'react-bootstrap';
+import { GrPrevious, GrNext } from 'react-icons/gr';
+
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import {
@@ -10,6 +12,7 @@ import {
 } from '../../components';
 
 import './index.css';
+import { chunkArray } from '../../utils/helpers';
 
 export default function Main() { // TODO: debug
   const [data, setData] = useState();
@@ -24,6 +27,16 @@ export default function Main() { // TODO: debug
       ([{ books }, { merch }, { news }]) => setData({ books, merch, news }),
     ).catch((error) => console.error(error));
   }, []);
+
+  // eslint-disable-next-line consistent-return
+  function defineChunkingLength(width) { // TODO: move to helpers
+    if (width < 576) { return 1; }
+    if (width >= 576 && width < 768) { return 2; }
+    if (width >= 768 && width < 992) { return 2; }
+    if (width >= 992 && width < 1200) { return 3; }
+    if (width >= 1200 && width < 1400) { return 3; }
+    if (width >= 1400) { return 4; }
+  }
 
   return (
     <Container className="m-0" fluid style={{ padding: '3em 0px' }}>
@@ -43,14 +56,48 @@ export default function Main() { // TODO: debug
       </Row>
 
       {data && data.books.length > 0 && <h3>{t('pages.mainPage.books')}</h3>}
-      <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
-        {data && data.books && data.books.filter(
-          (book) => book.tags,
-        ).map((book) => (
-          <div className="book-card-container" key={book.id} style={{ width: '260px', paddingBlock: '2em' }}>
-            <BookCard {...book} key={book.id} />
-          </div>
-        ))}
+      <Row
+        className="d-flex flex-nowrap mb-3 "
+        id="book-scroll"
+        style={{ overflowX: 'scroll' }}
+      >
+        {data && data.books && (
+        <Carousel
+          interval={1000 * 333333}
+          keyboard={false}
+          pause="hover"
+          prevIcon={<GrPrevious size={50} />}
+          nextIcon={<GrNext size={50} />}
+          indicators={false}
+          style={{ maxHeight: '600px' }}
+        >
+          {chunkArray(data.books.filter(
+            (book) => book.tags,
+          ).splice(0, 24), defineChunkingLength(window.innerWidth)).map((booksChunked) => (
+            <Carousel.Item key={booksChunked[0]?.id}>
+              <div
+                className="d-flex gap-2 justify-content-center"
+                style={{ paddingInline: '4em' }}
+              >
+                { booksChunked.map((book) => (
+                  <Col
+                    xs={{ span: 10, offset: 1 }}
+                    sm={{ span: 6, offset: 0 }}
+                    md={6}
+                    lg={4}
+                    xl={4}
+                    xxl={3}
+                    className="d-flex justify-content-center my-3 "
+                    key={book.id}
+                  >
+                    <BookCard {...book} key={book.id} />
+                  </Col>
+                ))}
+              </div>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+        )}
       </Row>
 
       {data && data.merch.length > 0 && <h3>{t('pages.mainPage.merch')}</h3>}

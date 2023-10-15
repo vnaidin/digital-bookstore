@@ -5,7 +5,7 @@
             "item-ended": "Закінчилося"
         },
         "buyBtn": "Купити",
-        "nodata": "Немає даних...",
+        "nodata": "Немає даних",
         "pagination-label": "Сторінка"
     },
     "layout": {
@@ -58,7 +58,8 @@
                 "title": "Каталог"
             },
             "search": {
-                "placeholder": "Автор, назва або видавництво"
+                "placeholder": "Автор, назва або видавництво",
+                "and-others": "та інші"
             },
             "shopping-cart": {
                 "title": "Кошик",
@@ -123,9 +124,13 @@
             "book-filters": {
                 "title": "Фільтри",
                 "price-ranges": "Ціновий діапазон",
-                "ok": "Ок",
+                "price-ranges-from": "Від",
+                "price-ranges-to": "До",
+                "ok": "Застосувати",
                 "author": "Автор",
-                "publisher": "Видавництво"
+                "publisher": "Видавництво",
+                "language": "Мова",
+                "reset-filters": "Очистити фільтри"
             },
             "order": {
                 "title": "Сортувати за",
@@ -154,7 +159,7 @@
                         "email": "Пошта",
                         "price": "Ціна",
                         "status": "Статус",
-                        "created":"Створено",
+                        "created": "Створено",
                         "hasPaid": "Оплачено",
                         "actions": "Дії",
                         "more-info-line": {
@@ -293,7 +298,7 @@
                 "email": "Пошта",
                 "price": "Ціна",
                 "status": "Статус",
-                "hasPaid":"Оплачено",
+                "hasPaid": "Оплачено",
                 "actions": "Дії",
                 "items": "Предмети",
                 "created": "Створено",

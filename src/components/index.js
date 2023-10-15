@@ -5,3 +5,4 @@ export { default as MerchCard } from './MerchCard';
 export { default as NewsItem } from './NewsItem';
 export { default as NoDataComponent } from './NoData';
 export { default as PaginationComponent } from './Pagination';
+export { default as PriceRangeComponent } from './PriceRange';

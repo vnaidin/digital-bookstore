@@ -22,6 +22,7 @@ export default function Books() {
     priceRange: null,
     author: null,
     publisher: null,
+    language: null,
   });
 
   const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
@@ -31,12 +32,18 @@ export default function Books() {
   filters.priceRange && url.searchParams.append('priceRange', filters.priceRange);
   filters.author && url.searchParams.append('author', filters.author);
   filters.publisher && url.searchParams.append('publisher', filters.publisher);
+  filters.language && url.searchParams.append('language', filters.language);
 
   const { loading, error, value } = useFetch(
     url,
     {},
     [search, filters],
   );
+
+  // when changing the category we should put the PAGE=0
+  /* useEffect(() => {
+    setFilters((prev) => ({ ...prev, page: 0 }));
+  }, [bookCategory]); */
 
   return (
     <Container as={Row} className="m-0">
@@ -55,11 +62,16 @@ export default function Books() {
         xxl={2}
       >
         <BookFilters
-          authors={value?.authors}
-          publishers={value?.publishers}
           minMaxPrice={value?.minMaxPrice}
-          updFilter={(key, val) => setFilters((prev) => ({ ...prev, [key]: val }))}
+          updFilter={(key, val) => setFilters((prev) => ({ ...prev, [key]: val, page: 0 }))}
           resetStartPage={() => setFilters((prev) => ({ ...prev, page: 0 }))}
+          resetFilters={() => setFilters({
+            page: 0,
+            order: null,
+            priceRange: null,
+            author: null,
+            publisher: null,
+          })}
         />
       </Col>
 
@@ -83,7 +95,7 @@ export default function Books() {
         </Row>
 
         {!loading && value && (
-          <Row title="order-pagination-row" className="gap-1 justify-center">
+          <Row title="order-pagination-row " className="gap-1 justify-center mx-3 px-2">
             <Form.Group
               as={Col}
               xs={12}
@@ -152,7 +164,7 @@ export default function Books() {
                 lg={4}
                 xl={4}
                 xxl={3}
-                className="d-flex justify-content-center my-1"
+                className="d-flex justify-content-center my-3 "
                 key={bookObj.id}
               >
                 <BookCard {...bookObj} />

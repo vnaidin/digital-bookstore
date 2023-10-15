@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 
 exports.getBooks = async (req, res) => {
   // Find all books
-  const { cat, page, order, priceRange, author, publisher } = req.query;
+  const { cat, page, order, priceRange, author, publisher, language } = req.query;
   const paginationQuery = {
     order: order ? [order == 0 ? db.sequelize.random() : [...order.split(",")]] : null,
     where: {
@@ -15,15 +15,16 @@ exports.getBooks = async (req, res) => {
         {
           category: cat ? {
             [Op.or]: [
-              { [Op.startsWith]: `${cat},` },                 
-              { [Op.endsWith]: `,${cat}` },                    
+              { [Op.startsWith]: `${cat},` },
+              { [Op.endsWith]: `,${cat}` },
               { [Op.substring]: `,${cat},` },
             ]
           } : { [Op.not]: null }
         },
         { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
-        { author: author ? author : { [Op.not]: null } },
-        { publisher: publisher ? publisher : { [Op.not]: null } }
+        { author: author ? { [Op.substring]: author } : { [Op.not]: null } },
+        { publisher: publisher ? publisher : { [Op.not]: null } },
+        { lang: language ? language : { [Op.not]: null } }
       ]
     },
     offset: page > 0 ? 12 * page : 0,// page n increments

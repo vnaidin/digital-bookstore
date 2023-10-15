@@ -1,60 +1,36 @@
-import React, { useRef, useState } from 'react';
-import { Form, Row, Button } from 'react-bootstrap';
-import RangeSlider from 'react-range-slider-input';
+import React from 'react';
+import { Row, Accordion } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { PriceRangeComponent } from '../../components';
 
 export default function MerchFilters({
   minMaxPrice, updFilter, resetStartPage,
 }) {
-  const [priceLocalValues, setLocalValues] = useState([0, 1000]);
-  const myRef = useRef(null);
   const { t } = useTranslation();
-
-  return (
+  const largeScreenView = (
     <Row className="gap-3 my-3">
-      <Form.Label className="m-0">
-        {t('pages.merch.merch-filters.price-ranges')}
-        :
-        {' '}
-        <div className="d-flex justify-content-between p-0" style={{ marginBottom: '-25px' }}>
-          {(priceLocalValues || minMaxPrice) && (
-            <>
-              <p>
-                {priceLocalValues[0]}
-              </p>
-              <p>
-                {priceLocalValues[1]}
-              </p>
-            </>
-          )}
-        </div>
-      </Form.Label>
-      <RangeSlider
-        defaultValue={priceLocalValues}
-        className="m-0 p-0"
-        min={0}
-        max={2000}
-        ref={myRef}
-        onInput={(values) => setLocalValues(values)}
+      <PriceRangeComponent
+        resetStartPage={resetStartPage}
+        minMaxPrice={minMaxPrice}
+        updFilter={updFilter}
       />
-      <Button
-        onClick={() => {
-          updFilter('priceRange', Object.values(myRef.current.value));
-          resetStartPage();
-        }}
-        className="button"
-        style={{ fontWeight: '900' }}
-
-      >
-        {t('pages.merch.merch-filters.ok')}
-      </Button>
     </Row>
+  );
+  return window.innerWidth > 768 ? largeScreenView : (
+    <Accordion className="my-2">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>{t('pages.books.book-filters.title')}</Accordion.Header>
+        <Accordion.Body as={Row} className="gap-1 p-1 m-0 justify-content-center">
+          {largeScreenView}
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
   );
 }
 
 MerchFilters.defaultProps = {
-  minMaxPrice: [0, 1000],
+  minMaxPrice: [50, 1000],
 };
 
 MerchFilters.propTypes = {

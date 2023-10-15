@@ -31,9 +31,7 @@ export default function Header() {
           href="/"
           className="col-xs d-flex align-items-center"
         >
-          <img alt="alineabooks.com" src="/logo.png" width={150} />
-          {' '}
-          {/* <p className="m-0" style={{ fontSize: 'xxx-large' }}>A Linea</p> */}
+          <img alt="alineabooks.com" src="/logo.png" width={120} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="layout-navbar-nav " />
         <Navbar.Collapse id="layout-navbar-nav">

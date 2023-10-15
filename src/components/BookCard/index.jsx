@@ -17,11 +17,11 @@ export default function BookCard({
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   return (
-    <Card style={{ backgroundColor: 'inherit' }}>
+    <Card style={{ backgroundColor: 'inherit', border: 'none' }}>
       <div className="badge-and-card">
         {tags.split(',').map((tag) => (
           <Badge
-            bg="danger"
+            bg={['danger', 'warning', 'success'][tag]}
             pill
             key={tag}
             style={{
@@ -33,7 +33,7 @@ export default function BookCard({
               top: '1px',
             }}
           >
-            {BOOK_TAGS[tag]}
+            {BOOK_TAGS[tag]?.toUpperCase()}
           </Badge>
         ))}
         <Card.Img
@@ -41,30 +41,32 @@ export default function BookCard({
           src={`${process.env.REACT_APP_BE_URL}/${image}`}
           height={300}
           className="p-3"
-          alt={`${author}_${title}`}
+          alt={title}
           onClick={() => navigate(`/book/${id}`)}
         />
 
       </div>
 
       <Card.Body
-        className="d-flex flex-column align-items-center justify-content-end py-2"
-        style={{ minHeight: '180px' }}
+        className="d-flex flex-column align-items-center justify-content-center py-0 px-2"
+        style={{ minHeight: '10px' }}
         title={`${author} ${title}`}
       >
         <NavLink href={`/book/${id}`}>
           <Card.Title style={{
-            width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+            width: '200px', /* overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', */
           }}
           >
             {title}
           </Card.Title>
         </NavLink>
         <Card.Subtitle style={{
-          width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+          width: '200px', /* overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', */
         }}
         >
-          {author}
+          {/* author */}
+          {`${author.split(',').length > 1 ? `${author.split(',').slice(0, 2).join(',')} ${t('layout.headerBottom.search.and-others')}` : author}`}
+
         </Card.Subtitle>
         <div className="d-flex m-2 p-1 gap-1 justify-content-center">
           <div className="d-flex flex-column">
@@ -93,6 +95,9 @@ export default function BookCard({
             {item_management.amount === 0 && <Badge pill bg="secondary">{t('components.bookCard.item-ended')}</Badge>}
           </div>
         </div>
+
+      </Card.Body>
+      <Card.Footer style={{ borderTop: 'none', backgroundColor: 'inherit' }}>
         <BuyButton
           id={id}
           price={price}
@@ -101,8 +106,7 @@ export default function BookCard({
           reducedPrice={reducedPrice}
           isReducedNow={isReducedNow}
         />
-
-      </Card.Body>
+      </Card.Footer>
     </Card>
   );
 }

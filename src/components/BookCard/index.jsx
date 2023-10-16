@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {
-  Card, Col, NavLink, Badge,
+  Card, NavLink, Badge,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -19,17 +19,17 @@ export default function BookCard({
   return (
     <Card style={{ backgroundColor: 'inherit', border: 'none' }}>
       <div className="badge-and-card">
-        {tags.split(',').map((tag) => (
+        {tags.split(',').map((tag, index) => (
           <Badge
             bg={['danger', 'warning', 'success'][tag]}
             pill
             key={tag}
             style={{
-              width: '5em',
+              // width: '5em',
               margin: '0px 1px',
               fontSize: 'large',
               position: 'absolute',
-              left: '1px',
+              left: `${(index === 0 ? 1 : index * 65)}px`,
               top: '1px',
             }}
           >

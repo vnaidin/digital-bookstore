@@ -33,7 +33,7 @@ export default function MerchCard({
       >
         <NavLink href={`/merch/${id}`}>
           <Card.Title style={{
-            width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+            width: '200px', /* overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', */
           }}
           >
             {title}

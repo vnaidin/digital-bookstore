@@ -45,7 +45,7 @@ exports.getBooks = async (req, res) => {
           } : { [Op.not]: null }
         },
         { price: priceRange ? { [Op.between]: priceRange?.split(',').map(x => +x) } : { [Op.not]: null } },
-        { author: author ? author : { [Op.not]: null } },
+        { author: author ? { [Op.substring]: author }  : { [Op.not]: null } },
         { publisher: publisher ? publisher : { [Op.not]: null } }
       ]
     }

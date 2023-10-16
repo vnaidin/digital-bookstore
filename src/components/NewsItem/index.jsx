@@ -26,7 +26,7 @@ export default function NewsItem({
           <Card.Title>{title}</Card.Title>
         </NavLink>
         <Card.Subtitle style={{
-          width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+          width: '200px', /* , overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', */
         }}
         >
           {author}

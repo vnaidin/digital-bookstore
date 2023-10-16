@@ -42,17 +42,18 @@ export default function BookPage() {
           xxl={6}
         >
           {value?.image && (
-            <div className="badge-and-card">
-              {value?.tags.split(',').map((tag) => (
+            <div className="badge-and-card" style={{ position: 'relative' }}>
+              {value?.tags.split(',').map((tag, index) => (
                 <Badge
                   bg={['danger', 'warning', 'success'][tag]}
                   key={tag}
                   pill
                   style={{
-                    width: '5em',
+                    // width: '5em',
                     margin: '0px 1px',
                     fontSize: 'large',
                     position: 'absolute',
+                    left: `${(index === 0 ? 1 : index * 65)}px`,
                   }}
                 >
                   {BOOK_TAGS[tag]?.toUpperCase()}

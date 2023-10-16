@@ -10,9 +10,9 @@ import { useTranslation } from 'react-i18next';
 import {
   BookCard, NewsItem, MerchCard, NoDataComponent,
 } from '../../components';
+import { chunkArray } from '../../utils/helpers';
 
 import './index.css';
-import { chunkArray } from '../../utils/helpers';
 
 export default function Main() { // TODO: debug
   const [data, setData] = useState();
@@ -63,7 +63,7 @@ export default function Main() { // TODO: debug
       >
         {data && data.books && (
         <Carousel
-          interval={1000 * 333333}
+          interval={1000 * 3}
           keyboard={false}
           pause="hover"
           prevIcon={<GrPrevious size={50} />}
@@ -103,9 +103,18 @@ export default function Main() { // TODO: debug
       {data && data.merch.length > 0 && <h3>{t('pages.mainPage.merch')}</h3>}
       <Row className="d-flex flex-nowrap mb-3" style={{ overflowX: 'scroll' }}>
         {data && data.merch && data.merch.map((book) => (
-          <div className="merch-card-container" key={book.id} style={{ width: '260px', paddingBlock: '2em' }}>
+          <Col
+            xs={{ span: 10, offset: 1 }}
+            sm={{ span: 6, offset: 0 }}
+            md={6}
+            lg={4}
+            xl={4}
+            xxl={3}
+            className="d-flex justify-content-center my-3 "
+            key={book.id}
+          >
             <MerchCard {...book} key={book.id} />
-          </div>
+          </Col>
         ))}
       </Row>
 

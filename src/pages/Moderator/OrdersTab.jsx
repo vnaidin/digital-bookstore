@@ -66,7 +66,10 @@ export default function OrdersTab() {
             <Form.Select
               aria-label="Default select example"
               onChange={(event) => setFilters(
-                (prev) => ({ ...prev, status: event.target.value === 'By status:' ? null : event.target.value }),
+                (prev) => ({
+                  ...prev,
+                  status: Number.isNaN(Number(event.target.value)) ? null : event.target.value,
+                }),
               )}
             >
               <option value={null}>

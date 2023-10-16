@@ -1,5 +1,7 @@
+import crypto from 'crypto';
 import React, { useContext, useState } from 'react';
 import {
+  Button,
   Container, Row, Spinner, Table,
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
@@ -11,6 +13,8 @@ import AppContext from '../../appContext';
 import { OrderTableLine } from '../Moderator/OrdersTab';
 import UpdateOrderModal from '../Moderator/UpdateOrderModal';
 import { NoDataComponent } from '../../components';
+import { toBinary } from '../../utils/helpers';
+import { post_to_url } from '../../utils/axios';
 
 export default function OrderPage() {
   const { state } = useContext(AppContext);
@@ -23,6 +27,9 @@ export default function OrderPage() {
     [showModal],
   );
   const isNotOrdinaryUser = state?.currentUser?.roles.some((role) => role === 'ROLE_SELLER');
+
+  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = process.env;
+
   return (
     <Container>
       <Helmet>
@@ -30,20 +37,20 @@ export default function OrderPage() {
       </Helmet>
 
       {showModal && (
-      <UpdateOrderModal
-        existingOrder={value ? value[0] : {}}
-        handleCloseModal={() => setShowModal(false)}
-      />
+        <UpdateOrderModal
+          existingOrder={value ? value[0] : {}}
+          handleCloseModal={() => setShowModal(false)}
+        />
       )}
 
       <Row className="my-2">
         {error && (
-        <p>
-          {new Error(error).message}
-        </p>
+          <p>
+            {new Error(error).message}
+          </p>
         )}
         {loading && (
-        <Spinner animation="border" />
+          <Spinner animation="border" />
         )}
       </Row>
 
@@ -78,6 +85,7 @@ export default function OrderPage() {
                     <th>ID</th>
                     <th>{t('pages.orderPage.table.items')}</th>
                     <th>{t('pages.orderPage.table.status')}</th>
+                    <th>{t('pages.orderPage.table.hasPaid')}</th>
                     <th>{t('pages.orderPage.table.created')}</th>
                     <th>{t('pages.orderPage.table.updated')}</th>
                   </>
@@ -95,6 +103,37 @@ export default function OrderPage() {
                   <td>{ind + 1}</td>
                   <OrderItemsCell items={order?.order_items} />
                   <td>{t(`constants.orderStatus.${order.status}`)}</td>
+                  <td>
+                    {Number(order.paymentMethodId) === 1 && order.hasPaid != null ? <p>{t('pages.orderPage.table.hasPaid-yes')}</p> : (
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          const json_string = {
+                            public_key: REACT_APP_LIQ_PAY_PUBLIC,
+                            version: '3',
+                            action: 'pay',
+                            amount: order.price,
+                            currency: 'UAH',
+                            description: 'Оплата за книги',
+                            result_url: window.location.origin,
+                            server_url: `${REACT_APP_BE_URL}/api/order/payment-update`,
+                            language: 'uk',
+                            order_id: String(order.id),
+                          };
+                          const liqpayData = window.btoa(toBinary(JSON.stringify(json_string)));
+                          // console.log('liqpayData', liqpayData);
+                          const sign_string = REACT_APP_LIQ_PAY_PRIVATE
+                          + liqpayData + REACT_APP_LIQ_PAY_PRIVATE;
+                          const sha1 = crypto.createHash('sha1');
+                          sha1.update(sign_string);
+                          const signature = sha1.digest('base64');
+                          post_to_url('https://www.liqpay.ua/api/3/checkout', { submit: 'submit', data: liqpayData, signature });
+                        }}
+                      >
+                        {t('pages.orderPage.table.pay')}
+                      </Button>
+                    )}
+                  </td>
                   <td>{new Date(order?.createdAt).toLocaleString()}</td>
                   <td>{new Date(order?.updatedAt).toLocaleString()}</td>
                 </tr>

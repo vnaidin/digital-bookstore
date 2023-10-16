@@ -51,7 +51,8 @@
                     "title": "Замовлення",
                     "items": "Предмети",
                     "price": "Ціна",
-                    "status": "Статус"
+                    "status": "Статус",
+                    "hasPaid": "Оплачено"
                 }
             },
             "catalog": {
@@ -303,7 +304,9 @@
                 "actions": "Дії",
                 "items": "Предмети",
                 "created": "Створено",
-                "updated": "Оновлено"
+                "updated": "Оновлено",
+                "hasPaid-yes": "Так",
+                "pay": "Оплатити"
             }
         },
         "retrieval": {

@@ -23,6 +23,11 @@ export default function AboutUs() { // TODO: more text!
           {t('pages.aboutUs.2')}
         </p>
       </Row>
+      <Row style={{ textAlign: 'justify' }}>
+        <p style={{ fontSize: 'x-large' }}>
+          {t('pages.aboutUs.3')}
+        </p>
+      </Row>
     </Container>
   );
 }

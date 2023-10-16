@@ -14,7 +14,7 @@ export default function LanguageSelect() {
       onChange={(event) => i18n.changeLanguage(event.target.value)}
       value={i18n.language}
     >
-      <option value="uk">EN</option>
+      <option value="en">EN</option>
       <option value="ua">UA</option>
     </Form.Select>
   );

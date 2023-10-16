@@ -59,7 +59,7 @@ exports.updateInfo = async (req, res) => {
     where: {
       id: userId
     }
-  }).then(user => res.status(200).json({ message: `User ${userId} updated` }))
+  }).then(user => res.status(200).json({ message: `User info was updated` }))
 }
 
 

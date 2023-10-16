@@ -12,12 +12,16 @@ import UserService from '../../../services/user';
 import { useFetch } from '../../../utils/hooks';
 import authHeader from '../../../services/auth-header';
 import { NoDataComponent } from '../../../components';
+import { post_to_url } from '../../../utils/axios';
+import { toBinary } from '../../../utils/helpers';
 
 export default function UserPanel() {
+  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = process.env;
+
   const { state, dispatch } = useContext(AppContext);
   const { t } = useTranslation();
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/all/orders/${state?.currentUser?.id}`,
+    `${REACT_APP_BE_URL}/api/all/orders/${state?.currentUser?.id}`,
     { headers: authHeader() },
     [],
   );
@@ -160,6 +164,7 @@ export default function UserPanel() {
                 <th>{t('layout.headerBottom.auth.ordersTable.items')}</th>
                 <th>{t('layout.headerBottom.auth.ordersTable.price')}</th>
                 <th>{t('layout.headerBottom.auth.ordersTable.status')}</th>
+                <th>{t('layout.headerBottom.auth.ordersTable.hasPaid')}</th>
               </tr>
             </thead>
             <tbody>
@@ -169,6 +174,38 @@ export default function UserPanel() {
                   <OrderItemsCell items={order.order_items} />
                   <td>{order.price}</td>
                   <td>{t(`constants.orderStatus.${order.status}`)}</td>
+                  <td>
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {Number(order.paymentMethodId) === 1 && order.status <= 1 ? order.hasPaid != null ? <p>{t('pages.orderPage.table.hasPaid-yes')}</p> : (
+                      <Button
+                        className="button"
+                        onClick={() => {
+                          const json_string = {
+                            public_key: REACT_APP_LIQ_PAY_PUBLIC,
+                            version: '3',
+                            action: 'pay',
+                            amount: order.price,
+                            currency: 'UAH',
+                            description: 'Оплата за книги',
+                            result_url: window.location.origin,
+                            server_url: `${REACT_APP_BE_URL}/api/order/payment-update`,
+                            language: 'uk',
+                            order_id: String(order.id),
+                          };
+                          const liqpayData = window.btoa(toBinary(JSON.stringify(json_string)));
+                          // console.log('liqpayData', liqpayData);
+                          const sign_string = REACT_APP_LIQ_PAY_PRIVATE
+                          + liqpayData + REACT_APP_LIQ_PAY_PRIVATE;
+                          const sha1 = crypto.createHash('sha1');
+                          sha1.update(sign_string);
+                          const signature = sha1.digest('base64');
+                          post_to_url('https://www.liqpay.ua/api/3/checkout', { submit: 'submit', data: liqpayData, signature });
+                        }}
+                      >
+                        {t('pages.orderPage.table.pay')}
+                      </Button>
+                    ) : <p>-</p>}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -200,7 +237,7 @@ export function OrderItemsCell({ items }) {
       <ListGroup>
         {orderItemsToShow && orderItemsToShow.length > 0 && orderItemsToShow.map((item) => (
           <ListGroup.Item className="text-start" key={item.id}>
-            <Image src={item.image} width={30} rounded className="m-1" />
+            <Image src={`${process.env.REACT_APP_BE_URL}/${item.image}`} width={30} rounded className="m-1" />
             {`${item.title} `}
             {itemsAmountById[item.id] > 1 ? (`(${itemsAmountById[item.id]})`) : ''}
           </ListGroup.Item>

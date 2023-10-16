@@ -51,7 +51,8 @@
                     "title": "Orders",
                     "items": "Items",
                     "price": "Price",
-                    "status": "Status"
+                    "status": "Status",
+                    "hasPaid": "Has Paid"
                 }
             },
             "catalog": {
@@ -299,7 +300,9 @@
                 "actions": "Actions",
                 "items": "Items",
                 "created": "Created",
-                "updated": "Updated"
+                "updated": "Updated",
+                "hasPaid-yes": "Yes",
+                "pay": "Pay"
             }
         },
         "retrieval": {

@@ -104,7 +104,7 @@ export default function OrderPage() {
                   <OrderItemsCell items={order?.order_items} />
                   <td>{t(`constants.orderStatus.${order.status}`)}</td>
                   <td>
-                    {Number(order.paymentMethodId) === 1 && order.hasPaid != null ? <p>{t('pages.orderPage.table.hasPaid-yes')}</p> : (
+                    {Number(order.paymentMethodId) === 0 || order.hasPaid != null ? <p>{t('pages.orderPage.table.hasPaid-yes')}</p> : (
                       <Button
                         className="button"
                         onClick={() => {

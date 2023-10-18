@@ -26,7 +26,7 @@ export default function Auth() {
       </Offcanvas.Header>
       <Offcanvas.Body>
         <Row className="justify-content-center">
-          {showRegister ? <Register /> : <Login />}
+          {showRegister ? <Register showLogIn={handleComponentSwitch} /> : <Login />}
           <p className="text-center">{t('layout.headerBottom.auth.or')}</p>
           <u
             className="text-center"

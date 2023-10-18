@@ -14,8 +14,8 @@ export default function Login() {
   const { Formik } = formik;
   const { dispatch } = useContext(AppContext);
   const schema = yup.object().shape({
-    email: yup.string('Enter your email').required('Email is required').email('Enter a valid email'),
-    password: forgotPass ? yup.string().max(0) : yup.string('Enter your password').required('Password is required'),
+    email: yup.string('Enter your email').required(t('layout.headerBottom.auth.form.email-validation')).email(t('layout.headerBottom.auth.form.email-rules')),
+    password: forgotPass ? yup.string().max(0) : yup.string('Enter your password').required(t('layout.headerBottom.auth.form.pass-validation')),
   });
 
   const logIn = (values) => {
@@ -37,11 +37,16 @@ export default function Login() {
   return (
     <Formik
       validationSchema={schema}
-      // eslint-disable-next-line no-unused-expressions
-      onSubmit={(values) => { forgotPass ? requestForgotPassword(values) : logIn(values); }}
       initialValues={{
         email: '',
         password: '',
+      }}
+      validateOnChange={false}
+      validateOnBlur={false}
+      onSubmit={(values) => {
+        if (forgotPass) {
+          return requestForgotPassword(values);
+        } return logIn(values);
       }}
     >
       {({

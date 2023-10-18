@@ -4,33 +4,44 @@ import {
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import PropTypes from 'prop-types';
 
 import { useTranslation } from 'react-i18next';
 import AuthService from '../../../services/auth';
 
-export default function Register() {
+export default function Register({ showLogIn }) {
   const { Formik } = formik;
   const { t } = useTranslation();
 
   const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
   // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
   const schema = yup.object().shape({
-    name: yup.string().required().min(2),
-    email: yup.string().required().email(),
+    name: yup.string()
+      .min(3).max(40)
+      .required(t('layout.headerBottom.auth.form.name-validation')),
+    email: yup.string()
+      .required(t('layout.headerBottom.auth.form.email-validation'))
+      .email(t('layout.headerBottom.auth.form.email-rules')),
     password: yup
       .string()
-      .matches(passwordRules, { message: 'Please create a stronger password' })
-      .required('Required'),
-  });// TODO: translate
+      .matches(passwordRules, { message: t('layout.headerBottom.auth.form.pass-rules') })
+      .required(t('layout.headerBottom.auth.form.pass-validation')),
+  });
 
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={AuthService.register}
       initialValues={{
         name: '',
         email: '',
         password: '',
+      }}
+      validateOnChange={false}
+      validateOnBlur={false}
+      onSubmit={(values) => {
+        AuthService.register(values).then(
+          (response) => { console.log(response); showLogIn(); },
+        ).catch((error) => { console.error(error); showLogIn(); });
       }}
     >
       {({
@@ -97,10 +108,15 @@ export default function Register() {
             className="my-2 align-self-center button"
           >
             {t('layout.headerBottom.auth.register')}
-
           </Button>
         </Form>
       )}
     </Formik>
   );
 }
+Register.defaultProps = {
+};
+
+Register.propTypes = {
+  showLogIn: PropTypes.func.isRequired,
+};

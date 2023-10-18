@@ -127,7 +127,7 @@ export const BOOK_CATEGORIES = [
 
 export const BOOK_ORDERING = [{ id: 0, value: 'price,DESC' }, { id: 1, value: 'price,ASC' }];
 
-export const BOOK_COVER_TYPES = ['Мʼяка', 'Тверда'];
+export const BOOK_COVER_TYPES = ['Мʼяка', 'Тверда', 'Тверда з суперобкладинкою', "М'яка з клапаном"];
 
 export const BOOK_TAGS = ['New', 'Top', 'Exclusive'];
 

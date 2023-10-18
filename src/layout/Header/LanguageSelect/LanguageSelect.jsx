@@ -12,7 +12,7 @@ export default function LanguageSelect() {
       className="langSelect"
       size="sm"
       onChange={(event) => i18n.changeLanguage(event.target.value)}
-      value={i18n.language}
+      value={i18n.language === 'uk' ? 'en' : i18n.language}
     >
       <option value="en">EN</option>
       <option value="ua">UA</option>

@@ -39,10 +39,15 @@
                 "user-info": "User Info",
                 "form": {
                     "name": "Name",
+                    "name-validation": "Name is required",
                     "surname": "Surname",
                     "tel": "Phone Number",
                     "email": "Email",
+                    "email-rules": "Enter a valid email",
+                    "email-validation": "Email is required",
                     "pass": "Password",
+                    "pass-rules": "Minimum 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit",
+                    "pass-validation": "Password is required",
                     "forgot-pass": "Forgot password?",
                     "valid-feedback": "Looks good!",
                     "reset-pass": "Reset"

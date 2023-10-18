@@ -131,10 +131,11 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
     }).catch((e) => console.error(new Error(e)));
   };
   return (
-    <Form onSubmit={(event) => {
-      event.preventDefault();
-      handleSubmit(formData);
-    }}
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        handleSubmit(formData);
+      }}
     >
       <Row className="mb-3">
         <h2 className="text-start my-1">
@@ -158,7 +159,9 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
               onChange={(event) => handleChange(event.target.title, event.target.value)}
               readOnly={state.currentUser?.name}
               autoComplete="given-name"
-              required
+              required={!formData.name}
+              isInvalid={!formData.name}
+              isValid={formData.name?.length > 0}
             />
           </InputGroup>
 
@@ -179,7 +182,9 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
               onChange={(event) => handleChange(event.target.title, event.target.value)}
               readOnly={state.currentUser?.surname}
               autoComplete="family-name"
-              required
+              required={!formData.surname}
+              isInvalid={!formData.surname}
+              isValid={formData.surname?.length > 0}
             />
           </InputGroup>
         </Form.Group>
@@ -197,7 +202,9 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
               onChange={(event) => handleChange(event.target.title, event.target.value)}
               readOnly={state.currentUser?.phoneNumber}
               autoComplete="tel"
-              required
+              required={!formData.phoneNumber}
+              isInvalid={!formData.phoneNumber}
+              isValid={formData.phoneNumber?.length > 0}
             />
           </InputGroup>
         </Form.Group>
@@ -215,7 +222,9 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
               onChange={(event) => handleChange(event.target.title, event.target.value)}
               readOnly={state.currentUser?.id > 0}
               autoComplete="email"
-              required
+              required={!formData.email}
+              isInvalid={!formData.email}
+              isValid={formData.email?.length > 0}
             />
           </InputGroup>
         </Form.Group>
@@ -258,6 +267,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                   defaultValue={formData?.receiverName}
                   onChange={(event) => handleChange(event.target.title, event.target.value)}
                   required={addReceiver}
+                  isInvalid={!formData.receiverName}
+                  isValid={formData.receiverName?.length > 0}
                 />
               </InputGroup>
 
@@ -277,6 +288,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                   defaultValue={formData?.receiverSurname}
                   onChange={(event) => handleChange(event.target.title, event.target.value)}
                   required={addReceiver}
+                  isInvalid={!formData.receiverSurname}
+                  isValid={formData.receiverSurname?.length > 0}
                 />
               </InputGroup>
             </Form.Group>
@@ -293,6 +306,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                   defaultValue={formData?.receiverPhoneNumber}
                   onChange={(event) => handleChange(event.target.title, event.target.value)}
                   required={addReceiver}
+                  isInvalid={!formData.receiverPhoneNumber}
+                  isValid={formData.receiverPhoneNumber?.length > 0}
                 />
               </InputGroup>
             </Form.Group>
@@ -327,6 +342,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
               title="delMethod"
               // placeholder="Category"
               required
+              isInvalid={!deliveryMethod}
+              isValid={deliveryMethod}
             >
               <option value="">{t('pages.order.form.choose-del-method')}</option>
               {DELIVERY_METHODS.map(
@@ -365,6 +382,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                 defaultValue={formData?.city}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
                 required
+                isInvalid={!formData.city}
+                isValid={formData.city?.length > 0}
               />
 
             </Form.Group>
@@ -382,6 +401,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                 defaultValue={formData?.street}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
                 required={deliveryMethod?.stateFullAddress}
+                isInvalid={!formData.street}
+                isValid={formData.street?.length > 0}
               />
             </Form.Group>
             <Form.Group
@@ -392,12 +413,14 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
             >
               <Form.Label>{t('pages.order.form.house-nr')}</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder={t('pages.order.form.house-nr')}
                 title="houseNr"
                 defaultValue={formData?.houseNr}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
                 required={deliveryMethod?.stateFullAddress}
+                isInvalid={!formData.houseNr}
+                isValid={formData.houseNr?.length > 0}
               />
 
             </Form.Group>
@@ -415,6 +438,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                 defaultValue={formData?.flatNr}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
                 required={deliveryMethod?.stateFullAddress}
+                isInvalid={!formData.flatNr}
+                isValid={formData.flatNr}
               />
             </Form.Group>
           </Row>
@@ -434,6 +459,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                 defaultValue={formData?.city}
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
                 required
+                isInvalid={!formData.city}
+                isValid={formData.city?.length > 0}
               />
 
             </Form.Group>
@@ -452,6 +479,8 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
                 onChange={(event) => handleChange(event.target.title, event.target.value)}
                 required
                 autoComplete="off"
+                isInvalid={!formData.branch}
+                isValid={formData.branch}
               />
             </Form.Group>
           </>

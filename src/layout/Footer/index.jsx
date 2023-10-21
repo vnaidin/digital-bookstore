@@ -4,25 +4,27 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { FiFacebook, FiInstagram } from 'react-icons/fi';
+import LanguageSelect from './LanguageSelect/LanguageSelect';
 
 import './index.css';
 
 export default function Footer() {
   const { t } = useTranslation();
   return (
-    <Container as="footer" className="p-3" fluid>
+    <Container as="footer" className="px-3" fluid>
       <Row className="align-items-center">
         <Col
           xs={12}
-          sm={6}
-          md={6}
-          lg={6}
-          xl={6}
-          xxl={6}
+          sm={9}
+          md={9}
+          lg={9}
+          xl={9}
+          xxl={9}
         >
           <Navbar variant="dark">
-            <Nav className="mx-auto gap-1 d-flex flex-column" justify>
-              <Nav.Item className="col text-start" key="aboutUs">
+            <Nav className="mx-auto gap-2 d-flex flex-row align-items-center" justify>
+              <LanguageSelect />
+              <Nav.Item className=" text-start" key="aboutUs">
                 <NavLink
                   className="footer-nav"
                   href="/about"
@@ -30,7 +32,7 @@ export default function Footer() {
                   {t('layout.header.routes.aboutUs')}
                 </NavLink>
               </Nav.Item>
-              <Nav.Item className="col text-start" key="contactUs">
+              <Nav.Item className=" text-start" key="contactUs">
                 <NavLink
                   className="footer-nav"
                   href="/contact"
@@ -38,7 +40,7 @@ export default function Footer() {
                   {t('layout.header.routes.contactUs')}
                 </NavLink>
               </Nav.Item>
-              <Nav.Item className="col text-start" key="terms">
+              <Nav.Item className=" text-start" key="terms">
                 <NavLink
                   className="footer-nav"
                   href="/terms"
@@ -48,21 +50,22 @@ export default function Footer() {
               </Nav.Item>
             </Nav>
           </Navbar>
+
         </Col>
 
         <Col
           xs={12}
-          sm={6}
-          md={4}
-          lg={4}
-          xl={4}
-          xxl={4}
+          sm={3}
+          md={3}
+          lg={3}
+          xl={3}
+          xxl={3}
         >
           <Row className="my-2 gap-1">
-            <Col>
+            {/* <Col>
               {t('layout.footer.social')}
               :
-            </Col>
+            </Col> */}
             <Col>
               <a
                 href="https://instagram.com/alinea_books"

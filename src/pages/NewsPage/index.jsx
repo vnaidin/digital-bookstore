@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  Col, Container, Row, Spinner, Image,
+  Col, Container, Row, Image,
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useFetch } from '../../utils/hooks';
+import { LoadingComponent } from '../../components';
 
 export default function NewsPage() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ export default function NewsPage() {
         </p>
         )}
         {loading && (
-        <Spinner animation="border" />
+        <LoadingComponent />
         )}
       </Row>
       {value && (

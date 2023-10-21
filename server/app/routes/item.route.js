@@ -590,12 +590,12 @@ module.exports = function(app) {
 
   /**
    * @swagger
-   * /item/:id:
+   * /item/{id}:
    *   get:
    *     summary: Get items of the order
    *     tags: [Items]
    *     parameters:
-   *      - in: query
+   *      - in: path
    *        name: id
    *        schema:
    *          type: integer

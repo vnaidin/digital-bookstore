@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Col, Container, Row, Spinner, Image, /* ListGroup */
+  Col, Container, Row, Image, /* ListGroup */
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
-import { BuyButton } from '../../components';
+import { BuyButton, LoadingComponent } from '../../components';
 
 export default function MerchPage() {
   const { id } = useParams();
@@ -28,7 +28,7 @@ export default function MerchPage() {
         </p>
         )}
         {loading && (
-        <Spinner animation="border" />
+        <LoadingComponent />
         )}
       </Row>
       <Row>

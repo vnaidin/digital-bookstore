@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import {
-  Container, Row, Spinner, Col,
+  Container, Row, Col,
 } from 'react-bootstrap';
 
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
-import { NewsItem, NoDataComponent, PaginationComponent } from '../../components';
+import {
+  LoadingComponent, NewsItem, NoDataComponent, PaginationComponent,
+} from '../../components';
 
 export default function News() {
   const { search } = useLocation();
@@ -46,7 +48,7 @@ export default function News() {
             </p>
           )}
           {loading && (
-            <Spinner animation="border" />
+          <LoadingComponent />
           )}
         </Row>
 

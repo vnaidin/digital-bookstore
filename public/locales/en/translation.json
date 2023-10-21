@@ -37,6 +37,11 @@
                 "reset-pass": "Reset Password",
                 "save": "Save changes",
                 "user-info": "User Info",
+                "wishlist": {
+                    "title": "WishList",
+                    "add": "Add to wishList",
+                    "rm": "Remove from wishList"
+                },
                 "form": {
                     "name": "Name",
                     "name-validation": "Name is required",
@@ -322,6 +327,8 @@
     "toasts": {
         "callee-sys": "System",
         "add-to-cart": "added to the cart!",
+        "add-to-wishList": "added to favorites!",
+        "rm-from-wishList": "removed from favorites!",
         "1": "Log into TronLink",
         "2": "Looking for blockchain connectivity...",
         "3": "Item is already sold!",

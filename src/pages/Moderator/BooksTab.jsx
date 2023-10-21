@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, Table, Row, Col, Form, Spinner,
+  Button, Container, Table, Row, Col, Form,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDebounce, useFetch } from '../../utils/hooks';
@@ -8,7 +8,7 @@ import BookService from '../../services/book';
 import CreateUpdateBookModal from './CreateUpdateBookModal';
 import AppContext from '../../appContext';
 import authHeader from '../../services/auth-header';
-import { NoDataComponent } from '../../components';
+import { LoadingComponent, NoDataComponent } from '../../components';
 
 export default function BooksTab() {
   const { dispatch } = useContext(AppContext);
@@ -75,7 +75,7 @@ export default function BooksTab() {
             </p>
           )}
           {loading && (
-            <Spinner animation="border" />
+          <LoadingComponent />
           )}
         </Row>
         {value && value.books.length === 0 && <NoDataComponent />}

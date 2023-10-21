@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, Table, Row, Spinner,
+  Button, Container, Table, Row,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import NewsService from '../../services/news';
 import CreateUpdateNewsModal from './CreateUpdateNewsModal';
 import AppContext from '../../appContext';
-import { NoDataComponent } from '../../components';
+import { LoadingComponent, NoDataComponent } from '../../components';
 
 export default function NewsTab() {
   const { dispatch } = useContext(AppContext);
@@ -48,7 +48,7 @@ export default function NewsTab() {
           </p>
           )}
           {loading && (
-          <Spinner animation="border" />
+          <LoadingComponent />
           )}
         </Row>
         <Row className="my-3">

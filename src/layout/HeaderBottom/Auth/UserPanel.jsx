@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  Button, ListGroup, Table, Row, Form, Col, InputGroup, Spinner, Image,
+  Button, ListGroup, Table, Row, Form, Col, InputGroup, Image,
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
@@ -11,7 +11,7 @@ import AppContext from '../../../appContext';
 import UserService from '../../../services/user';
 import { useFetch } from '../../../utils/hooks';
 import authHeader from '../../../services/auth-header';
-import { NoDataComponent } from '../../../components';
+import { LoadingComponent, NoDataComponent, WishListButton } from '../../../components';
 import { post_to_url } from '../../../utils/axios';
 import { toBinary } from '../../../utils/helpers';
 
@@ -142,14 +142,14 @@ export default function UserPanel() {
       </Row> */}
 
       <Row className="my-3">
-        <h3 className="text-center">{t('layout.headerBottom.auth.ordersTable.title')}</h3>
+        {value && <h3 className="text-center">{t('layout.headerBottom.auth.ordersTable.title')}</h3>}
         {error && (
         <p>
           {new Error(error).message}
         </p>
         )}
         {loading && (
-        <Spinner animation="border" />
+        <LoadingComponent />
         )}
         {value && value.length > 0 ? (
           <Table
@@ -213,6 +213,10 @@ export default function UserPanel() {
         ) : <NoDataComponent />}
       </Row>
 
+      <Row>
+        <WishListComponent />
+      </Row>
+
       <Button variant="danger" onClick={logout}>{t('layout.headerBottom.auth.logout')}</Button>
     </>
   );
@@ -227,7 +231,7 @@ export function OrderItemsCell({ items }) {
 
   const [orderItemsToShow, setOrderItemsToShow] = useState([]);
   useEffect(() => {
-    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/book/${id}`).then(
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/item/${id}`).then(
       (response) => response.json(),
     ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
   }, [items]);
@@ -258,3 +262,59 @@ OrderItemsCell.propTypes = {
     title: PropTypes.string.isRequired,
   })),
 };
+
+export function WishListComponent() {
+  const { t } = useTranslation();
+  const { state } = useContext(AppContext);
+  return (
+    <>
+      {state?.wishList && <h3 className="text-center">{t('layout.headerBottom.auth.wishlist.title')}</h3>}
+      {state?.wishList && state?.wishList.length > 0 ? (
+        <ListGroup>
+          {state.wishList.map(({
+            id,
+            price,
+            title,
+            image,
+            reducedPrice,
+            isReducedNow,
+          }) => (
+            <ListGroup.Item key={id}>
+              <Row className="gap-1 align-items-center">
+
+                <Col
+                  xs={3}
+                >
+                  <Image
+                    src={`${process.env.REACT_APP_BE_URL}/${image}`}
+                    width={50}
+                    rounded
+                    className="m-1"
+                  />
+                </Col>
+                <p
+                  className="m-0 p-0 col"
+                  style={{
+                    width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+                  }}
+                >
+                  {title}
+                </p>
+
+                <WishListButton
+                  id={id}
+                  price={price}
+                  title={title}
+                  image={image}
+                  reducedPrice={reducedPrice}
+                  isReducedNow={isReducedNow}
+                />
+              </Row>
+
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      ) : <NoDataComponent />}
+    </>
+  );
+}

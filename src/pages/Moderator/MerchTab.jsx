@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, Table, Row, Spinner, Col, Form,
+  Button, Container, Table, Row, Col, Form,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDebounce, useFetch } from '../../utils/hooks';
 import MerchService from '../../services/merch';
 import CreateUpdateMerchModal from './CreateUpdateMerchModal';
-import { NoDataComponent } from '../../components';
+import { LoadingComponent, NoDataComponent } from '../../components';
 import AppContext from '../../appContext';
 import authHeader from '../../services/auth-header';
 
@@ -72,7 +72,7 @@ export default function MerchTab() {
             </p>
           )}
           {loading && (
-            <Spinner animation="border" />
+            <LoadingComponent />
           )}
         </Row>
         {value && value.merch.length > 0 ? (

@@ -1,8 +1,10 @@
 export { default as BookCard } from './BookCard';
 export { default as BuyButton } from './BuyButton';
+export { default as WishListButton } from './WishListButton';
 export { default as InfoToast } from './InfoToast';
 export { default as MerchCard } from './MerchCard';
 export { default as NewsItem } from './NewsItem';
 export { default as NoDataComponent } from './NoData';
 export { default as PaginationComponent } from './Pagination';
 export { default as PriceRangeComponent } from './PriceRange';
+export { default as LoadingComponent } from './Loading';

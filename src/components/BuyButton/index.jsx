@@ -42,7 +42,7 @@ BuyButton.defaultProps = {
 };
 
 BuyButton.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   title: PropTypes.string,
   image: PropTypes.string,
   price: PropTypes.number,

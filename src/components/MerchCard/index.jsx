@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {
-  Card, Col, NavLink, Badge,
+  Card, NavLink, Badge, Row,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import BuyButton from '../BuyButton';
+import WishListButton from '../WishListButton';
 import { merchType } from '../../utils/types';
 
 export default function MerchCard({
@@ -67,14 +68,24 @@ export default function MerchCard({
             {item_management.amount === 0 && <Badge pill bg="secondary">{t('components.bookCard.item-ended')}</Badge>}
           </div>
         </div>
-        <BuyButton
-          id={id}
-          price={price}
-          title={title}
-          image={image}
-          reducedPrice={reducedPrice}
-          isReducedNow={isReducedNow}
-        />
+        <Row className="align-items-center justify-content-center gap-3">
+          <WishListButton
+            id={id}
+            price={price}
+            title={title}
+            image={image}
+            reducedPrice={reducedPrice}
+            isReducedNow={isReducedNow}
+          />
+          <BuyButton
+            id={id}
+            price={price}
+            title={title}
+            image={image}
+            reducedPrice={reducedPrice}
+            isReducedNow={isReducedNow}
+          />
+        </Row>
 
       </Card.Body>
     </Card>

@@ -1,7 +1,8 @@
 export const initialState = {
-  toast: null/* { visible: 3, body: 'body', callee: 'syatem' } */,
+  toast: null/* { visible: 3, body: 'body', callee: 'system' } */,
   currentUser: JSON.parse(localStorage.getItem('user')) || undefined,
   shoppingCart: JSON.parse(localStorage.getItem('cart')) || [],
+  wishList: localStorage.getItem('wishList') ? JSON.parse(localStorage.getItem('wishList')) : [],
 };
 
 export function reducer(state, action) {
@@ -20,6 +21,14 @@ export function reducer(state, action) {
       };
     case 'clearCart':
       return { ...state, shoppingCart: [] };
+
+    case 'addItemToWishList':
+      return { ...state, wishList: action.payload };
+    case 'rmItemFromWishList':
+      return {
+        ...state,
+        wishList: action.payload,
+      };
 
     case 'setDeliveryMethod': {
       return { ...state, deliveryMethod: action.payload };

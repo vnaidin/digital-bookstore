@@ -2,11 +2,12 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import {
-  Card, NavLink, Badge,
+  Card, NavLink, Badge, Row,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import BuyButton from '../BuyButton';
+import WishListButton from '../WishListButton';
 import { bookType } from '../../utils/types';
 
 import { BOOK_TAGS } from '../../utils/constants';
@@ -98,14 +99,24 @@ export default function BookCard({
 
       </Card.Body>
       <Card.Footer style={{ borderTop: 'none', backgroundColor: 'inherit' }}>
-        <BuyButton
-          id={id}
-          price={price}
-          title={title}
-          image={image}
-          reducedPrice={reducedPrice}
-          isReducedNow={isReducedNow}
-        />
+        <Row className="align-items-center justify-content-center gap-3">
+          <WishListButton
+            id={id}
+            price={price}
+            title={title}
+            image={image}
+            reducedPrice={reducedPrice}
+            isReducedNow={isReducedNow}
+          />
+          <BuyButton
+            id={id}
+            price={price}
+            title={title}
+            image={image}
+            reducedPrice={reducedPrice}
+            isReducedNow={isReducedNow}
+          />
+        </Row>
       </Card.Footer>
     </Card>
   );

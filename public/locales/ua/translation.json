@@ -37,13 +37,18 @@
                 "reset-pass": "Скинути пароль",
                 "save": "Зберегти зміни",
                 "user-info": "Інформація про користувача",
+                "wishlist": {
+                    "title": "Обране",
+                    "add": "Додати до обраного",
+                    "rm": "Видалити з обраного"
+                },
                 "form": {
                     "name": "Імʼя",
                     "name-validation": "Імʼя обовʼязкове",
                     "surname": "Прізвище",
                     "tel": "Номер телефону",
                     "email": "Пошта",
-                    "email-rules":"Введіть справжню пошту",
+                    "email-rules": "Введіть справжню пошту",
                     "email-validation": "Пошта обовʼязкова",
                     "pass": "Пароль",
                     "pass-rules": "Мінімум 5 символів, 1 велика літера, 1 мала літера, 1 цифра",
@@ -326,6 +331,8 @@
     "toasts": {
         "callee-sys": "Система",
         "add-to-cart": "додано до кошика!",
+        "add-to-wishList": "додано до обраних!",
+        "rm-from-wishList": "видалено з обраних!",
         "1": "Log into TronLink",
         "2": "Looking for blockchain connectivity...",
         "3": "Item is already sold!",

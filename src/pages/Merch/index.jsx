@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import {
-  Container, Row, Spinner, Form, Col,
+  Container, Row, Form, Col,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 
@@ -9,7 +9,9 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
 import { BOOK_ORDERING } from '../../utils/constants';
-import { MerchCard, NoDataComponent, PaginationComponent } from '../../components';
+import {
+  LoadingComponent, MerchCard, NoDataComponent, PaginationComponent,
+} from '../../components';
 import MerchFilters from './MerchFilters';
 
 export default function Merch() {
@@ -71,7 +73,7 @@ export default function Merch() {
             </p>
           )}
           {loading && (
-            <Spinner animation="border" />
+            <LoadingComponent />
           )}
         </Row>
 

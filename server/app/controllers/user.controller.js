@@ -1,6 +1,6 @@
 const db = require("../models");
 const User = db.user;
-const Role=db.role;
+const Role = db.role;
 
 const Op = db.Sequelize.Op;
 const bcrypt = require("bcryptjs");
@@ -17,7 +17,7 @@ exports.moderatorBoard = async (req, res) => {
   res.status(200).json(allModerators);
 };
 
-exports.createUser = async(req,res)=>{
+exports.createUser = async (req, res) => {
   // Save User to Database
   User.create({
     name: req.body.name,
@@ -51,10 +51,10 @@ exports.createUser = async(req,res)=>{
 
 exports.updateInfo = async (req, res) => {
   const userId = req.params.id;
-  const { name, surname, phoneNumber } = req.body;
+  const { name, surname, phoneNumber, wishList } = req.body;
 
   await User.update({
-    name, surname, phoneNumber
+    name, surname, phoneNumber, wishlist: wishList || ''
   }, {
     where: {
       id: userId

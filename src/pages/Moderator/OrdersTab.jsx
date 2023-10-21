@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import {
-  Button, Container, Table, Spinner, OverlayTrigger, Tooltip, ListGroup, Row, Col, Form,
+  Button, Container, Table, OverlayTrigger, Tooltip, ListGroup, Row, Col, Form,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,7 @@ import { useDebounce, useFetch } from '../../utils/hooks';
 import authHeader from '../../services/auth-header';
 import { DELIVERY_METHODS, ORDER_STATUSES } from '../../utils/constants';
 import UpdateOrderModal from './UpdateOrderModal';
-import { NoDataComponent } from '../../components';
+import { LoadingComponent, NoDataComponent } from '../../components';
 
 export default function OrdersTab() {
   const { t } = useTranslation();
@@ -90,7 +90,7 @@ export default function OrdersTab() {
             </p>
           )}
           {loading && (
-            <Spinner animation="border" />
+            <LoadingComponent />
           )}
         </Row>
 

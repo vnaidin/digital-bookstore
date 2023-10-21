@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import React, { useContext, useState } from 'react';
 import {
   Button,
-  Container, Row, Spinner, Table,
+  Container, Row, Table,
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -12,9 +12,10 @@ import { OrderItemsCell } from '../../layout/HeaderBottom/Auth/UserPanel';
 import AppContext from '../../appContext';
 import { OrderTableLine } from '../Moderator/OrdersTab';
 import UpdateOrderModal from '../Moderator/UpdateOrderModal';
-import { NoDataComponent } from '../../components';
+import { LoadingComponent, NoDataComponent } from '../../components';
 import { toBinary } from '../../utils/helpers';
 import { post_to_url } from '../../utils/axios';
+import { DELIVERY_METHODS } from '../../utils/constants';
 
 export default function OrderPage() {
   const { state } = useContext(AppContext);
@@ -33,7 +34,7 @@ export default function OrderPage() {
   return (
     <Container>
       <Helmet>
-        <title>{t('pages.orderPage.title') + new Date(value ? value[0].createdAt : null).toLocaleString()}</title>
+        <title>{t('pages.orderPage.title') + new Date(value ? value[0]?.createdAt : null).toLocaleString()}</title>
       </Helmet>
 
       {showModal && (
@@ -50,7 +51,7 @@ export default function OrderPage() {
           </p>
         )}
         {loading && (
-          <Spinner animation="border" />
+        <LoadingComponent />
         )}
       </Row>
 
@@ -85,6 +86,7 @@ export default function OrderPage() {
                     <th>ID</th>
                     <th>{t('pages.orderPage.table.items')}</th>
                     <th>{t('pages.orderPage.table.status')}</th>
+                    {value[0].status === 2 ? <th>Tracking</th> : undefined}
                     <th>{t('pages.orderPage.table.hasPaid')}</th>
                     <th>{t('pages.orderPage.table.created')}</th>
                     <th>{t('pages.orderPage.table.updated')}</th>
@@ -103,8 +105,22 @@ export default function OrderPage() {
                   <td>{ind + 1}</td>
                   <OrderItemsCell items={order?.order_items} />
                   <td>{t(`constants.orderStatus.${order.status}`)}</td>
+                  {order.status === 2 && (
+                    <td>
+                      <a
+                        href={DELIVERY_METHODS.find(
+                          (method) => method.id === order.order_address.delMethodId,
+                        ).trackUrl + order.ttn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        link
+                      </a>
+                    </td>
+                  )}
                   <td>
-                    {Number(order.paymentMethodId) === 0 || order.hasPaid != null ? <p>{t('pages.orderPage.table.hasPaid-yes')}</p> : (
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {Number(order.paymentMethodId) === 1 ? order.hasPaid != null ? <p>{t('pages.orderPage.table.hasPaid-yes')}</p> : (
                       <Button
                         className="button"
                         onClick={() => {
@@ -132,7 +148,7 @@ export default function OrderPage() {
                       >
                         {t('pages.orderPage.table.pay')}
                       </Button>
-                    )}
+                    ) : '-'}
                   </td>
                   <td>{new Date(order?.createdAt).toLocaleString()}</td>
                   <td>{new Date(order?.updatedAt).toLocaleString()}</td>

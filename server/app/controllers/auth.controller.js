@@ -113,6 +113,7 @@ exports.signin = (req, res) => {
           surname: user.surname,
           email: user.email,
           phoneNumber: user.phoneNumber,
+          wishlist: user.wishlist,
           roles: authorities,
           accessToken: token
         });
@@ -171,7 +172,7 @@ exports.requestResetPassword = (req, res) => {
       });
 
       res.status(200).send({
-        message:"Check your email",
+        message: "Check your email",
         link: link
       });
 

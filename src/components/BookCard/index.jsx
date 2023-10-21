@@ -13,7 +13,7 @@ import { bookType } from '../../utils/types';
 import { BOOK_TAGS } from '../../utils/constants';
 
 export default function BookCard({
-  id, author, title, image, price, reducedPrice, isReducedNow, tags, item_management,
+  id, author, title, image, price, reducedPrice, isReducedNow, tags, item_management, itemType,
 }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function BookCard({
           height={300}
           className="p-3"
           alt={title}
-          onClick={() => navigate(`/book/${id}`)}
+          onClick={() => navigate(`/${itemType}/${id}`)}
         />
 
       </div>
@@ -53,7 +53,7 @@ export default function BookCard({
         style={{ minHeight: '10px' }}
         title={`${author} ${title}`}
       >
-        <NavLink href={`/book/${id}`}>
+        <NavLink href={`/${itemType}/${id}`}>
           <Card.Title style={{
             width: '200px', /* overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', */
           }}
@@ -102,6 +102,7 @@ export default function BookCard({
         <Row className="align-items-center justify-content-center gap-3">
           <WishListButton
             id={id}
+            itemType={itemType}
             price={price}
             title={title}
             image={image}

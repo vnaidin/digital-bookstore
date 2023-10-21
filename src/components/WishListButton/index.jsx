@@ -9,7 +9,7 @@ import AppContext from '../../appContext';
 import authHeader from '../../services/auth-header';
 
 export default function WishListButton({
-  id, price, title, image, reducedPrice, isReducedNow,
+  id, price, title, image, reducedPrice, isReducedNow, itemType,
 }) {
   const { dispatch, state } = useContext(AppContext);
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ export default function WishListButton({
   );
   const handleAddToWishList = () => {
     const payload = {
-      id, price, title, image, reducedPrice, isReducedNow,
+      id, price, title, image, reducedPrice, isReducedNow, itemType,
     };
     localStorage.setItem('wishList', JSON.stringify([...state.wishList, payload]));
     dispatch({ type: 'setToast', payload: { body: `${title} ${t('toasts.add-to-wishList')}`, callee: t('toasts.callee-sys') } });
@@ -76,6 +76,7 @@ export default function WishListButton({
 
 WishListButton.defaultProps = {
   id: null,
+  itemType: null,
   title: null,
   image: null,
   price: null,
@@ -85,6 +86,7 @@ WishListButton.defaultProps = {
 
 WishListButton.propTypes = {
   id: PropTypes.string,
+  itemType: PropTypes.string,
   title: PropTypes.string,
   image: PropTypes.string,
   price: PropTypes.number,

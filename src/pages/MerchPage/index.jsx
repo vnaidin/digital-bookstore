@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';
-import { BuyButton, LoadingComponent } from '../../components';
+import { BuyButton, LoadingComponent, WishListButton } from '../../components';
 
 export default function MerchPage() {
   const { id } = useParams();
@@ -85,14 +85,26 @@ export default function MerchPage() {
               )}
             </div>
           </Row>
-          <BuyButton
-            id={id}
-            price={value?.price}
-            title={value?.title}
-            image={value?.image}
-            reducedPrice={value?.reducedPrice}
-            isReducedNow={value?.isReducedNow}
-          />
+          <Row className="align-items-center justify-content-center gap-3">
+            <WishListButton
+              id={id}
+              itemType={value?.itemType}
+              price={value?.price}
+              title={value?.title}
+              image={value?.image}
+              reducedPrice={value?.reducedPrice}
+              isReducedNow={value?.isReducedNow}
+            />
+            <BuyButton
+              id={id}
+              price={value?.price}
+              title={value?.title}
+              image={value?.image}
+              reducedPrice={value?.reducedPrice}
+              isReducedNow={value?.isReducedNow}
+            />
+
+          </Row>
         </Col>
       </Row>
       <Row className="my-3">

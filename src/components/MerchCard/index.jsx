@@ -11,7 +11,7 @@ import { merchType } from '../../utils/types';
 
 export default function MerchCard({
   id, title, image,
-  price, reducedPrice, isReducedNow, tags, item_management,
+  price, reducedPrice, isReducedNow, tags, item_management, itemType,
 }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
@@ -25,14 +25,14 @@ export default function MerchCard({
         height={250}
         className="p-3"
         alt={title}
-        onClick={() => navigate(`/merch/${id}`)}
+        onClick={() => navigate(`/${itemType}/${id}`)}
       />
       <Card.Body
         className="d-flex flex-column align-items-center justify-content-end py-2"
         style={{ minHeight: '180px' }}
         title={title}
       >
-        <NavLink href={`/merch/${id}`}>
+        <NavLink href={`/${itemType}/${id}`}>
           <Card.Title style={{
             width: '200px', /* overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', */
           }}
@@ -71,6 +71,7 @@ export default function MerchCard({
         <Row className="align-items-center justify-content-center gap-3">
           <WishListButton
             id={id}
+            itemType={itemType}
             price={price}
             title={title}
             image={image}

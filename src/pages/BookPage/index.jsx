@@ -139,6 +139,7 @@ export default function BookPage() {
               <Row className="align-items-center justify-content-center gap-3">
                 <WishListButton
                   id={id}
+                  itemType={value?.itemType}
                   price={value?.price}
                   title={value?.title}
                   image={value?.image}

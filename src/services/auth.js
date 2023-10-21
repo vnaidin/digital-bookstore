@@ -17,9 +17,9 @@ const login = (loginData) => axios
           (item) => item.json(),
         )]).then((result) => {
           localStorage.setItem('wishList', JSON.stringify(result.map(({
-            id, price, title, image, reducedPrice, isReducedNow,
+            id, price, title, image, reducedPrice, isReducedNow, itemType,
           }) => ({
-            id, price, title, image, reducedPrice, isReducedNow,
+            id, price, title, image, reducedPrice, isReducedNow, itemType,
           }))));
         });
       } else {

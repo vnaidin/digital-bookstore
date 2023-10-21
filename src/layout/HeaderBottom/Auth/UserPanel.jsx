@@ -6,6 +6,7 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../../../services/auth';
 import AppContext from '../../../appContext';
 import UserService from '../../../services/user';
@@ -266,6 +267,7 @@ OrderItemsCell.propTypes = {
 export function WishListComponent() {
   const { t } = useTranslation();
   const { state } = useContext(AppContext);
+  const navigate = useNavigate();
   return (
     <>
       {state?.wishList && <h3 className="text-center">{t('layout.headerBottom.auth.wishlist.title')}</h3>}
@@ -273,6 +275,7 @@ export function WishListComponent() {
         <ListGroup>
           {state.wishList.map(({
             id,
+            itemType,
             price,
             title,
             image,
@@ -290,6 +293,7 @@ export function WishListComponent() {
                     width={50}
                     rounded
                     className="m-1"
+                    onClick={() => navigate(`/${itemType}/${id}`)}
                   />
                 </Col>
                 <p
@@ -297,12 +301,15 @@ export function WishListComponent() {
                   style={{
                     width: '200px', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
                   }}
+                  onClick={() => navigate(`/${itemType}/${id}`)}
+                  role="none"
                 >
                   {title}
                 </p>
 
                 <WishListButton
                   id={id}
+                  itemType={itemType}
                   price={price}
                   title={title}
                   image={image}

@@ -275,7 +275,12 @@ function OrderMoreInfoLine({
               :
             </strong>
             {' '}
-            <u>{phoneNumber}</u>
+            <a
+              href={`tel:${phoneNumber}`}
+              rel="nofollow"
+            >
+              {phoneNumber}
+            </a>
           </Col>
 
         </Row>

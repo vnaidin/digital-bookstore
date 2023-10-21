@@ -213,7 +213,7 @@ export default function UserPanel() {
         ) : <NoDataComponent />}
       </Row>
 
-      <Row>
+      <Row className="my-3">
         <WishListComponent />
       </Row>
 

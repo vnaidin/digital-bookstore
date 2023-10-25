@@ -81,6 +81,7 @@ export default function MerchTab() {
             bordered
             hover
             responsive
+            size="sm"
           >
             <thead>
               <tr>

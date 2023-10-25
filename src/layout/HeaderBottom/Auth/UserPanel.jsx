@@ -158,6 +158,7 @@ export default function UserPanel() {
             bordered
             hover
             responsive
+            size="sm"
           >
             <thead>
               <tr>

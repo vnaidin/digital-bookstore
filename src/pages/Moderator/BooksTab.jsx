@@ -85,6 +85,7 @@ export default function BooksTab() {
           bordered
           hover
           responsive
+          size="sm"
         >
           <thead>
             <tr>

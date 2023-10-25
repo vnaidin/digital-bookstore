@@ -4,7 +4,6 @@ import {
   Container, Row, Form, Col,
 } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../utils/hooks';

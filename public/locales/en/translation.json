@@ -350,7 +350,9 @@
         },
         "coverTypes": {
             "0": "Paperback",
-            "1": "Hard cover"
+            "1": "Hard cover",
+            "2": "Hardback with dust jacket",
+            "3": "Soft with valve"
         },
         "paymentMethods": {
             "0": "Postpayment",

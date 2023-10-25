@@ -13,6 +13,7 @@ exports.getOrders = async (req, res) => {
   const { status } = req.query;
 
   const orders = await Order.findAll({
+    order: [['createdAt', 'DESC']],
     where: {
       [Op.and]: [
         { status: status ? status : { [Op.not]: null } },

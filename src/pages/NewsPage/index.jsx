@@ -12,7 +12,7 @@ export default function NewsPage() {
   const { loading, error, value } = useFetch(
     `${process.env.REACT_APP_BE_URL}/api/news/${id}`,
     {},
-    [],
+    [id],
   );
   return (
     <Container style={{ padding: '3em 0px' }}>

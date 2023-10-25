@@ -14,7 +14,7 @@ export default function MerchPage() {
   const { loading, error, value } = useFetch(
     `${process.env.REACT_APP_BE_URL}/api/merch/${id}`,
     {},
-    [],
+    [id],
   );
   return (
     <Container style={{ padding: '3em 0px' }}>

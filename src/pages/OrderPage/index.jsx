@@ -63,6 +63,7 @@ export default function OrderPage() {
             bordered
             hover
             responsive
+            size="sm"
           >
             <thead>
               <tr>

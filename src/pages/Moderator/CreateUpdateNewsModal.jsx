@@ -172,7 +172,7 @@ export default function CreateUpdateNewsModal({
                   size="sm"
                   as="textarea"
                   placeholder={t('pages.moderator.tabs.news.modal.text')}
-                  maxLength={2000}
+                  maxLength={5000}
                   onChange={handleChange}
                   title="text"
                   defaultValue={existingNews?.text || ''}

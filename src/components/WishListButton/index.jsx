@@ -23,7 +23,9 @@ export default function WishListButton({
     localStorage.setItem('wishList', JSON.stringify([...state.wishList, payload]));
     dispatch({ type: 'setToast', payload: { body: `${title} ${t('toasts.add-to-wishList')}`, callee: t('toasts.callee-sys') } });
     dispatch({ type: 'addItemToWishList', payload: [...state.wishList, payload] });
-    axios.put(`/api/user/${state.currentUser.id}`, { wishList: [...state.wishList, payload].map((item) => item.id).join(',') }, { headers: authHeader() });
+    if (state.currentUser.id) {
+      axios.put(`/api/user/${state.currentUser.id}`, { wishList: [...state.wishList, payload].map((item) => item.id).join(',') }, { headers: authHeader() });
+    }
     setShouldAddToWishList(false);
   };
 
@@ -36,7 +38,9 @@ export default function WishListButton({
     localStorage.setItem('wishList', JSON.stringify(temp));
     dispatch({ type: 'rmItemFromWishList', payload: temp });
     dispatch({ type: 'setToast', payload: { body: `${title} ${t('toasts.rm-from-wishList')}`, callee: t('toasts.callee-sys') } });
-    axios.put(`/api/user/${state.currentUser.id}`, { wishList: temp.length > 0 ? temp.map((item) => item.id).join(',') : '' }, { headers: authHeader() });
+    if (state.currentUser.id) {
+      axios.put(`/api/user/${state.currentUser.id}`, { wishList: temp.length > 0 ? temp.map((item) => item.id).join(',') : '' }, { headers: authHeader() });
+    }
     setShouldAddToWishList(true);
   };
 
@@ -45,32 +49,34 @@ export default function WishListButton({
       {shouldAddToWishList ? t('layout.headerBottom.auth.wishlist.add') : t('layout.headerBottom.auth.wishlist.rm')}
     </Tooltip>
   );
-
+  // TODO: temporarily disabled favorites for unregistered users
   return (
-    <OverlayTrigger
-      placement="top"
-      delay={{ show: 250, hide: 400 }}
-      overlay={renderTooltip}
-    >
-      {({ ref, ...triggerHandler }) => (
-        <Button
-        // eslint-disable-next-line react/jsx-props-no-spreading
-          {...triggerHandler}
-          style={{
-            borderColor: '#2e3943', width: '3em', fontWeight: '900',
-          }}
-          ref={ref}
-          className="button"
-          onClick={() => {
-            if (shouldAddToWishList) { return handleAddToWishList(); }
-            return handleRemoveFromWishList();
-          }}
-          title={`${t('components.buyBtn')} ${title}`}
-        >
-          {shouldAddToWishList ? <AiOutlineHeart size={20} /> : <AiFillHeart size={20} />}
-        </Button>
-      )}
-    </OverlayTrigger>
+    state?.currentUser?.id ? (
+      <OverlayTrigger
+        placement="top"
+        delay={{ show: 250, hide: 400 }}
+        overlay={renderTooltip}
+      >
+        {({ ref, ...triggerHandler }) => (
+          <Button
+      // eslint-disable-next-line react/jsx-props-no-spreading
+            {...triggerHandler}
+            style={{
+              borderColor: '#2e3943', width: '3em', fontWeight: '900',
+            }}
+            ref={ref}
+            className="button"
+            onClick={() => {
+              if (shouldAddToWishList) { return handleAddToWishList(); }
+              return handleRemoveFromWishList();
+            }}
+            title={`${t('components.buyBtn')} ${title}`}
+          >
+            {shouldAddToWishList ? <AiOutlineHeart size={20} /> : <AiFillHeart size={20} />}
+          </Button>
+        )}
+      </OverlayTrigger>
+    ) : undefined
   );
 }
 

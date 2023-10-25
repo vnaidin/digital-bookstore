@@ -24,7 +24,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     text: {
-      type: Sequelize.STRING(2000)
+      type: Sequelize.STRING(5000)
     }
   });
 

@@ -100,6 +100,7 @@ export default function OrdersTab() {
             bordered
             hover
             responsive
+            size="sm"
           >
             <thead>
               <tr>

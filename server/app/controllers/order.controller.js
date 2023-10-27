@@ -5,6 +5,7 @@ const Order = db.order;
 const ItemsManagement = db.itemsManagement;
 const OrderItems = db.orderItems;
 const OrderAddress = db.orderAddress;
+const PromoCode = db.orderPromoCode;
 
 const Op = db.Sequelize.Op;
 
@@ -164,7 +165,46 @@ exports.updateOrderPaymentResult = async (req, res) => {
   }
 }
 
-exports.deleteOrder = async (req, res) => {//TODO: do we need it?
+exports.deleteOneTimePromocode = async (req, res) => {
+  const { promocode, id } = req.params
+
+  try {
+
+    const result = await db.sequelize.transaction(async (t) => {
+
+      const order = await PromoCode.destroy({
+        where: {
+          name: String(promocode).toUpperCase()
+        }
+      }, { transaction: t });
+
+      await Order.update({
+        promocode: null,
+      }, {
+        where: {
+          id: id
+        }
+      }, { transaction: t });
+
+      return order;
+
+    });
+    res.status(200).json({ message: `One-time promo ${promocode} deleted from both tables` })
+
+    // If the execution reaches this line, the transaction has been committed successfully
+    // `result` is whatever was returned from the transaction callback (the `user`, in this case)
+
+  } catch (error) {
+    // console.log(error);
+    res.status(500).send({ message: "Server Error" })
+
+    // If the execution reaches this line, an error occurred.
+    // The transaction has already been rolled back automatically by Sequelize!
+
+  }
+}
+
+exports.deleteOrder = async (req, res) => {
   const orderId = req.params.id;
   await Order.destroy({
     where: {

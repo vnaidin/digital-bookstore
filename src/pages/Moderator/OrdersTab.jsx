@@ -11,17 +11,16 @@ import { DELIVERY_METHODS, ORDER_STATUSES } from '../../utils/constants';
 import UpdateOrderModal from './UpdateOrderModal';
 import { LoadingComponent, NoDataComponent } from '../../components';
 import { orderType } from '../../utils/types';
-import PromoCodeService from '../../services/promocode';
 import AppContext from '../../appContext';
+import OrderService from '../../services/order';
 
 export default function OrdersTab() {
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(null);
   const [currentOrder, updateOrderObject] = useState();
 
   const handleCloseModal = () => { setShowModal(false); updateOrderObject(null); };
   const handleOpenModal = () => setShowModal(true);
-
   const [search, updSearch] = useState('');
   const debouncedSearch = useDebounce(search, 600);
 
@@ -134,6 +133,7 @@ export default function OrdersTab() {
                   key={order.id}
                   order={order}
                   handleOrderUpdate={handleOrderUpdate}
+                  handleCloseModal={handleCloseModal}
                 />
               ))}
             </tbody>
@@ -144,7 +144,7 @@ export default function OrdersTab() {
   );
 }
 
-export function OrderTableLine({ order, handleOrderUpdate }) {
+export function OrderTableLine({ order, handleOrderUpdate, handleCloseModal }) {
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const { t } = useTranslation();
   return (
@@ -195,12 +195,14 @@ export function OrderTableLine({ order, handleOrderUpdate }) {
       </tr>
       {showMoreInfo && (
       <OrderMoreInfoLine
+        orderId={order.id}
         items={order.order_items}
         address={order.order_address}
         phoneNumber={order.phoneNumber}
         comments={order.comments}
         promocode={order.promocode}
         receiver={order.receiverName ? `${order.receiverName} ${order.receiverSurname} (${order.receiverPhoneNumber})` : null}
+        handleCloseModal={handleCloseModal}
       />
       )}
     </>
@@ -212,13 +214,15 @@ OrderTableLine.defaultProps = {
 OrderTableLine.propTypes = {
   order: orderType.isRequired,
   handleOrderUpdate: PropTypes.func.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
 };
 
 function OrderMoreInfoLine({
-  items, address, phoneNumber, comments, receiver, promocode,
+  items, address, phoneNumber, comments, receiver, promocode, orderId, handleCloseModal,
 }) {
   const { t } = useTranslation();
   const { dispatch } = useContext(AppContext);
+
   // console.log(items)
   const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
@@ -234,6 +238,7 @@ function OrderMoreInfoLine({
   const currentDeliveryMethod = DELIVERY_METHODS.find(
     (method) => method.id === address.delMethodId,
   );
+
   return (
     <tr>
       <td>{' '}</td>
@@ -300,19 +305,23 @@ function OrderMoreInfoLine({
             Promocode
             :
             {' '}
-            {promocode}
+            <strong>{String(promocode).toUpperCase() || '...'}</strong>
           </Col>
           <Col>
+            {promocode && (
             <Button
               variant="danger"
               onClick={() => {
-                PromoCodeService.deletePromo(promocode).then((response) => {
-                  dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
-                }).catch((promoDelError) => console.error(new Error(promoDelError).message));
+                OrderService.deleteOneTimePromoCodeFromOrder(orderId, promocode)
+                  .then((response) => {
+                    dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
+                    handleCloseModal();
+                  }).catch((promoDelError) => console.error(new Error(promoDelError).message));
               }}
             >
               Delete
             </Button>
+            )}
           </Col>
         </Row>
         )}
@@ -325,6 +334,7 @@ OrderMoreInfoLine.defaultProps = {
   comments: null,
   receiver: null,
   promocode: null,
+  orderId: null,
 };
 
 OrderMoreInfoLine.propTypes = {
@@ -344,4 +354,6 @@ OrderMoreInfoLine.propTypes = {
   comments: PropTypes.string,
   promocode: PropTypes.string,
   receiver: PropTypes.string,
+  orderId: PropTypes.number,
+  handleCloseModal: PropTypes.func.isRequired,
 };

@@ -1,8 +1,8 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/order.controller");
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
+module.exports = function (app) {
+  app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
@@ -117,7 +117,7 @@ module.exports = function(app) {
    *         description: Some server error
    *
    */
-    app.get(
+  app.get(
     "/api/all/orders",
     [authJwt.verifyToken, authJwt.isModerator],
     controller.getOrders
@@ -191,69 +191,69 @@ module.exports = function(app) {
     controller.getOrderById
   );
 
-    /**
-   * @swagger
-   * /order:
-   *   post:
-   *     summary: Create a new order
-   *     tags: [Orders]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             $ref: '#/components/schemas/Order'
-   *     responses:
-   *       200:
-   *         description: The created order.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/Order'
-   *       500:
-   *         description: Some server error
-   *
-   */
-  
-    app.post(
-      "/api/order",
-      controller.createOrder
-    );
+  /**
+ * @swagger
+ * /order:
+ *   post:
+ *     summary: Create a new order
+ *     tags: [Orders]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Order'
+ *     responses:
+ *       200:
+ *         description: The created order.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Order'
+ *       500:
+ *         description: Some server error
+ *
+ */
 
-    /**
-  * @swagger
-  * /order/payment-update:
-  *   post:
-  *    summary: Updates the order by the liqpay
-  *    tags: [Orders]
-  *    parameters:
-  *    requestBody:
-  *      required: false
-  *      content:
-  *        application/json:
-  *          schema:
-  *             type: object
-  *             properties:
-  *               data:
-  *                 type: string
-  *                 description: UserId might not be stated
-  *               signature:
-  *                 type: string
-  *                 description: Array of books ordered
-  *            
-  *    responses:
-  *      200:
-  *        description: The order was updated
-  *        content:
-  *          application/json:
-  *            schema:
-  *              $ref: '#/components/schemas/Order'
-  *      404:
-  *        description: The order was not found
-  *      500:
-  *        description: Some error happened
-  */
-  app.post('/api/order/payment-update',controller.updateOrderPaymentResult)
+  app.post(
+    "/api/order",
+    controller.createOrder
+  );
+
+  /**
+* @swagger
+* /order/payment-update:
+*   post:
+*    summary: Updates the order by the liqpay
+*    tags: [Orders]
+*    parameters:
+*    requestBody:
+*      required: false
+*      content:
+*        application/json:
+*          schema:
+*             type: object
+*             properties:
+*               data:
+*                 type: string
+*                 description: UserId might not be stated
+*               signature:
+*                 type: string
+*                 description: Array of books ordered
+*            
+*    responses:
+*      200:
+*        description: The order was updated
+*        content:
+*          application/json:
+*            schema:
+*              $ref: '#/components/schemas/Order'
+*      404:
+*        description: The order was not found
+*      500:
+*        description: Some error happened
+*/
+  app.post('/api/order/payment-update', controller.updateOrderPaymentResult)
 
   /**
   * @swagger
@@ -288,38 +288,68 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/order/:id', [authJwt.verifyToken, authJwt.isModerator],controller.updateOrder)
+  app.put('/api/order/:id', [authJwt.verifyToken, authJwt.isModerator], controller.updateOrder)
 
-    /**
-  * @swagger
-  * /order/{id}:
-  *   delete:
-  *     security: 
-  *       - bearer: []
-  *     summary: Remove the order by id
-  *     tags: [Orders]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         schema:
-  *           type: number
-  *         required: true
-  *         description: The order id
-  *
-  *     responses:
-  *       200:
-  *         description: The order was deleted
-  *       404:
-  *         description: The order was not found
-  */
-  app.delete('/api/order/:id',[authJwt.verifyToken,authJwt.isAdmin],controller.deleteOrder);
+  /**
+* @swagger
+* /order/{id}:
+*   delete:
+*     security: 
+*       - bearer: []
+*     summary: Remove the order by id
+*     tags: [Orders]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: number
+*         required: true
+*         description: The order id
+*
+*     responses:
+*       200:
+*         description: The order was deleted
+*       404:
+*         description: The order was not found
+*/
+  app.delete('/api/order/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deleteOrder);
+
+  /**
+* @swagger
+* /order/{promocode}/{id}:
+*   delete:
+*     security: 
+*       - bearer: []
+*     summary: Remove the promocode from PROMOCODE table and clearing the promocode column in ORDERS
+*     tags: [Orders]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: number
+*         required: true
+*         description: The order id
+*       - in: path
+*         name: promocode
+*         schema:
+*           type: string
+*         required: true
+*         description: The order promocode
+*
+*     responses:
+*       200:
+*         description: The order was deleted
+*       404:
+*         description: The order was not found
+*/
+  app.delete('/api/order/:promocode/:id', [authJwt.verifyToken, authJwt.isModeratorOrAdmin], controller.deleteOneTimePromocode);
 
   /**
    * @swagger
    * /orders/search:
    *   get:
-  *     security: 
-  *       - bearer: []
+   *     security: 
+   *       - bearer: []
    *     summary: Get search items
    *     tags: [Orders]
    *     parameters:
@@ -344,7 +374,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/orders/search",
-     [authJwt.verifyToken,authJwt.isModerator],
+    [authJwt.verifyToken, authJwt.isModerator],
     controller.searchOrder
   );
 };

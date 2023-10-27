@@ -80,7 +80,7 @@ module.exports = function (app) {
    *         description: Some server error
    *
    */
-  
+
   app.post(
     "/api/auth/signup",
     [
@@ -136,22 +136,22 @@ module.exports = function (app) {
    */
   app.post("/api/auth/signin", controller.signin);
 
-    /**
- * @swagger
- * components:
- *   schemas:
- *     UserRequestResetPass:
- *       type: object
- *       required:
- *         - email
- *       properties:
- *         email:
- *           type: string
- *           description: Address where to send recovery email
- *   
- *       example:
- *         email: shniperson62@gmail.com
- */
+  /**
+* @swagger
+* components:
+*   schemas:
+*     UserRequestResetPass:
+*       type: object
+*       required:
+*         - email
+*       properties:
+*         email:
+*           type: string
+*           description: Address where to send recovery email
+*   
+*       example:
+*         email: shniperson62@gmail.com
+*/
 
   /**
    * @swagger

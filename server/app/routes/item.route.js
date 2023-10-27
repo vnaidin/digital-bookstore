@@ -5,11 +5,11 @@ const controller = require("../controllers/item.controller");
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+    cb(null, 'uploads/');
   }
   ,
   filename: function (req, file, cb) {
-      cb(null, file?file.fieldname + '-' + Date.now()+'.'+file.mimetype.split('/')[1]:'none');
+    cb(null, file ? file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1] : 'none');
   }
 });
 
@@ -17,9 +17,9 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
   // reject a file
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-      cb(null, true);
+    cb(null, true);
   } else {
-      cb(null, false);
+    cb(null, false);
   }
 }
 
@@ -37,8 +37,8 @@ const upload = multer({
 
 
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
+module.exports = function (app) {
+  app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
@@ -313,7 +313,7 @@ module.exports = function(app) {
    *         description: Some server error
    *
    */
-    app.get(
+  app.get(
     "/api/all/books",
     controller.getBooks
   );
@@ -347,37 +347,37 @@ module.exports = function(app) {
     controller.getBookById
   );
 
-    /**
-   * @swagger
-   * /book:
-   *   post:
-   *     security: 
-   *       - bearer: []
-   *     summary: Create a new book
-   *     tags: [Books]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         multipart/form-data:
-   *           schema:
-   *             $ref: '#/components/schemas/BookCreate'
-   *     responses:
-   *       200:
-   *         description: The created book.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/Book'
-   *       500:
-   *         description: Some server error
-   *
-   */
-  
-    app.post(
-      "/api/book",
-      [authJwt.verifyToken, authJwt.isModerator],upload,
-      controller.createBook
-    );
+  /**
+ * @swagger
+ * /book:
+ *   post:
+ *     security: 
+ *       - bearer: []
+ *     summary: Create a new book
+ *     tags: [Books]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/BookCreate'
+ *     responses:
+ *       200:
+ *         description: The created book.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Some server error
+ *
+ */
+
+  app.post(
+    "/api/book",
+    [authJwt.verifyToken, authJwt.isModerator], upload,
+    controller.createBook
+  );
 
   /**
   * @swagger
@@ -412,32 +412,32 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/book/:id', [authJwt.verifyToken, authJwt.isModerator],upload,
-  controller.updateBook)
+  app.put('/api/book/:id', [authJwt.verifyToken, authJwt.isModerator], upload,
+    controller.updateBook)
 
-    /**
-  * @swagger
-  * /book/{id}:
-  *   delete:
-  *     security: 
-  *       - bearer: []
-  *     summary: Remove the book by id
-  *     tags: [Books]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         schema:
-  *           type: number
-  *         required: true
-  *         description: The book id
-  *
-  *     responses:
-  *       200:
-  *         description: The book was deleted
-  *       404:
-  *         description: The book was not found
-  */
-  app.delete('/api/book/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteBook)
+  /**
+* @swagger
+* /book/{id}:
+*   delete:
+*     security: 
+*       - bearer: []
+*     summary: Remove the book by id
+*     tags: [Books]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: number
+*         required: true
+*         description: The book id
+*
+*     responses:
+*       200:
+*         description: The book was deleted
+*       404:
+*         description: The book was not found
+*/
+  app.delete('/api/book/:id', [authJwt.verifyToken, authJwt.isModerator], controller.deleteBook)
 
   /******************************************************************************************************************************************************** */
 
@@ -494,37 +494,37 @@ module.exports = function(app) {
     controller.getMerchById
   );
 
-    /**
-   * @swagger
-   * /merch:
-   *   post:
-   *     security: 
-   *       - bearer: []
-   *     summary: Create a new merch
-   *     tags: [Merch]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         multipart/form-data:
-   *           schema:
-   *             $ref: '#/components/schemas/MerchCreate'
-   *     responses:
-   *       200:
-   *         description: The created merch.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/Merch'
-   *       500:
-   *         description: Some server error
-   *
-   */
-  
-    app.post(
-      "/api/merch",
-      [authJwt.verifyToken, authJwt.isModerator],multer({ storage }).single('image'),
-      controller.createMerch
-    );
+  /**
+ * @swagger
+ * /merch:
+ *   post:
+ *     security: 
+ *       - bearer: []
+ *     summary: Create a new merch
+ *     tags: [Merch]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/MerchCreate'
+ *     responses:
+ *       200:
+ *         description: The created merch.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Merch'
+ *       500:
+ *         description: Some server error
+ *
+ */
+
+  app.post(
+    "/api/merch",
+    [authJwt.verifyToken, authJwt.isModerator], multer({ storage }).single('image'),
+    controller.createMerch
+  );
 
   /**
   * @swagger
@@ -559,32 +559,32 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/merch/:id', [authJwt.verifyToken, authJwt.isModerator],multer({ storage }).single('image'),
-  controller.updateMerch)
+  app.put('/api/merch/:id', [authJwt.verifyToken, authJwt.isModerator], multer({ storage }).single('image'),
+    controller.updateMerch)
 
-    /**
-  * @swagger
-  * /merch/{id}:
-  *   delete:
-  *     security: 
-  *       - bearer: []
-  *     summary: Remove the merch by id
-  *     tags: [Merch]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         schema:
-  *           type: number
-  *         required: true
-  *         description: The merch id
-  *
-  *     responses:
-  *       200:
-  *         description: The merch was deleted
-  *       404:
-  *         description: The merch was not found
-  */
-  app.delete('/api/merch/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteMerch)
+  /**
+* @swagger
+* /merch/{id}:
+*   delete:
+*     security: 
+*       - bearer: []
+*     summary: Remove the merch by id
+*     tags: [Merch]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: number
+*         required: true
+*         description: The merch id
+*
+*     responses:
+*       200:
+*         description: The merch was deleted
+*       404:
+*         description: The merch was not found
+*/
+  app.delete('/api/merch/:id', [authJwt.verifyToken, authJwt.isModerator], controller.deleteMerch)
 
   /************************************************************************************************************************************************** */
 
@@ -684,7 +684,7 @@ module.exports = function(app) {
    */
   app.get(
     "/api/merches/search",
-    [authJwt.verifyToken,authJwt.isModerator],
+    [authJwt.verifyToken, authJwt.isModerator],
     controller.searchMerch
   );
 };

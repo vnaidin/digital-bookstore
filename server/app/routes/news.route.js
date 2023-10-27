@@ -5,11 +5,11 @@ const controller = require("../controllers/news.controller");
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'uploads/');
+    cb(null, 'uploads/');
   }
   ,
   filename: function (req, file, cb) {
-      cb(null, file?file.fieldname + '-' + Date.now()+'.'+file.mimetype.split('/')[1]:'none');
+    cb(null, file ? file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1] : 'none');
   }
 });
 
@@ -17,9 +17,9 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
   // reject a file
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-      cb(null, true);
+    cb(null, true);
   } else {
-      cb(null, false);
+    cb(null, false);
   }
 }
 
@@ -31,8 +31,8 @@ const upload = multer({
   fileFilter: fileFilter
 }).single('image');
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
+module.exports = function (app) {
+  app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
@@ -108,7 +108,7 @@ module.exports = function(app) {
    *         description: Some server error
    *
    */
-    app.get(
+  app.get(
     "/api/all/news",
     controller.getNews
   );
@@ -142,38 +142,38 @@ module.exports = function(app) {
     controller.getNewsById
   );
 
-    /**
-   * @swagger
-   * /news:
-   *   post:
-   *     security: 
-   *       - bearer: []
-   *     summary: Create news
-   *     tags: [News]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         multipart/form-data:
-   *           schema:
-   *             $ref: '#/components/schemas/News'
-   * 
-   *     responses:
-   *       200:
-   *         description: The created news.
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/News'
-   *       500:
-   *         description: Some server error
-   *
-   */
-  
-    app.post(
-      "/api/news",
-      [authJwt.verifyToken, authJwt.isModerator],upload,
-      controller.createNews
-    );
+  /**
+ * @swagger
+ * /news:
+ *   post:
+ *     security: 
+ *       - bearer: []
+ *     summary: Create news
+ *     tags: [News]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/News'
+ * 
+ *     responses:
+ *       200:
+ *         description: The created news.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/News'
+ *       500:
+ *         description: Some server error
+ *
+ */
+
+  app.post(
+    "/api/news",
+    [authJwt.verifyToken, authJwt.isModerator], upload,
+    controller.createNews
+  );
 
   /**
   * @swagger
@@ -208,30 +208,30 @@ module.exports = function(app) {
   *      500:
   *        description: Some error happened
   */
-  app.put('/api/news/:id', [authJwt.verifyToken, authJwt.isModerator],upload,
-  controller.updateNews)
+  app.put('/api/news/:id', [authJwt.verifyToken, authJwt.isModerator], upload,
+    controller.updateNews)
 
-    /**
-  * @swagger
-  * /news/{id}:
-  *   delete:
-  *     security: 
-  *       - bearer: []
-  *     summary: Remove the news by id
-  *     tags: [News]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         schema:
-  *           type: number
-  *         required: true
-  *         description: The news id
-  *
-  *     responses:
-  *       200:
-  *         description: The new was deleted
-  *       404:
-  *         description: The new was not found
-  */
-  app.delete('/api/news/:id',[authJwt.verifyToken,authJwt.isModerator],controller.deleteNews)
-    }
+  /**
+* @swagger
+* /news/{id}:
+*   delete:
+*     security: 
+*       - bearer: []
+*     summary: Remove the news by id
+*     tags: [News]
+*     parameters:
+*       - in: path
+*         name: id
+*         schema:
+*           type: number
+*         required: true
+*         description: The news id
+*
+*     responses:
+*       200:
+*         description: The new was deleted
+*       404:
+*         description: The new was not found
+*/
+  app.delete('/api/news/:id', [authJwt.verifyToken, authJwt.isModerator], controller.deleteNews)
+}

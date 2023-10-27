@@ -56,7 +56,6 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode, curren
       updatePriceWithPromocode({});
     }
   }, [formData?.promocode]);
-  console.log(formData?.promocode);
 
   const handleSubmit = (values) => {
     const objectToPost = {
@@ -82,9 +81,9 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode, curren
       },
       price: totalPrice,
       status: false,
-      comments: currentPromo?.id ? `Promo: ${values.promocode} ${values.comments ? values.comments : ''}` : values.comments,
+      comments: values.comments,
       paymentMethodId: +values.paymentMethodId,
-      promocode: values.promocode,
+      promocode: values.promocode ? String(values.promocode).toUpperCase() : '',
     };
 
     //  console.log('object to post', objectToPost);

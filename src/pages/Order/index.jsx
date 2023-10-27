@@ -59,6 +59,7 @@ export default function Order() {
           >
             <OrderForm
               totalPrice={Math.round(totalPrice)}
+              currentPromo={promoObject}
               updatePriceWithPromocode={updatePromoObject}
             />
           </Col>

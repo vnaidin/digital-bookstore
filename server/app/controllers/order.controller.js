@@ -68,7 +68,8 @@ exports.createOrder = async (req, res) => {
       // create order
       const order = await Order.create({
         userId, name, surname, phoneNumber, receiverName, receiverSurname, receiverPhoneNumber,
-        email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price, promocode
+        email, order_address, comments, year, category, status, rejected, order_items, paymentMethodId, price,
+        promocode: promocode ? String(promocode).toUpperCase() : ''
       },
         {
           include: [OrderItems, OrderAddress]

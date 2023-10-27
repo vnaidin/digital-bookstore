@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Button, Container, Table, OverlayTrigger, Tooltip, ListGroup, Row, Col, Form,
 } from 'react-bootstrap';
@@ -10,6 +10,9 @@ import authHeader from '../../services/auth-header';
 import { DELIVERY_METHODS, ORDER_STATUSES } from '../../utils/constants';
 import UpdateOrderModal from './UpdateOrderModal';
 import { LoadingComponent, NoDataComponent } from '../../components';
+import { orderType } from '../../utils/types';
+import PromoCodeService from '../../services/promocode';
+import AppContext from '../../appContext';
 
 export default function OrdersTab() {
   const { t } = useTranslation();
@@ -51,9 +54,10 @@ export default function OrdersTab() {
       )}
       <Container>
         <Row>
+
           <Col>
             <Form.Control
-              className="colmy-3 px-3"
+              className="col my-1 px-3"
               size="lg"
               placeholder="Name, Surname or TelNumber"
               onChange={(e) => { updSearch(e.target.value); }}
@@ -61,6 +65,7 @@ export default function OrdersTab() {
               autoComplete="off"
             />
           </Col>
+
           <Col className="d-flex gap-2 align-items-center">
             <Form.Label>{t('pages.moderator.tabs.order.filter')}</Form.Label>
             <Form.Select
@@ -82,6 +87,12 @@ export default function OrdersTab() {
             </Form.Select>
 
           </Col>
+          {/** FIXME: think about pre-defined ranges, today- 1,2 weeks/ months/ */}
+          {/* <Col>
+            <Form.Label>from today to date:</Form.Label>
+            <Form.Control type="date" />
+          </Col> */}
+
         </Row>
         <Row className="my-2">
           {error && (
@@ -188,6 +199,7 @@ export function OrderTableLine({ order, handleOrderUpdate }) {
         address={order.order_address}
         phoneNumber={order.phoneNumber}
         comments={order.comments}
+        promocode={order.promocode}
         receiver={order.receiverName ? `${order.receiverName} ${order.receiverSurname} (${order.receiverPhoneNumber})` : null}
       />
       )}
@@ -198,40 +210,15 @@ OrderTableLine.defaultProps = {
 };
 
 OrderTableLine.propTypes = {
-  order: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    surname: PropTypes.string,
-    phoneNumber: PropTypes.string,
-    receiverName: PropTypes.string,
-    receiverSurname: PropTypes.string,
-    receiverPhoneNumber: PropTypes.string,
-    email: PropTypes.string,
-    order_address: PropTypes.shape({
-      delMethodId: PropTypes.number,
-      city: PropTypes.string,
-      street: PropTypes.string,
-      houseNr: PropTypes.string,
-      flatNr: PropTypes.number,
-      branch: PropTypes.number,
-    }),
-    comments: PropTypes.string,
-    price: PropTypes.number,
-    status: PropTypes.number,
-    hasPaid: PropTypes.bool,
-    createdAt: PropTypes.string,
-    order_items: PropTypes.arrayOf(PropTypes.shape({
-      itemId: PropTypes.number,
-      price: PropTypes.number,
-    })),
-  }).isRequired,
+  order: orderType.isRequired,
   handleOrderUpdate: PropTypes.func.isRequired,
 };
 
 function OrderMoreInfoLine({
-  items, address, phoneNumber, comments, receiver,
+  items, address, phoneNumber, comments, receiver, promocode,
 }) {
   const { t } = useTranslation();
+  const { dispatch } = useContext(AppContext);
   // console.log(items)
   const itemsAmountById = items.map(({ itemId }) => itemId).reduce((prev, cur) => {
     // eslint-disable-next-line no-param-reassign
@@ -250,7 +237,7 @@ function OrderMoreInfoLine({
   return (
     <tr>
       <td>{' '}</td>
-      <td colSpan={5}>
+      <td colSpan={8}>
 
         <Row className="my-3 gap-1">
           <Col>
@@ -307,6 +294,28 @@ function OrderMoreInfoLine({
           {comments}
         </Row>
         )}
+        {promocode && (
+        <Row className="p-3">
+          <Col>
+            Promocode
+            :
+            {' '}
+            {promocode}
+          </Col>
+          <Col>
+            <Button
+              variant="danger"
+              onClick={() => {
+                PromoCodeService.deletePromo(promocode).then((response) => {
+                  dispatch({ type: 'setToast', payload: { body: response.data.message, callee: t('toasts.callee-sys') } });
+                }).catch((promoDelError) => console.error(new Error(promoDelError).message));
+              }}
+            >
+              Delete
+            </Button>
+          </Col>
+        </Row>
+        )}
       </td>
     </tr>
   );
@@ -315,6 +324,7 @@ function OrderMoreInfoLine({
 OrderMoreInfoLine.defaultProps = {
   comments: null,
   receiver: null,
+  promocode: null,
 };
 
 OrderMoreInfoLine.propTypes = {
@@ -332,5 +342,6 @@ OrderMoreInfoLine.propTypes = {
   }).isRequired,
   phoneNumber: PropTypes.string.isRequired,
   comments: PropTypes.string,
+  promocode: PropTypes.string,
   receiver: PropTypes.string,
 };

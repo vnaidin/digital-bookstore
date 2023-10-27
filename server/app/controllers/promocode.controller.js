@@ -17,14 +17,24 @@ exports.createPromo = async (req, res) => {
   }).then(user => res.status(200).json({ message: `PromoCode ${name} created` }))
 }
 
+exports.getPromoByName = async (req, res) => {
+  const promocode = await PromoCode.findOne({
+    where: {
+      name: String(req.query.name).toUpperCase()
+    }
+  });
+  res.status(200).json(promocode);
+
+}
+
 
 exports.deletePromo = async (req, res) => {
-  const promoId = req.params.id;
+  const promoName = req.params.name;
 
   await PromoCode.destroy({
     where: {
-      id: promoId
+      name: String(promoName).toUpperCase()
     }
   });
-  res.status(200).json({ message: "Deleted PromoCode " + promoId })
+  res.status(200).json({ message: "Deleted PromoCode " + promoName })
 }

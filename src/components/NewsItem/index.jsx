@@ -11,7 +11,7 @@ export default function NewsItem({
   const navigate = useNavigate();
   return (
 
-    <Card style={{ backgroundColor: 'inherit' }}>
+    <Card style={{ backgroundColor: 'inherit', border: 'none' }}>
       <Card.Img
         variant="top"
         // src={image}

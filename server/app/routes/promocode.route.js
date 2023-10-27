@@ -68,6 +68,44 @@ module.exports = function (app) {
     controller.getAllPromocodes
   );
 
+
+  /**
+   * @swagger
+   * tags:
+   *   name: PromoCode
+   *   description: The promocode managing API
+   * /promo:
+   *   get:
+   *     security: 
+   *        - bearer: []
+   *     summary: Get promocode object
+   *     tags: [PromoCode]
+   *     parameters:
+   *      - in: query
+   *        name: name
+   *        schema:
+   *          type: string
+   *        required: true
+   *        example: KARINA
+   *        description: type in any case
+   *     responses:
+   *       200:
+   *         description: The needed promocode.
+   *         content:
+   *           application/json:
+   *            schema:
+   *              type: array
+   *              items:
+   *               $ref: '#/components/schemas/PromoCode'
+   *       500:
+   *         description: Some server error
+   *
+   */
+  app.get(
+    "/api/promo", [authJwt.verifyToken, authJwt.isModerator],
+    controller.getPromoByName
+  );
+
   /**
   * @swagger
   * /promo:
@@ -98,19 +136,19 @@ module.exports = function (app) {
 
   /**
 * @swagger
-* /promo/{id}:
+* /promo/{name}:
 *   delete:
 *     security: 
 *       - bearer: []
-*     summary: Remove the promocode by id
+*     summary: Remove the promocode by name
 *     tags: [PromoCode]
 *     parameters:
 *       - in: path
-*         name: id
+*         name: name
 *         schema:
-*           type: number
+*           type: string
 *         required: true
-*         description: The promocode id
+*         description: The promocode name
 *
 *     responses:
 *       200:
@@ -118,5 +156,5 @@ module.exports = function (app) {
 *       404:
 *         description: The promocode was not found
 */
-  app.delete('/api/promo/:id', [authJwt.verifyToken, authJwt.isAdmin], controller.deletePromo)
+  app.delete('/api/promo/:name', [authJwt.verifyToken, authJwt.isModeratorOrAdmin], controller.deletePromo)
 };

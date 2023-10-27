@@ -6,14 +6,16 @@ import {
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { FcApproval } from 'react-icons/fc';
 import { DELIVERY_METHODS, PAYMENT_METHODS } from '../../utils/constants';
 import AppContext from '../../appContext';
 import OrderService from '../../services/order';
 import { post_to_url, telegramBotSendMsg } from '../../utils/axios';
 import { toBinary } from '../../utils/helpers';
 import { useGetPromoCodes } from '../../utils/hooks';
+import { promoCodeType } from '../../utils/types';
 
-export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
+export default function OrderForm({ totalPrice, updatePriceWithPromocode, currentPromo }) {
   const [deliveryMethod, setDeliveryMethod] = useState();
   const [addReceiver, setReceiver] = useState(false);
   const promocodesArray = useGetPromoCodes();
@@ -54,6 +56,7 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
       updatePriceWithPromocode({});
     }
   }, [formData?.promocode]);
+  console.log(formData?.promocode);
 
   const handleSubmit = (values) => {
     const objectToPost = {
@@ -79,7 +82,7 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
       },
       price: totalPrice,
       status: false,
-      comments: values.comments,
+      comments: currentPromo?.id ? `Promo: ${values.promocode} ${values.comments ? values.comments : ''}` : values.comments,
       paymentMethodId: +values.paymentMethodId,
       promocode: values.promocode,
     };
@@ -550,14 +553,18 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
             controlId="validationFormik106"
             className="position-relative"
           >
-            <Form.Control
-              type="text"
-              placeholder={t('pages.order.form.promocode-p')}
-              title="promocode"
-              // defaultValue={formData?.comments}
-              onChange={(event) => handleChange(event.target.title, event.target.value)}
-              autoComplete="off"
-            />
+            <InputGroup className="mb-3">
+
+              <Form.Control
+                type="text"
+                placeholder={t('pages.order.form.promocode-p')}
+                title="promocode"
+                // defaultValue={formData?.comments}
+                onChange={(event) => handleChange(event.target.title, event.target.value)}
+                autoComplete="off"
+              />
+              {currentPromo?.id && <InputGroup.Text className="p-1" id="basic-addon1"><FcApproval size={20} /></InputGroup.Text>}
+            </InputGroup>
           </Form.Group>
 
         </Form.Group>
@@ -592,9 +599,11 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode }) {
 }
 
 OrderForm.defaultProps = {
+  currentPromo: undefined,
 };
 
 OrderForm.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   updatePriceWithPromocode: PropTypes.func.isRequired,
+  currentPromo: promoCodeType,
 };

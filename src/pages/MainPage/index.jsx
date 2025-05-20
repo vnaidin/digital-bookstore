@@ -21,7 +21,7 @@ export default function Main() { // TODO: debug
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   useEffect(() => {
-    Promise.all(['books', 'merch', 'news'].map((entity) => fetch(`${process.env.REACT_APP_BE_URL}/api/all/${entity}`, options).then(
+    Promise.all(['books', 'merch', 'news'].map((entity) => fetch(`${import.meta.env.REACT_APP_BE_URL}/api/all/${entity}`, options).then(
       (response) => response.json(),
     ))).then(
       ([{ books }, { merch }, { news }]) => setData({ books, merch, news }),

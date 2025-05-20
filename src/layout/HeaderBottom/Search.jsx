@@ -59,7 +59,7 @@ export default function SearchBar() {
                 onClick={() => { navigate(`/${result.itemType}/${result.id}`); updSearch(''); }}
               >
                 <img
-                  src={`${process.env.REACT_APP_BE_URL}/${result.image}`}
+                  src={`${import.meta.env.REACT_APP_BE_URL}/${result.image}`}
                   width={35}
                   alt={result.title}
                 />

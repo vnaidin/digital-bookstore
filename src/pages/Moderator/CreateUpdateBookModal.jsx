@@ -565,7 +565,7 @@ export default function CreateUpdateBookModal({
                   <Card.Img
                     variant="top"
                     src={image ? URL.createObjectURL(image)
-                      : `${existingBook?.image ? '' : process.env.REACT_APP_BE_URL}${existingBook.image}`}
+                      : `${existingBook?.image ? '' : import.meta.env.REACT_APP_BE_URL}${existingBook.image}`}
                   />
                 )}
                 <Card.Title>main</Card.Title>
@@ -600,7 +600,7 @@ export default function CreateUpdateBookModal({
                   <Card.Img
                     variant="top"
                     src={coverFront ? URL.createObjectURL(coverFront)
-                      : `${existingBook?.covers ? '' : process.env.REACT_APP_BE_URL}/${existingBook.covers.split(',')[0]}`}
+                      : `${existingBook?.covers ? '' : import.meta.env.REACT_APP_BE_URL}/${existingBook.covers.split(',')[0]}`}
                   />
                 )}
                 <Card.Title>front</Card.Title>
@@ -637,7 +637,7 @@ export default function CreateUpdateBookModal({
                   <Card.Img
                     variant="top"
                     src={coverBack ? URL.createObjectURL(coverBack)
-                      : `${existingBook?.covers ? '' : process.env.REACT_APP_BE_URL}/${existingBook.covers.split(',')[1]}`}
+                      : `${existingBook?.covers ? '' : import.meta.env.REACT_APP_BE_URL}/${existingBook.covers.split(',')[1]}`}
                   />
                 )}
                 <Card.Title>back</Card.Title>

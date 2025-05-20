@@ -301,7 +301,7 @@ export default function CreateUpdateMerchModal({
                 <Card.Img
                   variant="top"
                   src={image ? URL.createObjectURL(image)
-                    : `${existingMerch?.image ? '' : process.env.REACT_APP_BE_URL}${existingMerch.image}`}
+                    : `${existingMerch?.image ? '' : import.meta.env.REACT_APP_BE_URL}${existingMerch.image}`}
                 />
               )}
               <Card.Body>

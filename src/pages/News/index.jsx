@@ -19,7 +19,7 @@ export default function News() {
   });
   const { t } = useTranslation();
 
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/news`);
+  const url = new URL(`${import.meta.env.REACT_APP_BE_URL}/api/all/news`);
   url.searchParams.append('page', filters.page);
 
   const { loading, error, value } = useFetch(

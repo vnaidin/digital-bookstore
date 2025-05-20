@@ -22,7 +22,7 @@ export default function Merch() {
     priceRange: null,
   });
 
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/merch`);
+  const url = new URL(`${import.meta.env.REACT_APP_BE_URL}/api/all/merch`);
   url.searchParams.append('page', filters.page);
   // eslint-disable-next-line no-unused-expressions
   filters.order && url.searchParams.append('order', filters.order);

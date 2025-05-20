@@ -23,13 +23,13 @@ export default function OrderPage() {
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/order/${id}`,
+    `${import.meta.env.REACT_APP_BE_URL}/api/order/${id}`,
     {},
     [showModal],
   );
   const isNotOrdinaryUser = state?.currentUser?.roles.some((role) => role === 'ROLE_SELLER');
 
-  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = process.env;
+  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = import.meta.env;
 
   return (
     <Container>

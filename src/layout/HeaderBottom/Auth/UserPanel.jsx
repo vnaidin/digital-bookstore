@@ -17,7 +17,7 @@ import { post_to_url } from '../../../utils/axios';
 import { toBinary } from '../../../utils/helpers';
 
 export default function UserPanel() {
-  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = process.env;
+  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = import.meta.env;
 
   const { state, dispatch } = useContext(AppContext);
   const { t } = useTranslation();
@@ -233,7 +233,7 @@ export function OrderItemsCell({ items }) {
 
   const [orderItemsToShow, setOrderItemsToShow] = useState([]);
   useEffect(() => {
-    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/item/${id}`).then(
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${import.meta.env.REACT_APP_BE_URL}/api/item/${id}`).then(
       (response) => response.json(),
     ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
   }, [items]);
@@ -243,7 +243,7 @@ export function OrderItemsCell({ items }) {
       <ListGroup>
         {orderItemsToShow && orderItemsToShow.length > 0 && orderItemsToShow.map((item) => (
           <ListGroup.Item className="text-start" key={item.id}>
-            <Image src={`${process.env.REACT_APP_BE_URL}/${item.image}`} width={30} rounded className="m-1" />
+            <Image src={`${import.meta.env.REACT_APP_BE_URL}/${item.image}`} width={30} rounded className="m-1" />
             {`${item.title} `}
             {itemsAmountById[item.id] > 1 ? (`(${itemsAmountById[item.id]})`) : ''}
           </ListGroup.Item>
@@ -290,7 +290,7 @@ export function WishListComponent() {
                   xs={3}
                 >
                   <Image
-                    src={`${process.env.REACT_APP_BE_URL}/${image}`}
+                    src={`${import.meta.env.REACT_APP_BE_URL}/${image}`}
                     width={50}
                     rounded
                     className="m-1"

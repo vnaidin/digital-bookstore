@@ -27,7 +27,7 @@ export default function Books() {
     language: null,
   });
 
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
+  const url = new URL(`${import.meta.env.REACT_APP_BE_URL}/api/all/books`);
   url.searchParams.append('page', filters.page);
   bookCategory && url.searchParams.append('cat', bookCategory);
   filters.order && url.searchParams.append('order', filters.order);

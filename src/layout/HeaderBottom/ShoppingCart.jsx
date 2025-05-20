@@ -82,7 +82,7 @@ export default function ShoppingCart() {
                     <Col className="text-start my-1">
                       <img
                         // src={value[0].image}
-                        src={`${process.env.REACT_APP_BE_URL}/${value[0].image}`}
+                        src={`${import.meta.env.REACT_APP_BE_URL}/${value[0].image}`}
                         alt={value[0].title}
                         width={80}
                         className="my-1 mx-1"

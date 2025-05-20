@@ -28,7 +28,7 @@ export default function OrdersTab() {
     page: 0,
     status: null,
   });
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'orders/search' : 'all/orders'}`);
+  const url = new URL(`${import.meta.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'orders/search' : 'all/orders'}`);
   // eslint-disable-next-line no-unused-expressions
   search.length > 1 && url.searchParams.append('search', debouncedSearch);
   // eslint-disable-next-line no-unused-expressions
@@ -231,7 +231,7 @@ function OrderMoreInfoLine({
   }, {});
   const [orderItemsToShow, setOrderItemsToShow] = useState([]);
   useEffect(() => {
-    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${process.env.REACT_APP_BE_URL}/api/item/${id}`).then(
+    Promise.all(Object.entries(itemsAmountById).map(([id, amount]) => fetch(`${import.meta.env.REACT_APP_BE_URL}/api/item/${id}`).then(
       (response) => response.json(),
     ).then((xx) => ({ ...xx, amount })))).then((result) => setOrderItemsToShow(result));
   }, [items]);

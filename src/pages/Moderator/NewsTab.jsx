@@ -19,7 +19,7 @@ export default function NewsTab() {
   const handleOpenModal = () => setShowModal(true);
 
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/all/news`,
+    `${import.meta.env.REACT_APP_BE_URL}/api/all/news`,
     {},
     [showModal],
   );

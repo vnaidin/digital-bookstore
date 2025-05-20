@@ -12,7 +12,7 @@ export default function MerchPage() {
   const { id } = useParams();
   const { t, i18n } = useTranslation();
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/merch/${id}`,
+    `${import.meta.env.REACT_APP_BE_URL}/api/merch/${id}`,
     {},
     [id],
   );
@@ -42,7 +42,7 @@ export default function MerchPage() {
         >
           <Image
             // src={value?.image}
-            src={`${process.env.REACT_APP_BE_URL}/${value?.image}`}
+            src={`${import.meta.env.REACT_APP_BE_URL}/${value?.image}`}
             className="p-2"
             alt={value?.title}
             width={300}

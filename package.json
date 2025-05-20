@@ -24,18 +24,16 @@
     "react-icons": "^5.0.1",
     "react-range-slider-input": "^3.0.7",
     "react-router-dom": "^7.5.2",
-    "react-scripts": "5.0.1",
     "yup": "^1.4.0"
   },
   "scripts": {
     "start-back": "cd ./server && npm run dev",
-    "start-front": "react-scripts start",
+    "start-front": "vite", 
+    "build": "vite build", 
+    "preview": "vite preview", 
     "dev": "concurrently --kill-others \"npm run start-back\" \"npm run start-front\"",
     "prod": "npm run build && cd ./server && npm start",
-    "build": "react-scripts build",
-    "update": "npx npm-check -u",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "update": "npx npm-check -u"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +64,7 @@
     "stream": "npm:stream-browserify@3.0.0",
     "url": "npm:url",
     "util": "npm:util",
+    "vite": "^6.3.5",
     "zlib": "npm:browserify-zlib"
   }
 }

@@ -10,7 +10,7 @@ import { LoadingComponent } from '../../components';
 export default function NewsPage() {
   const { id } = useParams();
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/news/${id}`,
+    `${import.meta.env.REACT_APP_BE_URL}/api/news/${id}`,
     {},
     [id],
   );
@@ -42,7 +42,7 @@ export default function NewsPage() {
           >
             <Image
               // src={value?.image}
-              src={`${process.env.REACT_APP_BE_URL}/${value?.image}`}
+              src={`${import.meta.env.REACT_APP_BE_URL}/${value?.image}`}
               className="p-2"
               alt={value?.title}
               width={300}

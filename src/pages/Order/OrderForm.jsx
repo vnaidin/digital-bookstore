@@ -37,7 +37,7 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode, curren
     }));
   };
 
-  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE } = process.env;
+  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE } = import.meta.env;
 
   useEffect(() => {
     const today = new Date().toUTCString();
@@ -129,7 +129,7 @@ export default function OrderForm({ totalPrice, updatePriceWithPromocode, curren
       New Order!
       From: ${values.name} ${values.surname}
       Price: ${totalPrice} UAH`;
-      telegramBotSendMsg(hypertext, `${process.env.REACT_APP_BE_URL}/order/${id}`);
+      telegramBotSendMsg(hypertext, `${import.meta.env.REACT_APP_BE_URL}/order/${id}`);
     }).catch((e) => console.error(new Error(e)));
   };
   return (

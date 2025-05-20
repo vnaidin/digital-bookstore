@@ -39,7 +39,7 @@ export default function BookCard({
         ))}
         <Card.Img
           variant="top"
-          src={`${process.env.REACT_APP_BE_URL}/${image}`}
+          src={`${import.meta.env.REACT_APP_BE_URL}/${image}`}
           height={300}
           className="p-3"
           alt={title}

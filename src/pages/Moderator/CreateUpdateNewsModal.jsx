@@ -208,7 +208,7 @@ export default function CreateUpdateNewsModal({
                 <Card.Img
                   variant="top"
                   src={image ? URL.createObjectURL(image)
-                    : `${existingNews?.image ? '' : process.env.REACT_APP_BE_URL}${existingNews.image}`}
+                    : `${existingNews?.image ? '' : import.meta.env.REACT_APP_BE_URL}${existingNews.image}`}
                 />
               )}
               <Card.Body>

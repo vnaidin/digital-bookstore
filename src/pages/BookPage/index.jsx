@@ -15,7 +15,7 @@ export default function BookPage() {
   const { id } = useParams();
   const { t, i18n } = useTranslation();
   const { loading, error, value } = useFetch(
-    `${process.env.REACT_APP_BE_URL}/api/book/${id}`,
+    `${import.meta.env.REACT_APP_BE_URL}/api/book/${id}`,
     {},
     [id],
   );
@@ -64,7 +64,7 @@ export default function BookPage() {
                   </Badge>
                 ))}
                 <Image
-                  src={`${process.env.REACT_APP_BE_URL}/${value.image}`}
+                  src={`${import.meta.env.REACT_APP_BE_URL}/${value.image}`}
                   className="p-2 m-0"
                   alt={value?.title}
                   width={300}

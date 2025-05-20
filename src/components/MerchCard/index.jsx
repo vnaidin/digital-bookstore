@@ -21,7 +21,7 @@ export default function MerchCard({
       <Card.Img
         variant="top"
         // src={image}
-        src={`${process.env.REACT_APP_BE_URL}/${image}`}
+        src={`${import.meta.env.REACT_APP_BE_URL}/${image}`}
         height={250}
         className="p-3"
         alt={title}

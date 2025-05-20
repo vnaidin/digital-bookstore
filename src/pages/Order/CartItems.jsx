@@ -55,7 +55,7 @@ export default function CartItems({ totalPrice }) {
             >
               <img
                 // src={value[0].image}
-                src={`${process.env.REACT_APP_BE_URL}/${value[0].image}`}
+                src={`${import.meta.env.REACT_APP_BE_URL}/${value[0].image}`}
                 alt={value[0].title}
                 width={80}
               />

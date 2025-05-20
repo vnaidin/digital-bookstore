@@ -12,7 +12,7 @@ import { useFetch } from '../../utils/hooks';
 export default function BookFilters({ // TODO: add delete btn in input
   minMaxPrice, updFilter, resetStartPage, resetFilters,
 }) {
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/all/books`);
+  const url = new URL(`${import.meta.env.REACT_APP_BE_URL}/api/all/books`);
   const { /*  loading, error, */ value } = useFetch(
     url,
     {},

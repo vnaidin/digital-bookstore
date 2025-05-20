@@ -22,7 +22,7 @@ export default function MerchTab() {
   const [search, updSearch] = useState('');
   const debouncedSearch = useDebounce(search, 600);
 
-  const url = new URL(`${process.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'merches/search' : 'all/merch'}`);
+  const url = new URL(`${import.meta.env.REACT_APP_BE_URL}/api/${debouncedSearch.length > 1 ? 'merches/search' : 'all/merch'}`);
   // eslint-disable-next-line no-unused-expressions
   search.length > 1 && url.searchParams.append('search', debouncedSearch);
 

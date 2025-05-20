@@ -2,7 +2,7 @@
 /* eslint-disable guard-for-in */
 import axios from 'axios';
 
-const { REACT_APP_BOT_ID, REACT_APP_CHAT_ID, REACT_APP_BE_URL } = process.env;
+const { REACT_APP_BOT_ID, REACT_APP_CHAT_ID, REACT_APP_BE_URL } = import.meta.env;
 
 axios.defaults.baseURL = REACT_APP_BE_URL;
 

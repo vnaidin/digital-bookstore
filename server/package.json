@@ -21,7 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.0",
     "mysql2": "^3.9.4",
-    "nodemailer": "^6.9.13",
+    "nodemailer": "^7.0.9",
     "nodemailer-express-handlebars": "^6.1.2",
     "sequelize": "^6.37.2",
     "swagger-jsdoc": "^6.2.8",

@@ -64,7 +64,7 @@
     "stream": "npm:stream-browserify@3.0.0",
     "url": "npm:url",
     "util": "npm:util",
-    "vite": "^6.4.1",
+    "vite": "^6.4.2",
     "zlib": "npm:browserify-zlib"
   }
 }

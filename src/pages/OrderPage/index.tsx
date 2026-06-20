@@ -34,7 +34,7 @@ export default function OrderPage() {
       {isLoading && <LoadingComponent />}
       <Title order={3} ta="center" my="md">{t('pages.order.title')}</Title>
       {value && value.length > 0 ? (
-        <Table bordered highlightOnHover withTableBorder withColumnBorders>
+        <Table highlightOnHover withTableBorder withColumnBorders>
           <Table.Thead>
             <Table.Tr>
               {isNotOrdinaryUser ? (

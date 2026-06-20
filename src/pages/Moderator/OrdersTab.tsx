@@ -45,7 +45,7 @@ export default function OrdersTab() {
       {error && <p>{String(error)}</p>}
       {isLoading && <LoadingComponent />}
       {value && value.length > 0 ? (
-        <Table bordered highlightOnHover withTableBorder withColumnBorders>
+        <Table highlightOnHover withTableBorder withColumnBorders>
           <Table.Thead>
             <Table.Tr>
               <Table.Th />

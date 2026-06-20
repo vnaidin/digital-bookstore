@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UploadedFile,UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { AuthorsService } from './authors.service';
+
+import { Roles } from '@/common/decorators/roles.decorator';
 import { JwtGuard } from '@/common/guards/jwt.guard';
 import { RolesGuard } from '@/common/guards/roles.guard';
-import { Roles } from '@/common/decorators/roles.decorator';
+
+import { AuthorsService } from './authors.service';
 
 const storage = diskStorage({
   destination: 'uploads/',

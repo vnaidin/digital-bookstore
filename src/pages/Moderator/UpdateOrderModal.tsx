@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Button, Modal, NativeSelect, Stack, TextInput } from '@mantine/core';
 
-import toast from 'react-hot-toast';
 import { useUpdateOrderMutation } from '@/store/api';
 import { ORDER_STATUSES } from '@/utils/constants';
 

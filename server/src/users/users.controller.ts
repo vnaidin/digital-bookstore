@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { UsersService } from './users.service';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
+
+import { Roles } from '@/common/decorators/roles.decorator';
 import { JwtGuard } from '@/common/guards/jwt.guard';
 import { RolesGuard } from '@/common/guards/roles.guard';
-import { Roles } from '@/common/decorators/roles.decorator';
+
+import { UsersService } from './users.service';
 
 @ApiTags('users')
 @Controller('api')

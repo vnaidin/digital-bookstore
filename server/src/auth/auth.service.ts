@@ -1,11 +1,13 @@
-import { Injectable, BadRequestException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
-import { PrismaService } from '@/prisma/prisma.service';
+
 import { MailService } from '@/mail/mail.service';
-import { SignUpDto } from './dto/signup.dto';
+import { PrismaService } from '@/prisma/prisma.service';
+
 import { SignInDto } from './dto/signin.dto';
+import { SignUpDto } from './dto/signup.dto';
 
 const VALID_ROLES = ['user', 'admin', 'moderator', 'seller'];
 

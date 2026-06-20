@@ -4,11 +4,11 @@ import { BsTelephone } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 import { Anchor, Box, Burger, Container, Divider, Group, Stack, Text } from '@mantine/core';
 
-import { useAppSelector } from '@/store';
 import Auth from '@/layout/HeaderBottom/Auth';
 import Catalog from '@/layout/HeaderBottom/Catalog';
 import SearchBar from '@/layout/HeaderBottom/Search';
 import ShoppingCart from '@/layout/HeaderBottom/ShoppingCart';
+import { useAppSelector } from '@/store';
 
 export default function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);

@@ -1,7 +1,8 @@
-import { act, renderHook } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { useDebounce } from './useDebounce';
+
+import { act, renderHook } from '@testing-library/react';
 
 describe('useDebounce', () => {
   afterEach(() => {

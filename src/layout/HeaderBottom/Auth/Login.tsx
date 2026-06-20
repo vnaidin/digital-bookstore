@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import toast from 'react-hot-toast';
 import { useAppDispatch } from '@/store';
 import { useLoginMutation, useRequestPasswordResetMutation } from '@/store/api';
 import { logIn } from '@/store/user';

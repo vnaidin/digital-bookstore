@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import { Container, Grid, Group, Image, Stack, Text, Title } from '@mantine/core';
 
 import { BuyButton, LoadingComponent, NoDataComponent, WishListButton } from '@/components';
-import { getImageUrl, PLACEHOLDER_IMG } from '@/utils/helpers';
 import { useCurrency } from '@/hooks';
+import { getImageUrl, PLACEHOLDER_IMG } from '@/utils/helpers';
 
 interface ItemBase {
   title?: string;

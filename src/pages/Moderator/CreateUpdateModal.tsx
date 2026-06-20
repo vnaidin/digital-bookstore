@@ -32,7 +32,7 @@ import {
   BOOK_PUBLICATION_YEARS,
   BOOK_TAGS,
 } from "@/utils/constants";
-import { PLACEHOLDER_IMG, getImageUrl } from "@/utils/helpers";
+import { getImageUrl,PLACEHOLDER_IMG } from "@/utils/helpers";
 
 type EntityType = "book" | "merch" | "news";
 

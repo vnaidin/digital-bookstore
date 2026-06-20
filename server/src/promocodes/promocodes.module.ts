@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { PromocodesService } from './promocodes.service';
+
 import { PromocodesController } from './promocodes.controller';
+import { PromocodesService } from './promocodes.service';
 
 @Module({
   providers: [PromocodesService],

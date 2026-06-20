@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { BsSearch } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { Box, Group, Image, TextInput } from '@mantine/core';
-import { useSearchBooksQuery } from '@/store/api';
-import { PLACEHOLDER_IMG, getImageUrl } from '@/utils/helpers';
+
 import { useDebounce } from '@/hooks';
+import { useSearchBooksQuery } from '@/store/api';
+import { getImageUrl,PLACEHOLDER_IMG } from '@/utils/helpers';
 
 export default function SearchBar() {
   const [search, setSearch] = useState('');

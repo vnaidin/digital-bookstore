@@ -7,8 +7,8 @@ import { LoadingComponent, NoDataComponent } from '@/components';
 import { OrderItemsCell } from '@/layout/HeaderBottom/Auth/UserPanel';
 import { useAppSelector } from '@/store';
 import { useGetOrderByIdQuery } from '@/store/api';
-import { post_to_url } from '@/utils/helpers';
 import { DELIVERY_METHODS } from '@/utils/constants';
+import { post_to_url } from '@/utils/helpers';
 import { toBinary } from '@/utils/helpers';
 
 import { OrderTableLine } from '../Moderator/OrdersTab';

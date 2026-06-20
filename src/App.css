@@ -1,10 +1,9 @@
-
-.App, .modal-body, .offcanvas-body,.list-group-item,table>tbody/* ,.toast-body */ {
+.App, .modal-body, .offcanvas-body, .list-group-item, table > tbody {
   text-align: center;
   background-color: #f9f3e7;
 }
 
-.list-group-item{
+.list-group-item {
   text-align: left !important;
 }
 
@@ -12,8 +11,8 @@ main {
   min-height: 70vh;
 }
 
-header, .modal-header, .offcanvas-header,.toast-header,footer, .modal-footer,.header-bottom  {
-  background-color:#e7d6cc;
+header, .modal-header, .offcanvas-header, .toast-header, footer, .modal-footer, .header-bottom {
+  background-color: #e7d6cc;
 }
 
 .button, .button:hover, .button:active, .button:focus-visible {
@@ -27,23 +26,21 @@ header, .modal-header, .offcanvas-header,.toast-header,footer, .modal-footer,.he
   -ms-user-select: none;
   user-select: none;
 }
-/* #b38757 */
-.page-link.active, .active > .page-link{
+
+.page-link.active, .active > .page-link {
   background-color: #4a5a69;
 }
 
-.page-link{
+.page-link {
   color: #4a5a69;
 }
 
 .range-slider__thumb {
   background: #4a5a69 !important;
-  /* CSS for range */
 }
-@import 'react-range-slider-input/dist/style.css';
 
 @media print {
   html, body {
-    display: none;  /* hide whole page */
+    display: none;
   }
 }

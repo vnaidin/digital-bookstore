@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Item {
+  id               Int                @id @default(autoincrement())
+  itemType         String?            @db.VarChar(255)
+  author           String?            @db.VarChar(255)
+  title            String?            @db.VarChar(255)
+  image            String?            @db.VarChar(255)
+  covers           String?            @db.VarChar(255)
+  publisher        String?            @db.VarChar(255)
+  coverType        Int?
+  year             Int?
+  isbn             String?            @db.VarChar(255)
+  pageCount        Int?
+  lang             String?            @db.VarChar(255)
+  price            Int?
+  reducedPrice     Int?               @default(0)
+  isReducedNow     Boolean?           @default(false)
+  annotation       String?            @db.VarChar(2000)
+  category         String?            @db.VarChar(255)
+  tags             String?            @db.VarChar(255)
+  createdAt        DateTime           @default(now()) @db.DateTime(0)
+  updatedAt        DateTime           @updatedAt @db.DateTime(0)
+  item_managements item_managements[]
+
+  @@map("items")
+}
+
+model item_managements {
+  id             Int      @id @default(autoincrement())
+  amount         Int?
+  purchasesCount Int?     @default(0)
+  comments       String?  @db.VarChar(255)
+  createdAt      DateTime @default(now()) @db.DateTime(0)
+  updatedAt      DateTime @updatedAt @db.DateTime(0)
+  itemId         Int?
+  items          Item?    @relation(fields: [itemId], references: [id], onDelete: Cascade, map: "item_managements_ibfk_1")
+
+  @@index([itemId], map: "itemId")
+}
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  fullName  String?  @db.VarChar(255)
+  pseudo    String?  @db.VarChar(255)
+  image     String?  @db.VarChar(255)
+  birthday  String?  @db.VarChar(255)
+  death     String?  @db.VarChar(255)
+  bio       String?  @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @updatedAt @db.DateTime(0)
+
+  @@map("authors")
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  author    String?  @db.VarChar(255)
+  title     String?  @db.VarChar(255)
+  category  String?  @db.VarChar(255)
+  image     String?  @db.VarChar(255)
+  showImage Boolean?
+  publisher String?  @db.VarChar(255)
+  text      String?  @db.VarChar(5000)
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @updatedAt @db.DateTime(0)
+
+  @@map("news")
+}
+
+model Order {
+  id                  Int                @id @default(autoincrement())
+  userId              Int?
+  price               Int?
+  email               String?            @db.VarChar(255)
+  name                String?            @db.VarChar(255)
+  surname             String?            @db.VarChar(255)
+  phoneNumber         String?            @db.VarChar(255)
+  receiverName        String?            @db.VarChar(255)
+  receiverSurname     String?            @db.VarChar(255)
+  receiverPhoneNumber String?            @db.VarChar(255)
+  comments            String?            @db.VarChar(255)
+  status              Int?
+  paymentMethodId     Int?
+  hasPaid             Boolean?
+  ttn                 String?            @db.VarChar(255)
+  promocode           String?            @db.VarChar(255)
+  createdAt           DateTime           @default(now()) @db.DateTime(0)
+  updatedAt           DateTime           @updatedAt @db.DateTime(0)
+  order_addresses     order_addresses[]
+  orderItems          OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id      Int    @id @default(autoincrement())
+  itemId  Int?
+  price   Int?
+  orderId Int?
+  order   Order? @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "order_items_ibfk_1")
+
+  @@index([orderId], map: "orderId")
+  @@map("order_items")
+}
+
+model order_addresses {
+  id          Int     @id @default(autoincrement())
+  delMethodId Int?
+  city        String? @db.VarChar(255)
+  street      String? @db.VarChar(255)
+  houseNr     String? @db.VarChar(255)
+  flatNr      Int?
+  branch      Int?
+  orderId     Int?
+  orders      Order?  @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "order_addresses_ibfk_1")
+
+  @@index([orderId], map: "orderId")
+}
+
+model PromoCode {
+  id        Int       @id @default(autoincrement())
+  name      String?   @db.VarChar(255)
+  percent   Int?
+  from      DateTime? @db.DateTime(0)
+  till      DateTime? @db.DateTime(0)
+  createdAt DateTime  @default(now()) @db.DateTime(0)
+  updatedAt DateTime  @updatedAt @db.DateTime(0)
+
+  @@map("order_promo_codes")
+}
+
+model Role {
+  id        Int        @id
+  name      String?    @db.VarChar(255)
+  createdAt DateTime   @default(now()) @db.DateTime(0)
+  updatedAt DateTime   @updatedAt @db.DateTime(0)
+  users     UserRole[]
+
+  @@map("roles")
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  email       String?    @db.VarChar(255)
+  password    String?    @db.VarChar(255)
+  resetToken  String?    @db.VarChar(255)
+  expireToken String?    @db.VarChar(255)
+  name        String?    @db.VarChar(255)
+  surname     String?    @db.VarChar(255)
+  phoneNumber String?    @db.VarChar(255)
+  wishlist    String?    @db.VarChar(255)
+  birthday    DateTime?  @db.Date
+  createdAt   DateTime   @default(now()) @db.DateTime(0)
+  updatedAt   DateTime   @updatedAt @db.DateTime(0)
+  roles       UserRole[]
+
+  @@map("users")
+}
+
+model UserRole {
+  createdAt DateTime @default(now()) @db.DateTime(0)
+  updatedAt DateTime @updatedAt @db.DateTime(0)
+  roleId    Int
+  userId    Int
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade, map: "user_roles_ibfk_1")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "user_roles_ibfk_2")
+
+  @@id([roleId, userId])
+  @@index([userId], map: "userId")
+  @@map("user_roles")
+}

@@ -2,8 +2,10 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
   Param,
+  ParseFilePipe,
   Post,
   Put,
   Query,
@@ -17,23 +19,18 @@ import {
   FileInterceptor,
 } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { diskStorage } from "multer";
 
 import { Roles } from "@/common/decorators/roles.decorator";
 import { JwtGuard } from "@/common/guards/jwt.guard";
 import { RolesGuard } from "@/common/guards/roles.guard";
+import { FileUpload } from "@/common/utils/save-upload";
 
 import { ItemsService } from "./items.service";
 
-const storage = diskStorage({
-  destination: "uploads/",
-  filename: (_req, file, cb) =>
-    cb(null, `${file.fieldname}-${Date.now()}.${file.mimetype.split("/")[1]}`),
+const imageFilePipe = new ParseFilePipe({
+  fileIsRequired: false,
+  validators: [new FileTypeValidator({ fileType: /image\/(jpeg|png)/ })],
 });
-
-const imageFilter = (_req: any, file: Express.Multer.File, cb: any) => {
-  cb(null, file.mimetype === "image/jpeg" || file.mimetype === "image/png");
-};
 
 @ApiTags("items")
 @Controller("api")
@@ -66,12 +63,12 @@ export class ItemsController {
         { name: "cover_front", maxCount: 1 },
         { name: "cover_back", maxCount: 1 },
       ],
-      { storage, fileFilter: imageFilter },
+      {},
     ),
   )
   createBook(
     @Body() body: any,
-    @UploadedFiles() files: Record<string, Express.Multer.File[]>,
+    @UploadedFiles() files: Record<string, FileUpload[]>,
   ) {
     return this.items.createBook(body, files);
   }
@@ -87,13 +84,13 @@ export class ItemsController {
         { name: "cover_front", maxCount: 1 },
         { name: "cover_back", maxCount: 1 },
       ],
-      { storage, fileFilter: imageFilter },
+      {},
     ),
   )
   updateBook(
     @Param("id") id: string,
     @Body() body: any,
-    @UploadedFiles() files: Record<string, Express.Multer.File[]>,
+    @UploadedFiles() files: Record<string, FileUpload[]>,
   ) {
     return this.items.updateBook(+id, body, files);
   }
@@ -126,9 +123,9 @@ export class ItemsController {
   @Roles("moderator", "admin")
   @ApiBearerAuth()
   @UseInterceptors(
-    FileInterceptor("image", { storage, fileFilter: imageFilter }),
+    FileInterceptor("image", {}),
   )
-  createMerch(@Body() body: any, @UploadedFile() file: Express.Multer.File) {
+  createMerch(@Body() body: any, @UploadedFile(imageFilePipe) file?: FileUpload) {
     return this.items.createMerch(body, file);
   }
 
@@ -137,12 +134,12 @@ export class ItemsController {
   @Roles("moderator", "admin")
   @ApiBearerAuth()
   @UseInterceptors(
-    FileInterceptor("image", { storage, fileFilter: imageFilter }),
+    FileInterceptor("image", {}),
   )
   updateMerch(
     @Param("id") id: string,
     @Body() body: any,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(imageFilePipe) file?: FileUpload,
   ) {
     return this.items.updateMerch(+id, body, file);
   }

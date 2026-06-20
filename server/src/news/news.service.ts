@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { FileUpload,saveUpload } from '@/common/utils/save-upload';
 import { PrismaService } from '@/prisma/prisma.service';
 
 const PAGE_SIZE = 12;
@@ -25,18 +26,18 @@ export class NewsService {
     return this.prisma.news.findUnique({ where: { id } });
   }
 
-  async createNews(body: Record<string, any>, file?: Express.Multer.File) {
+  async createNews(body: Record<string, any>, file?: FileUpload) {
     const { author, text, title, publisher, showImage, category } = body;
     await this.prisma.news.create({
-      data: { author, text, title, publisher, category, showImage: showImage === 'true', image: file?.filename ?? null },
+      data: { author, text, title, publisher, category, showImage: showImage === 'true', image: file ? await saveUpload(file) : null },
     });
     return { message: `${title} created` };
   }
 
-  async updateNews(id: number, body: Record<string, any>, file?: Express.Multer.File) {
+  async updateNews(id: number, body: Record<string, any>, file?: FileUpload) {
     await this.prisma.news.update({
       where: { id },
-      data: { ...body, image: file?.filename ?? body.image },
+      data: { ...body, image: file ? await saveUpload(file) : body.image },
     });
     return { message: `News with id:${id} updated` };
   }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { FileUpload,saveUpload } from '@/common/utils/save-upload';
 import { PrismaService } from '@/prisma/prisma.service';
 
 const PAGE_SIZE = 12;
@@ -25,18 +26,18 @@ export class AuthorsService {
     return this.prisma.author.findUnique({ where: { id } });
   }
 
-  async createAuthor(body: Record<string, any>, file?: Express.Multer.File) {
+  async createAuthor(body: Record<string, any>, file?: FileUpload) {
     const { fullName, pseudo, birthday, death, bio } = body;
     await this.prisma.author.create({
-      data: { fullName, pseudo, birthday, death, bio, image: file?.filename ?? null },
+      data: { fullName, pseudo, birthday, death, bio, image: file ? await saveUpload(file) : null },
     });
     return { message: `${fullName} created` };
   }
 
-  async updateAuthor(id: number, body: Record<string, any>, file?: Express.Multer.File) {
+  async updateAuthor(id: number, body: Record<string, any>, file?: FileUpload) {
     await this.prisma.author.update({
       where: { id },
-      data: { ...body, image: file?.filename ?? body.image },
+      data: { ...body, image: file ? await saveUpload(file) : body.image },
     });
     return { message: `Author with id:${id} updated` };
   }

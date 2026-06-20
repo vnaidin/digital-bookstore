@@ -21,7 +21,7 @@ export default function BookFilters({ minMaxPrice = [50, 1000], updFilter, reset
   const languageRef = useRef<HTMLInputElement>(null);
   const publisherRef = useRef<HTMLInputElement>(null);
 
-  const uniqueAuthorArray = Array.from(new Set(
+  const uniqueAuthorArray = Array.from(new Set<string>(
     (data?.authors ?? []).flatMap((a: string) => (a.includes(',') ? a.trim().split(', ').map((x) => x.trim()) : [a.trimStart()])),
   ));
 

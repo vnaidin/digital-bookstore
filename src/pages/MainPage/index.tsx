@@ -56,7 +56,7 @@ export default function Main() {
           onMouseEnter={stop}
           onMouseLeave={start}
           withControls
-          loop
+          emblaOptions={{ loop: true }}
           withIndicators={false}
           mb="md"
         >

@@ -22,7 +22,7 @@ export default function Catalog() {
           <NavLink
             key={id}
             label={t(`constants.bookCategories.${id}`)}
-            active={pathname.substring(1) === id}
+            active={pathname.substring(1) === String(id)}
             onClick={() => {
               navigate({ pathname: '/books/', search: `?cat=${id}` });
               setOpened(false);

@@ -73,7 +73,7 @@ export class ItemsService {
       ],
     };
 
-    const [items, count, metaItems] = await this.prisma.$transaction([
+    const [items, count, metaItems] = await Promise.all([
       this.prisma.item.findMany({
         where,
         orderBy: parseOrder(order),
@@ -136,8 +136,8 @@ export class ItemsService {
       files?.cover_back?.[0] ? saveUpload(files.cover_back[0]) : null,
     ]);
 
-    await this.prisma.$transaction([
-      this.prisma.item.update({
+    await this.prisma.$transaction(async (tx) => {
+      await tx.item.update({
         where: { id },
         data: {
           pageCount: pageCount ? +pageCount : undefined, isReducedNow: isReducedNow === 'true',
@@ -147,12 +147,12 @@ export class ItemsService {
           image: newImage ?? image,
           covers: coverFront && coverBack ? `${coverFront},${coverBack}` : covers,
         },
-      }),
-      this.prisma.item_managements.updateMany({
+      });
+      await tx.item_managements.updateMany({
         where: { itemId: id },
         data: { amount: amount ? +amount : undefined, comments },
-      }),
-    ]);
+      });
+    });
     return { message: `Book ${author}-${title} updated` };
   }
 
@@ -170,7 +170,7 @@ export class ItemsService {
 
     const where: Prisma.ItemWhereInput = { AND: [{ itemType: 'merch' }, priceFilter] };
 
-    const [items, count, metaItems] = await this.prisma.$transaction([
+    const [items, count, metaItems] = await Promise.all([
       this.prisma.item.findMany({
         where,
         orderBy: parseOrder(order),
@@ -208,20 +208,20 @@ export class ItemsService {
 
   async updateMerch(id: number, body: Record<string, any>, file?: FileUpload) {
     const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments, image } = body;
-    await this.prisma.$transaction([
-      this.prisma.item.update({
+    await this.prisma.$transaction(async (tx) => {
+      await tx.item.update({
         where: { id },
         data: {
           isReducedNow: isReducedNow === 'true',
           price: price ? +price : undefined, reducedPrice: reducedPrice ? +reducedPrice : undefined,
           annotation, title, tags, image: file ? await saveUpload(file) : image,
         },
-      }),
-      this.prisma.item_managements.updateMany({
+      });
+      await tx.item_managements.updateMany({
         where: { itemId: id },
         data: { amount: amount ? +amount : undefined, comments },
-      }),
-    ]);
+      });
+    });
     return { message: `Merch ${title} updated` };
   }
 

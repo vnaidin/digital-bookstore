@@ -11,7 +11,6 @@ interface ResolvedItem {
   author?: string;
   image?: string;
   amount: number;
-  [key: string]: any;
 }
 
 export function useOrderItems(items: OrderItem[]): ResolvedItem[] {

@@ -1,174 +1,23 @@
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="format-detection" content="telephone=no">
-  <title>Email</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet" />
-  <style>
-    table {
-      margin: 0;
-      padding: 0;
-      border-collapse: collapse;
-    }
-
-    span {
-      -webkit-text-size-adjust: none;
-    }
-
-    img {
-      border: 0;
-      display: block;
-    }
-
-    hr {
-      border: none;
-      color: #e1e1e1;
-      background-color: #e1e1e1;
-      height: 1px;
-    }
-
-    .padding-wrapper {
-      padding: 0 30px;
-    }
-
-    .padding-wrapper--top {
-      padding-top: 24px;
-    }
-
-    .padding-wrapper--bottom {
-      padding-bottom: 24px;
-    }
-
-    .email-title {
-      font-family: "Roboto", "Arial", sans-serif;
-      color: #000000;
-      margin: 0;
-      text-align: left;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 24px;
-      line-height: 28px;
-      display: flex;
-      align-items: center;
-    }
-
-    .email-link {
-      color: #58606b !important;
-      -webkit-text-size-adjust: none;
-    }
-
-    .email-text {
-      font-family: "Roboto", "Arial", sans-serif;
-      font-weight: 400;
-      color: #000000 !important;
-      font-style: normal;
-      font-size: 16px;
-      line-height: 26px;
-      -webkit-text-size-adjust: none;
-    }
-
-    .im {
-      color: #000000 !important;
-    }
-  </style>
-</head>
-
+{{> _head}}
 <body>
-  <table border="0" cellpadding="0" cellspacing="0" style="width:100%;padding-bottom:40px;">
-    <tbody>
-      <tr>
-        <td align="center">
-          <div
-            style="background-color: #212842;padding-top:61px;padding-bottom:0;padding-right:10px;padding-left:10px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
-            <table class="email" border="0" cellpadding="0" cellspacing="0" align="center"
-              style="max-width:600px;width:100%;background-color:#FFFFFF;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;box-shadow:0 -12px 15px rgba(0, 122, 255, 0.12);border-radius:8px 8px 0 0;">
-              <tbody>
-                <tr>
-                  <td class="padding-wrapper"
-                    style="padding-top:36px;padding-bottom:10px;padding-right:30px;padding-left:30px;">
-                    <h3 class="email-title"
-                      style="font-family:'Roboto', 'Arial', sans-serif;color:#000000;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;text-align:left;font-style:normal;font-weight:500;font-size:24px;line-height:28px;display:flex;align-items:center;">
-
-                      Замовлення в обробці
-
-                    </h3>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div
-            style="padding-top:0;padding-bottom:10px;padding-right:10px;padding-left:10px;background-color:#F7FAFC;height:100vh;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
-            <table class="email" border="0" cellpadding="0" cellspacing="0" align="center"
-              style="max-width:600px;width:100%;background-color:#FFFFFF;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;box-shadow:0 12px 15px rgba(0, 122, 255, 0.12);border-radius:0 0 8px 8px;">
-              <tbody>
-                <tr>
-                  <td class="padding-wrapper"
-                    style="padding-top:16px;padding-bottom:38px;padding-right:30px;padding-left:30px;">
-                    <div class="email-text"
-                      style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
-                      {{name}}, ви успішно зробили замовлення на сайті <a href={{address}}>{{address}}</a>
-                      <br>
-                      <br>
-                      <div class="email-text"
-                        style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
-                        Було замовлено {{nOfItems}} позиції на суму {{sum}} грн.</div>
-                      <br>
-                      <div class="email-text"
-                        style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
-                        Ви можете перевірити стан вашого замовлення на <a href={{orderPage}} target="_blank"
-                          class="email-text email-link"
-                          style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#58606b !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">сторінці замовлення</a>
-                        або у кабінеті користувача.</div>
-                        <br>
-                      <div class="email-text"
-                        style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
-                        У разі виникнення труднощів з обробкою замовлення наш менеджер обовʼязково з вами звʼяжеться для уточнення деталей.</div>
-                    </div>
-
-                    <br />
-                    <div class="email-text"
-                      style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
-                      Дякуємо, що Ви з нами!</div>
-
-                  </td>
-                </tr>
-                <tr>
-                  <td class="padding-wrapper"
-                    style="padding-top:0;padding-bottom:0;padding-right:30px;padding-left:30px;">
-                    <div
-                      style="height:4px;background-image:none;background-repeat:repeat;background-attachment:scroll;background-color:#F94F43;background: linear-gradient(90deg, #F94F43 0%, #EA9A2E 100%);">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="padding-wrapper padding-wrapper--top"
-                    style="padding-bottom:0;padding-right:30px;padding-left:30px;padding-top:24px;">
-                    <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
-                      <tbody>
-
-                        <tr>
-                          <td style="padding-bottom:40px;">
-                            <div>
-                              <div class="email-text"
-                                style="color:#58606B !important;font-family:'Roboto', 'Arial', sans-serif;font-weight:400;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
-                                Чекаємо Вас </div><a href={{address}} target="_blank" class="email-text email-link"
-                                style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#58606b !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">{{address}}</a>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  {{> _email-top title="Замовлення в обробці"}}
+  <div class="email-text" style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
+    {{name}}, ви успішно зробили замовлення на сайті <a href="{{address}}">{{address}}</a>
+    <br /><br />
+    Було замовлено {{nOfItems}} позиції на суму {{sum}} грн.
+    <br /><br />
+    Ви можете перевірити стан вашого замовлення на
+    <a href="{{orderPage}}" target="_blank" class="email-text email-link"
+      style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#58606b !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">сторінці замовлення</a>
+    або у кабінеті користувача.
+    <br /><br />
+    У разі виникнення труднощів з обробкою замовлення наш менеджер обовʼязково з вами звʼяжеться для уточнення деталей.
+  </div>
+  <br />
+  <div class="email-text" style="font-family:'Roboto', 'Arial', sans-serif;font-weight:400;color:#000000 !important;font-style:normal;font-size:16px;line-height:26px;-webkit-text-size-adjust:none;">
+    Дякуємо, що Ви з нами!
+  </div>
+  {{> _email-bottom address=address}}
 </body>
-
 </html>

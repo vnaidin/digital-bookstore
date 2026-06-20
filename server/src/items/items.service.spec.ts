@@ -87,23 +87,20 @@ describe('ItemsService', () => {
 
   describe('getBooks', () => {
     it('returns books, total, authors, publishers and minMaxPrice', async () => {
-      prisma.$transaction.mockResolvedValue([
-        [{ id: 1, title: 'A', item_managements: [{ amount: 1, comments: '' }] }],
-        1,
-        [{ author: 'Author A', publisher: 'Pub A', price: 100 }],
-      ]);
+      prisma.item.findMany
+        .mockResolvedValueOnce([{ id: 1, title: 'A', item_managements: [{ amount: 1, comments: '' }] }])
+        .mockResolvedValueOnce([{ author: 'Author A', publisher: 'Pub A', price: 100 }]);
+      prisma.item.count.mockResolvedValue(1);
 
       const result = await service.getBooks({});
-      expect(result).toMatchObject({
-        total: 1,
-        minMaxPrice: [100, 100],
-      });
+      expect(result).toMatchObject({ total: 1, minMaxPrice: [100, 100] });
       expect(result.books[0]).toMatchObject({ id: 1, item_management: { amount: 1 } });
       expect(result.authors).toContain('Author A');
     });
 
     it('returns zero minMaxPrice when no items', async () => {
-      prisma.$transaction.mockResolvedValue([[], 0, []]);
+      prisma.item.findMany.mockResolvedValue([]);
+      prisma.item.count.mockResolvedValue(0);
       const result = await service.getBooks({});
       expect(result.minMaxPrice).toEqual([0, 0]);
     });

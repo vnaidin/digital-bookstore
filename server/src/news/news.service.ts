@@ -15,7 +15,7 @@ export class NewsService {
       ? { skip: p > 0 ? PAGE_SIZE * p : 0, take: PAGE_SIZE }
       : {};
 
-    const [news, total] = await this.prisma.$transaction([
+    const [news, total] = await Promise.all([
       this.prisma.news.findMany(pagination as any),
       this.prisma.news.count(),
     ]);

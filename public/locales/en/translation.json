@@ -88,7 +88,8 @@
       "title": "About Us",
       "1": "A Linea is an online bookstore where you can find those books that will inspire you, give you the impetus to find new ways, show you the artistic world, allow you to immerse yourself in intrigue and adventure, and also open up new knowledge.",
       "2": "A linea is translated from Latin as 'from a new line'. With us, start your thoughts from a new line, from a new paragraph - unexplored emotions, from a new chapter - your other interesting life story. Books are reborn from the inside, so choose quickly , which you like the most.",
-      "3": "It is in our online bookstore that you will find Independence books that will help you rethink the war, understand historical contexts and look at the path of Ukraine in a completely different way. Your inner world is your fortress, fill yourself with new content with the A Linea online bookstore."
+      "3": "It is in our online bookstore that you will find Independence books that will help you rethink the war, understand historical contexts and look at the path of Ukraine in a completely different way. Your inner world is your fortress, fill yourself with new content with the A Linea online bookstore.",
+      "description": "Learn more about Alineabooks online bookstore — our mission, team and values."
     },
     "authors": {
       "title": "Authors"
@@ -97,7 +98,8 @@
       "title": "Main",
       "news": "News",
       "books": "Books",
-      "merch": "Merch"
+      "merch": "Merch",
+      "description": "Alineabooks online bookstore — best selection, low prices, new releases and bestsellers. Buy books online with delivery across Ukraine."
     },
     "bookPage": {
       "author": "Author",
@@ -113,7 +115,8 @@
       "title": "Contacts",
       "email": "Email",
       "tel": "Telephone",
-      "address": "Address"
+      "address": "Address",
+      "description": "Contact us — contact details and address for Alineabooks bookstore. Phone and email support."
     },
     "delivery": {
       "title": "Delivery",
@@ -144,14 +147,16 @@
         "title": "Order by",
         "0": "Price High > Low",
         "1": "Price Low > High"
-      }
+      },
+      "description": "Buy books online at Alineabooks — fiction, children's, educational and military literature with delivery across Ukraine."
     },
     "merch": {
       "title": "Merch",
       "merch-filters": {
         "price-ranges": "Price ranges",
         "ok": "Ok"
-      }
+      },
+      "description": "Merch and souvenirs from Alineabooks — original gifts and accessories for book enthusiasts."
     },
     "merchPage": {
       "description": "Description"
@@ -261,7 +266,8 @@
       }
     },
     "news": {
-      "title": "News"
+      "title": "News",
+      "description": "News, announcements and reviews from Alineabooks bookstore — stay up to date with book events."
     },
     "order": {
       "title": "Order",
@@ -321,7 +327,8 @@
     "terms-of-use": {
       "title-b": "Terms of Use",
       "title-1": "PUBLIC CONTRACT",
-      "title-2": "[BID]"
+      "title-2": "[BID]",
+      "description": "Terms of use and public offer agreement for Alineabooks bookstore."
     },
     "error-boundary": {
       "title": "Something went wrong",

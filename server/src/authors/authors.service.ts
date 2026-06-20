@@ -15,7 +15,7 @@ export class AuthorsService {
       ? { skip: p > 0 ? PAGE_SIZE * p : 0, take: PAGE_SIZE }
       : {};
 
-    const [authors, total] = await this.prisma.$transaction([
+    const [authors, total] = await Promise.all([
       this.prisma.author.findMany(pagination as any),
       this.prisma.author.count(),
     ]);

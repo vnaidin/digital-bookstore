@@ -61,7 +61,6 @@ describe('OrdersService', () => {
 
     beforeEach(() => {
       prisma.order.create.mockResolvedValue({ id: 1, email: 'a@b.com', orderItems: [] });
-      prisma.$transaction.mockResolvedValue([]);
     });
 
     it('uppercases the promocode', async () => {

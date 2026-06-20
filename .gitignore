@@ -6,6 +6,7 @@
 /server/uploads/*
 /server/.env
 /server/certs/*
+/server/dist/*
 /.pnp
 .pnp.js
 

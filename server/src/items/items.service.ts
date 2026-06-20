@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
+import { FileUpload,saveUpload } from '@/common/utils/save-upload';
 import { PrismaService } from '@/prisma/prisma.service';
 
 const PAGE_SIZE = 12;
@@ -101,9 +102,15 @@ export class ItemsService {
     return item ? flattenMgmt(item) : null;
   }
 
-  async createBook(body: Record<string, any>, files: Record<string, Express.Multer.File[]>) {
+  async createBook(body: Record<string, any>, files: Record<string, FileUpload[]>) {
     const { pageCount, isReducedNow, price, reducedPrice, author, coverType, lang,
       annotation, isbn, title, tags, publisher, year, category, amount, comments } = body;
+
+    const [image, coverFront, coverBack] = await Promise.all([
+      files?.image?.[0] ? saveUpload(files.image[0]) : null,
+      files?.cover_front?.[0] ? saveUpload(files.cover_front[0]) : null,
+      files?.cover_back?.[0] ? saveUpload(files.cover_back[0]) : null,
+    ]);
 
     await this.prisma.item.create({
       data: {
@@ -111,19 +118,23 @@ export class ItemsService {
         pageCount: +pageCount, isReducedNow: isReducedNow === 'true', price: +price,
         reducedPrice: +reducedPrice, author, lang, coverType: +coverType,
         annotation, isbn, title, tags, publisher, year: +year, category,
-        image: files?.image?.[0]?.filename ?? null,
-        covers: files?.cover_front?.[0] && files?.cover_back?.[0]
-          ? `${files.cover_front[0].filename},${files.cover_back[0].filename}`
-          : null,
+        image,
+        covers: coverFront && coverBack ? `${coverFront},${coverBack}` : null,
         item_managements: { create: { amount: +amount, comments } },
       },
     });
     return { message: `Book ${title} created` };
   }
 
-  async updateBook(id: number, body: Record<string, any>, files: Record<string, Express.Multer.File[]>) {
+  async updateBook(id: number, body: Record<string, any>, files: Record<string, FileUpload[]>) {
     const { pageCount, isReducedNow, price, reducedPrice, author, lang, annotation,
       isbn, title, tags, publisher, year, category, amount, comments, coverType, image, covers } = body;
+
+    const [newImage, coverFront, coverBack] = await Promise.all([
+      files?.image?.[0] ? saveUpload(files.image[0]) : null,
+      files?.cover_front?.[0] ? saveUpload(files.cover_front[0]) : null,
+      files?.cover_back?.[0] ? saveUpload(files.cover_back[0]) : null,
+    ]);
 
     await this.prisma.$transaction([
       this.prisma.item.update({
@@ -133,10 +144,8 @@ export class ItemsService {
           price: price ? +price : undefined, reducedPrice: reducedPrice ? +reducedPrice : undefined,
           author, lang, annotation, isbn, title, tags, publisher,
           year: year ? +year : undefined, category, coverType: coverType ? +coverType : undefined,
-          image: files?.image?.[0]?.filename ?? image,
-          covers: files?.cover_front?.[0] && files?.cover_back?.[0]
-            ? `${files.cover_front[0].filename},${files.cover_back[0].filename}`
-            : covers,
+          image: newImage ?? image,
+          covers: coverFront && coverBack ? `${coverFront},${coverBack}` : covers,
         },
       }),
       this.prisma.item_managements.updateMany({
@@ -184,20 +193,20 @@ export class ItemsService {
     return this.prisma.item.findUnique({ where: { id } });
   }
 
-  async createMerch(body: Record<string, any>, file?: Express.Multer.File) {
+  async createMerch(body: Record<string, any>, file?: FileUpload) {
     const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments } = body;
     await this.prisma.item.create({
       data: {
         itemType: 'merch',
         isReducedNow: isReducedNow === 'true', price: +price, reducedPrice: +reducedPrice,
-        annotation, title, tags, image: file?.filename ?? null,
+        annotation, title, tags, image: file ? await saveUpload(file) : null,
         item_managements: { create: { amount: +amount, comments } },
       },
     });
     return { message: `Merch ${title} created` };
   }
 
-  async updateMerch(id: number, body: Record<string, any>, file?: Express.Multer.File) {
+  async updateMerch(id: number, body: Record<string, any>, file?: FileUpload) {
     const { isReducedNow, price, reducedPrice, annotation, title, tags, amount, comments, image } = body;
     await this.prisma.$transaction([
       this.prisma.item.update({
@@ -205,7 +214,7 @@ export class ItemsService {
         data: {
           isReducedNow: isReducedNow === 'true',
           price: price ? +price : undefined, reducedPrice: reducedPrice ? +reducedPrice : undefined,
-          annotation, title, tags, image: file?.filename ?? image,
+          annotation, title, tags, image: file ? await saveUpload(file) : image,
         },
       }),
       this.prisma.item_managements.updateMany({

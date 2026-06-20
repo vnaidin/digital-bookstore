@@ -18,6 +18,8 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "ignoreDeprecations": "6.0"
+  },
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }

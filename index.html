@@ -1,38 +1,56 @@
 <!DOCTYPE html>
-<html lang="ua">
+<html lang="uk">
 
 <head>
   <meta charset="utf-8" />
-  <meta name="robots" content="index, follow" />
-  <!-- <meta name="robots" content="noindex, nofollow" /> -->
-  <meta name="keywords" content="інтернет-магазин книг, книги українською мовою, книги, алінеа, воєнна література, військова література,елінея, елінеа, алінея, books, warbooks, алінеябук, алінеябукс, алінеабук, алінеябукс, елінеабук, елінеабукс, елінеябук, елінеябукс, alineabook, alineabooks, a_lineabooks, a_lineabooks" />
-  <meta name="description"
-    content="Книжковий інтернет-магазин Alineabooks –  ✓Найкращий асортимент ✓Низька ціна ✓Новинки ✓Бестселери ✓Купити книги онлайн в інтернет-магазині" />
-
-  <meta property="og:title" content="Alineabooks" />
-  <meta property="og:url" content="https://alineabooks.com" />
-  <meta property="og:site_name" content="Alineabooks" />
-  <meta name="og:description"
-    content="Книжковий інтернет-магазин Alineabooks –  ✓Найкращий асортимент ✓Низька ціна ✓Новинки ✓Бестселери ✓Купити книги онлайн в інтернет-магазині" />
-
-  <link rel="icon" href="/logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#000000" />
-  <link rel="apple-touch-icon" href="/logo.png" />
+
+  <!-- Fallback title shown before JS hydrates -->
+  <title>Alineabooks — Книжковий інтернет-магазин</title>
+  <meta name="author" content="Alineabooks" />
+
+  <!-- hreflang is site-level and static — correct place for it -->
+  <link rel="alternate" hreflang="uk" href="https://alineabooks.com/uk/" />
+  <link rel="alternate" hreflang="en" href="https://alineabooks.com/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://alineabooks.com/uk/" />
+
+  <!-- Declares the Twitter card format; other twitter: tags are set per-page by Page component -->
+  <meta name="twitter:card" content="summary" />
+
+  <!-- PWA / Icons -->
+  <link rel="icon" href="/logo.png" />
+  <link rel="apple-touch-icon" href="/logo192.png" />
   <link rel="manifest" href="/manifest.json" />
-  <link rel="canonical" href="https://alineabooks.com" />
+  <meta name="theme-color" content="#e7d6cc" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Alineabooks" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&display=swap" rel="stylesheet" />
 
-  <title>Alineabooks</title>
+  <!-- Organization structured data — site-level, not per-page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BookStore",
+    "name": "Alineabooks",
+    "url": "https://alineabooks.com",
+    "logo": "https://alineabooks.com/logo512.png",
+    "description": "Книжковий інтернет-магазин — найкращий асортимент, низькі ціни, новинки та бестселери.",
+    "telephone": "+380636320017",
+    "areaServed": "UA",
+    "availableLanguage": ["Ukrainian", "English"],
+    "sameAs": []
+  }
+  </script>
 </head>
 
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <noscript>Для роботи цього сайту необхідно увімкнути JavaScript. / You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <script type="module" src="/src/index.tsx"></script>
 </body>

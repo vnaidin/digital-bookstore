@@ -1,7 +1,10 @@
 {
+  "name": "Alineabooks — Книжковий інтернет-магазин",
   "short_name": "Alineabooks",
-  "name": "Alineabooks.com",
-  "description": "Your digital bookstore",
+  "description": "Книжковий інтернет-магазин — найкращий асортимент, низькі ціни, новинки та бестселери.",
+  "lang": "uk",
+  "dir": "ltr",
+  "categories": ["shopping", "books"],
   "icons": [
     {
       "src": "favicon.ico",
@@ -11,17 +14,20 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/uk/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "display_override": ["window-controls-overlay"]
+  "display_override": ["window-controls-overlay"],
+  "theme_color": "#e7d6cc",
+  "background_color": "#ffffff"
 }

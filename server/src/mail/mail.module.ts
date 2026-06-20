@@ -23,7 +23,12 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/adapters/handlebars.ad
       template: {
         dir: path.join(process.cwd(), 'views'),
         adapter: new HandlebarsAdapter(),
-        options: { strict: false },
+        options: {
+          strict: false,
+          partials: {
+            dir: path.join(process.cwd(), 'views/partials'),
+          },
+        },
       },
     }),
   ],

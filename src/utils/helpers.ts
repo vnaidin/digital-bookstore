@@ -30,7 +30,7 @@ export function post_to_url(path: string, params: Record<string, string>, method
     form.appendChild(field);
   });
   document.body.appendChild(form);
-  form.submit();
+  HTMLFormElement.prototype.submit.call(form);
 }
 
 export function toBinary(str: string): string {

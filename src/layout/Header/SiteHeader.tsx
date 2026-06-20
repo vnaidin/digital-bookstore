@@ -1,0 +1,174 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { BsTelephone } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
+import {
+  Anchor,
+  Box,
+  Burger,
+  Container,
+  Divider,
+  Group,
+  Stack,
+  Text,
+} from "@mantine/core";
+
+import { useLang } from "@/hooks";
+import { useAppSelector } from "@/store";
+import { selectIsModerator } from "@/store/user";
+
+import { Auth, Catalog, SearchBar, ShoppingCart } from "./components";
+
+export default function SiteHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useLocation();
+  const { t } = useTranslation();
+  const isModOrAdmin = useAppSelector(selectIsModerator);
+  const lang = useLang();
+
+  const active = (key: string) =>
+    pathname.split("/").filter(Boolean)[1] === key;
+
+  const navLinks = [
+    {
+      href: `/${lang}/books`,
+      label: t("layout.header.routes.books"),
+      key: "books",
+    },
+    {
+      href: `/${lang}/merch`,
+      label: t("layout.header.routes.merch"),
+      key: "merch",
+    },
+    {
+      href: `/${lang}/news`,
+      label: t("layout.header.routes.news"),
+      key: "news",
+    },
+    ...(isModOrAdmin
+      ? [
+          {
+            href: `/${lang}/moderator`,
+            label: t("layout.header.routes.moderator"),
+            key: "moderator",
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <Box
+      component="header"
+      bg="#e7d6cc"
+      style={{ borderBottom: "1px solid #d4c0b4" }}
+    >
+      {/* Row 1: logo / phone / nav */}
+      <Container size="xl">
+        <Group justify="space-between" h={60} wrap="nowrap">
+          <Anchor
+            href={`/${lang}/`}
+            display="flex"
+            style={{ flexShrink: 0, alignItems: "center" }}
+          >
+            <img alt="alineabooks.com" src="/logo.png" width={120} />
+          </Anchor>
+
+          <Group visibleFrom="sm" gap="xs" style={{ flexShrink: 0 }}>
+            <BsTelephone size={16} />
+            <Text size="sm">
+              <strong>
+                <Anchor
+                  href="tel:+380636320017"
+                  rel="nofollow"
+                  c="inherit"
+                  underline="never"
+                >
+                  +380 (63) 632 00 17
+                </Anchor>
+              </strong>
+            </Text>
+          </Group>
+
+          <Group gap="lg" visibleFrom="sm">
+            {navLinks.map(({ href, label, key }) => (
+              <Anchor
+                key={key}
+                href={href}
+                fw={active(key) ? 700 : 400}
+                c="#4a5a69"
+                fz="lg"
+                underline="never"
+              >
+                {label}
+              </Anchor>
+            ))}
+          </Group>
+
+          <Burger
+            hiddenFrom="sm"
+            opened={mobileOpen}
+            onClick={() => setMobileOpen((o) => !o)}
+            size="sm"
+          />
+        </Group>
+      </Container>
+
+      {/* Row 2: catalog / search / auth+cart — sticky */}
+      <Box
+        pos="sticky"
+        bg="#e7d6cc"
+        style={{ top: 0, zIndex: 100, borderTop: "1px solid #d4c0b4" }}
+      >
+        <Container size="xl" py="xs">
+          <Group gap="sm" wrap="nowrap">
+            <Catalog />
+            <Box flex={1}>
+              <SearchBar />
+            </Box>
+            <Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>
+              <Auth />
+              <ShoppingCart />
+            </Group>
+          </Group>
+        </Container>
+      </Box>
+
+      {/* Mobile dropdown */}
+      {mobileOpen && (
+        <Box bg="#e7d6cc" style={{ borderTop: "1px solid #d4c0b4" }}>
+          <Container size="xl" py="sm">
+            <Stack gap="xs">
+              {navLinks.map(({ href, label, key }) => (
+                <Anchor
+                  key={key}
+                  href={href}
+                  fw={active(key) ? 700 : 400}
+                  c="#4a5a69"
+                  fz="lg"
+                  underline="never"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {label}
+                </Anchor>
+              ))}
+              <Divider />
+              <Group gap="xs">
+                <BsTelephone size={14} />
+                <Text size="sm">
+                  <Anchor
+                    href="tel:+380636320017"
+                    rel="nofollow"
+                    c="inherit"
+                    underline="never"
+                  >
+                    +380 (63) 632 00 17
+                  </Anchor>
+                </Text>
+              </Group>
+            </Stack>
+          </Container>
+        </Box>
+      )}
+    </Box>
+  );
+}

@@ -60,14 +60,14 @@ export class OrdersService {
       .map((i) => i.itemId)
       .reduce<Record<string, number>>((acc, id) => { acc[id] = (acc[id] || 0) + 1; return acc; }, {});
 
-    await this.prisma.$transaction(
-      Object.entries(amountById).map(([itemId, n]) =>
-        this.prisma.item_managements.updateMany({
+    await this.prisma.$transaction(async (tx) => {
+      for (const [itemId, n] of Object.entries(amountById)) {
+        await tx.item_managements.updateMany({
           where: { itemId: +itemId },
           data: { amount: { decrement: n }, purchasesCount: { increment: n } },
-        }),
-      ),
-    );
+        });
+      }
+    });
 
     this.mail.send({
       to: email,
@@ -102,8 +102,8 @@ export class OrdersService {
         template: 'orderStatusChange',
         context: {
           address: origin,
+          title: `Статус: ${MAILING_STATUSES[body.status]}`,
           orderPage: `${origin}/order/${id}`,
-          status: MAILING_STATUSES[body.status],
           ttn: body.ttn,
           nOfItems: updated.orderItems.length,
         },
@@ -126,10 +126,10 @@ export class OrdersService {
   }
 
   async deleteOneTimePromocode(promocode: string, id: number) {
-    await this.prisma.$transaction([
-      this.prisma.promoCode.deleteMany({ where: { name: promocode.toUpperCase() } }),
-      this.prisma.order.update({ where: { id }, data: { promocode: null } }),
-    ]);
+    await this.prisma.$transaction(async (tx) => {
+      await tx.promoCode.deleteMany({ where: { name: promocode.toUpperCase() } });
+      await tx.order.update({ where: { id }, data: { promocode: null } });
+    });
     return { message: `One-time promo ${promocode} deleted from both tables` };
   }
 

@@ -3,12 +3,18 @@
   background-color: #f9f3e7;
 }
 
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .list-group-item {
   text-align: left !important;
 }
 
 main {
-  min-height: 70vh;
+  flex: 1;
 }
 
 header, .modal-header, .offcanvas-header, .toast-header, footer, .modal-footer, .header-bottom {

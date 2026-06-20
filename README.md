@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Digital Bookstore
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Full-stack web application for selling books and merchandise. Built with React + NestJS.
 
-## Available Scripts
+## Tech Stack
 
-In the project directory, you can run:
+**Frontend** — React 18, TypeScript, Vite, Mantine UI, Redux Toolkit (RTK Query), React Router v6, i18next (uk/en)
 
-### `npm start`
+**Backend** — NestJS v11, Prisma v7 (MySQL via `@prisma/adapter-mariadb`), JWT auth, Swagger, Nodemailer
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+/               → React frontend (Vite)
+/server         → NestJS backend
+```
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Node.js 22+
+- MySQL database
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm install
+npm run dev        # dev server at http://localhost:5173
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Backend
 
-### `npm run eject`
+```bash
+cd server
+npm install        # also runs prisma generate via postinstall
+npm run dev        # watch mode at http://localhost:3000
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+API docs available at `http://localhost:3000/api/docs` when running.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Environment Variables
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Frontend (`.env`)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+| Variable | Description |
+|---|---|
+| `REACT_APP_BE_URL` | Backend base URL (e.g. `http://localhost:3000`) |
+| `REACT_APP_LIQ_PAY_PUBLIC` | LiqPay public key |
+| `REACT_APP_LIQ_PAY_PRIVATE` | LiqPay private key |
+| `REACT_APP_BOT_ID` | Telegram bot ID (order notifications) |
+| `REACT_APP_CHAT_ID` | Telegram chat ID (order notifications) |
 
-## Learn More
+### Backend (`server/.env`)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | MySQL connection string |
+| `JWT_SECRET` | Secret for signing JWT tokens |
+| `EMAIL_SENDER` | SMTP sender address |
+| `EMAIL_SENDER_PASS` | SMTP sender password |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Scripts
 
-### Code Splitting
+### Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript check |
+| `npm test` | Vitest unit tests |
 
-### Analyzing the Bundle Size
+### Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+| Command | Description |
+|---|---|
+| `npm run dev` | Start NestJS in watch mode |
+| `npm run build` | Compile to `dist/` |
+| `npm run lint` | ESLint |
+| `npm test` | Jest unit tests |
+| `npm run prisma:generate` | Regenerate Prisma client |
+| `npm run prisma:pull` | Introspect database schema |
+| `npm run prisma:push` | Push schema changes to database |
+| `npm run seed` | Seed the database |
 
-### Making a Progressive Web App
+## CI
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+GitHub Actions runs on every push and PR to `main`:
+- **Frontend**: lint → typecheck → test
+- **Backend**: lint → test (includes `prisma generate` via postinstall)

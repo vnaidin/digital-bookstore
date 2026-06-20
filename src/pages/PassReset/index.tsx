@@ -1,9 +1,9 @@
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Container, PasswordInput, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import toast from 'react-hot-toast';
 import { useResetPasswordMutation } from '@/store/api';
 
 export default function PassReset() {

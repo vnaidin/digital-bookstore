@@ -1,5 +1,6 @@
-import { BaseQueryFn, createApi, fetchBaseQuery, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { logOut } from '@/store/user';
+
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 function authHeader() {
   const raw = localStorage.getItem('user');

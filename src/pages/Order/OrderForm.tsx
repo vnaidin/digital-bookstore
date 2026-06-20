@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { FcApproval } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { Button, Checkbox, Group, NativeSelect, Stack, Textarea, TextInput, Title } from '@mantine/core';
 
-import toast from 'react-hot-toast';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useCreateOrderMutation, useGetPromoCodesQuery } from '@/store/api';
 import { clearCart } from '@/store/cart';
-import { post_to_url, telegramBotSendMsg } from '@/utils/helpers';
 import { DELIVERY_METHODS, PAYMENT_METHODS } from '@/utils/constants';
+import { post_to_url, telegramBotSendMsg } from '@/utils/helpers';
 import { toBinary } from '@/utils/helpers';
 
 interface Props {

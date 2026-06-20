@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Delete, Query, Body, Param, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { PromocodesService } from './promocodes.service';
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
+
+import { Roles } from '@/common/decorators/roles.decorator';
 import { JwtGuard } from '@/common/guards/jwt.guard';
 import { RolesGuard } from '@/common/guards/roles.guard';
-import { Roles } from '@/common/decorators/roles.decorator';
+
+import { PromocodesService } from './promocodes.service';
 
 @ApiTags('promocodes')
 @Controller('api')

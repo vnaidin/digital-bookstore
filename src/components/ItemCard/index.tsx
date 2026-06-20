@@ -4,9 +4,9 @@ import { Badge, Card, Group, Text } from '@mantine/core';
 
 import BuyButton from '@/components/BuyButton';
 import WishListButton from '@/components/WishListButton';
-import { getImageUrl, onImgError } from '@/utils/helpers';
 import { useCurrency } from '@/hooks';
 import { BOOK_TAGS } from '@/utils/constants';
+import { getImageUrl, onImgError } from '@/utils/helpers';
 
 const TAG_COLORS = ['red', 'yellow', 'green'];
 

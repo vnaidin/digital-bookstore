@@ -1,8 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter } from "react-router-dom";
 
-import { Footer, SiteHeader } from "@/layout";
 import { ErrorBoundary } from "@/components";
+import { Footer, SiteHeader } from "@/layout";
 
 import AppRouter from "./routing/Router";
 

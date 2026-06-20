@@ -6,7 +6,7 @@ import { Badge, Button, Group, Indicator, Modal, ScrollArea, Text } from '@manti
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { addItem, clearCart, removeOneItem } from '@/store/cart';
-import { onImgError, getImageUrl } from '@/utils/helpers';
+import { getImageUrl,onImgError } from '@/utils/helpers';
 
 export default function ShoppingCart() {
   const dispatch = useAppDispatch();

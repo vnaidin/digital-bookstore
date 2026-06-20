@@ -1,7 +1,7 @@
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mantine/core';
 
-import toast from 'react-hot-toast';
 import { useAppDispatch } from '@/store';
 import { addItem } from '@/store/cart';
 

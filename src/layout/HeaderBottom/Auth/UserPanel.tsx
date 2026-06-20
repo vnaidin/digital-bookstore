@@ -1,15 +1,15 @@
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button, Group, Image, List, Stack, Table, Text, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 import { LoadingComponent, NoDataComponent, WishListButton } from '@/components';
-import toast from 'react-hot-toast';
+import { useOrderItems } from '@/hooks';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { useGetOrderByIdQuery, useUpdateUserMutation } from '@/store/api';
 import { logIn, logOut } from '@/store/user';
-import { PLACEHOLDER_IMG, getImageUrl, post_to_url, toBinary } from '@/utils/helpers';
-import { useOrderItems } from '@/hooks';
+import { getImageUrl, PLACEHOLDER_IMG, post_to_url, toBinary } from '@/utils/helpers';
 
 export default function UserPanel() {
   const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = import.meta.env;

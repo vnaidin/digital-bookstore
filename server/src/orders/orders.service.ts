@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
-import { PrismaService } from '@/prisma/prisma.service';
+
 import { MailService } from '@/mail/mail.service';
+import { PrismaService } from '@/prisma/prisma.service';
 
 const MAILING_STATUSES: Record<number, string> = { 2: 'Доставка', 3: 'Завершений', 4: 'Скасований' };
 

@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { PLACEHOLDER_IMG, chunkArray, getImageUrl, toBinary } from './helpers';
+import { chunkArray, getImageUrl, PLACEHOLDER_IMG, toBinary } from './helpers';
 
 describe('PLACEHOLDER_IMG', () => {
   it('is the logo path', () => {

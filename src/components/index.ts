@@ -1,8 +1,8 @@
-export { default as ErrorBoundary } from './ErrorBoundary';
-export { default as CatalogLayout } from './CatalogLayout';
-export { default as ItemDetailLayout } from './ItemDetailLayout';
-export { default as ItemCard } from './ItemCard';
 export { default as BuyButton } from './BuyButton';
+export { default as CatalogLayout } from './CatalogLayout';
+export { default as ErrorBoundary } from './ErrorBoundary';
+export { default as ItemCard } from './ItemCard';
+export { default as ItemDetailLayout } from './ItemDetailLayout';
 export { default as LoadingComponent } from './Loading';
 export { default as NewsItem } from './NewsItem';
 export { default as NoDataComponent } from './NoData';

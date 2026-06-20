@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { ActionIcon, Tooltip } from '@mantine/core';
 
-import toast from 'react-hot-toast';
 import { useAppSelector } from '@/store';
 import { useUpdateUserMutation } from '@/store/api';
 

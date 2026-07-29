@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface OrderItem {
   itemId: number;
@@ -18,14 +18,17 @@ export function useOrderItems(items: OrderItem[]): ResolvedItem[] {
 
   useEffect(() => {
     if (!items?.length) return;
-    const amountById = items.reduce<Record<number, number>>((acc, { itemId }) => {
-      acc[itemId] = (acc[itemId] ?? 0) + 1;
-      return acc;
-    }, {});
+    const amountById = items.reduce<Record<number, number>>(
+      (acc, { itemId }) => {
+        acc[itemId] = (acc[itemId] ?? 0) + 1;
+        return acc;
+      },
+      {},
+    );
 
     Promise.all(
       Object.entries(amountById).map(([id, amount]) =>
-        fetch(`${import.meta.env.REACT_APP_BE_URL}/api/item/${id}`)
+        fetch(`${import.meta.env.VITE_BE_URL}/api/item/${id}`)
           .then((r) => r.json())
           .then((item) => ({ ...item, amount })),
       ),

@@ -3,8 +3,6 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { FcApproval } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-
-import { useLang } from "@/hooks";
 import {
   Button,
   Checkbox,
@@ -16,12 +14,13 @@ import {
   Title,
 } from "@mantine/core";
 
-import { DELIVERY_METHODS, PAYMENT_METHODS } from '@/settings';
+import { useLang } from "@/hooks";
+import { DELIVERY_METHODS, PAYMENT_METHODS } from "@/settings";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { useCreateOrderMutation, useGetPromoByNameQuery } from "@/store/api";
 import { clearCart, selectCart } from "@/store/cart";
 import { selectUser } from "@/store/user";
-import { PromoCode } from '@/types';
+import { PromoCode } from "@/types";
 import { post_to_url, telegramBotSendMsg, toBinary } from "@/utils/helpers";
 
 interface DeliveryMethod {
@@ -59,7 +58,9 @@ export default function OrderForm({
   updatePriceWithPromocode,
   currentPromo,
 }: Props) {
-  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod | undefined>();
+  const [deliveryMethod, setDeliveryMethod] = useState<
+    DeliveryMethod | undefined
+  >();
   const [addReceiver, setReceiver] = useState(false);
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectUser);
@@ -70,24 +71,33 @@ export default function OrderForm({
     email: currentUser?.email,
     phoneNumber: currentUser?.phoneNumber,
   });
-  const promoName = formData.promocode?.toUpperCase() ?? '';
-  const { data: promoResult } = useGetPromoByNameQuery(promoName, { skip: promoName.length < 2 });
+  const promoName = formData.promocode?.toUpperCase() ?? "";
+  const { data: promoResult } = useGetPromoByNameQuery(promoName, {
+    skip: promoName.length < 2,
+  });
   const navigate = useNavigate();
   const lang = useLang();
   const { t } = useTranslation();
-  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE } = import.meta
-    .env;
+  const { VITE_LIQ_PAY_PUBLIC, VITE_LIQ_PAY_PRIVATE } = import.meta.env;
   const [createOrder] = useCreateOrderMutation();
 
   const set =
     (key: keyof OrderFormData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >,
+    ) =>
       setFormData((p) => ({ ...p, [key]: e.target.value }));
 
   useEffect(() => {
-    if (!promoResult) { updatePriceWithPromocode(null); return; }
+    if (!promoResult) {
+      updatePriceWithPromocode(null);
+      return;
+    }
     const now = Date.now();
-    const valid = Date.parse(promoResult.from) < now && Date.parse(promoResult.till) > now;
+    const valid =
+      Date.parse(promoResult.from) < now && Date.parse(promoResult.till) > now;
     updatePriceWithPromocode(valid ? promoResult : null);
   }, [promoResult]);
 
@@ -128,11 +138,11 @@ export default function OrderForm({
       dispatch(clearCart());
       telegramBotSendMsg(
         `New Order!\nFrom: ${formData.name} ${formData.surname}\nPrice: ${totalPrice} UAH`,
-        `${import.meta.env.REACT_APP_BE_URL}/order/${response.id}`,
+        `${import.meta.env.VITE_BE_URL}/order/${response.id}`,
       );
       if (formData.paymentMethodId === 1) {
         const json_string = {
-          public_key: REACT_APP_LIQ_PAY_PUBLIC,
+          public_key: VITE_LIQ_PAY_PUBLIC,
           version: "3",
           action: "pay",
           amount: totalPrice,
@@ -144,10 +154,15 @@ export default function OrderForm({
           order_id: String(response.id),
         };
         const liqpayData = window.btoa(toBinary(JSON.stringify(json_string)));
-        const signString = REACT_APP_LIQ_PAY_PRIVATE + liqpayData + REACT_APP_LIQ_PAY_PRIVATE;
+        const signString =
+          VITE_LIQ_PAY_PRIVATE + liqpayData + VITE_LIQ_PAY_PRIVATE;
         const encoded = new TextEncoder().encode(signString);
         const hashBuffer = await window.crypto.subtle.digest("SHA-1", encoded);
-        const signature = window.btoa(Array.from(new Uint8Array(hashBuffer)).map((b) => String.fromCharCode(b)).join(""));
+        const signature = window.btoa(
+          Array.from(new Uint8Array(hashBuffer))
+            .map((b) => String.fromCharCode(b))
+            .join(""),
+        );
         post_to_url("https://www.liqpay.ua/api/3/checkout", {
           submit: "submit",
           data: liqpayData,

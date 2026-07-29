@@ -10,31 +10,41 @@ interface Props {
 
 export default function PayButton({ order }: Props) {
   const { t } = useTranslation();
-  const { REACT_APP_LIQ_PAY_PUBLIC, REACT_APP_LIQ_PAY_PRIVATE, REACT_APP_BE_URL } = import.meta.env;
+  const { VITE_LIQ_PAY_PUBLIC, VITE_LIQ_PAY_PRIVATE, VITE_BE_URL } = import.meta
+    .env;
 
-  if (order.hasPaid != null) return <Text>{t("pages.orderPage.table.hasPaid-yes")}</Text>;
+  if (order.hasPaid != null)
+    return <Text>{t("pages.orderPage.table.hasPaid-yes")}</Text>;
 
   const handlePay = async () => {
     const jsonData = {
-      public_key: REACT_APP_LIQ_PAY_PUBLIC,
+      public_key: VITE_LIQ_PAY_PUBLIC,
       version: "3",
       action: "pay",
       amount: order.price,
       currency: "UAH",
       description: "Оплата за книги",
       result_url: window.location.origin,
-      server_url: `${REACT_APP_BE_URL}/api/order/payment-update`,
+      server_url: `${VITE_BE_URL}/api/order/payment-update`,
       language: "uk",
       order_id: String(order.id),
     };
     const liqpayData = window.btoa(toBinary(JSON.stringify(jsonData)));
-    const signString = REACT_APP_LIQ_PAY_PRIVATE + liqpayData + REACT_APP_LIQ_PAY_PRIVATE;
+    const signString = VITE_LIQ_PAY_PRIVATE + liqpayData + VITE_LIQ_PAY_PRIVATE;
 
     const encoded = new TextEncoder().encode(signString);
     const hashBuffer = await window.crypto.subtle.digest("SHA-1", encoded);
-    const signature = window.btoa(Array.from(new Uint8Array(hashBuffer)).map((b) => String.fromCharCode(b)).join(""));
+    const signature = window.btoa(
+      Array.from(new Uint8Array(hashBuffer))
+        .map((b) => String.fromCharCode(b))
+        .join(""),
+    );
 
-    post_to_url("https://www.liqpay.ua/api/3/checkout", { submit: "submit", data: liqpayData, signature });
+    post_to_url("https://www.liqpay.ua/api/3/checkout", {
+      submit: "submit",
+      data: liqpayData,
+      signature,
+    });
   };
 
   return (

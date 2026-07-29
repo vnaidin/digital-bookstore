@@ -34,14 +34,14 @@ jobs:
       - name: Test
         run: npm test
 
-      # - name: Build
-      #   run: npm run build
-      #   env:
-      #     REACT_APP_BE_URL: ${{ secrets.REACT_APP_BE_URL }}
-      #     REACT_APP_LIQ_PAY_PUBLIC: ${{ secrets.REACT_APP_LIQ_PAY_PUBLIC }}
-      #     REACT_APP_LIQ_PAY_PRIVATE: ${{ secrets.REACT_APP_LIQ_PAY_PRIVATE }}
-      #     REACT_APP_BOT_ID: ${{ secrets.REACT_APP_BOT_ID }}
-      #     REACT_APP_CHAT_ID: ${{ secrets.REACT_APP_CHAT_ID }}
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BE_URL: ${{ secrets.VITE_BE_URL }}
+          VITE_LIQ_PAY_PUBLIC: ${{ secrets.VITE_LIQ_PAY_PUBLIC }}
+          VITE_LIQ_PAY_PRIVATE: ${{ secrets.VITE_LIQ_PAY_PRIVATE }}
+          VITE_BOT_ID: ${{ secrets.VITE_BOT_ID }}
+          VITE_CHAT_ID: ${{ secrets.VITE_CHAT_ID }}
 
   server:
     name: Server — lint / test

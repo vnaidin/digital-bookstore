@@ -7,8 +7,9 @@ export class JwtGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const auth: string = request.headers['authorization'] ?? '';
     if (!auth.startsWith('Bearer ')) throw new UnauthorizedException();
+    if (!process.env.JWT_SECRET) throw new UnauthorizedException();
     try {
-      request.user = jwt.verify(auth.slice(7), process.env.JWT_SECRET || 'bezkoder-secret-key');
+      request.user = jwt.verify(auth.slice(7), process.env.JWT_SECRET);
       return true;
     } catch {
       throw new UnauthorizedException();

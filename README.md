@@ -1,6 +1,19 @@
 # Digital Bookstore
 
+[![CI](https://github.com/vnaidin/digital-bookstore/actions/workflows/ci.yml/badge.svg)](https://github.com/vnaidin/digital-bookstore/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)
+![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs&logoColor=white)
+
 Full-stack web application for selling books and merchandise. Built with React + NestJS.
+
+## Screenshots
+
+<!-- TODO: add screenshots or a demo GIF, e.g.:
+![Home page](docs/screenshots/home.png)
+![Product page](docs/screenshots/product.png)
+-->
 
 ## Tech Stack
 

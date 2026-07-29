@@ -2,6 +2,10 @@
   "name": "digital-bookstore",
   "version": "0.9.0",
   "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
     "@mantine/carousel": "^9.5.0",
     "@mantine/core": "^9.5.0",

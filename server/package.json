@@ -48,7 +48,7 @@
     "@types/node": "^26.0.0",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "jest": "^30.4.2",
-    "prisma": "^7.9.0",
+    "prisma": "^7.9.1",
     "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

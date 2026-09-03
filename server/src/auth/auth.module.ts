@@ -1,17 +1,18 @@
 import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-if (!process.env.JWT_SECRET) {
-  throw new Error("JWT_SECRET environment variable must be set");
-}
 
 @Module({
   imports: [
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: "12h", algorithm: "HS256" },
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.getOrThrow<string>("JWT_SECRET"),
+        signOptions: { expiresIn: "12h", algorithm: "HS256" },
+      }),
     }),
   ],
   providers: [AuthService],

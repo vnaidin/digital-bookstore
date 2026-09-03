@@ -43,7 +43,7 @@ export default function UpdateOrderModal({ handleCloseModal, existingOrder }: Pr
             ]}
           />
           <TextInput label="TTN" placeholder="TTN" defaultValue={existingOrder?.ttn ?? ''} onChange={(e) => setFormData((p) => ({ ...p, ttn: e.target.value }))} autoComplete="off" required={Number(formData.status) === 2} />
-          <Button type="submit" style={{ backgroundColor: '#05aac2', fontWeight: 900 }}>{t('pages.moderator.tabs.order.modal.update')}</Button>
+          <Button type="submit" fw={700}>{t('pages.moderator.tabs.order.modal.update')}</Button>
         </Stack>
       </form>
     </Modal>

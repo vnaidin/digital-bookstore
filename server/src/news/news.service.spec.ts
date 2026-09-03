@@ -1,14 +1,12 @@
 import { Test } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 
 import { PrismaService } from '@/prisma/prisma.service';
 
+import { saveUpload } from '@/common/utils/save-upload';
+
 import { NewsService } from './news.service';
 
-jest.mock('@/common/utils/save-upload', () => ({
-  saveUpload: jest.fn(),
-}));
-
-import { saveUpload } from '@/common/utils/save-upload';
 const mockSaveUpload = saveUpload as jest.Mock;
 
 const makePrismaMock = () => ({

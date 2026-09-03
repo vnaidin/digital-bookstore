@@ -22,7 +22,12 @@ export default function Auth() {
 
   return (
     <>
-      <Button variant="subtle" onClick={() => setOpened(true)} leftSection={<FiUser size={20} />}>
+      <Button
+        variant="subtle"
+        color="ink"
+        onClick={() => setOpened(true)}
+        leftSection={<FiUser size={18} />}
+      >
         <Text visibleFrom="md">{t('layout.headerBottom.auth.title')}</Text>
       </Button>
       <Drawer opened={opened} onClose={() => setOpened(false)} title={title} position="right">

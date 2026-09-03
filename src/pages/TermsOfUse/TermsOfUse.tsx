@@ -10,7 +10,7 @@ export default function TermsOfUse() {
   const { t } = useTranslation();
 
   return (
-    <Container>
+    <Container className="content-page" py="xl">
       <Page title={t("pages.terms-of-use.title-p")} description={t("pages.terms-of-use.description")} />
       <div className="my-3">
         <h2>{t("pages.terms-of-use.title-1")}</h2>

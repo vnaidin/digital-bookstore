@@ -9,7 +9,10 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     resolve: {
-      alias: { "@": path.resolve(__dirname, "./src") },
+      alias: {
+        "@": path.resolve(import.meta.dirname, "./src"),
+        "@shared": path.resolve(import.meta.dirname, "./shared"),
+      },
     },
     server: {
       proxy: {
@@ -25,7 +28,10 @@ export default defineConfig(({ mode }) => {
       environment: "jsdom",
       setupFiles: ["./src/test-setup.ts"],
       include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
-      alias: { "@": path.resolve(__dirname, "./src") },
+      alias: {
+        "@": path.resolve(import.meta.dirname, "./src"),
+        "@shared": path.resolve(import.meta.dirname, "./shared"),
+      },
     },
   };
 });

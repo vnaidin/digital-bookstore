@@ -24,7 +24,8 @@
       }
     },
     "footer": {
-      "social": "Соц. мережі"
+      "social": "Соц. мережі",
+      "tagline": "Книжковий інтернет-магазин"
     },
     "headerBottom": {
       "greeting": "Привіт",

@@ -127,12 +127,13 @@ export default function ShoppingCart() {
         label={cart.length}
         size={18}
         disabled={cart.length === 0}
-        color="yellow"
+        color="coral"
       >
         <Button
           variant="subtle"
+          color="ink"
           onClick={() => setOpened(true)}
-          leftSection={<FiShoppingCart size={20} />}
+          leftSection={<FiShoppingCart size={18} />}
         >
           <Text visibleFrom="md">
             {t("layout.headerBottom.shopping-cart.title")}

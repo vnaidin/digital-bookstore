@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core';
 
 import App from './App';
 import { store } from './store';
+import { theme } from './theme';
 
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
@@ -15,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <MantineProvider>
+      <MantineProvider theme={theme}>
         <Suspense fallback={<div style={{ minHeight: '95vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} />}>
           <App />
         </Suspense>

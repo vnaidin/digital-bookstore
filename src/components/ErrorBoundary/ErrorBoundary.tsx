@@ -57,10 +57,7 @@ class ErrorBoundary extends Component<
             </Text>
           )}
           <Stack gap="xs" w="100%" align="center">
-            <Button
-              onClick={this.handleReload}
-              bg="#05aac2"
-            >
+            <Button onClick={this.handleReload}>
               {t("pages.error-boundary.reload")}
             </Button>
             <Button variant="subtle" onClick={this.handleHome}>

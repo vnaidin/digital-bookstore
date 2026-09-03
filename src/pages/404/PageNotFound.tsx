@@ -9,12 +9,12 @@ export default function PageNotFound() {
   const { t } = useTranslation();
   const lang = useLang();
   return (
-    <Container py="xl" ta="center">
+    <Container py="xl" ta="center" className="main-page">
       <Title order={1} tt="uppercase" mb="xl">{t('pages.404.pageNotFound')}...</Title>
       <Box component="img" src="/logo.png" w={300} alt="logo" display="block" mx="auto" mb="xl" />
       <Group justify="center" gap="md">
-        <Button color="yellow" onClick={() => navigate(-1)}>{t('pages.404.btnBack')}</Button>
-        <Button color="green" onClick={() => navigate(`/${lang}/`)}>{t('pages.404.btnHome')}</Button>
+        <Button variant="outline" onClick={() => navigate(-1)}>{t('pages.404.btnBack')}</Button>
+        <Button onClick={() => navigate(`/${lang}/`)}>{t('pages.404.btnHome')}</Button>
       </Group>
     </Container>
   );

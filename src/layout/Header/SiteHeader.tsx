@@ -57,51 +57,60 @@ export default function SiteHeader() {
   ];
 
   return (
-    <Box
-      component="header"
-      bg="#e7d6cc"
-      style={{ borderBottom: "1px solid #d4c0b4" }}
-    >
+    <Box component="header" style={{ backgroundColor: "var(--paper-deep)" }}>
       {/* Row 1: logo / phone / nav */}
       <Container size="xl">
-        <Group justify="space-between" h={60} wrap="nowrap">
+        <Group justify="space-between" h={72} wrap="nowrap">
           <Anchor
             href={`/${lang}/`}
             display="flex"
-            style={{ flexShrink: 0, alignItems: "center" }}
+            style={{ flexShrink: 0, alignItems: "center", gap: 10 }}
           >
-            <img alt="alineabooks.com" src="/logo.png" width={120} />
+            <img alt="alineabooks.com" src="/logo.png" height={44} style={{ width: "auto" }} />
+            <Text
+              visibleFrom="xs"
+              c="var(--ink)"
+              style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 22, fontWeight: 600, letterSpacing: 0.2 }}
+            >
+              Alineabooks
+            </Text>
           </Anchor>
 
-          <Group visibleFrom="sm" gap="xs" style={{ flexShrink: 0 }}>
-            <BsTelephone size={16} />
-            <Text size="sm">
-              <strong>
-                <Anchor
-                  href="tel:+380636320017"
-                  rel="nofollow"
-                  c="inherit"
-                  underline="never"
-                >
-                  +380 (63) 632 00 17
-                </Anchor>
-              </strong>
-            </Text>
-          </Group>
-
-          <Group gap="lg" visibleFrom="sm">
+          <Group gap="xl" visibleFrom="sm">
             {navLinks.map(({ href, label, key }) => (
               <Anchor
                 key={key}
                 href={href}
                 fw={active(key) ? 700 : 400}
-                c="#4a5a69"
-                fz="lg"
+                c="var(--ink)"
+                fz="md"
                 underline="never"
+                style={{
+                  fontFamily: "'Fraunces', Georgia, serif",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.6,
+                  borderBottom: active(key) ? "2px solid var(--coral)" : "2px solid transparent",
+                  paddingBottom: 4,
+                  transition: "border-color 150ms ease",
+                }}
               >
                 {label}
               </Anchor>
             ))}
+          </Group>
+
+          <Group visibleFrom="sm" gap={6} c="var(--muted-ink)" style={{ flexShrink: 0 }}>
+            <BsTelephone size={14} />
+            <Anchor
+              href="tel:+380636320017"
+              rel="nofollow"
+              c="inherit"
+              underline="never"
+              fz="sm"
+              fw={600}
+            >
+              +380 (63) 632 00 17
+            </Anchor>
           </Group>
 
           <Burger
@@ -109,6 +118,7 @@ export default function SiteHeader() {
             opened={mobileOpen}
             onClick={() => setMobileOpen((o) => !o)}
             size="sm"
+            color="var(--ink)"
           />
         </Group>
       </Container>
@@ -116,8 +126,14 @@ export default function SiteHeader() {
       {/* Row 2: catalog / search / auth+cart — sticky */}
       <Box
         pos="sticky"
-        bg="#e7d6cc"
-        style={{ top: 0, zIndex: 100, borderTop: "1px solid #d4c0b4" }}
+        style={{
+          top: 0,
+          zIndex: 100,
+          backgroundColor: "var(--paper)",
+          borderTop: "1px solid var(--line)",
+          borderBottom: "1px solid var(--line)",
+        }}
+        className="header-bottom"
       >
         <Container size="xl" py="xs">
           <Group gap="sm" wrap="nowrap">
@@ -125,7 +141,7 @@ export default function SiteHeader() {
             <Box flex={1}>
               <SearchBar />
             </Box>
-            <Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>
+            <Group gap={4} wrap="nowrap" style={{ flexShrink: 0 }}>
               <Auth />
               <ShoppingCart />
             </Group>
@@ -135,7 +151,7 @@ export default function SiteHeader() {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <Box bg="#e7d6cc" style={{ borderTop: "1px solid #d4c0b4" }}>
+        <Box style={{ backgroundColor: "var(--paper-deep)", borderTop: "1px solid var(--line)" }}>
           <Container size="xl" py="sm">
             <Stack gap="xs">
               {navLinks.map(({ href, label, key }) => (
@@ -143,7 +159,7 @@ export default function SiteHeader() {
                   key={key}
                   href={href}
                   fw={active(key) ? 700 : 400}
-                  c="#4a5a69"
+                  c="var(--ink)"
                   fz="lg"
                   underline="never"
                   onClick={() => setMobileOpen(false)}
@@ -151,7 +167,7 @@ export default function SiteHeader() {
                   {label}
                 </Anchor>
               ))}
-              <Divider />
+              <Divider color="var(--line)" />
               <Group gap="xs">
                 <BsTelephone size={14} />
                 <Text size="sm">

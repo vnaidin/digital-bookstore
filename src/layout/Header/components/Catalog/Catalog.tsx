@@ -15,7 +15,11 @@ export default function Catalog() {
 
   return (
     <>
-      <Button variant="filled" color="dark" onClick={() => setOpened(true)}>
+      <Button
+        variant="filled"
+        onClick={() => setOpened(true)}
+        style={{ flexShrink: 0 }}
+      >
         {t("layout.headerBottom.catalog.title")}
       </Button>
 

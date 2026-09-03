@@ -23,6 +23,7 @@ export default function SearchBar() {
       <TextInput
         ref={inputRef}
         size="md"
+        radius="xl"
         placeholder={t('layout.headerBottom.search.placeholder')}
         leftSection={<BsSearch size={18} style={{ cursor: 'pointer' }} onClick={() => inputRef.current?.focus()} />}
         value={search}
@@ -33,14 +34,14 @@ export default function SearchBar() {
         <Box
           pos="absolute"
           bg="white"
-          style={{ top: '100%', left: 0, right: 0, zIndex: 200, border: '1px solid #dee2e6', borderRadius: 4 }}
+          style={{ top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 200, border: '1px solid var(--line)', borderRadius: 12, boxShadow: 'var(--shadow)', overflow: 'hidden' }}
         >
           {data.books.map((result) => (
             <Group
               key={result.id}
               gap="sm"
               p="xs"
-              style={{ cursor: 'pointer', borderBottom: '1px solid #f1f3f5' }}
+              style={{ cursor: 'pointer', borderBottom: '1px solid var(--line)' }}
               onClick={() => { navigate(`/${lang}/${result.itemType}/${result.id}`); setSearch(''); }}
             >
               <Image src={getImageUrl(result.image)} fallbackSrc={PLACEHOLDER_IMG} w={35} h={35} fit="contain" />

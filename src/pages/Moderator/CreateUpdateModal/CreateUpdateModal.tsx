@@ -126,7 +126,7 @@ export default function CreateUpdateModal({ entityType, existing, onClose, autho
               {(entityType === 'book' || entityType === 'merch') && (
                 <PriceStockFields handlers={handlers} entityType={entityType} existing={existing as Book | Merch | undefined} />
               )}
-              <Button type="submit" style={{ backgroundColor: '#05aac2', fontWeight: 900 }}>
+              <Button type="submit" fw={700}>
                 {t(titleKey)}
               </Button>
             </Stack>

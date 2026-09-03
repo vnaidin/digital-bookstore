@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Container, PasswordInput, Stack } from '@mantine/core';
+import { Button, Container, PasswordInput, Stack, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 import { useLang } from '@/hooks';
@@ -17,7 +17,8 @@ export default function PassReset() {
   const form = useForm({ initialValues: { password: '' } });
 
   return (
-    <Container py="xl">
+    <Container py="xl" className="content-page">
+      <Title order={2} ta="center" mb="lg">{t('layout.headerBottom.auth.form.reset-pass')}</Title>
       <form onSubmit={form.onSubmit(async (values) => {
         try {
           const res = await resetPassword({ password: values.password, token: params.get('token'), id: params.get('id') }).unwrap();

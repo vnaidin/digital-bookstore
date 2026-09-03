@@ -18,7 +18,7 @@ export default function UploadButton({ imgKey, label, existingSrc, setImages }: 
   return (
     <Stack align="center" gap="xs">
       {src && <Image src={src} fallbackSrc={PLACEHOLDER_IMG} alt={label} maw={200} />}
-      <label style={{ cursor: "pointer", background: "#515151", color: "white", borderRadius: 24, padding: "4px 12px" }}>
+      <label style={{ cursor: "pointer", background: "var(--ink)", color: "white", borderRadius: 24, padding: "4px 12px" }}>
         <FiUpload size={20} />
         <input
           type="file"

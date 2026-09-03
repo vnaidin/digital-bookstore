@@ -1,9 +1,13 @@
 body {
   margin: 0;
-  font-family: 'Merriweather', serif;
+  font-family: 'Merriweather', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #4a5a69;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fraunces', Georgia, serif;
 }
 
 code {

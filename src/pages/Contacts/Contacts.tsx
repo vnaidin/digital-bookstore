@@ -6,7 +6,7 @@ import { Page } from '@/components';
 export default function Contacts() {
   const { t } = useTranslation();
   return (
-    <Container py="xl">
+    <Container py="xl" className="content-page">
       <Page title={t('pages.contacts.title')} description={t('pages.contacts.description')} />
       <Title order={2} mb="lg">{t('pages.contacts.title')}</Title>
       <Text mb="sm">
